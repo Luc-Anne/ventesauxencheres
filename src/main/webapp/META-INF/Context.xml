@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource
+        name="jdbc/pool_cnx/ventes_aux_encheres"
+        type="javax.sql.DataSource"
+        driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+    
+        url="jdbc:sqlserver://10.105.200.27:1433;databasename=Projet_VentesAuxEncheres"
+        username="ju_ENI-VentesAuxEncheres"
+        password="Pa$$w0rd"
+        
+        maxIdle="3"
+        maxTotal="10"
+        maxWaitMillis="15000"
+        
+        removeAbandonedOnBorrow="true"
+        removeAbandonedTimeout="10"
+    />
+</Context>
