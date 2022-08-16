@@ -1,5 +1,5 @@
 # sql files
-.sql
+*.sql
 
 # Compiled class file
 *.class
