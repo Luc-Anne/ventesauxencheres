@@ -42,7 +42,7 @@
 
 
 <!-- Custom styles for this template -->
-<link href="chekout/form-validation.css" rel="stylesheet">
+<link href="css/form-validation.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 
@@ -176,7 +176,7 @@
 
 	<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
-	<script src="chekout/form-validation.js"></script>
+	<script src="css/form-validation.js"></script>
 </body>
 </html>
 
