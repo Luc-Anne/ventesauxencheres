@@ -12,7 +12,7 @@
 		crossorigin="anonymous">
 </head>
 <body>
-	<form action="${pageContext.request.servletContext}/utilisateur/connexion" method="post">
+	<form action="${pageContext.request.contextPath}/utilisateur/connexion" method="post">
 		<div class="mb-3">
 			<label for="exampleInputEmail1" class="form-label">Adresse mail :</label>
 			<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
