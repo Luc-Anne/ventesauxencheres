@@ -4,16 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Ventes aux Enchères - Se connecter</title>
-	<link href="${pageContext.request.contextPath}/css/style.css" type="text/css" rel="stylesheet">
-	<link
-		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-		rel="stylesheet"
-		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-		crossorigin="anonymous">
+	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
+	<title>${initParam.debutTitre} Se connecter</title>
 </head>
 <body>
+	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	${messageConnexion}
 	<form action="${pageContext.request.contextPath}/utilisateur/connexion" method="post">
 		<div class="mb-3">
@@ -32,5 +27,6 @@
 		-->
 		<button type="submit" class="btn btn-primary">Se connecter</button>
 	</form>
+	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>
 </html>
