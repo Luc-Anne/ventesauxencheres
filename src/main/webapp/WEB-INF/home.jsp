@@ -12,5 +12,7 @@
 <!-- Test Connexion  -->
 <p> ${sessionScope.utilisateurConnecte.nom } </p>
 <!--  -->
+
+
 </body>
 </html>

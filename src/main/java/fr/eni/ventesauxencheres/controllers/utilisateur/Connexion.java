@@ -45,11 +45,10 @@ public class Connexion extends HttpServlet {
 		} catch (BLLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		
+		}	
 
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
+		//RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
 		}
