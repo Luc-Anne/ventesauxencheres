@@ -16,6 +16,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSCRIPTION = 
 			"INSERT INTO UTILISATEURS	(pseudo, nom,prenom, email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)"
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String DELETE = "delete from UTILISATEURS where no_utilisateur = ?";
 
 	@Override
 	public Utilisateur connexion(String email, String motDePasse) throws DALException {
@@ -53,9 +54,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	public boolean inscription(Utilisateur u) throws DALException {
 		boolean enregistre = false;
-		
-		
-		
+
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();){
 			try (PreparedStatement stmt = cnx.prepareStatement(INSCRIPTION);){
 				//cnx.setAutoCommit(false);
@@ -66,9 +65,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				stmt.setString(4, u.getEmail());
 				stmt.setString(5, u.getTelephone());
 				stmt.setString(6, u.getRue());
-				stmt.setString(7, u.getCode_postal());
+				stmt.setString(7, u.getCodePostal());
 				stmt.setString(8, u.getVille());
-				stmt.setString(9, u.getMot_de_passe());
+				stmt.setString(9, u.getMotDePasse());
 				stmt.setInt(10, u.getCredit());
 				stmt.setBoolean(11, u.isAdministrateur());
 				cnx.commit();
@@ -92,7 +91,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 	
 	
-	
 	/*
 	 * HttpSession session = req.getSession();
 		session.removeAttribute("userObj");
@@ -100,5 +98,25 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		resp.sendRedirect("user_login.jsp");
 	 * 
 	 */
+
+	public boolean deleteById(int id) throws DALException {
+		boolean supprime = false;
+		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
+			try (PreparedStatement stmt = cnx.prepareStatement(DELETE);) {
+				stmt.executeUpdate();
+				int i = stmt.executeUpdate();
+				if (i == 1) {
+					supprime = true;
+					System.out.println("Suppresssion réussie");
+				}
+
+			} catch (SQLException e) {
+				throw new DALException("Erreur Suppresssion ", e);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Probleme Suppresssion", e);
+		}
+		return supprime;
+	}
 
 }

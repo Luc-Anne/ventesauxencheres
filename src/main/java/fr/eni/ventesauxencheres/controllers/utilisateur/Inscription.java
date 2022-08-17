@@ -17,29 +17,30 @@ import fr.eni.ventesauxencheres.bo.Utilisateur;
 /**
  * Servlet implementation class Inscription
  */
-@WebServlet("/Inscription")
+@WebServlet("/utilisateur/inscription")
 public class Inscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	
-  
-    public Inscription() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public Inscription() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
-		
+
 		if (rd != null) {
 			rd.forward(request, response);
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
-		//(pseudo, nom,prenom, email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)
+
+		// (pseudo, nom,prenom,
+		// email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)
 		String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
@@ -49,37 +50,41 @@ public class Inscription extends HttpServlet {
 		String code_postal = request.getParameter("code_postal");
 		String ville = request.getParameter("ville");
 		String mot_de_passe = request.getParameter("password");
-		String credit = request.getParameter("credit");
-		String administrateur = request.getParameter("status");
-		
-		//Utilisateur u = new Utilisateur(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur);
+		int credit = Integer.parseInt(request.getParameter("credit"));
+		boolean administrateur = false;
 
-		Utilisateur u = new Utilisateur();
+		if (request.getParameter("status") == null) {
+			administrateur = false;
+		} else {
+			administrateur = true;
+		}
+		System.out.println(administrateur);
+
+		Utilisateur u = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe,
+				credit, administrateur);
 		try {
 			boolean entergistre = UtilisateurManager.getInstance().inscription(u);
-			
 			if (entergistre) {
-				session.setAttribute("sucessMessage", "Inscription réussie ");
-				
-				//faire une redirection
+				session.setAttribute("messageInscription", "Inscription réussie ");
+				// faire une redirection
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
-				
+
 				if (rd != null) {
 					rd.forward(request, response);
 				}
-
 			} else {
-				session.setAttribute("erreurMessage", "Inscription Echoué");
-				
+				session.setAttribute("messageInscription", "Inscription Echoué");
+//				request.setAttribute("messageConnexion", "Email ou mot de passe incorrect.");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
+				if (rd != null) {
+					rd.forward(request, response);
+				}
 			}
 		} catch (BLLException e) {
-			
+
 			e.printStackTrace();
 		}
-		
-		
 
-	
 	}
 
 }

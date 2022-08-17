@@ -11,7 +11,6 @@
 <meta name="generator" content="Hugo 0.84.0">
 <%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
 <title>${initParam.debutTitre} Inscription</title>
-
 <link rel="canonical"
 	href="https://getbootstrap.com/docs/5.0/examples/checkout/">
 
@@ -75,8 +74,8 @@
 							</div>
 							<div class="col-sm-6">
 								<label for="lastName" class="form-label">Nom</label> <input
-									type="text" class="form-control" id="lastName" placeholder="nom"
-									value="" required name="">
+									type="text" class="form-control" id="lastName" placeholder="Inésrer le nom"
+									value="" required name="nom">
 								<div class="invalid-feedback">Il faut nécessairement
 									indiquer le Nom</div>
 							</div>
@@ -141,7 +140,7 @@
 							<div></div>
 							<h4 class="mb-3">Inidquer votre statuts</h4>
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value=""
+								<input class="form-check-input" type="checkbox" 
 									id="flexCheckDefault" name="status"> <label class="form-check-label"
 									for="flexCheckDefault"> Vous êtes Administrateur ? </label>
 							</div>
