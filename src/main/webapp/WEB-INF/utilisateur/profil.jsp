@@ -28,37 +28,32 @@
 	</div>	
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>prénom : ${utilisateurConnecte.prenom} </span>
+			<span>prénom : ${utilisateurConnecte.prenom}</span>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>email :</span>
+			<span>email : ${utilisateurConnecte.email}</span>
 		</div>
 	</div>		
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>prénom :</span>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>téléphone :</span>
+			<span>téléphone : ${utilisateurConnecte.telephone}</span>
 		</div>
 	</div>	
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>rue :</span>
+			<span>rue :  ${utilisateurConnecte.rue}</span>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>code postal :</span>
+			<span>code postal :  ${utilisateurConnecte.code_postal}</span>
 		</div>
 	</div>	
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>ville :</span>
+			<span>ville : ${utilisateurConnecte.ville}</span>
 		</div>
 	</div>		
 </main>

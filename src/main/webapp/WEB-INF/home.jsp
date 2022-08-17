@@ -15,7 +15,7 @@
 <p> ${messageSucces} </p>
 <!--  -->
 <!-- Test Profil -->
-<a href="/utilisateur/profil">Mon profil</a>
+<a href="${pageContext.request.contextPath}/utilisateur/profil">Mon profil</a>
 <!--  -->
 </body>
 </html>
