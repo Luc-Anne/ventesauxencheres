@@ -26,7 +26,7 @@ public class Desinscription extends HttpServlet {
 
 		Utilisateur uc = (Utilisateur) session.getAttribute("utilisateurConnecte");
 		
-		int id = uc.getNo_utilisateur();
+		int id = uc.getNoUtilisateur();
 		
 //		System.out.println(uc);
 		
