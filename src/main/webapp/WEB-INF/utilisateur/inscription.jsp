@@ -4,25 +4,15 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Hugo 0.84.0">
-<title>Inscription Page</title>
-
+<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
+<title>${initParam.debutTitre} Inscription</title>
 <link rel="canonical"
 	href="https://getbootstrap.com/docs/5.0/examples/checkout/">
-
-
-
-<!-- Bootstrap core CSS -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
 
 <style>
 .bd-placeholder-img {
@@ -45,7 +35,7 @@
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-
+	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	<div class="container">
 		<main>
 			<div class="py-5 text-center">
@@ -162,21 +152,13 @@
 			</div>
 		</main>
 
-		<footer class="my-5 pt-5 text-muted text-center text-small">
-			<p class="mb-1">&copy; Ventes Aux Enchères Promo 2022-2023 Bédiss
-				/ Luc / Bich</p>
-			<!-- <ul class="list-inline">
-				<li class="list-inline-item"><a href="#">Privacy</a></li>
-				<li class="list-inline-item"><a href="#">Terms</a></li>
-				<li class="list-inline-item"><a href="#">Support</a></li>
-			</ul> -->
-		</footer>
 	</div>
 
 
 	<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
 	<script src="${pageContext.request.contextPath}/css/form-validation.js"></script>
+	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>
 </html>
 
