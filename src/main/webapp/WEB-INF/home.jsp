@@ -16,6 +16,9 @@
 <p> ${sessionScope.utilisateurConnecte.telephone } </p>
 <p> ${messageSucces} </p>
 <!--  -->
+<form action="${pageContext.request.contextPath}/utilisateur/desinscription" method="post">
+	<button class="btn btn-danger">Delete</button>
+</form>
 <%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>
 </html>
