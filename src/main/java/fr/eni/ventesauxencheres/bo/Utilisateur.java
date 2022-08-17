@@ -18,6 +18,7 @@ public class Utilisateur {
 		super();
 	}
 
+
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
 			String code_postal, String ville, String mot_de_passe, int credit, boolean administrateur) {
 		super();
@@ -154,7 +155,5 @@ public class Utilisateur {
 				+ code_postal + ", ville=" + ville + ", mot_de_passe=" + mot_de_passe + ", credit=" + credit
 				+ ", administrateur=" + administrateur + "]";
 	}
-	
-	
 
 }
