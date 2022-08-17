@@ -5,4 +5,5 @@ import fr.eni.ventesauxencheres.bo.Utilisateur;
 public interface UtilisateurDAO {
 	Utilisateur connexion(String email, String motDePasse) throws DALException;
 	public boolean inscription(Utilisateur u) throws DALException ;
+	public boolean deleteById(int id) throws DALException;
 }

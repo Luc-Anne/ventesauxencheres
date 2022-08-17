@@ -20,7 +20,7 @@
       <a class="nav-item nav-link active" href="${pageContext.request.contextPath}/home">Accueil</a>
       <a class="nav-item nav-link" href="${pageContext.request.contextPath}/utilisateur/profil">Profil</a>
       <a class="nav-item nav-link" href="#">Panier</a>
-      <a class="nav-item nav-link" href="#">Déconnexion</a>
+      <a class="nav-item nav-link" href="">Déconnexion</a>
     </div>
   </div>
 </nav>
@@ -32,6 +32,9 @@
 <p> ${sessionScope.utilisateurConnecte.telephone } </p>
 <p> ${messageSucces} </p>
 <!--  -->
+<form action="${pageContext.request.contextPath}/utilisateur/desinscription" method="post">
+	<button class="btn btn-danger">Delete</button>
+</form>
 
 </body>
 </html>

@@ -37,4 +37,12 @@ public class UtilisateurManager {
 			throw new BLLException("ERREUR MANAGER class Utilisateur manager", e);
 		}
 	}
+	
+	public boolean deleteById(int id) throws BLLException {
+		try {
+			return utilisateurDAO.deleteById(id);
+		} catch (DALException e) {
+			throw new BLLException("ERREUR MANAGER class Utilisateur manager /suppression", e);
+		}
+	}
 }
