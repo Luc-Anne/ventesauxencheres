@@ -11,6 +11,8 @@
 <p>HOME PAGE</p>
 <!-- Test Connexion  -->
 <p> ${sessionScope.utilisateurConnecte.nom } </p>
+<p> ${sessionScope.utilisateurConnecte.prenom } </p>
+<p> ${sessionScope.utilisateurConnecte.telephone } </p>
 <!--  -->
 </body>
 </html>
