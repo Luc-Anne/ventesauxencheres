@@ -30,28 +30,36 @@ public class Connexion extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
+		String email = request.getParameter("email") != null ? request.getParameter("email") : "";
+		String password = request.getParameter("motDePasse") != null ? request.getParameter("motDePasse") : "";
 		
-		String email = request.getParameter("email");
-		String password = request.getParameter("motDePasse");
-		
-		// On doit récupérer la fonctionnalité connextion
-		
+		// On doit récupérer la fonctionnalité connexion
 		Utilisateur u;
 		try {
 			u = UtilisateurManager.getInstance().connexion(email, password);
-			// On va devoir transporter les paramètres																			// dans l'utilisateur
+			// On va devoir transporter les paramètres dans l'utilisateur
+			// Paramétrage de la session lors de sa création ici
+			HttpSession session = request.getSession();
 			session.setAttribute("utilisateurConnecte", u);
+			session.setMaxInactiveInterval(300);
+			if (u != null) {
+				request.setAttribute("messageConnexion", "Connexion réussie !");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
+				if (rd != null) {
+					rd.forward(request, response);
+				}
+			} else {
+				request.setAttribute("messageConnexion", "Email ou mot de passe incorrect.");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp");
+				if (rd != null) {
+					rd.forward(request, response);
+				}
+			}
 		} catch (BLLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
-
-		//RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp");
-		if (rd != null) {
-			rd.forward(request, response);
+			response.sendError(500);
 		}
+
 	}
 
 }

@@ -18,7 +18,7 @@ import fr.eni.ventesauxencheres.bo.Utilisateur;
  * Servlet implementation class profil
  */
 @WebServlet("/utilisateur/profil")
-public class profil extends HttpServlet {
+public class Profil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();

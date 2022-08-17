@@ -29,7 +29,7 @@ public class Inscription extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/inscription.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
 		
 		if (rd != null) {
 			rd.forward(request, response);
@@ -69,7 +69,7 @@ public class Inscription extends HttpServlet {
 				}
 
 			} else {
-				session.setAttribute("erreurMesage", "Inscription Echoué");
+				session.setAttribute("erreurMessage", "Inscription Echoué");
 				
 			}
 		} catch (BLLException e) {

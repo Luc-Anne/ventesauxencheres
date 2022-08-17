@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +12,7 @@
 <p> ${sessionScope.utilisateurConnecte.nom } </p>
 <p> ${sessionScope.utilisateurConnecte.prenom } </p>
 <p> ${sessionScope.utilisateurConnecte.telephone } </p>
+<p> ${messageSucces} </p>
 <!--  -->
 <!-- Test Profil -->
 <a href="/utilisateur/profil">Mon profil</a>

@@ -16,7 +16,10 @@ public class Home extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
+		if (rd != null) {
+			rd.forward(request, response);
+		}
 	}
 
 

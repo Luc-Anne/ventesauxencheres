@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>Ventes aux Enchères - Se connecter</title>
+	<link href="${pageContext.request.contextPath}/css/style.css" type="text/css" rel="stylesheet">
 	<link
 		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 		rel="stylesheet"
@@ -12,6 +14,7 @@
 		crossorigin="anonymous">
 </head>
 <body>
+	${messageConnexion}
 	<form action="${pageContext.request.contextPath}/utilisateur/connexion" method="post">
 		<div class="mb-3">
 			<label for="exampleInputEmail1" class="form-label">Adresse mail :</label>
