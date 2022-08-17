@@ -9,10 +9,26 @@
 <title>Profil</title>
 </head>
 <body>
-<main id="profil">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Logo</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="${pageContext.request.contextPath}/home">Accueil</a>
+      <a class="nav-item nav-link" href="${pageContext.request.contextPath}/utilisateur/profil">Profil</a>
+      <a class="nav-item nav-link" href="#">Panier</a>
+      <a class="nav-item nav-link" href="#">Déconnexion</a>
+    </div>
+  </div>
+</nav>
+<main id="profil-main">
 	<div class="row">
 		<div class="col-sm-6 col-md-5 col-lg-6">
-			<h1>Profil - Informations</h1>
+		<br><br>
+			<h1>Informations</h1>
+		<br><br>	
 		</div>
 	</div>
 <!-- Récupérer les informations d'une connexion -->
@@ -23,42 +39,37 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>nom : ${sessionScope.utilisateurConnecte.nom }</span>
+			<span>nom : ${sessionScope.utilisateurConnecte.nom }</span> 
 		</div>
 	</div>	
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>prénom : ${utilisateurConnecte.prenom} </span>
+		<span>prénom : ${utilisateurConnecte.prenom}</span>			
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>email :</span>
+			<span>email : ${utilisateurConnecte.email}</span>
 		</div>
 	</div>		
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>prénom :</span>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>téléphone :</span>
+			<span>téléphone : ${utilisateurConnecte.telephone}</span>
 		</div>
 	</div>	
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>rue :</span>
+			<span>rue :  ${utilisateurConnecte.rue}</span> 
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>code postal :</span>
+			<span>code postal :  ${utilisateurConnecte.code_postal}</span> 
 		</div>
 	</div>	
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<span>ville :</span>
+		<span>ville : ${utilisateurConnecte.ville}</span>			
 		</div>
 	</div>		
 </main>
