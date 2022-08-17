@@ -22,6 +22,7 @@ public class TestConnectionProvider extends HttpServlet {
 		String message = "";
 		
 		// Test Method 1
+		pw.append("\nMethode getConnection \n");
 		// Test 1 ###################################################
 		pw.append("\nTest 1 : Connexion à la base de données\n");
 		message = "";
@@ -41,6 +42,7 @@ public class TestConnectionProvider extends HttpServlet {
 	
 		pw.append(message);
 		// Test Method 2
+		pw.append("\nMethode \n");
 		// Test 3 ###################################################
 		pw.append("\nTest 3 : \n");
 		message = "";
