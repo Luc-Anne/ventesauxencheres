@@ -58,7 +58,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();){
 			try (PreparedStatement stmt = cnx.prepareStatement(INSCRIPTION);){
-				cnx.setAutoCommit(false);
+				//cnx.setAutoCommit(false);
 				//(pseudo, nom,prenom, email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)
 				stmt.setString(1,u.getPseudo() );
 				stmt.setString(2, u.getNom());
@@ -81,7 +81,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				
 				
 			} catch (SQLException e) {
-				cnx.rollback();
+				//cnx.rollback();
 				throw new DALException("Erreur insertion ", e);
 			}
 		} catch (SQLException e) {
