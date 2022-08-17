@@ -66,9 +66,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				stmt.setString(4, u.getEmail());
 				stmt.setString(5, u.getTelephone());
 				stmt.setString(6, u.getRue());
-				stmt.setString(7, u.getCode_postal());
+				stmt.setString(7, u.getCodePostal());
 				stmt.setString(8, u.getVille());
-				stmt.setString(9, u.getMot_de_passe());
+				stmt.setString(9, u.getMotDePasse());
 				stmt.setInt(10, u.getCredit());
 				stmt.setBoolean(11, u.isAdministrateur());
 				cnx.commit();
@@ -90,7 +90,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		return enregistre;
 
 	}
-	
 	
 	
 	/*

@@ -1,5 +1,5 @@
 package fr.eni.ventesauxencheres.dal;
 
-public interface DAO<T> {
-	
+public interface CategorieDAO {
+
 }
