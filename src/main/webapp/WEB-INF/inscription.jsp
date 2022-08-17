@@ -70,43 +70,43 @@
 			<div class="row g-8">
 				<div class="col-md-12 col-lg-12">
 					<h4 class="mb-3">Informations Générales à fournir</h4>
-					<form class="needs-validation" novalidate>
+					<form class="needs-validation" novalidate  action="" method="post">
 						<div class="row g-3">
 
 							<div class="col-12">
 								<label for="username" class="form-label">Pseudo</label>
 								<div class="input-group has-validation">
 									</span> <input type="text" class="form-control" id="username"
-										placeholder="Indiquer ici le pseudo ..." required>
+										placeholder="Indiquer ici le pseudo ..." required name="pseudo">
 									<div class="invalid-feedback">Il faut nécessairement
 										indiquer le Pseudo</div>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<label for="lastName" class="form-label">Nom</label> <input
-									type="text" class="form-control" id="lastName" placeholder=""
-									value="" required>
+									type="text" class="form-control" id="lastName" placeholder="nom"
+									value="" required name="">
 								<div class="invalid-feedback">Il faut nécessairement
 									indiquer le Nom</div>
 							</div>
 							<div class="col-sm-6">
 								<label for="firstName" class="form-label">Prénom</label> <input
 									type="text" class="form-control" id="firstName" placeholder=""
-									value="" required>
+									value="" required name="prenom">
 								<div class="invalid-feedback">Il faut nécessairement
 									indiquer le Prenom</div>
 							</div>
 							<div class="col-12">
 								<label for="email" class="form-label">Email </span></label> <input
 									type="email" class="form-control" id="email"
-									placeholder="you@exemple.com">
+									placeholder="you@exemple.com" name="email">
 								<div class="invalid-feedback">Entrer un email Valid</div>
 							</div>
 
 							<div class="col-12">
 								<label for="numerotelephone" class="form-label">Numéro
 									de Télephone</label> <input type="text" class="form-control"
-									id="numerotelephone" placeholder="(+33) 6 xx xx xx xx" required>
+									id="numerotelephone" placeholder="(+33) 6 xx xx xx xx" required name="telephone">
 								<div class="invalid-feedback">Merci de rensigner un numéro
 									de téléphone valide</div>
 							</div>
@@ -114,28 +114,28 @@
 							<div class="col-12">
 								<label for="address" class="form-label">Rue</label> <input
 									type="text" class="form-control" id="address"
-									placeholder="3 Rue Michael Faraday" required>
+									placeholder="3 Rue Michael Faraday" required name="rue">
 								<div class="invalid-feedback">Merci d'indiquer un numéro
 									et nom de rue Valides</div>
 							</div>
 							<div class="col-12">
 								<label for="address" class="form-label">Code Postale</label> <input
 									type="text" class="form-control" id="address"
-									placeholder="44800" required>
+									placeholder="44800" required  name="code_postal">
 								<div class="invalid-feedback">Code Postale Requis</div>
 							</div>
 
 							<div class="col-12">
 								<label for="address" class="form-label">Ville</label> <input
 									type="text" class="form-control" id="address"
-									placeholder="Saint-HERBLAIN" required>
+									placeholder="Saint-HERBLAIN" required name="ville">
 								<div class="invalid-feedback">Indiquer le nom de la ville</div>
 							</div>
 
 							<div class="col-12">
 								<label for="password" class="form-label">Mot de Passe</label> <input
 									type="password" class="form-control" id="password"
-									placeholder="........" required>
+									placeholder="........" required name="password">
 								<div class="invalid-feedback">Code Postale Requis</div>
 							</div>
 
@@ -143,7 +143,7 @@
 								<label for="credit" class="form-label">Crédit</label> <input
 									type="text" class="form-control" id=""
 									credit""
-									placeholder="48000" required>
+									placeholder="48000" required name="credit">
 								<div class="invalid-feedback">Indiquer le montant de vos
 									crédits en cours</div>
 							</div>
@@ -151,7 +151,7 @@
 							<h4 class="mb-3">Inidquer votre statuts</h4>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" value=""
-									id="flexCheckDefault"> <label class="form-check-label"
+									id="flexCheckDefault" name="status"> <label class="form-check-label"
 									for="flexCheckDefault"> Vous êtes Administrateur ? </label>
 							</div>
 						</div>

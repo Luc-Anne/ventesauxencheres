@@ -29,4 +29,12 @@ public class UtilisateurManager {
 			throw new BLLException("ERREUR MANAGER", e);
 		}
 	}
+	
+	public boolean inscription(Utilisateur u) throws BLLException {
+		try {
+			return utilisateurDAO.inscription(u);
+		} catch (Exception e) {
+			throw new BLLException("ERREUR MANAGER class Utilisateur manager", e);
+		}
+	}
 }
