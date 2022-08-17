@@ -14,7 +14,8 @@
 <p> ${sessionScope.utilisateurConnecte.prenom } </p>
 <p> ${sessionScope.utilisateurConnecte.telephone } </p>
 <!--  -->
-
-
+<!-- Test Profil -->
+<a href="/utilisateur/profil">Mon profil</a>
+<!--  -->
 </body>
 </html>
