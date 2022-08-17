@@ -53,6 +53,7 @@ public class TestUtilisateurManager extends HttpServlet {
 
 		pw.append(message);
 		// Test Method 2
+		pw.append("\nMethode \n");
 		// Test 3 ###################################################
 		pw.append("\nTest 3 : \n");
 		message = "";

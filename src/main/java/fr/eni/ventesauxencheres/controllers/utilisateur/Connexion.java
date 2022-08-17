@@ -41,7 +41,6 @@ public class Connexion extends HttpServlet {
 			// Paramétrage de la session lors de sa création ici
 			HttpSession session = request.getSession();
 			session.setAttribute("utilisateurConnecte", u);
-			session.setMaxInactiveInterval(300);
 			if (u != null) {
 				request.setAttribute("messageConnexion", "Connexion réussie !");
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
