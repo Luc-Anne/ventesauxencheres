@@ -17,6 +17,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			"INSERT INTO UTILISATEURS	(pseudo, nom,prenom, email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)"
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String DELETE = "delete from UTILISATEURS where no_utilisateur = ?";
+	private static final String UPDATE="UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?,telephone=?, "
+			+ "rue=? ,code_postal=?,ville=? ,mot_de_passe=?,credit=? ,administrateur=? "
+			+ "WHERE no_utilisateur=?; ";
 
 	@Override
 	public Utilisateur connexion(String email, String motDePasse) throws DALException {
@@ -117,6 +120,36 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw new DALException("Probleme Suppresssion", e);
 		}
 		return supprime;
+	}
+
+	@Override
+	public Utilisateur update(Utilisateur userToUpdated) throws DALException {
+		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
+			try (PreparedStatement stmt = cnx.prepareStatement(UPDATE);) {
+				cnx.setAutoCommit(false);
+				stmt.setString(1,userToUpdated.getPseudo());
+				stmt.setString(2,userToUpdated.getNom());
+				stmt.setString(3,userToUpdated.getPrenom());
+				stmt.setString(4,userToUpdated.getEmail());
+				stmt.setString(5,userToUpdated.getTelephone());
+				stmt.setString(6,userToUpdated.getRue());
+				stmt.setString(7,userToUpdated.getCodePostal());
+				stmt.setString(8,userToUpdated.getVille());
+				stmt.setString(9,userToUpdated.getMotDePasse());
+				stmt.setInt(10,userToUpdated.getCredit());
+				stmt.setBoolean(11,userToUpdated.isAdministrateur());
+				stmt.setInt(12, userToUpdated.getNoUtilisateur());
+				stmt.executeUpdate();
+				cnx.commit();				
+			} catch (SQLException e) {
+				cnx.rollback();
+				throw new DALException("Probleme connexion", e);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Probleme connexion", e);
+		}		
+		return userToUpdated;
+
 	}
 
 }

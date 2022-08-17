@@ -56,7 +56,7 @@
 							</div>	
 							<div class="col-12">
 								<label for="address" class="form-label">Code Postale</label> 
-								<input type="text" class="form-control" id="address" placeholder="${sessionScope.utilisateurConnecte.code_postal}" required name="code_postal" value="${sessionScope.utilisateurConnecte.code_postal}">
+								<input type="text" class="form-control" id="address" placeholder="${sessionScope.utilisateurConnecte.codePostal}" required name="code_postal" value="${sessionScope.utilisateurConnecte.codePostal}">
 								<div class="invalid-feedback">Code Postale Requis</div>
 							</div>
 							<div class="col-12">
@@ -66,7 +66,7 @@
 							</div>	
 							<div class="col-12">
 								<label for="password" class="form-label">Mot de Passe</label> 
-								<input 	type="password" class="form-control" id="password"	placeholder="${sessionScope.utilisateurConnecte.mot_de_passe}" required name="password" value="${sessionScope.utilisateurConnecte.mot_de_passe}">
+								<input 	type="password" class="form-control" id="password"	placeholder="${sessionScope.utilisateurConnecte.motDePasse}" required name="password" value="${sessionScope.utilisateurConnecte.motDePasse}">
 								<div class="invalid-feedback">Code Postale Requis</div>
 							</div>	
 							<div class="col-12">
