@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ include file="/WEB-INF/fragments/taglib.jspf" %>
+<%@ page import="fr.eni.ventesauxencheres.controllers.Errors" %>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -36,8 +37,8 @@
 </head>
 <body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
-	<div class="container">
 		<main>
+			<div class="container">
 			<div class="py-5 text-center">
 				<img class="d-block mx-auto mb-4" src="img/inscription.jpg" alt=""
 					width="350" height="200">
@@ -64,83 +65,108 @@
 						<div class="row g-3">
 
 							<div class="col-12">
+								<c:set var="isInvalid" value=""></c:set>
+								<c:if test="${erreurs.contains('utilisateur.pseudo_vide')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+								</c:if>
 								<label for="username" class="form-label">Pseudo</label>
-								<div class="input-group has-validation">
-									</span> <input type="text" class="form-control" id="username"
-										placeholder="Indiquer ici le pseudo ..." required name="pseudo">
-									<div class="invalid-feedback">Il faut nécessairement
-										indiquer le Pseudo</div>
-								</div>
+								<input type="text" class="form-control ${isInvalid}" id="username" required name="Pseudo">
+								<div class="invalid-feedback">Il faut nécessairement indiquer un pseudo</div>
 							</div>
 							<div class="col-sm-6">
-								<label for="lastName" class="form-label">Nom</label> <input
-									type="text" class="form-control" id="lastName" placeholder="Inésrer le nom"
-									value="" required name="nom">
-								<div class="invalid-feedback">Il faut nécessairement
-									indiquer le Nom</div>
+								<c:set var="isInvalid" value=""></c:set>
+								<c:if test="${erreurs.contains('utilisateur.nom_vide')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+								</c:if>
+								<label for="lastName" class="form-label">Nom</label>
+								<input type="text" class="form-control ${isInvalid}" id="lastName" required name="nom">
+								<div class="invalid-feedback">Il faut nécessairement indiquer votre nom</div>
 							</div>
 							<div class="col-sm-6">
-								<label for="firstName" class="form-label">Prénom</label> <input
-									type="text" class="form-control" id="firstName" placeholder=""
-									value="" required name="prenom">
-								<div class="invalid-feedback">Il faut nécessairement
-									indiquer le Prenom</div>
+								<c:set var="isInvalid" value=""></c:set>
+								<c:if test="${erreurs.contains('utilisateur.prenom_vide')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+								</c:if>
+								<label for="firstName" class="form-label">Prénom</label>
+								<input type="text" class="form-control ${isInvalid}" id="firstName" required name="prenom">
+								<div class="invalid-feedback">Il faut nécessairement indiquer votre prénom</div>
 							</div>
 							<div class="col-12">
-								<label for="email" class="form-label">Email </span></label> <input
-									type="email" class="form-control" id="email"
-									placeholder="you@exemple.com" name="email">
-								<div class="invalid-feedback">Entrer un email Valid</div>
+								<c:set var="isInvalid" value=""></c:set>
+								<c:if test="${erreurs.contains('utilisateur.email_vide')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+								</c:if>
+								<c:if test="${erreurs.contains('utilisateur.email_manque@')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+								</c:if>
+								<label for="email" class="form-label">Email</label>
+								<input type="email" class="form-control ${isInvalid}" id="email" placeholder="you@exemple.com" required name="email">
+								<div class="invalid-feedback">Il faut nécessairement indiquer un email valide</div>
 							</div>
 
 							<div class="col-12">
-								<label for="numerotelephone" class="form-label">Numéro
-									de Télephone</label> <input type="text" class="form-control"
-									id="numerotelephone" placeholder="(+33) 6 xx xx xx xx" required name="telephone">
-								<div class="invalid-feedback">Merci de rensigner un numéro
-									de téléphone valide</div>
+								<label for="numerotelephone" class="form-label">Numéro de Télephone</label>
+								<input type="text" class="form-control" id="numerotelephone" name="telephone">
 							</div>
 							<h4 class="mb-3">Adresse Complète</h4>
 							<div class="col-12">
-								<label for="address" class="form-label">Rue</label> <input
-									type="text" class="form-control" id="address"
-									placeholder="3 Rue Michael Faraday" required name="rue">
-								<div class="invalid-feedback">Merci d'indiquer un numéro
-									et nom de rue Valides</div>
+								<c:set var="isInvalid" value=""></c:set>
+								<c:if test="${erreurs.contains('utilisateur.rue_vide')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+								</c:if>
+								<label for="address" class="form-label">Rue</label>
+								<input type="text" class="form-control ${isInvalid}" id="address" required name="rue">
+								<div class="invalid-feedback">Il faut nécessairement indiquer le numéro et nom de la rue votre adresse</div>
 							</div>
-							<div class="col-12">
-								<label for="address" class="form-label">Code Postale</label> <input
-									type="text" class="form-control" id="address"
-									placeholder="44800" required  name="code_postal">
-								<div class="invalid-feedback">Code Postale Requis</div>
+							<div class="col-3">
+								<c:set var="isInvalid" value=""></c:set>
+								<c:if test="${erreurs.contains('utilisateur.codePostal_vide')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+								</c:if>
+								<label for="address" class="form-label">Code Postale</label>
+								<input type="text" class="form-control ${isInvalid}" id="address" required name="code_postal">
+								<div class="invalid-feedback">Il faut nécessairement indiquer un code postale pour votre adresse</div>
+							</div>
+
+							<div class="col-9">
+								<c:set var="isInvalid" value=""></c:set>
+								<c:if test="${erreurs.contains('utilisateur.ville_vide')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+								</c:if>
+								<label for="address" class="form-label">Ville</label>
+								<input type="text" class="form-control ${isInvalid}" id="address" required name="ville">
+								<div class="invalid-feedback">Il faut nécessairement indiquer une ville pour votre adresse</div>
 							</div>
 
 							<div class="col-12">
-								<label for="address" class="form-label">Ville</label> <input
-									type="text" class="form-control" id="address"
-									placeholder="Saint-HERBLAIN" required name="ville">
-								<div class="invalid-feedback">Indiquer le nom de la ville</div>
+								<c:set var="isInvalid" value=""></c:set>
+								<c:if test="${erreurs.contains('utilisateur.motDePasse_vide')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+								</c:if>
+								<c:if test="${erreurs.contains('utilisateur.motDePasse_faible')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+								</c:if>
+								<label for="password" class="form-label">Mot de Passe</label>
+								<input type="password" class="form-control ${isInvalid}" id="password" required name="password">
+								<div class="invalid-feedback">Il faut nécessairement indiquer un mot de passe valide (au moins 8 caractères)</div>
 							</div>
 
 							<div class="col-12">
-								<label for="password" class="form-label">Mot de Passe</label> <input
-									type="password" class="form-control" id="password"
-									placeholder="........" required name="password">
-								<div class="invalid-feedback">Code Postale Requis</div>
-							</div>
-
-							<div class="col-12">
-								<label for="credit" class="form-label">Crédit</label> <input
-									type="text" class="form-control" id=""
+								<c:set var="isInvalid" value=""></c:set>
+								<c:if test="${erreurs.contains('utilisateur.credit_negatif')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+								</c:if>
+								<label for="credit" class="form-label">Crédit</label>
+								<input
+									type="text" class="form-control ${isInvalid}" id=""
 									credit""
 									placeholder="48000" required name="credit">
 								<div class="invalid-feedback">Indiquer le montant de vos
 									crédits en cours</div>
 							</div>
-							<div></div>
 							<h4 class="mb-3">Inidquer votre statuts</h4>
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" 
+								<input class="form-check-input ${isInvalid}" type="checkbox" 
 									id="flexCheckDefault" name="status"> <label class="form-check-label"
 									for="flexCheckDefault"> Vous êtes Administrateur ? </label>
 							</div>
@@ -150,61 +176,9 @@
 					</form>
 				</div>
 			</div>
-		</main>
+		</div>
+	</main>
 
-	</div>
-
-
-	<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-
-	<script src="${pageContext.request.contextPath}/css/form-validation.js"></script>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>
 </html>
-
-
-<!--  
-				<div class="col-md-5 col-lg-4 order-md-last">
-					<h4 class="d-flex justify-content-between align-items-center mb-3">
-						<span class="text-primary">Your cart</span> <span
-							class="badge bg-primary rounded-pill">3</span>
-					</h4>
-					<ul class="list-group mb-3">
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div>
-								<h6 class="my-0">Product name</h6>
-								<small class="text-muted">Brief description</small>
-							</div> <span class="text-muted">$12</span>
-						</li>
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div>
-								<h6 class="my-0">Second product</h6>
-								<small class="text-muted">Brief description</small>
-							</div> <span class="text-muted">$8</span>
-						</li>
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div>
-								<h6 class="my-0">Third item</h6>
-								<small class="text-muted">Brief description</small>
-							</div> <span class="text-muted">$5</span>
-						</li>
-						<li
-							class="list-group-item d-flex justify-content-between bg-light">
-							<div class="text-success">
-								<h6 class="my-0">Promo code</h6>
-								<small>EXAMPLECODE</small>
-							</div> <span class="text-success">−$5</span>
-						</li>
-						<li class="list-group-item d-flex justify-content-between"><span>Total
-								(USD)</span> <strong>$20</strong></li>
-					</ul>
-
-					<form class="card p-2">
-						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Promo code">
-							<button type="submit" class="btn btn-secondary">Redeem</button>
-						</div>
-					</form>
-				</div>
-				
-				-->

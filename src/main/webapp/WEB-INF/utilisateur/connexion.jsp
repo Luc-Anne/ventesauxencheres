@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/fragments/taglib.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="/WEB-INF/fragments/commonHead.jspf"%>
-<title>${initParam.debutTitre}Se connecter</title>
+	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
+	<title>${initParam.debutTitre} Se connecter</title>
 </head>
 <body>
-	<%@ include file="/WEB-INF/fragments/header.jspf"%>
+	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	${messageConnexion}
 
 

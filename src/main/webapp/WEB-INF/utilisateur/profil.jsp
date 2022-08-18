@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/fragments/taglib.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,7 @@
 							<div class="col-sm-6">
 								<label for="lastName" class="form-label">Nom</label> <input
 									type="text" class="form-control" id="lastName" placeholder="${sessionScope.utilisateurConnecte.nom}"
-									required name="" value="${sessionScope.utilisateurConnecte.nom}">
+									required name="nom" value="${sessionScope.utilisateurConnecte.nom}">
 								<div class="invalid-feedback">Il faut nécessairement indiquer le Nom</div>
 							</div>
 							<div class="col-sm-6">
@@ -68,17 +69,7 @@
 								<label for="password" class="form-label">Mot de Passe</label> 
 								<input 	type="password" class="form-control" id="password"	placeholder="${sessionScope.utilisateurConnecte.motDePasse}" required name="password" value="${sessionScope.utilisateurConnecte.motDePasse}">
 								<div class="invalid-feedback">Code Postale Requis</div>
-							</div>	
-							<div class="col-12">
-								<label for="credit" class="form-label">Crédit</label> 
-								<input type="text" class="form-control" id="credit" placeholder="${sessionScope.utilisateurConnecte.credit}" required name="credit" value="${sessionScope.utilisateurConnecte.credit}">
-								<div class="invalid-feedback">Indiquer le montant de vos crédits en cours</div>
-							</div>	
-							<h4 class="mb-3">Inidquer votre statuts</h4>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value=""id="flexCheckDefault" name="status"> 
-								<label class="form-check-label" for="flexCheckDefault"> Vous êtes Administrateur ? </label>
-							</div>														
+							</div>												
 						</div>
 						<hr class="my-4">
 						<button class="w-100 btn btn-primary btn-lg" type="submit">Enregistrer les modifications</button>

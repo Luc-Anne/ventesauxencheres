@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
 import fr.eni.ventesauxencheres.dal.DALException;
 import fr.eni.ventesauxencheres.dal.FactoryDAO;
+import fr.eni.ventesauxencheres.dal.UtilisateurDAO;
 
 @WebServlet("/test/TestUtilisateurManager")
 public class TestUtilisateurManager extends HttpServlet {
@@ -25,32 +26,32 @@ public class TestUtilisateurManager extends HttpServlet {
 		pw.append("\nMethod updateById : \n");
 		// Test 1 ###################################################
 		pw.append("\nTest 1 : modifier email & mdp \n");
-		message = "";
-		try {
-			Utilisateur user = FactoryDAO.getUtilisateurDAO().connexion("pivoine@campus.fr","azerty2");
-				user.setEmail("peony@flower.com");
-				user.setMotDePasse("azerty");
-				FactoryDAO.getUtilisateurDAO().update(user);
-				message+="Aucune exception levée. Test OK";				
-
-		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			message+="Erreur BLL. Echec update";
-			e.printStackTrace();
-		}
+		message = "";		
+		  try { Utilisateur user =
+		  FactoryDAO.getUtilisateurDAO().connexion("pivoine@campus.fr","azerty2");
+		  user.setEmail("peony@flower.com"); user.setMotDePasse("azerty");
+		  FactoryDAO.getUtilisateurDAO().update(user);
+		  message+="Aucune exception levée. Test OK";
+		  
+		  } catch (DALException e) { // TODO Auto-generated catch block
+		  message+="Erreur BLL. Echec update"; e.printStackTrace(); }
+		 
 		pw.append(message);
 		// Test 2 ###################################################
 		pw.append("\nTest 2 : modifier tous les autres champs sauf email & mdp \n");
-		message = "";
-		try {
-			Utilisateur user=FactoryDAO.getUtilisateurDAO().connexion("peony@flower.com", "azerty");
-			user.setNom("Peonyname");
-			user.setPrenom("");
-		} catch (DALException e) {
-			message+="Erreur BLL. Echec update";
-			e.printStackTrace();
-		}
-
+		message = "";										
+			try {
+				Utilisateur userBll=UtilisateurManager.getInstance().connexion("peony@flower.com", "azerty");
+				System.out.println("Info user de la BDD avant traitement : "+userBll);
+				userBll.setNom("PeonynameBLL");
+				userBll.setPrenom("PivoinetteBLL");
+				UtilisateurManager.getInstance().modifier(userBll);
+				Utilisateur userBllnouveau=UtilisateurManager.getInstance().connexion("peony@flower.com", "azerty");
+				System.out.println("Info user de la BDD après traitement : "+userBllnouveau);
+				pw.append("\nTest 2 : Test OK \n");
+			} catch (BLLException e) {
+				e.printStackTrace();
+			}		
 		pw.append(message);
 		// Test Method 2
 		pw.append("\nMethode \n");

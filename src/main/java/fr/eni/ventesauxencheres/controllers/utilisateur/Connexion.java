@@ -30,8 +30,8 @@ public class Connexion extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String email = request.getParameter("email") != null ? request.getParameter("email") : "";
-		String password = request.getParameter("motDePasse") != null ? request.getParameter("motDePasse") : "";
+		String email = request.getParameter("email");
+		String password = request.getParameter("motDePasse");
 		
 		// On doit récupérer la fonctionnalité connexion
 		Utilisateur utilisateur;
