@@ -7,4 +7,5 @@ public interface UtilisateurDAO {
 	public boolean inscription(Utilisateur u) throws DALException ;
 	public boolean deleteById(int id) throws DALException;
 	Utilisateur update(Utilisateur userToUpdated) throws DALException;
+	public Utilisateur checkUtilisateur (String email, String password) throws DALException;
 }

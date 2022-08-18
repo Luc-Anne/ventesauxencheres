@@ -34,14 +34,15 @@ public class Connexion extends HttpServlet {
 		String password = request.getParameter("motDePasse") != null ? request.getParameter("motDePasse") : "";
 		
 		// On doit récupérer la fonctionnalité connexion
-		Utilisateur u;
+		Utilisateur utilisateur;
 		try {
-			u = UtilisateurManager.getInstance().connexion(email, password);
+			utilisateur = UtilisateurManager.getInstance().connexion(email, password);
 			// On va devoir transporter les paramètres dans l'utilisateur
 			// Paramétrage de la session lors de sa création ici
 			HttpSession session = request.getSession();
-			session.setAttribute("utilisateurConnecte", u);
-			if (u != null) {
+			session.setAttribute("utilisateurConnecte", utilisateur);
+			if (utilisateur != null) {
+//				session.setAttribute("utilisateurObjet", utilisateur);
 				request.setAttribute("messageConnexion", "Connexion réussie !");
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
 				if (rd != null) {
@@ -49,6 +50,7 @@ public class Connexion extends HttpServlet {
 				}
 			} else {
 				request.setAttribute("messageConnexion", "Email ou mot de passe incorrect.");
+				session.setAttribute("utilisateurObjet", utilisateur);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp");
 				if (rd != null) {
 					rd.forward(request, response);

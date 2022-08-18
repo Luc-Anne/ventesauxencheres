@@ -56,5 +56,18 @@ public class UtilisateurManager {
 		return utilisateur;		
 	}
 	
+	
+	
+	public Utilisateur checkUtilisateur (String email, String password) throws BLLException{
+		try {
+			Utilisateur utilisateur =  utilisateurDAO.checkUtilisateur(email, password);
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	
 
 }

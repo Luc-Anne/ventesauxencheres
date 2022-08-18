@@ -20,6 +20,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String UPDATE="UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?,telephone=?, "
 			+ "rue=? ,code_postal=?,ville=? ,mot_de_passe=?,credit=? ,administrateur=? "
 			+ "WHERE no_utilisateur=?; ";
+	
+	private static final String CHECK_UTILISATEUR ="";
 
 	@Override
 	public Utilisateur connexion(String email, String motDePasse) throws DALException {
@@ -93,14 +95,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	}
 	
-	
-	/*
-	 * HttpSession session = req.getSession();
-		session.removeAttribute("userObj");
-		session.setAttribute("succMsg", "User Logout Sucessfully");
-		resp.sendRedirect("user_login.jsp");
-	 * 
-	 */
 
 	public boolean deleteById(int id) throws DALException {
 		boolean supprime = false;
@@ -152,5 +146,50 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		return userToUpdated;
 
 	}
+
+	@Override
+	public Utilisateur checkUtilisateur(String email, String password) throws DALException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+//	
+//	public Utilisateur checkUtilisateur (String email, String password) throws DALException {
+//		Utilisateur u = null;
+//		
+//		
+//		try (Connection cnx = ConnectionProvider.getConnection_VAE();){
+//			try (PreparedStatement stmt = cnx.prepareStatement(CHECK_UTILISATEUR);){
+//				
+//				
+//				
+//				
+//				cnx.setAutoCommit(false);
+//				stmt.setString(1, email);
+//				stmt.setString(2, password);
+//
+//				ResultSet resultSet = stmt.executeQuery();
+//				if (resultSet.next()) {
+//					u = new Utilisateur(resultSet.getInt("no_utilisateur"), resultSet.getString("pseudo"),
+//							resultSet.getString("nom"), resultSet.getString("prenom"), resultSet.getString("email"),
+//							resultSet.getString("telephone"), resultSet.getString("rue"),
+//							resultSet.getString("code_postal"), resultSet.getString("ville"),
+//							resultSet.getString("mot_de_passe"), resultSet.getInt("credit"),
+//							resultSet.getBoolean("administrateur"));
+//					cnx.commit();
+//			}
+//				
+//			} catch (Exception e) {
+////				cnx.rollback();
+//				throw new DALException("Probleme checkUtilisateur", e);
+//			}
+//			
+//		} catch (Exception e) {
+//			throw new DALException("Probleme checkUtilisateur", e);
+//		}
+//		
+//		return u;
+//	}
+//	
 
 }
