@@ -106,6 +106,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		boolean supprime = false;
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(DELETE);) {
+				stmt.setInt(1, id);
 				stmt.executeUpdate();
 				int i = stmt.executeUpdate();
 				if (i == 1) {

@@ -61,39 +61,29 @@ public class TestUtilisateurDAOJdbcImpl extends HttpServlet {
 			e.printStackTrace();
 		}		
 		// Test 3 ###################################################
-		pw.append("\nTest 3 : modification plusieurs champs :prenom, mdp,email \n");
-		message = "";
-		try {
-			Utilisateur user = FactoryDAO.getUtilisateurDAO().connexion("pivoine@campus.fr","azerty2");
-			if (user != null) {
-				user.setPrenom("Pivoinita");
-				user.setEmail("piv@modif.fr");
-				user.setMotDePasse("xcvvb123");
-				FactoryDAO.getUtilisateurDAO().update(user);				
-				message+="Aucune exception levée. prenom, mdp,email modifiés ! Test OK";
-			}else {
-				message+="utilisateur non trouvé. Test incomplet";
-			}
-			
-		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		pw.append(message);
+		
+		  pw.append("\nTest 3 : modification plusieurs champs :prenom, mdp,email \n");
+		  message = ""; try { Utilisateur user =
+		  FactoryDAO.getUtilisateurDAO().connexion("pivoine@campus.fr","azerty2"); if
+		  (user != null) { user.setPrenom("Pivoinita"); user.setEmail("piv@modif.fr");
+		  user.setMotDePasse("xcvvb123"); FactoryDAO.getUtilisateurDAO().update(user);
+		  message+="Aucune exception levée. prenom, mdp,email modifiés ! Test OK";
+		  }else { message+="utilisateur non trouvé. Test incomplet"; }
+		  
+		  } catch (DALException e) { // TODO Auto-generated catch block
+		  e.printStackTrace(); } pw.append(message);
+		 
 		// Test 4 ###################################################
-		pw.append("\nTest 4 : modification plusieurs champs : nom,rue,ville, code postal,telephone,credit,administrateur \n");
+		pw.append("\nTest 4 : modification plusieurs champs : nom,rue,ville, code postal,telephone \n");
 		message = "";
 		try {
-			Utilisateur user = FactoryDAO.getUtilisateurDAO().connexion("piv@modif.fr","xcvvb123");
+			Utilisateur user = FactoryDAO.getUtilisateurDAO().connexion("peony@flower.com","azerty");
 			if (user != null) {
-				user.setNom("Plantus");
-				user.setAdministrateur(true);
+				user.setNom("BlancheDAL");
 				user.setCodePostal("75000");
-				user.setVille("Fleruville");
+				user.setVille("FlowerCityDAL");
 				user.setTelephone("02787777777");
-				user.setCredit(800);
-				user.setRue("8 rue des pétales");	
-
+				user.setRue("8 rue des pétales");
 				FactoryDAO.getUtilisateurDAO().update(user);				
 				message+="Aucune exception levée.  Test OK";
 			}else {

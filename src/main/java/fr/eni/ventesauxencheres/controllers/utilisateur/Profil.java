@@ -27,28 +27,36 @@ public class Profil extends HttpServlet {
 		}	
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		
-		//(pseudo, nom,prenom, email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)
-		String pseudo = request.getParameter("pseudo");
-		String nom = request.getParameter("nom");
-		String prenomNew = request.getParameter("prenom");
-		String email = request.getParameter("email");
-		String telephone = request.getParameter("telephone");
-		String rue = request.getParameter("rue");
-		String code_postal = request.getParameter("code_postal");
-		String ville = request.getParameter("ville");
-		String mot_de_passe = request.getParameter("password");
-		String credit = request.getParameter("credit");	
-		System.out.println(pseudo);
-		System.out.println(prenomNew);
-		System.out.println(rue);
-
+		String pseudoAModifier = request.getParameter("pseudo");
+		String nomAModifier = request.getParameter("nom");
+		String prenomAModifier = request.getParameter("prenom");
+		String emailAModifier = request.getParameter("email");
+		String telephoneAModifier = request.getParameter("telephone");
+		String rueAModifier = request.getParameter("rue");
+		String CpAModifier = request.getParameter("code_postal");
+		String villeAModifier = request.getParameter("ville");
+		String mdpAModifier = request.getParameter("password");
+		String creditAModifier = request.getParameter("credit");	
+		System.out.println("pseudo non modifié : "+pseudoAModifier);
+		System.out.println("nom modifié : "+nomAModifier);		
+		System.out.println("Prenom non modifié : "+prenomAModifier);
 			//Récupérer les informations de la session
 			HttpSession session = request.getSession();
-			Utilisateur user=(Utilisateur) session.getAttribute("utilisateurConnecte");
-			System.out.println(user);			
-			session.setAttribute("prenom", prenomNew);
+			//Creer un utilisateur avec les attributs de l'utilisateur connecté à la session à l'aide de l'objet utilisateurConnecte
+			Utilisateur userSession=(Utilisateur) session.getAttribute("utilisateurConnecte");
+			//Créer une nouvelle instance d'utilisateur, surlequel appliquer les modifications
+			Utilisateur user=new Utilisateur(userSession.getNoUtilisateur(),pseudoAModifier,nomAModifier,prenomAModifier,emailAModifier,telephoneAModifier,rueAModifier,CpAModifier,villeAModifier,mdpAModifier);
+			System.out.println("Info user de la BDD avant traitement : "+user);			
+			  try { 
+				  	UtilisateurManager.getInstance().modifier(user);
+				  	session.setAttribute("utilisateurConnecte", user);
+					} 
+			  catch (BLLException e) { 
+				  e.printStackTrace(); 
+				  }		 
+			System.out.println(nomAModifier);
+			System.out.println("Info user de la BDD après traitement : "+user);
+			System.out.println(nomAModifier);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp");
 			if (rd != null) {
 			rd.forward(request, response);
