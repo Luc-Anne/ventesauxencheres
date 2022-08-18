@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import fr.eni.ventesauxencheres.bll.BLLException;
 import fr.eni.ventesauxencheres.bll.UtilisateurManager;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.controllers.Errors;
 
 /**
  * Servlet implementation class profil
@@ -28,6 +29,9 @@ public class Profil extends HttpServlet {
 			}
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Errors erreurs = new Errors();
+		request.setAttribute("erreurs", erreurs);
+		
 		String pseudoAModifier = request.getParameter("pseudo");
 		String nomAModifier = request.getParameter("nom");
 		String prenomAModifier = request.getParameter("prenom");
@@ -37,30 +41,42 @@ public class Profil extends HttpServlet {
 		String CpAModifier = request.getParameter("code_postal");
 		String villeAModifier = request.getParameter("ville");
 		String mdpAModifier = request.getParameter("password");
-		String creditAModifier = request.getParameter("credit");	
-		System.out.println("pseudo non modifié : "+pseudoAModifier);
-		System.out.println("nom modifié : "+nomAModifier);		
-		System.out.println("Prenom non modifié : "+prenomAModifier);
-			//Récupérer les informations de la session
-			HttpSession session = request.getSession();
-			//Creer un utilisateur avec les attributs de l'utilisateur connecté à la session à l'aide de l'objet utilisateurConnecte
-			Utilisateur userSession=(Utilisateur) session.getAttribute("utilisateurConnecte");
-			//Créer une nouvelle instance d'utilisateur, surlequel appliquer les modifications
-			Utilisateur user=new Utilisateur(userSession.getNoUtilisateur(),pseudoAModifier,nomAModifier,prenomAModifier,emailAModifier,telephoneAModifier,rueAModifier,CpAModifier,villeAModifier,mdpAModifier,userSession.getCredit(),userSession.isAdministrateur());
-			System.out.println("Info user de la BDD avant traitement : "+user);			
-			  try { 
-				  	UtilisateurManager.getInstance().modifier(user);
-				  	session.setAttribute("utilisateurConnecte", user);
-					} 
-			  catch (BLLException e) { 
-				  e.printStackTrace(); 
-				  }		 
-			System.out.println(nomAModifier);
-			System.out.println("Info user de la BDD après traitement : "+user);
-			System.out.println(nomAModifier);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp");
-			if (rd != null) {
+		//Récupérer les informations de la session
+		HttpSession session = request.getSession();
+		//Creer un utilisateur avec les attributs de l'utilisateur connecté à la session à l'aide de l'objet utilisateurConnecte
+		Utilisateur userSession=(Utilisateur) session.getAttribute("utilisateurConnecte");
+		//Créer une nouvelle instance d'utilisateur, surlequel appliquer les modifications
+		Utilisateur user=new Utilisateur(
+				userSession.getNoUtilisateur(),
+				pseudoAModifier,nomAModifier,
+				prenomAModifier,
+				emailAModifier,
+				telephoneAModifier,
+				rueAModifier,
+				CpAModifier,
+				villeAModifier,
+				mdpAModifier,
+				userSession.getCredit(),
+				userSession.isAdministrateur()
+		);
+		try {
+			UtilisateurManager.getInstance().modifier(user);
+			session.setAttribute("utilisateurConnecte", user);
+		} catch (BLLException e) {
+			erreurs.addAll(UtilisateurManager.getInstance().invalidCause(user));
+			CharSequence erreurAChercher = "utilisateurs_pseudo_uq";
+			if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {
+				erreurs.add("utilisateur.pseudo_deja_pris");
+			}
+			erreurAChercher = "utilisateurs_email_uq";
+			if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {
+				erreurs.add("utilisateur.email_deja_pris");
+			}
+			e.printStackTrace();
+		}		 
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp");
+		if (rd != null) {
 			rd.forward(request, response);
-			}			
+		}
 	}	
 }

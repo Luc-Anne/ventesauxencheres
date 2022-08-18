@@ -56,13 +56,12 @@ public class UtilisateurManager {
 	public Utilisateur modifier(Utilisateur utilisateur)throws BLLException{
 		try {
 			if (this.isValide(utilisateur)) {
-			utilisateur= utilisateurDAO.update(utilisateur);
+				utilisateur= utilisateurDAO.update(utilisateur);
 			} else {
 				throw new BLLException("utilisateur invalide");
 			}
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new BLLException("utilisateur invalide", e);
 		}
 		return utilisateur;		
 	}

@@ -19,9 +19,13 @@
 					<form class="needs-validation" novalidate  action="${pageContext.request.contextPath}/moncompte/profil" method="post">
 						<div class="row g-3">
 							<div class="col-12">
+								<c:set var="isInvalid" value=""></c:set>
+								<c:if test="${erreurs.contains('utilisateur.pseudo_deja_pris')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+								</c:if>
 								<label for="username" class="form-label">Pseudo</label>
 								<div class="input-group has-validation">
-									<input type="text" class="form-control" id="username" placeholder="${sessionScope.utilisateurConnecte.pseudo}" required name="pseudo" value="${sessionScope.utilisateurConnecte.pseudo}">
+									<input type="text" class="form-control ${isInvalid}" id="username" placeholder="${sessionScope.utilisateurConnecte.pseudo}" required name="pseudo" value="${sessionScope.utilisateurConnecte.pseudo}">
 									<div class="invalid-feedback">Il faut nécessairement indiquer le Pseudo</div>
 								</div>
 							</div>
