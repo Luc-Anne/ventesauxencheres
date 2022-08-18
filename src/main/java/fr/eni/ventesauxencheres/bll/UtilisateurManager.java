@@ -45,4 +45,16 @@ public class UtilisateurManager {
 			throw new BLLException("ERREUR MANAGER class Utilisateur manager /suppression", e);
 		}
 	}
+
+	public Utilisateur modifier(Utilisateur utilisateur)throws BLLException{
+		try {
+			utilisateur= utilisateurDAO.update(utilisateur);					
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return utilisateur;		
+	}
+	
+
 }

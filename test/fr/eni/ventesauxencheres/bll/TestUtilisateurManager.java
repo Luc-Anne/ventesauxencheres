@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.dal.DALException;
+import fr.eni.ventesauxencheres.dal.FactoryDAO;
+
 @WebServlet("/test/TestUtilisateurManager")
 public class TestUtilisateurManager extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -18,15 +22,34 @@ public class TestUtilisateurManager extends HttpServlet {
 		String message = "";
 		
 		// Test Method 1
-		pw.append("\nMethode \n");
+		pw.append("\nMethod updateById : \n");
 		// Test 1 ###################################################
-		pw.append("\nTest 1 : \n");
+		pw.append("\nTest 1 : modifier email & mdp \n");
 		message = "";
+		try {
+			Utilisateur user = FactoryDAO.getUtilisateurDAO().connexion("pivoine@campus.fr","azerty2");
+				user.setEmail("peony@flower.com");
+				user.setMotDePasse("azerty");
+				FactoryDAO.getUtilisateurDAO().update(user);
+				message+="Aucune exception levée. Test OK";				
 
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			message+="Erreur BLL. Echec update";
+			e.printStackTrace();
+		}
 		pw.append(message);
 		// Test 2 ###################################################
-		pw.append("\nTest 2 : \n");
+		pw.append("\nTest 2 : modifier tous les autres champs sauf email & mdp \n");
 		message = "";
+		try {
+			Utilisateur user=FactoryDAO.getUtilisateurDAO().connexion("peony@flower.com", "azerty");
+			user.setNom("Peonyname");
+			user.setPrenom("");
+		} catch (DALException e) {
+			message+="Erreur BLL. Echec update";
+			e.printStackTrace();
+		}
 
 		pw.append(message);
 		// Test Method 2
