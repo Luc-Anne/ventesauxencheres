@@ -44,20 +44,18 @@ public class Inscription extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 
-		// (pseudo, nom,prenom,
-		// email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)
-		String pseudo = request.getParameter("pseudo") != null ? request.getParameter("pseudo") : null;
-		String nom = request.getParameter("nom") != null ? request.getParameter("nom") : null;
-		String prenom = request.getParameter("prenom") != null ? request.getParameter("prenom") : null;
-		String email = request.getParameter("email") != null ? request.getParameter("email") : null;
-		String telephone = request.getParameter("telephone") != null ? request.getParameter("telephone") : null;
-		String rue = request.getParameter("rue") != null ? request.getParameter("rue") : null;
-		String code_postal = request.getParameter("code_postal") != null ? request.getParameter("code_postal") : null;
-		String ville = request.getParameter("ville") != null ? request.getParameter("ville") : null;
-		String mot_de_passe = request.getParameter("password") != null ? request.getParameter("password") : null;
+		String pseudo = request.getParameter("pseudo");
+		String nom = request.getParameter("nom");
+		String prenom = request.getParameter("prenom");
+		String email = request.getParameter("email");
+		String telephone = request.getParameter("telephone");
+		String rue = request.getParameter("rue");
+		String code_postal = request.getParameter("code_postal");
+		String ville = request.getParameter("ville");
+		String mot_de_passe = request.getParameter("password");
 		int credit = 0;
 		try {
-			credit = request.getParameter("credit") != null ? Integer.parseInt(request.getParameter("credit")) : 0;
+			credit = Integer.parseInt(request.getParameter("credit"));
 		} catch (NumberFormatException e) {
 			credit = 0;
 			erreurs.add("utilisateur.credit_not_int");
