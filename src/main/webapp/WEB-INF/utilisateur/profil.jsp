@@ -15,7 +15,7 @@
 			<div class="row g-8">
 				<div class="col-md-12 col-lg-12">
 					<h4 class="mb-3">Informations Générales à modifier</h4>
-					<form class="needs-validation" novalidate  action="${pageContext.request.contextPath}/utilisateur/profil" method="post">
+					<form class="needs-validation" novalidate  action="${pageContext.request.contextPath}/moncompte/profil" method="post">
 						<div class="row g-3">
 							<div class="col-12">
 								<label for="username" class="form-label">Pseudo</label>

@@ -17,14 +17,15 @@ import fr.eni.ventesauxencheres.bo.Utilisateur;
 /**
  * Servlet implementation class profil
  */
-@WebServlet("/utilisateur/profil")
+@WebServlet("/moncompte/profil")
 public class Profil extends HttpServlet {
+	Boolean isConnected=false;
 	private static final long serialVersionUID = 1L;
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp");
-		if (rd != null) {
-		rd.forward(request, response);
-		}	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp");
+			if (rd != null) {
+			rd.forward(request, response);
+			}
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pseudoAModifier = request.getParameter("pseudo");
@@ -45,7 +46,7 @@ public class Profil extends HttpServlet {
 			//Creer un utilisateur avec les attributs de l'utilisateur connecté à la session à l'aide de l'objet utilisateurConnecte
 			Utilisateur userSession=(Utilisateur) session.getAttribute("utilisateurConnecte");
 			//Créer une nouvelle instance d'utilisateur, surlequel appliquer les modifications
-			Utilisateur user=new Utilisateur(userSession.getNoUtilisateur(),pseudoAModifier,nomAModifier,prenomAModifier,emailAModifier,telephoneAModifier,rueAModifier,CpAModifier,villeAModifier,mdpAModifier);
+			Utilisateur user=new Utilisateur(userSession.getNoUtilisateur(),pseudoAModifier,nomAModifier,prenomAModifier,emailAModifier,telephoneAModifier,rueAModifier,CpAModifier,villeAModifier,mdpAModifier,userSession.getCredit(),userSession.isAdministrateur());
 			System.out.println("Info user de la BDD avant traitement : "+user);			
 			  try { 
 				  	UtilisateurManager.getInstance().modifier(user);
@@ -61,7 +62,5 @@ public class Profil extends HttpServlet {
 			if (rd != null) {
 			rd.forward(request, response);
 			}			
-
-	}
-
+	}	
 }

@@ -20,8 +20,8 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link" href="${pageContext.request.contextPath}/utilisateur/profil">Profil</a>
-      <a class="nav-item nav-link" href="${pageContext.request.contextPath}/deconnexion">Déconnexion</a>
+      <a class="nav-item nav-link" href="${pageContext.request.contextPath}/moncompte/profil">Profil</a>
+      <a class="nav-item nav-link" href="${pageContext.request.contextPath}/moncompte/deconnexion">Déconnexion</a>
     </div>
   </div>
 </nav>
