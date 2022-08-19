@@ -10,7 +10,7 @@
 <body>
 <%@ include file="/WEB-INF/fragments/header.jspf" %>
 <!--  -->
-<p>HOME PAGE</p>
+
 <!-- Test Connexion  -->
 <p> ${sessionScope.utilisateurConnecte.nom } </p>
 <p> ${sessionScope.utilisateurConnecte.prenom } </p>
@@ -20,6 +20,12 @@
 <form action="${pageContext.request.contextPath}/utilisateur/desinscription" method="post">
 	<button class="btn btn-danger">Delete</button>
 </form>
+
+
+
+<%@ include file="/WEB-INF/fragments/main.jspf" %>
+
+
 <%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>
 </html>

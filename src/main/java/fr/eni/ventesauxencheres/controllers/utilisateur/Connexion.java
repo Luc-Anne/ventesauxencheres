@@ -43,13 +43,13 @@ public class Connexion extends HttpServlet {
 			session.setAttribute("utilisateurConnecte", utilisateur);
 			if (utilisateur != null) {
 //				session.setAttribute("utilisateurObjet", utilisateur);
-				request.setAttribute("messageConnexion", "Connexion réussie !");
+				request.setAttribute("messageConnexionSuccess", "Connexion réussie !");
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
 				if (rd != null) {
 					rd.forward(request, response);
 				}
 			} else {
-				request.setAttribute("messageConnexion", "Email ou mot de passe incorrect.");
+				request.setAttribute("messageConnexionEchec", "Email ou mot de passe incorrect.");
 				session.setAttribute("utilisateurObjet", utilisateur);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp");
 				if (rd != null) {
