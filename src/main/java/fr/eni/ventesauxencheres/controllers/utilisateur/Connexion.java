@@ -33,24 +33,19 @@ public class Connexion extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("motDePasse");
 		
-		// On doit récupérer la fonctionnalité connexion
-		Utilisateur utilisateur;
 		try {
-			utilisateur = UtilisateurManager.getInstance().connexion(email, password);
-			// On va devoir transporter les paramètres dans l'utilisateur
-			// Paramétrage de la session lors de sa création ici
-			HttpSession session = request.getSession();
-			session.setAttribute("utilisateurConnecte", utilisateur);
+			Utilisateur utilisateur = UtilisateurManager.getInstance().connexion(email, password);
 			if (utilisateur != null) {
-//				session.setAttribute("utilisateurObjet", utilisateur);
-				request.setAttribute("messageConnexionSuccess", "Connexion réussie !");
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
-				if (rd != null) {
-					rd.forward(request, response);
+				HttpSession session = request.getSession();
+				session.setAttribute("utilisateurConnecte", utilisateur);
+				// TODO rediriger vers /admin quand la servlet sera créé
+				if (utilisateur.isAdministrateur()) {
+					response.sendRedirect(request.getContextPath() + "/admin");
+				} else {
+					response.sendRedirect(request.getContextPath() + "/home");
 				}
 			} else {
-				request.setAttribute("messageConnexionEchec", "Email ou mot de passe incorrect.");
-				session.setAttribute("utilisateurObjet", utilisateur);
+				request.setAttribute("echecConnexion", "Email ou mot de passe incorrect.");
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp");
 				if (rd != null) {
 					rd.forward(request, response);
@@ -60,7 +55,6 @@ public class Connexion extends HttpServlet {
 			e.printStackTrace();
 			response.sendError(500);
 		}
-
 	}
 
 }
