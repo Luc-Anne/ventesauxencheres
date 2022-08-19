@@ -1,71 +1,77 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- Afficher le message en fonction de la connexion -->
-<c:if test="${not empty messageConnexionSuccess}">
-	<p class="fs-3 text-center text-success">${messageConnexionSuccess}</p>
-	<c:remove var="errorMsg" scope="session" />
-</c:if>
-<c:if test="${not empty messageConnexionEchec}">
-	<div class="fs-3 text-center text-danger" role="alert">${messageConnexionEchec}</div>
-<c:remove var="succMsg" scope="session" />
-</c:if>
+<%@ include file="/WEB-INF/fragments/taglib.jspf" %>
 <header>
-	<nav 
-		class="pr-5 navbar navbar-expand-sm bg-dark navbar-dark align-top justify-content-between"  >
+<nav class="pr-5 navbar navbar-expand-sm bg-dark navbar-dark align-top justify-content-between"  >
+		<!-- Choix du typeDeMenuAAfficher -->
+		<c:set var="typeDeMenuAAfficher" value="TypeNonConnecte"></c:set>
+		<c:if test="${not empty sessionScope.utilisateurConnecte}">
+			<c:set var="typeDeMenuAAfficher" value="TypeConnecte"></c:set>
+		</c:if>
 		<!-- Brand/logo -->
 		<a class="navbar-brand" href="${pageContext.request.contextPath}/home"> 
-		<img id="imageTrocenchere" class="small-icon"	src="${pageContext.request.contextPath}/img/trocenchere.jpg" alt="Accueil ENI-Encheres" height="50px" width="50"> 
-		<strong>ENI-Encheres</strong>
-		</a> <a class="navbar-brand" href="${pageContext.request.contextPath}/home" alt="Gérer mon profil"
-			title="Gérer mon profil"> <img class="small-icon"
-			src="images/user.svg"> <span class="align-middle text-muted">XXXXX  xxx, 0 crédit(s)</span>
+			<img id="imageTrocenchere" class="small-icon" src="${pageContext.request.contextPath}/img/trocenchere.jpg" alt="Accueil ENI-Encheres" height="50px" width="50"> 
+			<strong>ENI-Encheres</strong>
+		</a>
+		<a class="navbar-brand" href="${pageContext.request.contextPath}/home" alt="Gérer mon profil" title="Gérer mon profil">
+			<img class="small-icon"src="images/user.svg">
+			<span class="align-middle text-muted">XXXXX  xxx, 0 crédit(s)</span>
 		</a>
 		<ul class="navbar-nav ml-auto">
 			<!-- Dropdown for small screen -->
-			<li class="nav-item dropdown d-lg-none"><a
-				class="nav-link dropdown-toggle" href="#" id="navbardrop"
-				data-toggle="dropdown"> <img class="small-icon"
-					src="images/menu.svg" alt="Menu ENI-Encheres">
-			</a>
+			<!-- TODO small screen -->
+			<li class="nav-item dropdown d-lg-none">
+				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+					<img class="small-icon" src="images/menu.svg" alt="Menu ENI-Encheres">
+				</a>
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="#" alt="Administrer le site">Administrer</a>
-					<a class="dropdown-item" href="#" alt="Vendre un article">Vendre
-						un article</a> <a class="dropdown-item"
-						href="${pageContext.request.contextPath}/deconnexion"
-						alt="Me déconnecter">Me déconnecter</a> <a class="dropdown-item"
-						href="${pageContext.request.contextPath}/utilisateur/profil"
-						alt="S'inscrire à ENI-Encheres">M'inscrire</a> <a
-						class="dropdown-item"
-						href="${pageContext.request.contextPath}/utilisateur/connexion"
-						alt="Se connecter à ENI-Encheres">Me connecter</a>
-				</div></li>
+					<a class="dropdown-item" href="#" alt="Vendre un article">Vendre un article</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/moncompte/deconnexion" alt="Me déconnecter">Me déconnecter</a> 
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/moncompte/profil" alt="S'inscrire à ENI-Encheres">M'inscrire</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/utilisateur/connexion" alt="Se connecter à ENI-Encheres">Me connecter</a>
+				</div>
+			</li>
 			<!-- Links for medium screen-->
-			<li class="nav-item d-none d-lg-block"><a class="nav-link"
-				href="#" alt="Administrer le site">Administrer</a></li>
-			<li class="nav-item d-none d-lg-block"><a class="nav-link"
-				href="#" alt="Vendre un article">Vendre un article</a></li>
+			<c:if test="${typeDeMenuAAfficher == 'TypeConnecte' && sessionScope.utilisateurConnecte.administrateur}">
+				<li class="nav-item d-none d-lg-block">
+					<a class="nav-link"href="#" alt="Administrer le site">Administrer</a>
+				</li>
+			</c:if>
+			<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
+				<li class="nav-item d-none d-lg-block">
+					<a class="nav-link" href="#" alt="Vendre un article">Vendre un article</a>
+				</li>
+			</c:if>
 
-			<!-- Afficher Me déconnecter si l'utlisateur  est connecté -->
-			<c:if test="${not empty messageConnexionSuccess }">
-				<li class="nav-item d-none d-lg-block"><a class="nav-link"
-					href="${pageContext.request.contextPath}/deconnexion"
-					alt="Me déconnecter">Me déconnecter</a></li>
-			</c:if>
-			<c:if test="${empty messageConnexionSuccess }">
-				<li class="nav-item d-none d-lg-block"><a class="nav-link"
-					href="${pageContext.request.contextPath}/utilisateur/profil"
-					alt="S'inscrire à ENI-Encheres">M'inscrire</a></li>
-			</c:if>
-			<!-- Afficher Me connecter si l'utlisateur est déconnecté -->
-			<c:if test="${empty messageConnexionSuccess }">
-				<li class="nav-item d-none d-lg-block"><a class="nav-link"
-					href="${pageContext.request.contextPath}/utilisateur/connexion"
-					alt="Se connecter à ENI-Encheres">Me connecter</a></li>
+			<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
+				<li class="nav-item d-none d-lg-block">
+					<a class="nav-link" href="${pageContext.request.contextPath}/moncompte/profil" alt="S'inscrire à ENI-Encheres">Mon Profil</a>
+				</li>
 			</c:if>
 			
- 			<c:if test="${not empty messageConnexionSuccess }">
+			<c:if test="${typeDeMenuAAfficher != 'TypeConnecte'}">
 				<li class="nav-item d-none d-lg-block">
-				<a class="nav-link">Bienvenue ${sessionScope.utilisateurConnecte.prenom } ${sessionScope.utilisateurConnecte.nom }</a></li>
+					<a class="nav-link" href="${pageContext.request.contextPath}/utilisateur/inscription" alt="S'inscrire à ENI-Encheres">M'inscrire</a>
+				</li>
+			</c:if>
+			<!-- Afficher Me connecter ou Me déconnecter suivant l'état de connexion de l'utilisateur -->
+			<c:if test="${typeDeMenuAAfficher != 'TypeConnecte'}">
+				<li class="nav-item d-none d-lg-block">
+				<a class="nav-link" href="${pageContext.request.contextPath}/utilisateur/connexion" alt="Se connecter à ENI-Encheres">Me connecter</a>
+					</li>
+			</c:if>
+			<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
+				<li class="nav-item d-none d-lg-block">
+					<a class="nav-link" href="${pageContext.request.contextPath}/moncompte/deconnexion" alt="Me déconnecter">Me déconnecter</a>
+				</li>
+			</c:if>
+			
+ 			<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
+				<li class="nav-item d-none d-lg-block">
+				<a class="nav-link">Bienvenue ${sessionScope.utilisateurConnecte.prenom } ${sessionScope.utilisateurConnecte.nom }</a>
+				</li>
 			</c:if> 
 		</ul>
 	</nav>

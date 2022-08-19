@@ -21,6 +21,24 @@
 	<button class="btn btn-danger">Delete</button>
 </form>
 
+	<main>
+	
+		<!-- if (Non connecté || Connecté) -->
+		<div>
+			<h3>Liste des enchères</h3>
+			<!--  foreach (pour chacune des enchères) : -->
+				<!-- if(l'utilisateurConnecte est le vendeur de l'article de l'enchère) -->
+					<!-- Afficher cette enchère en mode vendeur -->
+					
+				<!-- else -->
+					<!-- Afficher cette enchère en mode enchérissable -->
+					
+				<!-- endif -->
+			<!-- end foreach -->
+		</div>
+		
+	</main>
+
 
 
 <%@ include file="/WEB-INF/fragments/main.jspf" %>
