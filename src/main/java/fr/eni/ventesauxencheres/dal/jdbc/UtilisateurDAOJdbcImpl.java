@@ -4,9 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.ventesauxencheres.bo.Article;
+import fr.eni.ventesauxencheres.bo.Categorie;
+import fr.eni.ventesauxencheres.bo.Retrait;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
 import fr.eni.ventesauxencheres.dal.ConnectionProvider;
 import fr.eni.ventesauxencheres.dal.DALException;
@@ -26,6 +31,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String AFFICHER_LIST_UTILISATEURS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit from UTILISATEURS";
 
 	private static final String CHECK_UTILISATEUR = "";
+	private static final String SELECT_ALL_SELLER="SELECT u.no_utilisateur,u.pseudo,u.telephone,a.no_article,a.nom_article,a.description,\r\n"
+			+ "a.prix_initial,a.prix_vente,a.date_debut_enchere,a.date_fin_enchere ,a.no_categorie,a.etat_vente,\r\n"
+			+ "r.rue,r.code_postal,r.ville \r\n"
+			+ "FROM UTILISATEURS as u \r\n"
+			+ "JOIN ARTICLES_VENDUS as a on u.no_utilisateur=a.no_utilisateur \r\n"
+			+ "JOIN RETRAITS as r on a.no_article=r.no_article;";
 
 	@Override
 	public Utilisateur connexion(String email, String motDePasse) throws DALException {
@@ -189,6 +200,68 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Utilisateur> selectAllSellers() throws DALException {
+		List<Utilisateur> sellerList=new ArrayList<Utilisateur>();
+		List<Article> artToSaleList=new ArrayList<Article>();
+		try (Connection cnx = ConnectionProvider.getConnection_VAE();
+				Statement stmt = cnx.createStatement();
+				ResultSet rs=stmt.executeQuery(SELECT_ALL_SELLER);){
+				while(rs.next()) {
+					//Récupérer information du vendeur
+					int noUtilisateur=rs.getInt("no_utilisateur");
+					String pseudo=rs.getString("pseudo");
+					String nom=rs.getString("nom");
+					String prenom=rs.getString("prenom");
+					String email=rs.getString("email");
+					String telephone=rs.getString("telephone");
+					String rue=rs.getString("rue");
+					String codePostal=rs.getString("code_postal");
+					String ville=rs.getString("ville");
+					String motDePasse=rs.getString("mot_de_passe");
+					int credit=rs.getInt("credit");
+					boolean administrateur=rs.getBoolean("administrateur");;
+					
+					//Récupérer information des catégories des articles
+					int noCategorie=rs.getInt("no_categorie");
+					String libelle=rs.getString("libelle");
+										
+					//Récupérer information de l' articles en vente
+					int noArticle=rs.getInt("credit");
+					String nomArticle=rs.getString("nom_article");
+					String description=rs.getString("description");
+					LocalDateTime dateDebutEncheres=LocalDateTime.of((rs.getDate("date_debut_enchere").toLocalDate()), rs.getTime("date_debut_enchere").toLocalTime());
+					LocalDateTime dateFinEncheres=LocalDateTime.of((rs.getDate("date_fin_enchere").toLocalDate()), rs.getTime("date_fin_enchere").toLocalTime());
+					int miseAPrix=rs.getInt("prix_initital");
+					int prixVente=rs.getInt("prix_vente");
+					String etatVente=rs.getString("etat_vente");
+
+					//Récupérer information du retrait
+					String rueRetrait=rs.getString("rue");
+					String codePostalRetrait=rs.getString("code_postal");
+					String villeRetrait=rs.getString("ville");
+					Article article;
+					
+					//Création des objets métiers
+					Utilisateur seller=new Utilisateur(noUtilisateur, pseudo,  nom, prenom,  email,  telephone, rue, codePostal, ville, motDePasse, credit,administrateur);
+					Categorie cat = new Categorie(noCategorie,libelle);
+					Categorie categorieArticle=cat;
+					Utilisateur vendeur=seller;					
+					Article art = new Article( nomArticle,  description,  dateDebutEncheres, dateFinEncheres,  miseAPrix,  prixVente,  etatVente,  categorieArticle, vendeur);
+					Retrait rt=new Retrait(rueRetrait, codePostalRetrait, villeRetrait, art);
+					
+					//Ajout du vendeur à la liste des vendeurs
+					sellerList.add(seller);					
+				}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		return sellerList;
+	}
+	
+	
 
 //	
 //	public Utilisateur checkUtilisateur (String email, String password) throws DALException {
