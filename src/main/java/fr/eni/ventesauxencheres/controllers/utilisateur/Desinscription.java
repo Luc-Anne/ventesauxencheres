@@ -14,7 +14,7 @@ import fr.eni.ventesauxencheres.bll.BLLException;
 import fr.eni.ventesauxencheres.bll.UtilisateurManager;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
 
-@WebServlet("/utilisateur/desinscription")
+@WebServlet("/moncompte/desinscription")
 public class Desinscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

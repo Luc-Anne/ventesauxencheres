@@ -1,8 +1,7 @@
-- Gérer l'unicité de l'e-mail lors de la modification du profil
+- Gérer l'unicité de l'e-mail et du peusdo lors de la modification du profil
 Bédiss - Supprimer de l'inscription la mention administrateur et fournir 100 crédits lors de l'inscription
 - Ajouter les deux methodes de validation dans chaque manager de la bbl
 - Modifier le nom inscription dans la dal utilisateur pour insert & modifier le type de retour de ce insert par un utilisateur
-- Vérifier que tous les paramètres récupérés dans les servlets à partir du request ne soient pas null avant de les assigner.
 - Nom des fichiers différents des urls présentées : modifier les urls plutôt que les fichiers ?
 - Voir comment externaliser les paramètres de la ressource de connexion jdbc dans un fichier externe.
 - Une fois que les vues des fonctionnalités sont implémentées, se demander comment l'intégré aux autres vues déjà présente.
@@ -10,4 +9,8 @@ Bédiss - Supprimer de l'inscription la mention administrateur et fournir 100 cr
 - Crypter le mot de passe en changeant son type dans la base de données, intégrer le cryptage en java et modifier le jeu de données de la base de données.
 - Créer une interface pour les managers de la bll pour avoir les mêmes noms de méthodes.
 - Faire un doFilter pour l'accès à l'administration (/admin/*) et aux tests (/test/*)
-- Faire un doFilter pour l'accès aux pages accessibles aux utilisateurs connectés (/moncompte/*) => modifier les urls correspondantes avec /moncompte/ au lieu de /utilisateur/
+Bich - Faire un doFilter pour l'accès aux pages accessibles aux utilisateurs connectés (/moncompte/*)
+      => modifier les urls correspondantes avec /moncompte/ au lieu de /utilisateur/
+- Plutôt que de tester s'il y a un utilisateurConnecté != null, il faudrait seulement vérifier si une session existe.
+Ainsi, il ne faudrait pas créer automatiquement une session à chaque fois qu'on appelle request.getSession() en conditionnant cet appel
+dans un if en testant si request.getRequestedSessionId() != null;
