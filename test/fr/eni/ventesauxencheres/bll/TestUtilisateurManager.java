@@ -28,7 +28,7 @@ public class TestUtilisateurManager extends HttpServlet {
 		pw.append("\nTest 1 : modifier email & mdp \n");
 		message = "";		
 		  try { Utilisateur user =
-		  FactoryDAO.getUtilisateurDAO().connexion("pivoine@campus.fr","azerty2");
+		  FactoryDAO.getUtilisateurDAO().selectUtilisateurConnecte("pivoine@campus.fr","azerty2");
 		  user.setEmail("peony@flower.com"); user.setMotDePasse("azerty");
 		  FactoryDAO.getUtilisateurDAO().update(user);
 		  message+="Aucune exception levée. Test OK";
@@ -45,7 +45,7 @@ public class TestUtilisateurManager extends HttpServlet {
 				System.out.println("Info user de la BDD avant traitement : "+userBll);
 				userBll.setNom("PeonynameBLL");
 				userBll.setPrenom("PivoinetteBLL");
-				UtilisateurManager.getInstance().modifier(userBll);
+				UtilisateurManager.getInstance().modify(userBll);
 				Utilisateur userBllnouveau=UtilisateurManager.getInstance().connexion("peony@flower.com", "azerty");
 				System.out.println("Info user de la BDD après traitement : "+userBllnouveau);
 				pw.append("\nTest 2 : Test OK \n");

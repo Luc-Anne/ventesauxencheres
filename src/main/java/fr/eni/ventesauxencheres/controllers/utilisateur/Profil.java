@@ -20,14 +20,15 @@ import fr.eni.ventesauxencheres.controllers.Errors;
  */
 @WebServlet("/moncompte/profil")
 public class Profil extends HttpServlet {
-	Boolean isConnected=false;
 	private static final long serialVersionUID = 1L;
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp");
-			if (rd != null) {
-			rd.forward(request, response);
-			}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp");
+		if (rd != null) {
+		rd.forward(request, response);
+		}
 	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Errors erreurs = new Errors();
 		request.setAttribute("erreurs", erreurs);
@@ -60,7 +61,7 @@ public class Profil extends HttpServlet {
 				userSession.isAdministrateur()
 		);
 		try {
-			UtilisateurManager.getInstance().modifier(user);
+			UtilisateurManager.getInstance().modify(user);
 			session.setAttribute("utilisateurConnecte", user);
 		} catch (BLLException e) {
 			erreurs.addAll(UtilisateurManager.getInstance().invalidCause(user));
@@ -73,10 +74,11 @@ public class Profil extends HttpServlet {
 				erreurs.add("utilisateur.email_deja_pris");
 			}
 			e.printStackTrace();
-		}		 
+		}
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
 		}
-	}	
+	}
+	
 }

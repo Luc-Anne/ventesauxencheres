@@ -1,6 +1,8 @@
 package fr.eni.ventesauxencheres.dal;
 
-public interface ArticleDAO {
+import fr.eni.ventesauxencheres.bo.Article;
+
+public interface ArticleDAO extends DAO<Article> {
 	
 
 }

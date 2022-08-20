@@ -80,7 +80,9 @@
 					</form>
 				</div>
 			</div>
-
+			<form action="${pageContext.request.contextPath}/moncompte/desinscription" method="post">
+				<button class="btn btn-danger">Delete</button>
+			</form>
 		</main>
 
 	</div>

@@ -150,26 +150,6 @@
 								<input type="password" class="form-control ${isInvalid}" id="password" required name="password">
 								<div class="invalid-feedback">Il faut nécessairement indiquer un mot de passe valide (au moins 8 caractères)</div>
 							</div>
-
-							<div class="col-12">
-								<c:set var="isInvalid" value=""></c:set>
-								<c:if test="${erreurs.contains('utilisateur.credit_negatif')}">
-									<c:set var="isInvalid" value="is-invalid"></c:set>
-								</c:if>
-								<label for="credit" class="form-label">Crédit</label>
-								<input
-									type="text" class="form-control ${isInvalid}" id=""
-									credit""
-									placeholder="48000" required name="credit">
-								<div class="invalid-feedback">Indiquer le montant de vos
-									crédits en cours</div>
-							</div>
-							<h4 class="mb-3">Inidquer votre statuts</h4>
-							<div class="form-check">
-								<input class="form-check-input ${isInvalid}" type="checkbox" 
-									id="flexCheckDefault" name="status"> <label class="form-check-label"
-									for="flexCheckDefault"> Vous êtes Administrateur ? </label>
-							</div>
 						</div>
 						<hr class="my-4">
 						<button class="w-100 btn btn-primary btn-lg" type="submit">S'inscire</button>

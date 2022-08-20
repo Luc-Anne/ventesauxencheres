@@ -1,5 +1,7 @@
 package fr.eni.ventesauxencheres.dal;
 
-public interface RetraitDAO {
+import fr.eni.ventesauxencheres.bo.Retrait;
+
+public interface RetraitDAO extends DAO<Retrait>{
 
 }

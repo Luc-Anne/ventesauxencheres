@@ -25,52 +25,17 @@ public class UtilisateurManager {
 		return utilisateurManager;
 	}
 	
-	public Utilisateur connexion(String email, String password) throws BLLException {
-		try {
-			return utilisateurDAO.connexion(email, password);
-		} catch (DALException e) {
-			throw new BLLException("ERREUR MANAGER", e);
-		}
-	}
+	// Règles métiers
+	public static final int DEFAULT_CREDIT = 100;
 	
-	public boolean inscription(Utilisateur u) throws BLLException {
-		try {
-			if (this.isValide(u)) {
-				return utilisateurDAO.inscription(u);
-			} else {
-				throw new BLLException("utilisateur invalide");
-			}
-		} catch (DALException e) {
-			throw new BLLException("ERREUR MANAGER class Utilisateur manager", e);
-		}
-	}
-	
-	public boolean deleteById(int id) throws BLLException {
-		try {
-			return utilisateurDAO.deleteById(id);
-		} catch (DALException e) {
-			throw new BLLException("ERREUR MANAGER class Utilisateur manager /suppression", e);
-		}
-	}
-
-	public Utilisateur modifier(Utilisateur utilisateur)throws BLLException{
-		try {
-			if (this.isValide(utilisateur)) {
-				utilisateur= utilisateurDAO.update(utilisateur);
-			} else {
-				throw new BLLException("utilisateur invalide");
-			}
-		} catch (DALException e) {
-			throw new BLLException("utilisateur invalide", e);
-		}
-		return utilisateur;		
-	}
-	
+	// Validation
 	public boolean isValide(Utilisateur utilisateur) {
 		return invalidCause(utilisateur).size() == 0 ? true : false;
 	}
 	
 	public List<String> invalidCause(Utilisateur utilisateur)  {
+		// TODO vérifier que la longueur des chaines de caractères soient bien compatibles avec les contraintes sql
+		// TODO vérifier qu'il n'y a pas d'espace à l'intérieur des pseudos
 		List<String> invalidCause = new ArrayList<>();
 		
 		// utilisateur
@@ -138,17 +103,62 @@ public class UtilisateurManager {
 		return invalidCause;
 	}
 	
-	
-	public Utilisateur checkUtilisateur (String email, String password) throws BLLException{
+	// Méthodes métier basiques
+	public Utilisateur save(Utilisateur u) throws BLLException {
 		try {
-			Utilisateur utilisateur =  utilisateurDAO.checkUtilisateur(email, password);
+			if (this.isValide(u)) {
+				return utilisateurDAO.insert(u);
+			} else {
+				throw new BLLException("utilisateur invalide");
+			}
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new BLLException("", e);
 		}
-		return null;
-		
 	}
 	
-
+	public Utilisateur get(int id) throws BLLException {
+		try {
+			return utilisateurDAO.selectById(id);
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}
+	}
+	
+	public List<Utilisateur> getAll() throws BLLException {
+		try {
+			return utilisateurDAO.selectAll();
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}
+	}
+	
+	public void modify(Utilisateur utilisateur)throws BLLException{
+		try {
+			if (this.isValide(utilisateur)) {
+				utilisateurDAO.update(utilisateur);
+			} else {
+				throw new BLLException("utilisateur invalide");
+			}
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}	
+	}
+	
+	public void delete(int id) throws BLLException {
+		try {
+			utilisateurDAO.delete(id);
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}
+	}
+	
+	// Méthodes métier specifiques
+	public Utilisateur connexion(String email, String password) throws BLLException {
+		try {
+			return utilisateurDAO.selectUtilisateurConnecte(email, password);
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}
+	}
+	
 }

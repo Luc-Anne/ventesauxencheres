@@ -13,7 +13,7 @@ Enfin, si vous vous proposez quelque chose dont vous n'êtes pas sûr, écrivez 
 ################################################################################
 Première version :
 
-Luc Faire les fichiers controllers et jsp pour les fonctionnalités principales
+OK Faire les fichiers controllers et jsp pour les fonctionnalités principales
 - Choisir une jsp/fonctionnalité pour coder de A à Z une première version : Faire une seule fonctionnalité si la page en demande plusieurs
 
 ################################################################################
@@ -23,13 +23,13 @@ Organisation du site :
 - Une fois que les vues des fonctionnalités sont implémentées, se demander comment l'intégré aux autres vues déjà présente.
 
 Ajustement des fonctionnalités :
-- Supprimer de l'inscription la mention administrateur et fournir 100 crédits lors de l'inscription
-- Déplacement du bouton
-- Revoir pour bien nettoyer la session de utilisateurConnecte lors de la deconnexion
+OK Supprimer de l'inscription la mention administrateur et fournir 100 crédits lors de l'inscription
+OK Déplacement du bouton
+OK Revoir pour bien nettoyer la session de utilisateurConnecte lors de la deconnexion
 - Factoriser la deconnexion (deconnexion et desincription) dans la BLL
 
 Harmonisation du code / Nettoyage du code :
-- Modifier le nom inscription dans la dal utilisateur pour insert & modifier le type de retour de ce insert par un utilisateur
+OK Modifier le nom inscription dans la dal utilisateur pour insert & modifier le type de retour de ce insert par un utilisateur
 
 Fonctionnalités supplémentaires :
 - Se pencher sur la question d'une nouvelle fonctionnalité demandée (voir fichier excel)
@@ -63,3 +63,6 @@ Sécurité :
 - Voir comment sortir le mot de passe de la bo
 - Crypter le mot de passe en changeant son type dans la base de données, intégrer le cryptage en java et modifier le jeu de données de la base de données.
 - Modifier le nom de la session JSESSION dans le cookie (<session-config><cookie-config><name>)
+
+Style :
+- Utiliser getPathInfo() et getServletPath() pour retrouver un morceau de l'url pour s'en servir comme paramètre. Utiliser une variable pour créer une url dans une jsp. 
