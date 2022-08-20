@@ -13,7 +13,7 @@ Enfin, si vous vous proposez quelque chose dont vous n'êtes pas sûr, écrivez 
 ################################################################################
 Première version :
 
-- Faire les fichiers controllers et jsp pour les fonctionnalités principales
+Luc Faire les fichiers controllers et jsp pour les fonctionnalités principales
 - Choisir une jsp/fonctionnalité pour coder de A à Z une première version : Faire une seule fonctionnalité si la page en demande plusieurs
 
 ################################################################################
