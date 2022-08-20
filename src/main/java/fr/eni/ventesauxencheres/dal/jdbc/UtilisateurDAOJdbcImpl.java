@@ -24,7 +24,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String GET_UTILISATEUR_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit from UTILISATEURS where no_utilisateur = ?";
 
 	private static final String AFFICHER_LIST_UTILISATEURS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit from UTILISATEURS";
-
+	private static final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
 
 	// CRUD
 	public Utilisateur insert(Utilisateur u) throws DALException {
@@ -161,6 +161,30 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw new DALException("Probleme insertion", e);
 		}
 		return null;
+	}
+
+	@Override
+	public Utilisateur selectByPseudo(String pseudo) throws DALException {
+		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
+			try (PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_PSEUDO);) {
+				stmt.setString(1, pseudo);
+				ResultSet rs = stmt.executeQuery();
+				Utilisateur u = null;
+				if (rs.next()) {
+					u = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"),
+							rs.getString("nom"), rs.getString("prenom"), rs.getString("email"),
+							rs.getString("telephone"), rs.getString("rue"),
+							rs.getString("code_postal"), rs.getString("ville"),
+							rs.getString("mot_de_passe"), rs.getInt("credit"),
+							rs.getBoolean("administrateur"));
+				}
+				return u;
+			} catch (SQLException e) {
+				throw new DALException("Erreur insertion ", e);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Probleme insertion", e);
+		}
 	}
 	
 }

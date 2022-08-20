@@ -161,4 +161,12 @@ public class UtilisateurManager {
 		}
 	}
 	
+	public Utilisateur getByPseudo(String pseudo) throws BLLException {
+		try {
+			return utilisateurDAO.selectByPseudo(pseudo);
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}
+	}
+	
 }

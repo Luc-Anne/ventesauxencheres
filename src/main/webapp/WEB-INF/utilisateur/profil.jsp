@@ -86,7 +86,6 @@
 		</main>
 
 	</div>
-	<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>
 </html>
