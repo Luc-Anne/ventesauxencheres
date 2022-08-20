@@ -5,12 +5,23 @@
 <html>
 <head>
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
-	<title>${initParam.debutTitre} Tableau de bord</title>
+	<title>${initParam.debutTitre} $$$$$$$$$$$$$$$$$$$$$$</title>
 </head>
 <body>
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	<main>
-		<!-- Afficher la liste des utilisateurs avec un lien par utilisateur vers la vue de gestion des utilisateurs /admin/utilisateur -->
+		<!-- Afficher les détails d'un article -->
+		
+		<!-- Les boutons d'actions seront à définir en fonction de :
+			- utilisateurConnecte
+			- état de la vente
+		 -->
+		 
+		 <!-- Boutons :
+		 	- Modifier la vente
+		 	- Faire une offre (d'enchère)
+		 	- Valider le retrait
+		  -->
 	</main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>
