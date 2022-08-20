@@ -19,9 +19,14 @@ Première version :
 ################################################################################
 Version Livrable :
 
+Organisation du site :
+- Une fois que les vues des fonctionnalités sont implémentées, se demander comment l'intégré aux autres vues déjà présente.
+
 Ajustement des fonctionnalités :
 - Supprimer de l'inscription la mention administrateur et fournir 100 crédits lors de l'inscription
-- Déplacement du bouton 
+- Déplacement du bouton
+- Revoir pour bien nettoyer la session de utilisateurConnecte lors de la deconnexion
+- Factoriser la deconnexion (deconnexion et desincription) dans la BLL
 
 Harmonisation du code / Nettoyage du code :
 - Modifier le nom inscription dans la dal utilisateur pour insert & modifier le type de retour de ce insert par un utilisateur
@@ -48,7 +53,6 @@ Législation :
 Amélioration des fonctionnalités :
 
 Organisation du site :
-- Une fois que les vues des fonctionnalités sont implémentées, se demander comment l'intégré aux autres vues déjà présente.
 - Mettre les données sauvegardés dans le sql dans le context application ? afin de réduire au maximum les requêtes SQL ?
 
 Harmonisation du code / Nettoyage du code :
