@@ -53,17 +53,18 @@ public class UtilisateurManager {
 		}
 	}
 
-	public Utilisateur modifier(Utilisateur utilisateur)throws BLLException{
+	//Voir avec Luc modif void update a lieu utilisateur
+	public void modifier(Utilisateur utilisateur)throws BLLException{
 		try {
 			if (this.isValide(utilisateur)) {
-				utilisateur= utilisateurDAO.update(utilisateur);
+				utilisateur= utilisateurDAO.update(utilisateur);;
 			} else {
 				throw new BLLException("utilisateur invalide");
 			}
 		} catch (DALException e) {
 			throw new BLLException("utilisateur invalide", e);
 		}
-		return utilisateur;		
+		//return utilisateur;		
 	}
 	
 	public boolean isValide(Utilisateur utilisateur) {

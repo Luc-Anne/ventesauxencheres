@@ -2,12 +2,17 @@ package fr.eni.ventesauxencheres.bll;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.eni.ventesauxencheres.bo.Article;
+import fr.eni.ventesauxencheres.dal.DALException;
 
 @WebServlet("/test/TestArticleManager")
 public class TestArticleManager extends HttpServlet {
@@ -22,6 +27,17 @@ public class TestArticleManager extends HttpServlet {
 		// Test 1 ###################################################
 		pw.append("\nTest 1 : \n");
 		message = "";
+		try {
+		List<Article> articlesList = ArticleManager.getInstance().getAll();
+		message+="Test DAL : requête OK";
+		for(Article art : articlesList) {
+			System.out.println(art);					
+		}			
+	} catch (BLLException e) {
+		e.printStackTrace();
+		message+="Test BLL : requête Echec";
+	}
+	System.out.println("Fin du test" );
 
 		pw.append(message);
 		// Test 2 ###################################################
