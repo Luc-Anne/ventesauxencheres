@@ -48,9 +48,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				while(rs.next()) {
 					//Récupérer information du vendeur
 					int noUtilisateur=rs.getInt("no_utilisateur");
-					String pseudo=rs.getString("pseudo");
-					String nom=rs.getString("nom");
-					String prenom=rs.getString("prenom");
+					String pseudoVendeur=rs.getString("pseudo");
+					String nomVendeur=rs.getString("nom");
+					String prenomVendeur=rs.getString("prenom");
 					String email=rs.getString("email");
 					String telephone=rs.getString("telephone");
 					String rue=rs.getString("rue");
@@ -81,7 +81,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 					Article article;
 					
 					//Création des objets métiers
-					Utilisateur seller=new Utilisateur(noUtilisateur, pseudo,  nom, prenom,  email,  telephone, rue, codePostal, ville, motDePasse, credit,administrateur);
+					Utilisateur seller=new Utilisateur(noUtilisateur, prenomVendeur,  nomVendeur, prenomVendeur,  email,  telephone, rue, codePostal, ville, motDePasse, credit,administrateur);
 					Categorie cat = new Categorie(noCategorie,libelle);
 					Categorie categorieArticle=cat;
 					Utilisateur vendeur=seller;					
