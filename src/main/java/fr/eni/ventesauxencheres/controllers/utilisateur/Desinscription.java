@@ -20,33 +20,22 @@ public class Desinscription extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		HttpSession session = request.getSession();
-		RequestDispatcher rd = null;
-
-		Utilisateur uc = (Utilisateur) session.getAttribute("utilisateurConnecte");
-		
-		int id = uc.getNoUtilisateur();
-		
-//		System.out.println(uc);
-		
 		try {
-			if (UtilisateurManager.getInstance().deleteById(id)) {
-				session.invalidate();
-				session.setAttribute("sucessDelete", "Suppression de l'utilisateur réussie");
-				rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
-				if (rd != null) {
-					rd.forward(request, response);
-				} else {
-					session.setAttribute("sucessDelete", "Suppression de l'utilisateur réussie");
-					rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
-					if (rd != null) {
-						rd.forward(request, response);
-					}
-				}
-			}
+			HttpSession session = request.getSession();
+			Utilisateur uc = (Utilisateur) session.getAttribute("utilisateurConnecte");
+			UtilisateurManager.getInstance().delete(uc.getNoUtilisateur());
+			session.invalidate();
+			// TODO Prévoir un message qui s'affichera juste en dessous de la navbar pour confirmer la suppression du compte
+			// TODO Créer une div de communication globale pour ce genre de cas
+			request.setAttribute("sucessDelete", "Suppression de l'utilisateur réussie");
+			response.sendRedirect("/home");
 		} catch (BLLException e) {
-			e.printStackTrace();
+			// TODO Prévoir un message qui s'affichera juste en dessous de la navbar pour dire que ça n'a pas fonctionné
+			request.setAttribute("sucessDelete", "Suppression de l'utilisateur échoué");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/moncompte/profil");
+			if (rd != null) {
+				rd.forward(request, response);
+			}
 		}
 	}
 

@@ -28,7 +28,7 @@ public class TestUtilisateurDAOJdbcImpl extends HttpServlet {
 		message = "";
 		//Il faut un utilisateur pour tester
 		try {
-			Utilisateur user = FactoryDAO.getUtilisateurDAO().connexion("pivoine@campus.fr","azerty2");
+			Utilisateur user = FactoryDAO.getUtilisateurDAO().selectUtilisateurConnecte("pivoine@campus.fr","azerty2");
 			if (user != null) {
 				FactoryDAO.getUtilisateurDAO().update(user);
 				message+="Aucune exception levée. Test OK";
@@ -47,7 +47,7 @@ public class TestUtilisateurDAOJdbcImpl extends HttpServlet {
 		pw.append("\nTest 2 : modification 1 champ : pseudo \n");
 		message = "";
 		try {
-			Utilisateur user = FactoryDAO.getUtilisateurDAO().connexion("pivoine@campus.fr","azerty2");
+			Utilisateur user = FactoryDAO.getUtilisateurDAO().selectUtilisateurConnecte("pivoine@campus.fr","azerty2");
 			if (user != null) {
 				user.setPseudo("PivModifiee");
 				FactoryDAO.getUtilisateurDAO().update(user);				
@@ -73,13 +73,26 @@ public class TestUtilisateurDAOJdbcImpl extends HttpServlet {
 				  message+="utilisateur non trouvé. Test incomplet"; 
 				  }		  
 		  } catch (DALException e) { 
-		  e.printStackTrace(); } pw.append(message);
+		  message = ""; 
+		  try { Utilisateur user = FactoryDAO.getUtilisateurDAO().selectUtilisateurConnecte("pivoine@campus.fr","azerty2"); 
+			  if (user != null) { 
+				  user.setPrenom("Pivoinita"); user.setEmail("piv@modif.fr");
+				  user.setMotDePasse("xcvvb123"); FactoryDAO.getUtilisateurDAO().update(user);
+				  message+="Aucune exception levée. prenom, mdp,email modifiés ! Test OK";
+			  }else {
+				  message+="utilisateur non trouvé. Test incomplet"; 
+				  }	  		  
+		  } catch (DALException e1) { // TODO Auto-generated catch block
+
+		  e1.printStackTrace(); 
+		  } 
+		  pw.append(message);
 		 
 		// Test 4 ###################################################
 		pw.append("\nTest 4 : modification plusieurs champs : nom,rue,ville, code postal,telephone \n");
 		message = "";
 		try {
-			Utilisateur user = FactoryDAO.getUtilisateurDAO().connexion("peony@flower.com","azerty");
+			Utilisateur user = FactoryDAO.getUtilisateurDAO().selectUtilisateurConnecte("peony@flower.com","azerty");
 			if (user != null) {
 				user.setNom("BlancheDAL");
 				user.setCodePostal("75000");
@@ -91,26 +104,13 @@ public class TestUtilisateurDAOJdbcImpl extends HttpServlet {
 			}else {
 				message+="utilisateur non trouvé. Test incomplet";
 			}			
-		} catch (DALException e) {
-			e.printStackTrace();
+		} catch (DALException e1) {
+			e1.printStackTrace();
 		}
 		pw.append(message);		
 		// Test Method 2
-		pw.append("\nMethod 2: SelectAllSellers \n");
-		message = "";
-		//Sélection de tous les vendeurs		
-		try {
-			List<Utilisateur> vendeursList = FactoryDAO.getUtilisateurDAO().selectAllSellers();
-			message+="Test DAL : requête OK";
-			for(Utilisateur vendeur : vendeursList) {
-				System.out.println(vendeur);					
-			}			
-		} catch (DALException e) {
-			e.printStackTrace();
-			message+="Test DAL : requête Echec";
-		}
-		System.out.println("Fin du test" );
-		
+		pw.append("\nMethod 2:  \n");
+		message = "";	
 		
 		// Test 5 ###################################################
 		pw.append("\nTest 3 : Afficher tous les vendeurs \n");
@@ -128,3 +128,4 @@ public class TestUtilisateurDAOJdbcImpl extends HttpServlet {
 	}
 
 }
+	}

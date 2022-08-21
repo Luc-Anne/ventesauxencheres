@@ -2,6 +2,13 @@
   max-width: 960px;
 }
 
+/* Bootstrap navbar */
+.navbar-nav .nav-link.active,
+.navbar-nav .show > .nav-link,
+.navbar-nav .show > li .nav-link {
+  color: black;
+}
+
 #profil-main {
 	color: black;
 	margin-left:500px;

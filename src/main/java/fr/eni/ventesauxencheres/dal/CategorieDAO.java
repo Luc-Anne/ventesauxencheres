@@ -1,5 +1,7 @@
 package fr.eni.ventesauxencheres.dal;
 
-public interface CategorieDAO {
+import fr.eni.ventesauxencheres.bo.Categorie;
+
+public interface CategorieDAO extends DAO<Categorie> {
 
 }

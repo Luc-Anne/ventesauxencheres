@@ -1,16 +1,68 @@
-- Gérer l'unicité de l'e-mail et du peusdo lors de la modification du profil
-Bédiss - Supprimer de l'inscription la mention administrateur et fournir 100 crédits lors de l'inscription
-- Ajouter les deux methodes de validation dans chaque manager de la bbl
-- Modifier le nom inscription dans la dal utilisateur pour insert & modifier le type de retour de ce insert par un utilisateur
-- Nom des fichiers différents des urls présentées : modifier les urls plutôt que les fichiers ?
-- Voir comment externaliser les paramètres de la ressource de connexion jdbc dans un fichier externe.
+Nota bene :
+1. Quand on se lance dans une tâche, on informe les autres grâce à ce fichier en remplacant le tiret par son prénom. Exemple :
+Luc Faire le fichier TODO
+Une fois que la tâche est terminé, on remplace son nom par OK. Exemple :
+OK Écrire le Nota bene du fichier TODO.
+Bien sûr, on peut en informer les autres par d'autres moyens mais garder cette liste à jour permet de savoir où en est le projet.
+Une tâche voire deux à la fois, pas plus car on peut bien entendu les enchainer.
+2. Libre à vous de rajouter des tâches, qu'elles soient indispensable ou non, dans les différentes rubriques.
+Noter des tâches qu'on a pas le temps de faire maintenant mais qu'on ne veut pas oublier car c'est une bonne idée est indispensable. C'est une des manières de travailler sur un projet conséquent.
+Surtout, ne jamais supprimer de lignes afin de garder l'historique, sauf si bien sûr on se met tous d'accord.
+Aussi, cette liste n'a pas forcément vocation à ne contenir que des choses que l'on va implémenter ; Ne pas avoir le temps de faire quelque chose n'implique pas que cette chose soit inutile.
+Enfin, si vous vous proposez quelque chose dont vous n'êtes pas sûr, écrivez une tâche sous forme de question et on pourra en discuter.
+################################################################################
+Première version :
+
+OK Faire les fichiers controllers et jsp pour les fonctionnalités principales
+- Choisir une jsp/fonctionnalité pour coder de A à Z une première version : Faire une seule fonctionnalité si la page en demande plusieurs
+
+################################################################################
+Version Livrable :
+
+Organisation du site :
 - Une fois que les vues des fonctionnalités sont implémentées, se demander comment l'intégré aux autres vues déjà présente.
+
+Ajustement des fonctionnalités :
+OK Supprimer de l'inscription la mention administrateur et fournir 100 crédits lors de l'inscription
+OK Déplacement du bouton
+OK Revoir pour bien nettoyer la session de utilisateurConnecte lors de la deconnexion
+- Factoriser la deconnexion (deconnexion et desincription) dans la BLL
+
+Harmonisation du code / Nettoyage du code :
+OK Modifier le nom inscription dans la dal utilisateur pour insert & modifier le type de retour de ce insert par un utilisateur
+
+Fonctionnalités supplémentaires :
+- Se pencher sur la question d'une nouvelle fonctionnalité demandée (voir fichier excel)
+
+Erreurs de saisies :
+- Remonter les erreurs de saisie de formulaires avec la classe Errors
+- Ajouter les deux methodes de validation dans chaque manager de la bbl
+- Gérer l'unicité de l'e-mail et du pseudo lors de la modification du profil
+- Remonter les autres contraintes SQL existantes jusqu'à l'utilisateur
+- Ajouter des trim() lors de la récupération des saisies de formulaire (éviter les doublons "rr" et "rr " par exemple)
+
+Sécurité :
+- Faire un doFilter pour l'accès à l'administration (/admin/*) et un autres pour l'accès aux tests (/test/*)
+OK Faire un doFilter pour l'accès aux pages accessibles aux utilisateurs connectés (/moncompte/*) => modifier les urls correspondantes avec /moncompte/ au lieu de /utilisateur/
+- Nom des fichiers différents des urls présentées : modifier les urls plutôt que les fichiers ?
+
+Législation :
+- Demander l'autorisation d'utiliser les cookies (Strictement nécessaire et préférence)
+
+################################################################################
+Amélioration des fonctionnalités :
+
+Organisation du site :
+- Mettre les données sauvegardés dans le sql dans le context application ? afin de réduire au maximum les requêtes SQL ?
+
+Harmonisation du code / Nettoyage du code :
+- Créer une interface pour les managers de la bll pour avoir les mêmes noms de méthodes.
+
+Sécurité : 
+- Voir comment externaliser les paramètres de la ressource de connexion jdbc dans un fichier externe.
 - Voir comment sortir le mot de passe de la bo
 - Crypter le mot de passe en changeant son type dans la base de données, intégrer le cryptage en java et modifier le jeu de données de la base de données.
-- Créer une interface pour les managers de la bll pour avoir les mêmes noms de méthodes.
-- Faire un doFilter pour l'accès à l'administration (/admin/*) et aux tests (/test/*)
-Bich - Faire un doFilter pour l'accès aux pages accessibles aux utilisateurs connectés (/moncompte/*)
-      => modifier les urls correspondantes avec /moncompte/ au lieu de /utilisateur/
-- Plutôt que de tester s'il y a un utilisateurConnecté != null, il faudrait seulement vérifier si une session existe.
-Ainsi, il ne faudrait pas créer automatiquement une session à chaque fois qu'on appelle request.getSession() en conditionnant cet appel
-dans un if en testant si request.getRequestedSessionId() != null;
+- Modifier le nom de la session JSESSION dans le cookie (<session-config><cookie-config><name>)
+
+Style :
+- Utiliser getPathInfo() et getServletPath() pour retrouver un morceau de l'url pour s'en servir comme paramètre. Utiliser une variable pour créer une url dans une jsp. 
