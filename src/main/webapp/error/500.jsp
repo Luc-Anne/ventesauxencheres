@@ -1,3 +1,4 @@
+<%@ page import="fr.eni.ventesauxencheres.controllers.Url" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,9 +6,9 @@
 <title>Erreur 500</title>
 </head>
 <body>
-	<p>Le serveur a rencontrÃ© un problÃ¨me.</p>
+	<p>Le serveur a rencontré un problème.</p>
 	<br>
 	<p>Veuillez vous redirigez vers la page d'accueil :</p>
-	<a href="../home">Page d'accueil</a>
+	<a href="${Url.HOME.getUrl()}">Page d'accueil</a>
 </body>
 </html>

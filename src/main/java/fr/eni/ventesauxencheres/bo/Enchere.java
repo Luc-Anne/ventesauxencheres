@@ -7,8 +7,8 @@ public class Enchere {
 	private LocalDateTime dateEnchere;
 	private int montantEnchere;
 	// Association
-	private Utilisateur encherisseur;
-	private Article article;
+	private Utilisateur encherisseur; // Correspondance SQL
+	private Article article; // Correspondance SQL
 	
 	public Enchere() {}
 	

@@ -5,6 +5,7 @@
 <%@ page import="java.util.Date" %>
 
 <%@ include file="/WEB-INF/fragments/taglib.jspf" %>
+
 <!DOCTYPE html>
 <html>
 <head>

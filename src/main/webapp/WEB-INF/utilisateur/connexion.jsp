@@ -15,7 +15,7 @@
 	</c:if>
 	 -->
 	<div class="container mt-5">
-		<form action="${pageContext.request.contextPath}/utilisateur/connexion" method="post">
+		<form action="${Url.CONNEXION.getUrl()}" method="post">
 			<div class="mb-3">
 				<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" placeholder="Adresse mail">
 			</div>

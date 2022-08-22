@@ -1,3 +1,4 @@
+<%@ page import="fr.eni.ventesauxencheres.controllers.Url" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,9 +6,9 @@
 <title>Erreur 404</title>
 </head>
 <body>
-	<p>La page demandÃ©e n'existe pas.</p>
+	<p>La page demandée n'existe pas.</p>
 	<br>
 	<p>Veuillez vous redirigez vers la page d'accueil :</p>
-	<a href="../home">Page d'accueil</a>
+	<a href="${Url.HOME.getUrl()}">Page d'accueil</a>
 </body>
 </html>
