@@ -17,6 +17,7 @@ public class Article {
 	private Categorie categorieArticle; // Correspondance SQL
 	private Utilisateur vendeur; // Correspondance SQL
 	private Retrait retrait; // Utilité application
+	private Utilisateur encherisseur;
 	private Enchere enchere;
 	
 	public Article() {}
@@ -154,6 +155,14 @@ public class Article {
 
 	public void setEnchere(Enchere enchere) {
 		this.enchere = enchere;
+	}
+
+	public Utilisateur getEncherisseur() {
+		return encherisseur;
+	}
+
+	public void setEncherisseur(Utilisateur encherisseur) {
+		this.encherisseur = encherisseur;
 	}
 	
 	
