@@ -117,9 +117,14 @@
                          <div class="col-3 p-2">
                              <img class="img-fluid img-thumbnail" src="images/photo.svg" alt="pas de photo" />
                          </div>
-                         <ul class="col-9 list-unstyled p-2">
-                             <li>Prix : ${itemArticle.miseAPrix} point(s)</li>
-                             <li>Meilleure enchère :${itemArticle.prixVente} point(s)</li>                                 
+                         <ul class="col-9 list-unstyled p-2">                            
+                             <c:if test="${not empty prixVente}">
+                             	<!-- Non opérationnel -->
+							   <li>Meilleure enchère :${itemArticle.prixVente} point(s)</li>      
+							</c:if>
+                             <c:if test="${empty prixVente}">
+							    <li>Prix : ${itemArticle.miseAPrix} point(s)</li>   
+							</c:if>							                                                        
                              <%
                              Article art = (Article) pageContext.getAttribute("itemArticle");
                              LocalDateTime dateLDT=art.getDateFinEncheres();
