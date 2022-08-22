@@ -28,7 +28,7 @@ public class Desinscription extends HttpServlet {
 			// TODO Prévoir un message qui s'affichera juste en dessous de la navbar pour confirmer la suppression du compte
 			// TODO Créer une div de communication globale pour ce genre de cas
 			request.setAttribute("sucessDelete", "Suppression de l'utilisateur réussie");
-			response.sendRedirect("/home");
+			response.sendRedirect(request.getContextPath() + "/home");
 		} catch (BLLException e) {
 			// TODO Prévoir un message qui s'affichera juste en dessous de la navbar pour dire que ça n'a pas fonctionné
 			request.setAttribute("sucessDelete", "Suppression de l'utilisateur échoué");
