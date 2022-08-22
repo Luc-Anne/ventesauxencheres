@@ -15,6 +15,16 @@ Première version :
 
 OK Faire les fichiers controllers et jsp pour les fonctionnalités principales
 - Choisir une jsp/fonctionnalité pour coder de A à Z une première version : Faire une seule fonctionnalité si la page en demande plusieurs
+- Home 7 affichages possibles :
+Bich Non connecté
+- Achat enchères ouvertes
+- Achat enchètres en cours
+- Achat enchères remportées
+- Ventes en cours
+- Mes ventes non débutées
+- Mes ventes terminées
+Bediss Nouvelle Vente / Ajouter Article
+Luc Détails Article / Modifier étatVente et enchérissement
 
 ################################################################################
 Version Livrable :
