@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="fr.eni.ventesauxencheres.bo.Article" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.util.Date" %>
+
 <%@ include file="/WEB-INF/fragments/taglib.jspf" %>
 <!DOCTYPE html>
 <html>
@@ -114,10 +118,19 @@
                          </div>
                          <ul class="col-9 list-unstyled p-2">
                              <li>Prix : ${itemArticle.miseAPrix} point(s)</li>
-                             <li>Meilleure enchère :${itemArticle.prixVente} point(s)</li>
-                             <li>Fin de l'enchère : ${itemArticle.dateFinEncheres} - dd-MM-yyyy HH:mm</li>
-                             <li>Vendeur : ${itemArticle.vendeur.pseudo}</li>
-                         </ul>
+                             <li>Meilleure enchère :${itemArticle.prixVente} point(s)</li>                                 
+                             <%
+                             Article art = (Article) pageContext.getAttribute("itemArticle");
+                             LocalDateTime dateLDT=art.getDateFinEncheres();
+                             System.out.println("LocalDateTime : "+dateLDT);
+                            // Date dateDate=Date.from(dateLDT.atZone(ZoneId.systemDefault()).toInstant());
+                            Date dateD = java.sql.Timestamp.valueOf(dateLDT);
+                            System.out.println("Date : "+dateD);
+                                                                        
+                             %>                       
+                             <c:set var="dateFormate" value="<%=java.sql.Timestamp.valueOf(dateLDT)%>" />
+                             <li>Fin de l'enchère : <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateFormate}" /></li>
+							<li><a href="/profil/">Vendeur : ${itemArticle.vendeur.pseudo}</a></li>
                      </div>
                      <a class="mt-3 btn btn-lg btn-block btn-primary" href="#" title="faire une enchère">
                          <img class="small-icon" src="images/bid.svg">
