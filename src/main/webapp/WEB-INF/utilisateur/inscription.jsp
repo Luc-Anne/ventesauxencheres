@@ -41,12 +41,22 @@
 
 							<div class="col-12">
 								<c:set var="isInvalid" value=""></c:set>
+								<c:set var="IF" value=""></c:set>
 								<c:if test="${erreurs.contains('utilisateur.pseudo_vide')}">
 									<c:set var="isInvalid" value="is-invalid"></c:set>
+									<c:set var="IF" value="${IF} Le pseudo doit être renseigné."></c:set>
+								</c:if>
+								<c:if test="${erreurs.contains('utilisateur.pseudo_tropLong')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+									<c:set var="IF" value="${IF} Le pseudo est trop long."></c:set>
+								</c:if>
+								<c:if test="${erreurs.contains('utilisateur.pseudo_avecEspace')}">
+									<c:set var="isInvalid" value="is-invalid"></c:set>
+									<c:set var="IF" value="${IF} Le pseudo ne doit pas avoir d'espace."></c:set>
 								</c:if>
 								<label for="username" class="form-label">Pseudo</label>
 								<input type="text" class="form-control ${isInvalid}" id="username" required name="pseudo">
-								<div class="invalid-feedback">Il faut nécessairement indiquer un pseudo</div>
+								<div class="invalid-feedback">${IF}</div>
 							</div>
 							<div class="col-sm-6">
 								<c:set var="isInvalid" value=""></c:set>

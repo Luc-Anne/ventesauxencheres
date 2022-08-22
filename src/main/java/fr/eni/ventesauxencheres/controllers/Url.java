@@ -12,7 +12,7 @@ public enum Url {
 	HOME("/home"),
 	// Utilisateur
 	INSCRIPTION("/inscription"),
-	DESINSCRIPTION("/moncompte/desincription"), // Filter on /moncompte/
+	DESINSCRIPTION("/moncompte/desinscription"), // Filter on /moncompte/
 	COMPTE_PROFIL("/moncompte/profil"), // Filter on /moncompte/
 	CONNEXION("/connexion"),
 	DECONNEXION("/moncompte/deconnexion"), // Filter on /moncompte/
