@@ -12,8 +12,6 @@
 <meta name="generator" content="Hugo 0.84.0">
 <%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
 <title>${initParam.debutTitre} Inscription</title>
-<link rel="canonical"
-	href="https://getbootstrap.com/docs/5.0/examples/checkout/">
 
 <style>
 .bd-placeholder-img {
@@ -30,34 +28,11 @@
 	}
 }
 </style>
-
-
-<!-- Custom styles for this template -->
-<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 		<main>
 			<div class="container">
-			<div class="py-5 text-center">
-				<img class="d-block mx-auto mb-4" src="img/inscription.jpg" alt=""
-					width="350" height="200">
-				<h2>Bienvenue Sur Le Formulaire d'Inscription</h2>
-				<p class="lead">
-					Merci de Renseigner les informations ci-dessous afin de vous
-					connecter lors de la prochaine session
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-						fill="currentColor" class="bi bi-emoji-smile" viewBox="0 0 16 16">
-  <path
-							d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-  <path
-							d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
-</svg>
-					</i>
-
-				</p>
-			</div>
-
 			<div class="row g-8">
 				<div class="col-md-12 col-lg-12">
 					<h4 class="mb-3">Informations Générales à fournir</h4>

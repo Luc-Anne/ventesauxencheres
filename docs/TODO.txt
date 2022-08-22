@@ -21,7 +21,7 @@ Version Livrable :
 
 Organisation du site :
 - Une fois que les vues des fonctionnalités sont implémentées, se demander comment l'intégré aux autres vues déjà présente.
-Luc Enum pour les adresse url du site
+OK Enum pour les adresse url du site
 
 Ajustement des fonctionnalités :
 OK Supprimer de l'inscription la mention administrateur et fournir 100 crédits lors de l'inscription
@@ -41,6 +41,7 @@ Erreurs de saisies :
 - Gérer l'unicité de l'e-mail et du pseudo lors de la modification du profil
 - Remonter les autres contraintes SQL existantes jusqu'à l'utilisateur
 - Ajouter des trim() lors de la récupération des saisies de formulaire (éviter les doublons "rr" et "rr " par exemple)
+- Faire un div de navigation pour message principal
 
 Sécurité :
 - Faire un doFilter pour l'accès à l'administration (/admin/*) et un autres pour l'accès aux tests (/test/*)

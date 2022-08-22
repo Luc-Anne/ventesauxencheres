@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import fr.eni.ventesauxencheres.bll.BLLException;
 import fr.eni.ventesauxencheres.bll.UtilisateurManager;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.controllers.Url;
 
 @WebServlet("/moncompte/desinscription")
 public class Desinscription extends HttpServlet {
@@ -28,7 +29,7 @@ public class Desinscription extends HttpServlet {
 			// TODO Prévoir un message qui s'affichera juste en dessous de la navbar pour confirmer la suppression du compte
 			// TODO Créer une div de communication globale pour ce genre de cas
 			request.setAttribute("sucessDelete", "Suppression de l'utilisateur réussie");
-			response.sendRedirect(request.getContextPath() + "/home");
+			response.sendRedirect(Url.HOME.getUrl());
 		} catch (BLLException e) {
 			// TODO Prévoir un message qui s'affichera juste en dessous de la navbar pour dire que ça n'a pas fonctionné
 			request.setAttribute("sucessDelete", "Suppression de l'utilisateur échoué");

@@ -7,7 +7,6 @@
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
 	<title>${initParam.debutTitre} Profil</title>
 </head>
-
 <body class="bg-light">
 <body>
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
@@ -16,7 +15,7 @@
 			<div class="row g-8">
 				<div class="col-md-12 col-lg-12">
 					<h4 class="mb-3">Informations Générales à modifier</h4>
-					<form class="needs-validation" novalidate  action="${pageContext.request.contextPath}/moncompte/profil" method="post">
+					<form class="needs-validation" novalidate  action="${Url.COMPTE_PROFIL.getUrl()}" method="post">
 						<div class="row g-3">
 							<div class="col-12">
 								<c:set var="isInvalid" value=""></c:set>
@@ -80,7 +79,7 @@
 					</form>
 				</div>
 			</div>
-			<form action="${pageContext.request.contextPath}/moncompte/desinscription" method="post">
+			<form action="${Url.DESINSCRIPTION.getUrl()}" method="post">
 				<button class="btn btn-danger">Delete</button>
 			</form>
 		</main>
