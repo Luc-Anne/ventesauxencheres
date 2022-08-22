@@ -123,15 +123,12 @@
                              <%
                              Article art = (Article) pageContext.getAttribute("itemArticle");
                              LocalDateTime dateLDT=art.getDateFinEncheres();
-                             System.out.println("LocalDateTime : "+dateLDT);
                             // Date dateDate=Date.from(dateLDT.atZone(ZoneId.systemDefault()).toInstant());
-                            Date dateD = java.sql.Timestamp.valueOf(dateLDT);
-                            System.out.println("Date : "+dateD);
-                                                                        
+                            Date dateD = java.sql.Timestamp.valueOf(dateLDT);                                                                        
                              %>                       
                              <c:set var="dateFormate" value="<%=java.sql.Timestamp.valueOf(dateLDT)%>" />
                              <li>Fin de l'enchère : <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateFormate}" /></li>
-							<li><a href="/profil/">Vendeur : ${itemArticle.vendeur.pseudo}</a></li>
+							<li><a href="${Url.PROFIL_PUBLIC.getUrl()}${itemArticle.vendeur.pseudo}">Vendeur : ${itemArticle.vendeur.pseudo}</a></li>
                      </div>
                      <a class="mt-3 btn btn-lg btn-block btn-primary" href="#" title="faire une enchère">
                          <img class="small-icon" src="images/bid.svg">

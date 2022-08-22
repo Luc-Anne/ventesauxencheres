@@ -17,7 +17,10 @@ public enum Url {
 	CONNEXION("/connexion"),
 	DECONNEXION("/moncompte/deconnexion"), // Filter on /moncompte/
 	// Administrateur
-	ADMIN_TABLEAUDEBORD("/admin");
+	ADMIN_TABLEAUDEBORD("/admin"),
+	// Business
+	PROFIL_PUBLIC("/profil/");
+	
 	
 	private String url;
 	
