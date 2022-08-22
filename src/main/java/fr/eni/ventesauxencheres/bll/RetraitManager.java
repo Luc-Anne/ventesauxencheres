@@ -41,10 +41,10 @@ public class RetraitManager {
 	}
 	
 	// Méthodes métier basiques
-	public Retrait save(Retrait u) throws BLLException {
+	public Retrait save(Retrait retrait) throws BLLException {
 		try {
-			if (this.isValide(u)) {
-				return retraitDAO.insert(u);
+			if (this.isValide(retrait)) {
+				return retraitDAO.insert(retrait);
 			} else {
 				throw new BLLException("retrait invalide");
 			}

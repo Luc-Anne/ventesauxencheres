@@ -39,11 +39,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			+ "JOIN ARTICLES_VENDUS as a on u.no_utilisateur=a.no_utilisateur \r\n"
 			+ "JOIN RETRAITS as r on a.no_article=r.no_article;";
 
-	@Override
-	public Utilisateur connexion(String email, String motDePasse) throws DALException {
-		Utilisateur u = null;
-		return u;}
-
 	// CRUD
 	public Utilisateur insert(Utilisateur u) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
@@ -181,49 +176,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		return null;
 	}
 
-
-	
-	
-
-//	
-//	public Utilisateur checkUtilisateur (String email, String password) throws DALException {
-//		Utilisateur u = null;
-//		
-//		
-//		try (Connection cnx = ConnectionProvider.getConnection_VAE();){
-//			try (PreparedStatement stmt = cnx.prepareStatement(CHECK_UTILISATEUR);){
-//				
-//				
-//				
-//				
-//				cnx.setAutoCommit(false);
-//				stmt.setString(1, email);
-//				stmt.setString(2, password);
-//
-//				ResultSet resultSet = stmt.executeQuery();
-//				if (resultSet.next()) {
-//					u = new Utilisateur(resultSet.getInt("no_utilisateur"), resultSet.getString("pseudo"),
-//							resultSet.getString("nom"), resultSet.getString("prenom"), resultSet.getString("email"),
-//							resultSet.getString("telephone"), resultSet.getString("rue"),
-//							resultSet.getString("code_postal"), resultSet.getString("ville"),
-//							resultSet.getString("mot_de_passe"), resultSet.getInt("credit"),
-//							resultSet.getBoolean("administrateur"));
-//					cnx.commit();
-//			}
-//				
-//			} catch (Exception e) {
-////				cnx.rollback();
-//				throw new DALException("Probleme checkUtilisateur", e);
-//			}
-//			
-//		} catch (Exception e) {
-//			throw new DALException("Probleme checkUtilisateur", e);
-//		}
-//		
-//		return u;
-//	}
-//	
-
 	public Utilisateur selectByPseudo(String pseudo) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_PSEUDO);) {
@@ -247,29 +199,29 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 	}
 	
+	@Override
+	public Utilisateur connexion(String email, String motDePasse) throws DALException {
+		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
+			try (PreparedStatement stmt = cnx.prepareStatement(CONNEXION);) {
+				stmt.setString(1, email);
+				stmt.setString(2, motDePasse);
+				ResultSet rs = stmt.executeQuery();
+				Utilisateur u = null;
+				if (rs.next()) {
+					u = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"),
+							rs.getString("nom"), rs.getString("prenom"), rs.getString("email"),
+							rs.getString("telephone"), rs.getString("rue"),
+							rs.getString("code_postal"), rs.getString("ville"),
+							rs.getString("mot_de_passe"), rs.getInt("credit"),
+							rs.getBoolean("administrateur"));
+				}
+				return u;
+			} catch (SQLException e) {
+				throw new DALException("Erreur insertion ", e);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Probleme insertion", e);
+		}
+	}
 
-@Override
-public boolean inscription(Utilisateur u) throws DALException {
-	// TODO Auto-generated method stub
-	return false;
-}
-@Override
-public boolean deleteById(int id) throws DALException {
-	// TODO Auto-generated method stub
-	return false;
-}
-@Override
-public Utilisateur checkUtilisateur(String email, String password) throws DALException {
-	// TODO Auto-generated method stub
-	return null;
-}
-@Override
-public Utilisateur getUtilisateurById(int id) throws DALException {
-	// TODO Auto-generated method stub
-	return null;
-}
-@Override
-public List<Utilisateur> getAllUtilisateur() throws DALException {
-	return null;
-}
 }
