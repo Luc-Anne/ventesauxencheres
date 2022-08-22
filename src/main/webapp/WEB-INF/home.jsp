@@ -120,10 +120,10 @@
                          <ul class="col-9 list-unstyled p-2">                            
                              <c:if test="${not empty prixVente}">
                              	<!-- Non opérationnel -->
-							   <li>Meilleure enchère :${itemArticle.prixVente} point(s)</li>      
+							   <li>Meilleure enchère : ${itemArticle.prixVente} point(s)</li>      
 							</c:if>
                              <c:if test="${empty prixVente}">
-							    <li>Prix : ${itemArticle.miseAPrix} point(s)</li>   
+							    <li>Prix de mise: ${itemArticle.miseAPrix} point(s)</li>   
 							</c:if>							                                                        
                              <%
                              Article art = (Article) pageContext.getAttribute("itemArticle");
@@ -134,6 +134,9 @@
                              <c:set var="dateFormate" value="<%=java.sql.Timestamp.valueOf(dateLDT)%>" />
                              <li>Fin de l'enchère : <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateFormate}" /></li>
 							<li><a href="${Url.PROFIL_PUBLIC.getUrl()}${itemArticle.vendeur.pseudo}">Vendeur : ${itemArticle.vendeur.pseudo}</a></li>
+							<li>Montant enchère : ${itemArticle.enchere.montantEnchere} point(s)</li>
+							<li>Encherisseur : ${itemArticle.encherisseur.pseudo}</li>
+							<li>Prix de vente : ${itemArticle.prixVente} point(s)</li>   
                      </div>
                      <a class="mt-3 btn btn-lg btn-block btn-primary" href="#" title="faire une enchère">
                          <img class="small-icon" src="images/bid.svg">
