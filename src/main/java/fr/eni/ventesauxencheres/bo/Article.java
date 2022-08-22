@@ -13,8 +13,9 @@ public class Article {
 	private int prixVente;
 	private String etatVente; //"RT" "VD" "EC" "CR"
 	// Association
-	private Categorie categorieArticle;
-	private Utilisateur vendeur;
+	private Categorie categorieArticle; // Correspondance SQL
+	private Utilisateur vendeur; // Correspondance SQL
+	private Retrait retrait; // Utilité application
 	
 	public Article() {}
 
@@ -137,5 +138,12 @@ public class Article {
 		this.vendeur = vendeur;
 	}
 
+	public Retrait getRetrait() {
+		return retrait;
+	}
+
+	public void setRetrait(Retrait retrait) {
+		this.retrait = retrait;
+	}
 	
 }
