@@ -32,6 +32,7 @@
             </ul>
         </div>
         <!--filtre-->
+        <c:if test="${not empty utilisateurConnecte}">
         <form class="form-filter border mb-3" action="#" method="">
             <div class="row">
                 <!--Partie gauche-->
@@ -104,6 +105,7 @@
             	<img class="small-icon" src="images/search.svg" alt="Eni Ecole">
             </button>
         </form>
+        </c:if>
 
         <!--enchères-->
         <div class="row justify-content-center border-top card-deck">
