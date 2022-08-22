@@ -5,10 +5,10 @@
 <html>
 <head>
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
-	<c:if test=${empty utilisateur}>
+	<c:if test="${empty utilisateur}">
 		<title>${initParam.debutTitre} Aucun profil</title>
 	</c:if>
-	<c:if test=${not empty utilisateur}>
+	<c:if test="${not empty utilisateur}">
 		<title>${initParam.debutTitre} Profil de ${utilisateur.pseudo}</title>
 	</c:if>
 </head>
@@ -17,11 +17,11 @@
 <body>
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	<main>
-		<c:if test=${empty utilisateur}>
+		<c:if test="${empty utilisateur}">
 			<p>Ce pseudo n'est pas utilisé.</p>
 			<a href="${pageContext.request.contextPath}/home">Page d'accueil</a>
 		</c:if>
-		<c:if test=${not empty utilisateur}>
+		<c:if test="${not empty utilisateur}">
 			<ul>
 				<li>${utilisateur.pseudo}</li>
 				<li>${utilisateur.nom}</li>

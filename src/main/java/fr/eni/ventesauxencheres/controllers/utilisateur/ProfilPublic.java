@@ -26,7 +26,9 @@ public class ProfilPublic extends HttpServlet {
 		Utilisateur utilisateur = null;
 		try {
 			utilisateur = UtilisateurManager.getInstance().getByPseudo(pseudoProfilDemande);
-		} catch (BLLException e) {}
+		} catch (BLLException e) {
+			e.printStackTrace();
+		}
 		// Même si l'utilisateur n'existe pas, on affiche la jsp profilPublic dans laquelle on affichera un message d'erreur
 		request.setAttribute("utilisateur", utilisateur);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profilPublic.jsp");
