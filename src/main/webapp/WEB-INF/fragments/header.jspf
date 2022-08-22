@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- Afficher le message en fonction de la connexion -->
-<%@ include file="/WEB-INF/fragments/taglib.jspf" %>
 <header>
 <nav class="pr-5 navbar navbar-expand-sm bg-dark navbar-dark align-top justify-content-between"  >
 		<!-- Choix du typeDeMenuAAfficher -->
