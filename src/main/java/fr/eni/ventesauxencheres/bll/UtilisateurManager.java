@@ -37,12 +37,6 @@ public class UtilisateurManager {
 	public List<String> invalidCause(Utilisateur utilisateur)  {
 		List<String> invalidCause = new ArrayList<>();
 		
-		// utilisateur
-		if (utilisateur == null) {
-			invalidCause.add("utilisateur_null");
-			return invalidCause;
-		}
-		
 		// pseudo
 		if (utilisateur.getPseudo() == null ||
 			utilisateur.getPseudo() == "") {

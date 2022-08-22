@@ -70,7 +70,7 @@
 									<c:set var="isInvalid" value="is-invalid"></c:set>
 								</c:if>
 								<label for="username" class="form-label">Pseudo</label>
-								<input type="text" class="form-control ${isInvalid}" id="username" required name="Pseudo">
+								<input type="text" class="form-control ${isInvalid}" id="username" required name="pseudo">
 								<div class="invalid-feedback">Il faut nécessairement indiquer un pseudo</div>
 							</div>
 							<div class="col-sm-6">

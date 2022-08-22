@@ -54,17 +54,15 @@ public class Inscription extends HttpServlet {
 		int credit = UtilisateurManager.DEFAULT_CREDIT;
 		boolean administrateur = false;
 
-		Utilisateur u = null;
+		Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur);
 		try {
-			u = UtilisateurManager.getInstance().save(
-				new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur)
-			);
-			request.getSession().setAttribute("utilisateurConnecte", u);
+			utilisateur = UtilisateurManager.getInstance().save(utilisateur);
+			request.getSession().setAttribute("utilisateurConnecte", utilisateur);
 			// TODO Afficher un message de bienvenue confirmant l'inscription
 			request.setAttribute("messageInscription", "Inscription réussie ");
-			response.sendRedirect("/home");
+			response.sendRedirect(request.getContextPath() + "/home");
 		} catch (BLLException e) {
-			erreurs.addAll(UtilisateurManager.getInstance().invalidCause(u));
+			erreurs.addAll(UtilisateurManager.getInstance().invalidCause(utilisateur));
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
 			if (rd != null) {
 				rd.forward(request, response);
