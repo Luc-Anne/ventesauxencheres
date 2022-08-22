@@ -21,6 +21,7 @@ Version Livrable :
 
 Organisation du site :
 - Une fois que les vues des fonctionnalités sont implémentées, se demander comment l'intégré aux autres vues déjà présente.
+Luc Enum pour les adresse url du site
 
 Ajustement des fonctionnalités :
 OK Supprimer de l'inscription la mention administrateur et fournir 100 crédits lors de l'inscription
