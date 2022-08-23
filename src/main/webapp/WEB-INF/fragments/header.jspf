@@ -14,9 +14,10 @@
 			<img id="imageTrocenchere" class="small-icon" src="${pageContext.request.contextPath}/img/trocenchere.jpg" alt="Accueil ENI-Encheres" height="50px" width="50"> 
 			<strong>ENI-Encheres</strong>
 		</a>
-		<c:if test="${not empty utilisateurConnecte && utilisateurConnecte.credit != 0}">
+		<c:if test="${not empty utilisateurConnecte}">
 		<li class="navbar-brand" style="list-style-type: none;">
-			<strong>${utilisateurConnecte.credit}</strong> <small>credits</small>
+			<strong>${utilisateurConnecte.credit}</strong>
+			<small>credit<c:if test="${utilisateurConnecte.credit != 0}">s</c:if></small>
 		</li>
 		</c:if>
 		<ul class="navbar-nav ml-auto">
