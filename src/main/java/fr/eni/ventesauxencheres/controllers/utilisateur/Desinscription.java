@@ -26,13 +26,9 @@ public class Desinscription extends HttpServlet {
 			Utilisateur uc = (Utilisateur) session.getAttribute("utilisateurConnecte");
 			UtilisateurManager.getInstance().delete(uc.getNoUtilisateur());
 			session.invalidate();
-			// TODO Prévoir un message qui s'affichera juste en dessous de la navbar pour confirmer la suppression du compte
-			// TODO Créer une div de communication globale pour ce genre de cas
-			request.setAttribute("sucessDelete", "Suppression de l'utilisateur réussie");
+			request.getSession().setAttribute("messageGlobal", "Vous avez bien été désincrit");
 			response.sendRedirect(Url.HOME.getUrl());
 		} catch (BLLException e) {
-			// TODO Prévoir un message qui s'affichera juste en dessous de la navbar pour dire que ça n'a pas fonctionné
-			request.setAttribute("sucessDelete", "Suppression de l'utilisateur échoué");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/moncompte/profil");
 			if (rd != null) {
 				rd.forward(request, response);

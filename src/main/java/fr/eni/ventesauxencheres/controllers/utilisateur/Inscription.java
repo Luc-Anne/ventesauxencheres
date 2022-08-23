@@ -52,8 +52,7 @@ public class Inscription extends HttpServlet {
 		try {
 			utilisateur = UtilisateurManager.getInstance().save(utilisateur);
 			request.getSession().setAttribute("utilisateurConnecte", utilisateur);
-			// TODO Afficher un message de bienvenue confirmant l'inscription
-			request.setAttribute("messageInscription", "Inscription réussie ");
+			request.getSession().setAttribute("messageGlobal", "Bienvenue sur le site !");
 			response.sendRedirect(Url.HOME.getUrl());
 		} catch (BLLException e) {
 			erreurs.addAll(UtilisateurManager.getInstance().invalidCause(utilisateur));

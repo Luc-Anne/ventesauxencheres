@@ -17,6 +17,7 @@ public class Deconnexion extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
+		request.getSession().setAttribute("messageGlobal", "Vous avez été déconnecté");
 		response.sendRedirect(Url.HOME.getUrl());
 	}
 

@@ -9,12 +9,9 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
-	<main class="container">
-		<p>La page demandée n'existe pas.</p>
-		<br>
-		<p>Veuillez vous redirigez vers la page d'accueil :</p>
-		<a href="${Url.HOME.getUrl()}">Page d'accueil</a>
-	</main>
+	<div id="messageGlobal">
+		<p>La page demandée n'existe pas</p>
+	</div>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>
 </html>

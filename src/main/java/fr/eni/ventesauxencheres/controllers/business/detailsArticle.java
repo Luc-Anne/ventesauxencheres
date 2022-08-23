@@ -25,6 +25,10 @@ public class detailsArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Récupérer un attribut à travers un sendRedirect
+		request.setAttribute("messageGlobal", request.getSession().getAttribute("messageGlobal"));
+		request.getSession().removeAttribute("messageGlobal");
+		
 		// Récupération des paramètres
 		int no_article = 0;
 		try {

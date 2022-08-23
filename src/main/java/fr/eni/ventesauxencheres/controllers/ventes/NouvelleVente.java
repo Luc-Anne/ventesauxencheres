@@ -29,7 +29,6 @@ public class NouvelleVente extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/nouvelleVente.jsp");
 		if (rd != null) {rd.forward(request, response);
 		}
-			
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -104,7 +103,6 @@ public class NouvelleVente extends HttpServlet {
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 }

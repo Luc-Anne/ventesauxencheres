@@ -44,7 +44,7 @@ public class Connexion extends HttpServlet {
 					response.sendRedirect(Url.ADMIN_TABLEAUDEBORD.getUrl());
 				} else {
 					// Passer un attribut à travers un sendRedirect
-					session.setAttribute("messageGlobal", "Bienvenue !");
+					session.setAttribute("messageGlobal", "Bonjour " + utilisateur.getPrenom() + " " + utilisateur.getNom());
 					response.sendRedirect(Url.HOME.getUrl());
 				}
 			} else {
