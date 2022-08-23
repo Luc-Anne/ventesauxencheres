@@ -105,12 +105,26 @@
         </form>
         </c:if>
 
+ 
+  <span>-----------------------------------------------------------------------------</span>       
         <!--enchères-->
-        <div class="row justify-content-center border-top card-deck">
-           <c:forEach items="${articlesList}" var="itemArticle">
-           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
-            </c:forEach>
-     </div>
+        <c:if test="${empty utilisateurConnecte}">
+	        <!-- Liste des articles mode non connecté -->
+	        <div class="row justify-content-center border-top card-deck">
+	           <c:forEach items="${articlesList}" var="itemArticle">
+	           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+	            </c:forEach>
+	     	</div>
+     	</c:if>
+     	<!-- Affichage Achats - Enchères ouvertes -->
+     	<c:if test="${not empty utilisateurConnecte}">
+     		<c:if test="${achats.checked}">
+     		 <h3>Bouton radio achat checked !</h3>
+     		</c:if>      	
+     	</c:if>
+    	
+     	
+     	 
     </main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>
