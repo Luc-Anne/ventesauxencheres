@@ -9,7 +9,7 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
-	<main>
+	<main class="container">
 		<!-- Afficher la liste des utilisateurs avec un lien par utilisateur vers la vue de gestion des utilisateurs /admin/utilisateur -->
 	</main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>

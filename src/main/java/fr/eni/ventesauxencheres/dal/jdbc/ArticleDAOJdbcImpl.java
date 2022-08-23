@@ -1,7 +1,6 @@
 package fr.eni.ventesauxencheres.dal.jdbc;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,8 +9,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import fr.eni.ventesauxencheres.bo.Article;
 import fr.eni.ventesauxencheres.bo.Categorie;
@@ -71,8 +68,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			stmt.setString(1, article.getNomArticle());
 			stmt.setString(2, article.getDescription());
 			
-			stmt.setTimestamp(3, java.sql.Timestamp.valueOf(article.getDateDebutEncheres()));
-            stmt.setTimestamp(4, java.sql.Timestamp.valueOf(article.getDateFinEncheres()));
+			stmt.setTimestamp(3, Timestamp.valueOf(article.getDateDebutEncheres()));
+            stmt.setTimestamp(4, Timestamp.valueOf(article.getDateFinEncheres()));
 			stmt.setInt(5, article.getMiseAPrix());
 			stmt.setInt(6, article.getVendeur().getNoUtilisateur());
 			stmt.setInt(7, article.getCategorieArticle().getNoCategorie());
@@ -100,7 +97,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			throw new DALException("Erreur insertion ", e);
 		}
 
-		
+		// TODO Ajouter le no_article avant de le renvoyer
 		return article;
 	}
 
@@ -218,13 +215,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	@Override
 	public void update(Article userToUpdated) throws DALException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void delete(int id) throws DALException {
-		// TODO Auto-generated method stub
 		
 	}
 

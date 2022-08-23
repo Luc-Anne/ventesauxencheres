@@ -38,7 +38,6 @@ public class TestUtilisateurDAOJdbcImpl extends HttpServlet {
 
 			
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -57,7 +56,6 @@ public class TestUtilisateurDAOJdbcImpl extends HttpServlet {
 			}
 			
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 		// Test 3 ###################################################
@@ -82,9 +80,8 @@ public class TestUtilisateurDAOJdbcImpl extends HttpServlet {
 			  }else {
 				  message+="utilisateur non trouvé. Test incomplet"; 
 				  }	  		  
-		  } catch (DALException e1) { // TODO Auto-generated catch block
-
-		  e1.printStackTrace(); 
+		  } catch (DALException e1) {
+			  e1.printStackTrace(); 
 		  } 
 		  pw.append(message);
 		 

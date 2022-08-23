@@ -13,7 +13,7 @@
 <body class="bg-light">
 <body>
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
-	<main>
+	<main class="container">
 		<c:if test="${not empty utilisateur}">
 			<ul>
 				<li>${utilisateur.pseudo}</li>

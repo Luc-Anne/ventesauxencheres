@@ -31,8 +31,7 @@
 </head>
 <body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
-		<main>
-			<div class="container">
+		<main class="container">
 			<div class="row g-8">
 				<div class="col-md-12 col-lg-12">
 					<h4 class="mb-3">Informations Générales à fournir</h4>
@@ -141,7 +140,6 @@
 					</form>
 				</div>
 			</div>
-		</div>
 	</main>
 
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>

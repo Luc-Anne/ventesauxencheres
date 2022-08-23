@@ -138,7 +138,8 @@
 							<li><a href="${Url.PROFIL_PUBLIC.getUrl()}${itemArticle.vendeur.pseudo}">Vendeur : ${itemArticle.vendeur.pseudo}</a></li>
 							<li>Montant enchère : ${itemArticle.enchere.montantEnchere} point(s)</li>
 							<li>Encherisseur : ${itemArticle.encherisseur.pseudo}</li>
-							<li>Prix de vente : ${itemArticle.prixVente} point(s)</li>   
+							<li>Prix de vente : ${itemArticle.prixVente} point(s)</li>
+						</ul>   
                      </div>
                      <a class="mt-3 btn btn-lg btn-block btn-primary" href="#" title="faire une enchère">
                          <img class="small-icon" src="images/bid.svg">

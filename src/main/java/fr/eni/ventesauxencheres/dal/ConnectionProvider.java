@@ -25,7 +25,6 @@ public class ConnectionProvider {
 	
 	public static Connection getConnection_VAE() throws SQLException {
 		Connection cnx = bdd_VEA.getConnection();
-		// cnx.setAutoCommit(false); /* TODO Use this line for default */
 		return cnx;
 	}
 	

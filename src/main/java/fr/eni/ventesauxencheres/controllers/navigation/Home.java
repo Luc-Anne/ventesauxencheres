@@ -19,7 +19,6 @@ import fr.eni.ventesauxencheres.bo.Article;
 public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Article> articleList;
 		try {
@@ -31,7 +30,6 @@ public class Home extends HttpServlet {
 				rd.forward(request, response);
 			}
 		} catch (BLLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

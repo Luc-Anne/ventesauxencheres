@@ -33,7 +33,7 @@ public class TestUtilisateurManager extends HttpServlet {
 		  FactoryDAO.getUtilisateurDAO().update(user);
 		  message+="Aucune exception levée. Test OK";
 		  
-		  } catch (DALException e) { // TODO Auto-generated catch block
+		  } catch (DALException e) {
 		  message+="Erreur BLL. Echec update"; e.printStackTrace(); }
 		 
 		pw.append(message);

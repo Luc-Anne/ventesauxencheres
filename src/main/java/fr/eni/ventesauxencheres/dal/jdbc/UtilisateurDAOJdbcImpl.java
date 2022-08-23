@@ -95,7 +95,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return listeUtilisateursExistants;

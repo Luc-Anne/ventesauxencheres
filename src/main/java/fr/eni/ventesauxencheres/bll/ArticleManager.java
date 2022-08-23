@@ -33,8 +33,6 @@ public class ArticleManager {
 	}
 	
 	public List<String> invalidCause(Article article)  {
-		// TODO vérifier que la longueur des chaines de caractères soient bien compatibles avec les contraintes sql
-		// TODO vérifier qu'il n'y a pas d'espace à l'intérieur des pseudos
 		List<String> invalidCause = new ArrayList<>();
 		// TODO Remplir des critères de validation
 		return invalidCause;

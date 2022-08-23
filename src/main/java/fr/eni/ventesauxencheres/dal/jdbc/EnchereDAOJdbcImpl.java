@@ -16,7 +16,7 @@ import fr.eni.ventesauxencheres.dal.DALException;
 import fr.eni.ventesauxencheres.dal.EnchereDAO;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO {
-
+	// TODO Enchere a un CRUD de base différent
 	private static final String SELECT_BY_OBJECT = ""
 			+ "SELECT * "
 			+ "FROM ENCHERES "
@@ -25,13 +25,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	@Override
 	public Enchere insert(Enchere u) throws DALException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Enchere selectById(int id) throws DALException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -70,13 +68,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	@Override
 	public void update(Enchere userToUpdated) throws DALException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void delete(int id) throws DALException {
-		// TODO Auto-generated method stub
 		
 	}
 

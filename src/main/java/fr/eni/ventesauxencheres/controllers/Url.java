@@ -21,7 +21,7 @@ public enum Url {
 	// Business
 	PROFIL_PUBLIC("/profil/"), //Ajouter un pseudo juste à la suite
 	DETAILS_ARTICLE("/encheres/article"); // le paramètre no_article est nécessaire pour la Servlet	
-	
+	// TODO Ajouter l'url de NouvelleVente
 	private String url;
 	
 	Url(String url) {

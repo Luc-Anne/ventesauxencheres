@@ -12,7 +12,7 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
-	<main>
+	<main class="container">
 		<%
 		// Supprimer ces lignes
 		Article article = (Article)request.getAttribute("article");

@@ -14,26 +14,28 @@
 		<p class="fs-3 text-center text-success">${messageConnexion}</p>
 	</c:if>
 	 -->
-	<div class="container mt-5">
-		<form action="${Url.CONNEXION.getUrl()}" method="post">
-			<div class="mb-3">
-				<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" placeholder="Adresse mail">
+	 <main class="container">
+		<div class="mt-5">
+			<form action="${Url.CONNEXION.getUrl()}" method="post">
+				<div class="mb-3">
+					<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" placeholder="Adresse mail">
+				</div>
+				<div class="mb-3">
+					<input type="password" class="form-control" id="exampleInputPassword1" name="motDePasse" placeholder="Mot de passe">
+				</div>
+				<c:if test="${not empty echecConnexion}">
+					<div class="form-invalid-feedback">Email ou mot de passe incorrect.</div>
+				</c:if>
+				<!-- FONCTIONNALITE 1002 Se souvenir de moi 
+			<div class="mb-3 form-check">
+				<input type="checkbox" class="form-check-input" id="exampleCheck1">
+				<label class="form-check-label" for="exampleCheck1">Check me out</label>
 			</div>
-			<div class="mb-3">
-				<input type="password" class="form-control" id="exampleInputPassword1" name="motDePasse" placeholder="Mot de passe">
-			</div>
-			<c:if test="${not empty echecConnexion}">
-				<div class="form-invalid-feedback">Email ou mot de passe incorrect.</div>
-			</c:if>
-			<!-- FONCTIONNALITE 1002 Se souvenir de moi 
-		<div class="mb-3 form-check">
-			<input type="checkbox" class="form-check-input" id="exampleCheck1">
-			<label class="form-check-label" for="exampleCheck1">Check me out</label>
+			-->
+				<button type="submit" class="btn btn-primary">Se connecter</button>
+			</form>
 		</div>
-		-->
-			<button type="submit" class="btn btn-primary">Se connecter</button>
-		</form>
-	</div>
+	</main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf"%>
 </body>
 </html>

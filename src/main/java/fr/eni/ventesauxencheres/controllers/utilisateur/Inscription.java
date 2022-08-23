@@ -22,11 +22,6 @@ import fr.eni.ventesauxencheres.controllers.Url;
 public class Inscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public Inscription() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");

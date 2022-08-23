@@ -3,9 +3,7 @@ package fr.eni.ventesauxencheres.bll;
 public class BLLException extends Exception {
     private static final long serialVersionUID = 2270280020015195969L;
 
-
-
-   public BLLException() {
+    public BLLException() {
         super();
     }
     
