@@ -43,10 +43,12 @@ public class Connexion extends HttpServlet {
 				if (utilisateur.isAdministrateur()) {
 					response.sendRedirect(Url.ADMIN_TABLEAUDEBORD.getUrl());
 				} else {
+					// Passer un attribut à travers un sendRedirect
+					session.setAttribute("messageGlobal", "Bienvenue !");
 					response.sendRedirect(Url.HOME.getUrl());
 				}
 			} else {
-				request.setAttribute("echecConnexion", "Email ou mot de passe incorrect.");
+				request.setAttribute("messageGlobal", "Email ou mot de passe incorrect");
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp");
 				if (rd != null) {
 					rd.forward(request, response);

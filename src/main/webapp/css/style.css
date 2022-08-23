@@ -9,6 +9,17 @@
   color: black;
 }
 
+#messageGlobal {
+	text-align: center;
+	background-color: #ffc107;
+}
+
+#messageGlobal p {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-weight: bold;
+}
+
 #profil-main {
 	margin-left:500px;
 }
