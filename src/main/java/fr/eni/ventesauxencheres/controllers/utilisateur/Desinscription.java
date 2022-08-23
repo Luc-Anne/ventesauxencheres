@@ -22,6 +22,15 @@ public class Desinscription extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
+			// TODO Tester avant si on a le droit de le faire sinon remonter une exception
+			// Changer le false avec la raison choisie
+			if(false) {
+				request.setAttribute("messageGlobal", "Vous ne pouvez pas supprimer votre compte car ....");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/moncompte/profil");
+				if (rd != null) {
+					rd.forward(request, response);
+				}
+			}
 			HttpSession session = request.getSession();
 			Utilisateur uc = (Utilisateur) session.getAttribute("utilisateurConnecte");
 			UtilisateurManager.getInstance().delete(uc.getNoUtilisateur());
