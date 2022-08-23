@@ -21,8 +21,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "SELECT * "
 			+ "FROM ENCHERES e "
 			+ "LEFT JOIN UTILISATEURS u ON e.no_utilisateur = u.no_utilisateur "
-			+ "WHERE no_article = ? "
-			+ "ORDER BY date_enchere DESC ";
+			+ "WHERE no_article = ? ";
 
 	@Override
 	public Enchere insert(Enchere u) throws DALException {

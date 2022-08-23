@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="fr.eni.ventesauxencheres.bo.Article" %>
+<%@ page import="fr.eni.ventesauxencheres.bo.Enchere" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.util.Date" %>
 <%@ include file="/WEB-INF/fragments/taglib.jspf" %>
@@ -39,11 +40,11 @@
 			Date dateFinEncheresDate = java.sql.Timestamp.valueOf(dateDebutEncheres);
 			%>
 			<c:set var="dateFormate" value="<%=dateFinEncheresDate%>" />
-			<c:if test="${article.etatVente == 'VD'} || ${article.etatVente == 'RT'}">
+			<c:if test="${article.etatVente == 'VD' || article.etatVente == 'RT'}">
 				<li><fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateFinEncheresDate}" /></li>
 			</c:if>
 			<li>${article.miseAPrix}</li>
-			<c:if test="${article.etatVente == 'VD'} || ${article.etatVente == 'RT'}">
+			<c:if test="${article.etatVente == 'VD' || article.etatVente == 'RT'}">
 				<li>${article.prixVente}</li>
 			</c:if>
 			<li>${article.etatVente}</li>
@@ -60,22 +61,25 @@
 				<li>${article.utilisateur.ville}</li>
 			</c:if>
 		</ul>
-		<c:if test="${article.etatVente == 'EC'}">
-			<h3>Historique des enchères :</h3>
-			<table>
-			<c:forEach var="enchere" items="${encheres}">
+		<c:if test="${article.etatVente == 'EC' && not empty enchere}">
+			<table class="table">
 				<tr>
-					<td>${enchere.utilisateur.pseudo}</td>
+					<th scope="col">Dernier enrichisseur</th>
+					<th scope="col">Montant de l'enchère</th>
+					<th scope="col">Date</th>
+				</tr>
+				<tr>
+					<td>${enchere.encherisseur.pseudo}</td>
 					<td>${enchere.montantEnchere}</td>
 					<%
 					// Supprimer ces lignes
-					LocalDateTime dateEncheres = article.getDateFinEncheres();
+					Enchere enchere = (Enchere)request.getAttribute("enchere");
+					LocalDateTime dateEncheres = enchere.getDateEnchere();
 					Date dateEncheresDate = java.sql.Timestamp.valueOf(dateEncheres);
 					%>
 					<c:set var="dateFormate" value="<%=dateEncheresDate%>" />
 					<td><fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateFormate}" /></td>
 				</tr>
-			</c:forEach>
 			</table>
 		</c:if>
 

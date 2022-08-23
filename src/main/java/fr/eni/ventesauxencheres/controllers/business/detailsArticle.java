@@ -1,7 +1,6 @@
 package fr.eni.ventesauxencheres.controllers.business;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,13 +48,13 @@ public class detailsArticle extends HttpServlet {
 		if (article.getEtatVente() == "CR") {
 			response.sendError(404);
 		} else {
-			List<Enchere> encheres = null;
 			Utilisateur acheteur = null;
+			Enchere enchere = null;
 			try {
-				encheres = EnchereManager.getInstance().getByObject(article);
-				if (encheres != null) {
+				enchere = EnchereManager.getInstance().getByArticle(article);
+				if (enchere != null) {
 					if (article.getEtatVente() == "VD" || article.getEtatVente() == "RT") {
-						acheteur = encheres.get(0).getEncherisseur();
+						acheteur = enchere.getEncherisseur();
 					}
 				}
 			} catch (BLLException e) {
@@ -72,10 +71,10 @@ public class detailsArticle extends HttpServlet {
 					response.sendError(403);
 				}
 			}
-			
+
 			// Affichage de la vue
 			request.setAttribute("article", article);
-			request.setAttribute("encheres", encheres);
+			request.setAttribute("enchere", enchere);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/business/detailsArticle.jsp");
 			if (rd != null) {
 				rd.forward(request, response);
