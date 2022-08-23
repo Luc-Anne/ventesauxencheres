@@ -16,8 +16,7 @@ public class Article {
 	private Categorie categorieArticle; // Correspondance SQL
 	private Utilisateur vendeur; // Correspondance SQL
 	private Retrait retrait; // Utilité application
-	private Utilisateur encherisseur; // TODO a supprimer
-	private Enchere enchere; // TODO a supprimer
+
 
 	public Article() {};
 	
