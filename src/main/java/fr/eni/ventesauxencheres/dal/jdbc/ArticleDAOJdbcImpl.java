@@ -1,12 +1,17 @@
 package fr.eni.ventesauxencheres.dal.jdbc;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import fr.eni.ventesauxencheres.bo.Article;
 import fr.eni.ventesauxencheres.bo.Categorie;
@@ -25,11 +30,63 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "JOIN UTILISATEURS as seller on seller.no_utilisateur=a.no_utilisateur \r\n"
 			+ "JOIN CATEGORIES as c on c.no_categorie=a.no_categorie \r\n"
 			+ "LEFT JOIN RETRAITS as r  on r.no_article=a.no_article;";
+	
+	
+	
+	//INSERT INTO ARTICLES_VENDUS 
+	private static final String INSERT 
+						="INSERT INTO ARTICLES_VENDUS \r\n"
+						+ "(nom_article,"	//1
+						+ "description, " //2
+						+ "date_debut_enchere," //3
+						+ "date_fin_enchere, " //4
+						+ "prix_initial, " //5
+						+ "no_utilisateur, " //6
+						+ "no_categorie) "//7
+						+ " VALUES (?,?,?,?,?,?,?);"; 
+	
 
 	@Override
-	public Article insert(Article u) throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+	public Article insert(Article article) throws DALException {
+		ResultSet rs= null;
+
+		
+		try (Connection cnx = ConnectionProvider.getConnection_VAE();
+				PreparedStatement stmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);){
+			stmt.setString(1, article.getNomArticle());
+			stmt.setString(2, article.getDescription());
+			
+			stmt.setTimestamp(3, java.sql.Timestamp.valueOf(article.getDateDebutEncheres()));
+            stmt.setTimestamp(4, java.sql.Timestamp.valueOf(article.getDateFinEncheres()));
+			stmt.setInt(5, article.getMiseAPrix());
+			stmt.setInt(6, article.getVendeur().getNoUtilisateur());
+			stmt.setInt(7, article.getCategorieArticle().getNoCategorie());
+
+//			Timestamp dateDebutEC = Timestamp.valueOf(article.getDateDebutEncheres());
+//			Timestamp dateFinEC = Timestamp.valueOf(article.getDateFinEncheres());
+//			System.out.println(dateDebutEC);
+//			stmt.setTimestamp(3, dateDebutEC);
+//			stmt.setTimestamp(4, dateFinEC);
+			//java.sql.Date.valueof
+//			stmt.setTimestamp(3, java.sql.Timestamp.valueOf(article.getDateDebutEncheres()));
+//			stmt.setTimestamp(4, java.sql.Timestamp.valueOf(article.getDateFinEncheres()));
+			
+			
+			
+//			stmt.setInt(6, article.getNo_utilisateur());
+//			stmt.setInt(7, article.getCategorie());
+
+
+			stmt.executeUpdate();
+			
+
+			
+		} catch (SQLException e) {
+			throw new DALException("Erreur insertion ", e);
+		}
+
+		
+		return article;
 	}
 
 	@Override

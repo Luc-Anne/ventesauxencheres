@@ -36,7 +36,7 @@
 						<hr class="dropdown-divider">
 					</c:if>
 					<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
-						<a class="nav-link" href="#" alt="Vendre un article">Vendre un article</a>
+						<a class="nav-link" href="${pageContext.request.contextPath}/nouvelleVente/add" alt="Vendre un article">Vendre un article</a>
 						<hr class="dropdown-divider">
 						<a class="nav-link" href="#">${sessionScope.utilisateurConnecte.prenom} ${sessionScope.utilisateurConnecte.nom} N P</a>
 						<a class="nav-link" href="${pageContext.request.contextPath}/moncompte/profil" alt="S'inscrire à ENI-Encheres">Mon Profil</a>
@@ -61,7 +61,7 @@
 			</c:if>
 			<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
 				<li class="nav-item d-none d-lg-block">
-					<a class="nav-link" href="#" alt="Vendre un article">Vendre un article</a>
+					<a class="nav-link" href="${pageContext.request.contextPath}/nouvelleVente/add" alt="Vendre un article">Vendre un article</a>
 				</li>
 				<li class="nav-item dropdown d-none d-lg-block ">
 					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">

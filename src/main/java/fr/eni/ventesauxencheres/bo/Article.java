@@ -15,8 +15,72 @@ public class Article {
 	// Association
 	private Categorie categorieArticle;
 	private Utilisateur vendeur;
+	private Retrait lieuDeRetrait;
 	
+	private int no_utilisateur;
+	private int categorie;
+	
+	
+	
+	public int getNo_utilisateur() {
+		return no_utilisateur;
+	}
+
+	public void setNo_utilisateur(int no_utilisateur) {
+		this.no_utilisateur = no_utilisateur;
+	}
+
+	public int getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(int categorie) {
+		this.categorie = categorie;
+	}
+
+	public Retrait getLieuDeRetrait() {
+		return lieuDeRetrait;
+	}
+
+	public void setLieuDeRetrait(Retrait lieuDeRetrait) {
+		this.lieuDeRetrait = lieuDeRetrait;
+	}
+
 	public Article() {}
+
+	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle,
+			Utilisateur vendeur, Retrait lieuDeRetrait) {
+
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.etatVente = etatVente;
+		this.categorieArticle = categorieArticle;
+		this.vendeur = vendeur;
+		this.lieuDeRetrait = lieuDeRetrait;
+	}
+
+	
+	public Article(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle,
+			Utilisateur vendeur, Retrait lieuDeRetrait) {
+		super();
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.etatVente = etatVente;
+		this.categorieArticle = categorieArticle;
+		this.vendeur = vendeur;
+		this.lieuDeRetrait = lieuDeRetrait;
+	}
 
 	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle,
