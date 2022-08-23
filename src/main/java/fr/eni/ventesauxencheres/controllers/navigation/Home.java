@@ -20,6 +20,10 @@ public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Récupérer un attribut à travers un sendRedirect
+		request.setAttribute("messageGlobal", request.getSession().getAttribute("messageGlobal"));
+		request.getSession().removeAttribute("messageGlobal");
+		
 		List<Article> articleList;
 		try {
 			articleList = ArticleManager.getInstance().getAll();
