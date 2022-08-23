@@ -197,7 +197,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		);
 		
 		Retrait retrait = null;
-		if (rs.getString("rue") != null) {
+		if (rs.getString("Rrue") != null) {
 			retrait = new Retrait (
 				rs.getString("Rrue"),
 				rs.getString("Rcode_postal"),

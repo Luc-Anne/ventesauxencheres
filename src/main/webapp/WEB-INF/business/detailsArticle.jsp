@@ -15,92 +15,101 @@
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	<main class="container">
 		<%
-		// Supprimer ces lignes
 		Article article = (Article)request.getAttribute("article");
 		%>
 		<!-- Afficher les détails d'un article -->
 		<h3>${article.nomArticle}</h3>
-		<ul>
-			<li>${article.description}</li>
-			<li>
-				<%
-				// Supprimer ces lignes
-				LocalDateTime dateDebutEncheres = article.getDateDebutEncheres();
-				Date dateDebutEncheresDate = java.sql.Timestamp.valueOf(dateDebutEncheres);
-				%>
-				<c:set var="dateFormate" value="<%=java.sql.Timestamp.valueOf(dateDebutEncheres)%>" />
-				<fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateFormate}" />
+		<ul class="list-group">
+			<li class="list-group-item d-flex justify-content-between align-items-start">
+				<div class="ms-2 me-auto">
+					<div class="fw-bold">Article</div>
+					${article.nomArticle}
+				</div>
 			</li>
-			<%
-			// Supprimer ces lignes
-			LocalDateTime dateFinEncheres = article.getDateFinEncheres();
-			Date dateFinEncheresDate = java.sql.Timestamp.valueOf(dateDebutEncheres);
-			%>
-			<c:set var="dateFormate" value="<%=dateFinEncheresDate%>" />
-			<c:if test="${article.etatVente == 'VD' || article.etatVente == 'RT'}">
-				<li><fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateFinEncheresDate}" /></li>
+			<li class="list-group-item d-flex justify-content-between align-items-start">
+				<div class="ms-2 me-auto">
+					<div class="fw-bold">Description</div>
+					${article.description}
+				</div>
+			</li>
+			<c:if test="${typeAffichage == 'typeEncherir'}">
+			<li class="list-group-item d-flex justify-content-between align-items-start">
+				<div class="ms-2 me-auto">
+					<div class="fw-bold">Categorie</div>
+					${article.categorieArticle.libelle}
+				</div>
+			</li>
 			</c:if>
-			<li>${article.miseAPrix}</li>
-			<c:if test="${article.etatVente == 'VD' || article.etatVente == 'RT'}">
-				<li>${article.prixVente}</li>
-			</c:if>
-			<li>${article.etatVente}</li>
-			<li>${article.categorieArticle.libelle}</li>
-			<li><a href="${Url.PROFIL_PUBLIC.getUrl()}${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
-			<c:if test="${not empty article.retrait}">
-				<li>${article.retrait.rue}</li>
-				<li>${article.retrait.codePostal}</li>
-				<li>${article.retrait.ville}</li>
-			</c:if>
-			<c:if test="${empty article.retrait}">
-				<li>${article.utilisateur.rue}</li>
-				<li>${article.utilisateur.codePostal}</li>
-				<li>${article.utilisateur.ville}</li>
-			</c:if>
-		</ul>
-		<c:if test="${article.etatVente == 'EC' && not empty enchere}">
-			<table class="table">
-				<tr>
-					<th scope="col">Dernier enrichisseur</th>
-					<th scope="col">Montant de l'enchère</th>
-					<th scope="col">Date</th>
-				</tr>
-				<tr>
-					<td>${enchere.encherisseur.pseudo}</td>
-					<td>${enchere.montantEnchere}</td>
+			<li class="list-group-item d-flex justify-content-between align-items-start">
+				<div class="ms-2 me-auto">
+					<div class="fw-bold">Meilleure offre</div>
+					<c:if test="${not empty article.enchere}">
+						${article.enchere.montantEnchere} credit
+						<c:if test="${typeAffichage == 'typeEncherir'}">
+							 par ${article.enchere.encherisseur.pseudo}
+						</c:if>
+						<c:if test="${typeAffichage == 'typeRetrait'}">
+							par <a href="${Url.PROFIL_PUBLIC.getUrl()}${article.enchere.encherisseur.pseudo}">${article.enchere.encherisseur.pseudo}</a>
+						</c:if>
+						<c:if test="${typeAffichage == 'typeBack'}">
+							<!-- Rien -->
+						</c:if>
+					</c:if>
+					<c:if test="${empty article.enchere}">
+						Aucune enchère n'a été faite
+					</c:if>
+				</div>
+			</li>
+			<li class="list-group-item d-flex justify-content-between align-items-start">
+				<div class="ms-2 me-auto">
+					<div class="fw-bold">Mise à prix</div>
+					${article.miseAPrix}
+				</div>
+			</li>
+			<c:if test="${typeAffichage != 'typeBack'}">
+			<li class="list-group-item d-flex justify-content-between align-items-start">
+				<div class="ms-2 me-auto">
+					<div class="fw-bold">Fin des enchères</div>
 					<%
-					// Supprimer ces lignes
-					Enchere enchere = (Enchere)request.getAttribute("enchere");
-					LocalDateTime dateEncheres = enchere.getDateEnchere();
-					Date dateEncheresDate = java.sql.Timestamp.valueOf(dateEncheres);
+					LocalDateTime dateFinEncheres = article.getDateFinEncheres();
+					Date dateFinEncheresDate = java.sql.Timestamp.valueOf(dateFinEncheres);
 					%>
-					<c:set var="dateFormate" value="<%=dateEncheresDate%>" />
-					<td><fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateFormate}" /></td>
-				</tr>
-			</table>
-		</c:if>
-
-		<c:if test="${article.etatVente == 'EC'}">
+					<c:set var="dateFormate" value="<%=dateFinEncheresDate%>" />
+					<fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateFormate}" />
+				</div>
+			</li>
+			</c:if>
+			<li class="list-group-item d-flex justify-content-between align-items-start">
+				<div class="ms-2 me-auto">
+					<div class="fw-bold">TODO</div>
+					
+				</div>
+			</li>
+			<li class="list-group-item d-flex justify-content-between align-items-start">
+				<div class="ms-2 me-auto">
+					<div class="fw-bold">Retrait</div>
+					<c:if test="${not empty article.retrait}">
+						${article.retrait.rue}<br>
+						${article.retrait.codePostal}
+						${article.retrait.ville}
+					</c:if>
+					<c:if test="${empty article.retrait}">
+						${article.vendeur.rue}<br>
+						${article.vendeur.codePostal}
+						${article.vendeur.ville}
+					</c:if>
+				</div>
+			</li>
+		</ul>
+		<c:if test="${typeAffichage == 'typeEncherir'}">
 			<button>Miser</button>
 		</c:if>
-		<c:if test="${article.etatVente == 'VD'} && ${acheteur == sessionScope.utilisateurConnecte}">
+		<c:if test="${typeAffichage == 'typeRetrait'}">
 			<button>Confirmer le retrait</button>
 		</c:if>
-		<c:if test="${article.etatVente == 'RT'}">
-			<p>Retrait effectué</p>
+		<c:if test="${typeAffichage == 'typeBack'}">
+			<button>Back</button>
 		</c:if>
-		
-		
-		<!-- Les boutons d'actions seront à définir en fonction de :
-			- utilisateurConnecte
-			- état de la vente
-		 -->
-		 
-		 <!-- Boutons :
-		 	- Modifier la vente
-		 	- Faire une offre (d'enchère)
-		 	- Valider le retrait
-		  -->
 	</main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>

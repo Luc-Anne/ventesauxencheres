@@ -30,11 +30,13 @@ Demande clients principales :
 OK Supprimer de l'inscription la mention administrateur et fournir 100 crédits lors de l'inscription
 OK Déplacement du bouton suppression vers la modification du profil
 - Gérer l'unicité de l'e-mail et du pseudo lors de la modification du profil et de l'inscription
-- Mettre en commentaire l'affichage de l'image d'un article car c'est une fonctionnalité secondaire
+OK Mettre en commentaire l'affichage de l'image d'un article car c'est une fonctionnalité secondaire
 - Nom des fichiers différents des urls présentées : modifier les urls plutôt que les fichiers ?
 - Ajouter un second champs dans l'inscription pour confirmer le mot de passe
 - FAIRE LES FICHIERS DE TESTS ?
 - Renvoyer la page de nouvelle article vers la page home
+- Gérer la désinscription d'une personne dans la cas où elle a des enchères en cours
+- Intégrer la procédure stockée et faire la classe évènement
 
 Demande clients secondaires :
 + Faire l'administration du site
