@@ -7,17 +7,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="/WEB-INF/fragments/commonHead.jspf"%>
-	<link href="${pageContext.request.contextPath}/css/style.css" type="text/css" rel="stylesheet">
-
-<title>${initParam.debutTitre}Gestiond'un utilisateur</title>
+	<%@ include file="/WEB-INF/fragments/commonHead.jspf"%>
+	<title>${initParam.debutTitre}Gestiond'un utilisateur</title>
 </head>
 <body>
 	<%@ include file="/WEB-INF/fragments/header.jspf"%>
 	<main>
 		<div class="container">
 			<%Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte"); %>
-				<form method="post" action="${pageContext.request.contextPath}/nouvelleVente/add">
+				<form method="post" action="${Url.AJOUTER_ARTICLE.getUrl()}">
 					<!-- Article  -->
 					<div class="mb-3 mt-4">
 						<label for="inputTextArticle" class="form-label">Article</label> 
