@@ -16,13 +16,13 @@ public class Article {
 	private Categorie categorieArticle; // Correspondance SQL
 	private Utilisateur vendeur; // Correspondance SQL
 	private Retrait retrait; // Utilité application
-
+	private Enchere enchere; // Utilité application
 
 	public Article() {};
 	
 	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle,
-			Utilisateur vendeur) {
+			Utilisateur vendeur, Enchere enchere) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -37,7 +37,7 @@ public class Article {
 
 	public Article(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle,
-			Utilisateur vendeur) {
+			Utilisateur vendeur, Enchere enchere) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -56,7 +56,7 @@ public class Article {
 		return "Article [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
 				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
 				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", categorieArticle="
-				+ categorieArticle + ", vendeur=" + vendeur + "]";
+				+ categorieArticle + ", vendeur=" + vendeur + ", retrait=" + retrait + ", enchere=" + enchere + "]";
 	}
 
 	public int getNoArticle() {
@@ -145,6 +145,14 @@ public class Article {
 
 	public void setRetrait(Retrait retrait) {
 		this.retrait = retrait;
+	}
+
+	public Enchere getEnchere() {
+		return enchere;
+	}
+
+	public void setEnchere(Enchere enchere) {
+		this.enchere = enchere;
 	}
 	
 }
