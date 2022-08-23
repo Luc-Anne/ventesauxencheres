@@ -7,7 +7,7 @@
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
 	<title>${initParam.debutTitre} Tableau de bord</title>
 </head>
-<body>
+<body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	<main class="container">
 		<div class="mx-auto text-center">

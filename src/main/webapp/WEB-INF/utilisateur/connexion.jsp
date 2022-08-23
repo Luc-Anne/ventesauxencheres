@@ -7,7 +7,7 @@
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
 	<title>${initParam.debutTitre} Se connecter</title>
 </head>
-<body>
+<body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	<!-- 
 	<c:if test="${messageConnexion == 'Connexion réussie !'}">
