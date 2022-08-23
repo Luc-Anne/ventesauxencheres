@@ -146,21 +146,5 @@ public class Article {
 	public void setRetrait(Retrait retrait) {
 		this.retrait = retrait;
 	}
-
-	public Enchere getEnchere() {
-		return enchere;
-	}
-
-	public void setEnchere(Enchere enchere) {
-		this.enchere = enchere;
-	}
-
-	public Utilisateur getEncherisseur() {
-		return encherisseur;
-	}
-
-	public void setEncherisseur(Utilisateur encherisseur) {
-		this.encherisseur = encherisseur;
-	}
 	
 }
