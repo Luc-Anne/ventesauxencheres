@@ -13,11 +13,12 @@ import javax.servlet.http.HttpSession;
 import fr.eni.ventesauxencheres.bll.BLLException;
 import fr.eni.ventesauxencheres.bll.UtilisateurManager;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.controllers.Url;
 
 /**
  * Servlet implementation class Connexion
  */
-@WebServlet("/utilisateur/connexion")
+@WebServlet("/connexion")
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -40,9 +41,9 @@ public class Connexion extends HttpServlet {
 				session.setAttribute("utilisateurConnecte", utilisateur);
 				// TODO rediriger vers /admin quand la servlet sera créé
 				if (utilisateur.isAdministrateur()) {
-					response.sendRedirect(request.getContextPath() + "/admin");
+					response.sendRedirect(Url.ADMIN_TABLEAUDEBORD.getUrl());
 				} else {
-					response.sendRedirect(request.getContextPath() + "/home");
+					response.sendRedirect(Url.HOME.getUrl());
 				}
 			} else {
 				request.setAttribute("echecConnexion", "Email ou mot de passe incorrect.");

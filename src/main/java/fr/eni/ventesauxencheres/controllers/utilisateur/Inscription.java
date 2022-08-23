@@ -1,7 +1,6 @@
 package fr.eni.ventesauxencheres.controllers.utilisateur;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,17 +8,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import fr.eni.ventesauxencheres.bll.BLLException;
 import fr.eni.ventesauxencheres.bll.UtilisateurManager;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
 import fr.eni.ventesauxencheres.controllers.Errors;
+import fr.eni.ventesauxencheres.controllers.Url;
 
 /**
  * Servlet implementation class Inscription
  */
-@WebServlet("/utilisateur/inscription")
+@WebServlet("/inscription")
 public class Inscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -54,17 +53,15 @@ public class Inscription extends HttpServlet {
 		int credit = UtilisateurManager.DEFAULT_CREDIT;
 		boolean administrateur = false;
 
-		Utilisateur u = null;
+		Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur);
 		try {
-			u = UtilisateurManager.getInstance().save(
-				new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur)
-			);
-			request.getSession().setAttribute("utilisateurConnecte", u);
+			utilisateur = UtilisateurManager.getInstance().save(utilisateur);
+			request.getSession().setAttribute("utilisateurConnecte", utilisateur);
 			// TODO Afficher un message de bienvenue confirmant l'inscription
 			request.setAttribute("messageInscription", "Inscription réussie ");
-			response.sendRedirect("/home");
+			response.sendRedirect(Url.HOME.getUrl());
 		} catch (BLLException e) {
-			erreurs.addAll(UtilisateurManager.getInstance().invalidCause(u));
+			erreurs.addAll(UtilisateurManager.getInstance().invalidCause(utilisateur));
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
 			if (rd != null) {
 				rd.forward(request, response);

@@ -7,7 +7,7 @@ public class Retrait {
 	private String codePostal;
 	private String ville;
 	// Association
-	private Article article;
+	private Article article; // Correspondance SQL
 	
 	public Retrait() {}
 	

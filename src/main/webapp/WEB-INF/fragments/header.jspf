@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- Afficher le message en fonction de la connexion -->
-<%@ include file="/WEB-INF/fragments/taglib.jspf" %>
 <header>
 <nav class="pr-5 navbar navbar-expand-sm bg-dark navbar-dark align-top justify-content-between"  >
 		<!-- Choix du typeDeMenuAAfficher -->
@@ -11,12 +10,12 @@
 		</c:if>
 		
 		<!-- Brand/logo -->
-		<a class="navbar-brand" href="${pageContext.request.contextPath}/home"> 
+		<a class="navbar-brand" href="${Url.HOME.getUrl()}"> 
 			<img id="imageTrocenchere" class="small-icon" src="${pageContext.request.contextPath}/img/trocenchere.jpg" alt="Accueil ENI-Encheres" height="50px" width="50"> 
 			<strong>ENI-Encheres</strong>
 		</a>
-		<a class="navbar-brand" href="${pageContext.request.contextPath}/home" alt="Gérer mon profil" title="Gérer mon profil">
-			<img class="small-icon"src="images/user.svg">
+		<a class="navbar-brand" href="${Url.HOME.getUrl()}" title="Gérer mon profil">
+			<img class="small-icon" src="images/user.svg" alt="icon_user">
 			<span class="align-middle text-muted">XXXXX  xxx, 0 crédit(s)</span>
 		</a>
 		<ul class="navbar-nav ml-auto">
@@ -28,35 +27,35 @@
 				</a>
 				<div class="dropdown-menu dropdown-menu-end">
 					<c:if test="${typeDeMenuAAfficher != 'TypeConnecte'}">
-						<a class="nav-link" href="${pageContext.request.contextPath}/utilisateur/inscription" alt="S'inscrire à ENI-Encheres">M'inscrire</a>
-						<a class="nav-link" href="${pageContext.request.contextPath}/utilisateur/connexion" alt="Se connecter à ENI-Encheres">Me connecter</a>
+						<a class="nav-link" href="${Url.INSCRIPTION.getUrl()}">M'inscrire</a>
+						<a class="nav-link" href="${Url.CONNEXION.getUrl()}">Me connecter</a>
 					</c:if>
 					<c:if test="${typeDeMenuAAfficher == 'TypeConnecte' && sessionScope.utilisateurConnecte.administrateur}">
-						<a class="nav-link" href="#" alt="Administrer le site">Administrer</a>
+						<a class="nav-link" href="#">Administrer</a>
 						<hr class="dropdown-divider">
 					</c:if>
 					<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
 						<a class="nav-link" href="${pageContext.request.contextPath}/nouvelleVente/add" alt="Vendre un article">Vendre un article</a>
 						<hr class="dropdown-divider">
-						<a class="nav-link" href="#">${sessionScope.utilisateurConnecte.prenom} ${sessionScope.utilisateurConnecte.nom} N P</a>
-						<a class="nav-link" href="${pageContext.request.contextPath}/moncompte/profil" alt="S'inscrire à ENI-Encheres">Mon Profil</a>
+						<a  class="nav-link" href="#">${sessionScope.utilisateurConnecte.prenom} ${sessionScope.utilisateurConnecte.nom}</a>
+						<a  class="nav-link" href="${Url.COMPTE_PROFIL.getUrl()}">Mon Profil</a>
 						<hr class="dropdown-divider">
-						<a class="nav-link" href="${pageContext.request.contextPath}/moncompte/deconnexion" alt="Me déconnecter">Me déconnecter</a>
+						<a class="nav-link" href="${Url.DECONNEXION.getUrl()}">Me déconnecter</a>
 					</c:if>
 				</div>
 			</li>
 			<!-- Links for medium screen-->
 			<c:if test="${typeDeMenuAAfficher != 'TypeConnecte'}">
 				<li class="nav-item d-none d-lg-block">
-					<a class="nav-link" href="${pageContext.request.contextPath}/utilisateur/inscription" alt="S'inscrire à ENI-Encheres">M'inscrire</a>
+					<a class="nav-link" href="${Url.INSCRIPTION.getUrl()}">M'inscrire</a>
 				</li>
 				<li class="nav-item d-none d-lg-block">
-					<a class="nav-link" href="${pageContext.request.contextPath}/utilisateur/connexion" alt="Se connecter à ENI-Encheres">Me connecter</a>
+					<a class="nav-link" href="${Url.CONNEXION.getUrl()}">Me connecter</a>
 				</li>
 			</c:if>
 			<c:if test="${typeDeMenuAAfficher == 'TypeConnecte' && sessionScope.utilisateurConnecte.administrateur}">
 				<li class="nav-item d-none d-lg-block">
-					<a class="nav-link" href="#" alt="Administrer le site">Administrer</a>
+					<a class="nav-link" href="#">Administrer</a>
 				</li>
 			</c:if>
 			<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
@@ -65,12 +64,12 @@
 				</li>
 				<li class="nav-item dropdown d-none d-lg-block ">
 					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-						<img class="small-icon" src="images/menu.svg" alt="${sessionScope.utilisateurConnecte.prenom} ${sessionScope.utilisateurConnecte.nom} N P">
+						<img class="small-icon" src="images/menu.svg" alt="${sessionScope.utilisateurConnecte.prenom} ${sessionScope.utilisateurConnecte.nom}">
 					</a>
 					<ul class="dropdown-menu dropdown-menu-end">
-						<li><a class="nav-link" href="${pageContext.request.contextPath}/moncompte/profil" alt="S'inscrire à ENI-Encheres">Mon Profil</a></li>
+						<li><a class="nav-link" href="${Url.COMPTE_PROFIL.getUrl()}">Mon Profil</a></li>
 						<li><hr class="dropdown-divider"></li>
-						<li><a class="nav-link" href="${pageContext.request.contextPath}/moncompte/deconnexion" alt="Me déconnecter">Me déconnecter</a></li>
+						<li><a class="nav-link" href="${Url.DECONNEXION.getUrl()}">Me déconnecter</a></li>
 					</ul>
 				</li>
 			</c:if>

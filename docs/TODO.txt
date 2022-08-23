@@ -14,55 +14,64 @@ Enfin, si vous vous proposez quelque chose dont vous n'êtes pas sûr, écrivez 
 Première version :
 
 OK Faire les fichiers controllers et jsp pour les fonctionnalités principales
-- Choisir une jsp/fonctionnalité pour coder de A à Z une première version : Faire une seule fonctionnalité si la page en demande plusieurs
+- Home 7 affichages possibles :
+	Bich Non connecté
+	- Achat enchères ouvertes
+	- Achat enchètres en cours
+	- Achat enchères remportées
+	- Ventes en cours
+	- Mes ventes non débutées
+	- Mes ventes terminées
+Bediss Nouvelle Vente / Ajouter Article
+Luc Détails Article / Modifier étatVente et enchérissement
 
 ################################################################################
-Version Livrable :
-
-Organisation du site :
-- Une fois que les vues des fonctionnalités sont implémentées, se demander comment l'intégré aux autres vues déjà présente.
-
-Ajustement des fonctionnalités :
+Demande clients principales :
 OK Supprimer de l'inscription la mention administrateur et fournir 100 crédits lors de l'inscription
-OK Déplacement du bouton
-OK Revoir pour bien nettoyer la session de utilisateurConnecte lors de la deconnexion
-- Factoriser la deconnexion (deconnexion et desincription) dans la BLL
-
-Harmonisation du code / Nettoyage du code :
-OK Modifier le nom inscription dans la dal utilisateur pour insert & modifier le type de retour de ce insert par un utilisateur
-
-Fonctionnalités supplémentaires :
-- Se pencher sur la question d'une nouvelle fonctionnalité demandée (voir fichier excel)
-
-Erreurs de saisies :
-- Remonter les erreurs de saisie de formulaires avec la classe Errors
-- Ajouter les deux methodes de validation dans chaque manager de la bbl
-- Gérer l'unicité de l'e-mail et du pseudo lors de la modification du profil
-- Remonter les autres contraintes SQL existantes jusqu'à l'utilisateur
-- Ajouter des trim() lors de la récupération des saisies de formulaire (éviter les doublons "rr" et "rr " par exemple)
-
-Sécurité :
-- Faire un doFilter pour l'accès à l'administration (/admin/*) et un autres pour l'accès aux tests (/test/*)
-OK Faire un doFilter pour l'accès aux pages accessibles aux utilisateurs connectés (/moncompte/*) => modifier les urls correspondantes avec /moncompte/ au lieu de /utilisateur/
+OK Déplacement du bouton suppression vers la modification du profil
+- Gérer l'unicité de l'e-mail et du pseudo lors de la modification du profil et de l'inscription
+- Mettre en commentaire l'affichage de l'image d'un article car c'est une fonctionnalité secondaire
 - Nom des fichiers différents des urls présentées : modifier les urls plutôt que les fichiers ?
+- Ajouter un second champs dans l'inscription pour confirmer le mot de passe
+- FAIRE LES FICHIERS DE TESTS ?
 
-Législation :
-- Demander l'autorisation d'utiliser les cookies (Strictement nécessaire et préférence)
+Demande clients secondaires :
++ Faire l'administration du site
++ Permettre l'ajout d'une photo sur le site
 
-################################################################################
-Amélioration des fonctionnalités :
-
-Organisation du site :
+Organisation du code  :
+OK Revoir pour bien nettoyer la session de utilisateurConnecte lors de la deconnexion
+OK Enum pour les adresse url du site
+- Une fois que les vues des fonctionnalités sont implémentées, se demander comment l'intégré aux autres vues déjà présente. Ne pas hésitez à penser fragments, que ce soit lors de listes parcourues ou bien lors de factorisations sur plusieurs pages
 - Mettre les données sauvegardés dans le sql dans le context application ? afin de réduire au maximum les requêtes SQL ?
 
-Harmonisation du code / Nettoyage du code :
-- Créer une interface pour les managers de la bll pour avoir les mêmes noms de méthodes.
+Harmonisation du code :
+OK Modifier le nom inscription dans la dal utilisateur pour insert & modifier le type de retour de ce insert par un utilisateur
++ Créer une interface pour les managers de la bll pour avoir les mêmes noms de méthodes, voire des méthodes par défauts
++ Factoriser la deconnexion (deconnexion et desincription) dans la BLL
++ Factoriser d'autres fonctionnalités
 
-Sécurité : 
-- Voir comment externaliser les paramètres de la ressource de connexion jdbc dans un fichier externe.
-- Voir comment sortir le mot de passe de la bo
-- Crypter le mot de passe en changeant son type dans la base de données, intégrer le cryptage en java et modifier le jeu de données de la base de données.
-- Modifier le nom de la session JSESSION dans le cookie (<session-config><cookie-config><name>)
+QoL :
+- Mettre un bouton annuler dans la modification du profil pour revenir à l'accueil
+- Faire un div dans le header pour message de communication principal
+- (En cours dans inscription) Remonter les erreurs de saisie de formulaires avec la classe Errors
+- Lorsqu'une erreur est remontée, représenter de nouveau les saisies faites par l'utilisateur
+- Remonter les autres contraintes SQL existantes jusqu'à l'utilisateur si tel est le cas ou bien s'en prémunir dans la validation des manager de la BLL
+OK Ajouter les deux methodes de validation dans chaque manager de la bbl
+
+Législation :
+- Demander l'autorisation d'utiliser les cookies (Strictement nécessaire pour la session). Faire un doFilter pour tout pattern d'url afin de vérifier si la demande à déjà été faite ou non. Ajouter dans le header deux boutons pour accepter ou non.
++ Demander l'autorisation d'utiliser les cookies (Préférence pour la langue choisie)
+
+Sécurité :
+OK Faire un doFilter pour l'accès aux pages accessibles aux utilisateurs connectés (/moncompte/*) => modifier les urls correspondantes avec /moncompte/ au lieu de /utilisateur/
+- Ajouter des trim() lors de la récupération des saisies de formulaire (éviter les doublons "rr" et "rr " par exemple)
+- Réserver l'url de nouvelleVente à un utilisateurConnecte : tant pour l'affichage de la page (doGet) que pour la gestion de cette page doPost) 
++ Faire un doFilter pour l'accès à l'administration (/admin/*) et un autres pour l'accès aux tests (/test/*)
++ Voir comment externaliser les paramètres de la ressource de connexion jdbc dans un fichier externe.
++ Voir comment sortir le mot de passe de la bo
++ Crypter le mot de passe en changeant son type dans la base de données, intégrer le cryptage en java et modifier le jeu de données de la base de données.
++ Modifier le nom de la session JSESSION dans le cookie (<session-config><cookie-config><name>)
 
 Style :
-- Utiliser getPathInfo() et getServletPath() pour retrouver un morceau de l'url pour s'en servir comme paramètre. Utiliser une variable pour créer une url dans une jsp. 
+OK (fait pour le profil public) Utiliser getPathInfo() et getServletPath() pour retrouver un morceau de l'url pour s'en servir comme paramètre. Utiliser une variable pour créer une url dans une jsp. 

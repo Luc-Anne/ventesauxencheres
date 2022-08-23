@@ -37,61 +37,93 @@ public class UtilisateurManager {
 	public List<String> invalidCause(Utilisateur utilisateur)  {
 		List<String> invalidCause = new ArrayList<>();
 		
-		// utilisateur
-		if (utilisateur == null) {
-			invalidCause.add("utilisateur_null");
-			return invalidCause;
-		}
-		
 		// pseudo
 		if (utilisateur.getPseudo() == null ||
 			utilisateur.getPseudo() == "") {
 			invalidCause.add("utilisateur.pseudo_vide");
+		} else {
+			if (utilisateur.getPseudo().length() > 30) {
+				invalidCause.add("utilisateur.pseudo_tropLong");
+			}
+			if (utilisateur.getPseudo().contains(" ")) {
+				invalidCause.add("utilisateur.pseudo_avecEspace");
+			}
 		}
 		// nom
 		if (utilisateur.getNom() == null ||
 			utilisateur.getNom() == "") {
 			invalidCause.add("utilisateur.nom_vide");
+		} else {
+			if (utilisateur.getNom().length() > 30) {
+				invalidCause.add("utilisateur.nom_tropLong");
+			}
 		}
 		// prenom
 		if (utilisateur.getPrenom() == null ||
 			utilisateur.getPrenom() == "") {
 			invalidCause.add("utilisateur.prenom_vide");
+		} else {
+			if (utilisateur.getPrenom().length() > 30) {
+				invalidCause.add("utilisateur.prenom_tropLong");
+			}
 		}
 		// email
 		if (utilisateur.getEmail() == null ||
 			utilisateur.getEmail() == "") {
 			invalidCause.add("utilisateur.email_vide");
-		}
-		if (! utilisateur.getEmail().contains("@")) {
-			invalidCause.add("utilisateur.email_manque@");
+		} else {
+			if (utilisateur.getEmail().length() > 20) {
+				invalidCause.add("utilisateur.email_tropLong");
+			}
+			if (! utilisateur.getEmail().contains("@")) {
+				invalidCause.add("utilisateur.email_manque@");
+			}
 		}
 		// telephone
-		// Peut être null (ou "")
+		if (utilisateur.getNom().length() > 15) {
+			invalidCause.add("utilisateur.telephone_tropLong");
+		}
 		// rue
 		if (utilisateur.getRue() == null ||
 			utilisateur.getRue() == "") {
 			invalidCause.add("utilisateur.rue_vide");
+		} else {
+			if (utilisateur.getRue().length() > 30) {
+				invalidCause.add("utilisateur.rue_tropLong");
+			}
 		}
 		// codePostal
 		if (utilisateur.getCodePostal() == null ||
 			utilisateur.getCodePostal() == "") {
 			invalidCause.add("utilisateur.codePostal_vide");
+		} else {
+			if (utilisateur.getCodePostal().length() > 10) {
+				invalidCause.add("utilisateur.codePostal_tropLong");
+			}
 		}
 		// ville
 		if (utilisateur.getVille() == null ||
 			utilisateur.getVille() == "") {
 			invalidCause.add("utilisateur.ville_vide");
+		} else {
+			if (utilisateur.getVille().length() > 30) {
+				invalidCause.add("utilisateur.ville_tropLong");
+			}			
 		}
 		// motDePasse
 		if (utilisateur.getMotDePasse() == null ||
 			utilisateur.getMotDePasse() == "") {
 			invalidCause.add("utilisateur.motDePasse_vide");
+		} else {
+			if (utilisateur.getMotDePasse().length() > 30) {
+				invalidCause.add("utilisateur.motDePasse_tropLong");
+			}
+			if (utilisateur.getMotDePasse().length() < 8) {
+				// Un mot de passe est d'au moins 8 caractères
+				invalidCause.add("utilisateur.motDePasse_faible");
+			}
 		}
-		if (utilisateur.getMotDePasse().length() < 8) {
-			// Un mot de passe est d'au moins 8 caractères
-			invalidCause.add("utilisateur.motDePasse_faible");
-		}
+		
 		// credit
 		if (utilisateur.getCredit() < 0) {
 			invalidCause.add("utilisateur.credit_negatif");

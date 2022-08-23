@@ -1,6 +1,7 @@
 package fr.eni.ventesauxencheres.bo;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Article {
 
@@ -13,9 +14,11 @@ public class Article {
 	private int prixVente;
 	private String etatVente; //"RT" "VD" "EC" "CR"
 	// Association
-	private Categorie categorieArticle;
-	private Utilisateur vendeur;
-	private Retrait lieuDeRetrait;
+	private Categorie categorieArticle; // Correspondance SQL
+	private Utilisateur vendeur; // Correspondance SQL
+	private Retrait retrait; // Utilité application
+	private Utilisateur encherisseur;
+	private Enchere enchere;
 	
 	private int no_utilisateur;
 	private int categorie;
@@ -38,49 +41,12 @@ public class Article {
 		this.categorie = categorie;
 	}
 
-	public Retrait getLieuDeRetrait() {
-		return lieuDeRetrait;
-	}
-
-	public void setLieuDeRetrait(Retrait lieuDeRetrait) {
-		this.lieuDeRetrait = lieuDeRetrait;
-	}
 
 	public Article() {}
 
-	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle,
-			Utilisateur vendeur, Retrait lieuDeRetrait) {
 
-		this.nomArticle = nomArticle;
-		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
-		this.miseAPrix = miseAPrix;
-		this.prixVente = prixVente;
-		this.etatVente = etatVente;
-		this.categorieArticle = categorieArticle;
-		this.vendeur = vendeur;
-		this.lieuDeRetrait = lieuDeRetrait;
-	}
 
-	
-	public Article(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle,
-			Utilisateur vendeur, Retrait lieuDeRetrait) {
-		super();
-		this.noArticle = noArticle;
-		this.nomArticle = nomArticle;
-		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
-		this.miseAPrix = miseAPrix;
-		this.prixVente = prixVente;
-		this.etatVente = etatVente;
-		this.categorieArticle = categorieArticle;
-		this.vendeur = vendeur;
-		this.lieuDeRetrait = lieuDeRetrait;
-	}
+
 
 	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle,
@@ -201,5 +167,29 @@ public class Article {
 		this.vendeur = vendeur;
 	}
 
+	public Retrait getRetrait() {
+		return retrait;
+	}
+
+	public void setRetrait(Retrait retrait) {
+		this.retrait = retrait;
+	}
+
+	public Enchere getEnchere() {
+		return enchere;
+	}
+
+	public void setEnchere(Enchere enchere) {
+		this.enchere = enchere;
+	}
+
+	public Utilisateur getEncherisseur() {
+		return encherisseur;
+	}
+
+	public void setEncherisseur(Utilisateur encherisseur) {
+		this.encherisseur = encherisseur;
+	}
+	
 	
 }

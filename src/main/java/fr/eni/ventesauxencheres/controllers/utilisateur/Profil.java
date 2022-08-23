@@ -66,12 +66,16 @@ public class Profil extends HttpServlet {
 		} catch (BLLException e) {
 			erreurs.addAll(UtilisateurManager.getInstance().invalidCause(user));
 			CharSequence erreurAChercher = "utilisateurs_pseudo_uq";
-			if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {
-				erreurs.add("utilisateur.pseudo_deja_pris");
+			if (e.getCause() != null && e.getCause().getCause() != null) {
+				if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {
+					erreurs.add("utilisateur.pseudo_deja_pris");
+				}
 			}
 			erreurAChercher = "utilisateurs_email_uq";
-			if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {
-				erreurs.add("utilisateur.email_deja_pris");
+			if (e.getCause() != null && e.getCause().getCause() != null) {
+				if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {
+					erreurs.add("utilisateur.email_deja_pris");
+				}
 			}
 			e.printStackTrace();
 		}

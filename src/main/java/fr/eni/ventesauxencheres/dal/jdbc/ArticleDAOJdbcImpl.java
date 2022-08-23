@@ -15,6 +15,7 @@ import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import fr.eni.ventesauxencheres.bo.Article;
 import fr.eni.ventesauxencheres.bo.Categorie;
+import fr.eni.ventesauxencheres.bo.Enchere;
 import fr.eni.ventesauxencheres.bo.Retrait;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
 import fr.eni.ventesauxencheres.dal.ArticleDAO;
@@ -22,17 +23,20 @@ import fr.eni.ventesauxencheres.dal.ConnectionProvider;
 import fr.eni.ventesauxencheres.dal.DALException;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
-	private static final String SELECT_ALL="SELECT a.no_article,a.nom_article,a.description,a.date_debut_enchere,a.date_fin_enchere,a.prix_initial,a.prix_vente,a.etat_vente, \r\n"
-			+ "c.libelle,c.no_categorie, \r\n"
-			+ "a.no_utilisateur,seller.pseudo,seller.nom,seller.prenom,seller.email,seller.mot_de_passe,seller.telephone,seller.rue,seller.code_postal,seller.ville,seller.administrateur,seller.credit, \r\n"
-			+ "r.rue,r.ville,r.code_postal \r\n"
-			+ "FROM ARTICLES_VENDUS as a \r\n"
-			+ "JOIN UTILISATEURS as seller on seller.no_utilisateur=a.no_utilisateur \r\n"
-			+ "JOIN CATEGORIES as c on c.no_categorie=a.no_categorie \r\n"
-			+ "LEFT JOIN RETRAITS as r  on r.no_article=a.no_article;";
-	
-	
-	
+
+private static final String SELECT_ALL="SELECT a.no_article,a.nom_article,a.description,a.date_debut_enchere,a.date_fin_enchere,a.prix_initial,a.prix_vente,a.etat_vente,\r\n"
+		+ "c.libelle,c.no_categorie,\r\n"
+		+ "a.no_utilisateur,seller.pseudo,seller.nom,seller.prenom,seller.email,seller.mot_de_passe,seller.telephone,seller.rue,seller.code_postal,seller.ville,seller.administrateur,seller.credit,\r\n"
+		+ "r.rue,r.ville,r.code_postal,\r\n"
+		+ "e.montant_enchere,e.date_enchere,\r\n"
+		+ "bidder.no_utilisateur as bidderNo,bidder.pseudo as bidderPseudo,bidder.nom as bidderNom,bidder.prenom as bidderPrenom,bidder.email as bidderEmail,bidder.mot_de_passe as bidderMDP,bidder.telephone as bidderTel,bidder.rue as bidderRue,bidder.code_postal as bidderCP,bidder.ville as bidderVille,bidder.credit as bidderCredit,bidder.administrateur as bidderAd \r\n"
+		+ "FROM ARTICLES_VENDUS as a\r\n"
+		+ "JOIN UTILISATEURS as seller on seller.no_utilisateur=a.no_utilisateur\r\n"
+		+ "JOIN CATEGORIES as c on c.no_categorie=a.no_categorie\r\n"
+		+ "LEFT JOIN RETRAITS as r  on r.no_article=a.no_article\r\n"
+		+ "LEFT JOIN ENCHERES as e on e.no_article=a.no_article\r\n"
+		+ "LEFT JOIN UTILISATEURS as bidder on bidder.no_utilisateur=e.no_utilisateur;";
+
 	//INSERT INTO ARTICLES_VENDUS 
 	private static final String INSERT 
 						="INSERT INTO ARTICLES_VENDUS \r\n"
@@ -43,8 +47,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 						+ "prix_initial, " //5
 						+ "no_utilisateur, " //6
 						+ "no_categorie) "//7
-						+ " VALUES (?,?,?,?,?,?,?);"; 
-	
+						+ " VALUES (?,?,?,?,?,?,?);";
 
 	@Override
 	public Article insert(Article article) throws DALException {
@@ -103,25 +106,39 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				ResultSet rs=stmt.executeQuery(SELECT_ALL);
 			){
 				while(rs.next()) {
-					//Récupérer information du vendeur
-					int noUtilisateur=rs.getInt("no_utilisateur");
+					//Récupérer informations du vendeur
+					int noUtilisateurVendeur=rs.getInt("no_utilisateur");
 					String pseudoVendeur=rs.getString("pseudo");
 					String nomVendeur=rs.getString("nom");
 					String prenomVendeur=rs.getString("prenom");
-					String email=rs.getString("email");
-					String telephone=rs.getString("telephone");
-					String rue=rs.getString("rue");
-					String codePostal=rs.getString("code_postal");
-					String ville=rs.getString("ville");
-					String motDePasse=rs.getString("mot_de_passe");
-					int credit=rs.getInt("credit");
-					boolean administrateur=rs.getBoolean("administrateur");
+					String emailVendeur=rs.getString("email");
+					String telephoneVendeur=rs.getString("telephone");
+					String rueVendeur=rs.getString("rue");
+					String codePostalVendeur=rs.getString("code_postal");
+					String villeVendeur=rs.getString("ville");
+					String motDePasseVendeur=rs.getString("mot_de_passe");
+					int creditVendeur=rs.getInt("credit");
+					boolean administrateurVendeur=rs.getBoolean("administrateur");
 					
-					//Récupérer information des catégories des articles
+					//Récupérer informations de l'encherisseur Bidder
+					int noUtilisateurBidder=rs.getInt("bidderNo");
+					String pseudoBidder=rs.getString("bidderPseudo");
+					String nomBidder=rs.getString("bidderNom");
+					String prenomBidder=rs.getString("bidderPrenom");
+					String emailBidder=rs.getString("bidderEmail");
+					String telephoneBidder=rs.getString("bidderTel");
+					String rueBidder=rs.getString("bidderRue");
+					String codePostalBidder=rs.getString("bidderCP");
+					String villeBidder=rs.getString("bidderVille");
+					String motDePasseBidder=rs.getString("bidderMDP");
+					int creditBidder=rs.getInt("bidderCredit");
+					boolean administrateurBidder=rs.getBoolean("bidderAd");
+					
+					//Récupérer informations des catégories des articles
 					int noCategorie=rs.getInt("no_categorie");
 					String libelle=rs.getString("libelle");
 										
-					//Récupérer information de l' articles en vente
+					//Récupérer informations de l' articles en vente
 					int noArticle=rs.getInt("no_article");
 					String nomArticle=rs.getString("nom_article");
 					String description=rs.getString("description");
@@ -131,20 +148,40 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 					int prixVente=rs.getInt("prix_vente");
 					String etatVente=rs.getString("etat_vente");
 
-					//Récupérer information du retrait
+					//Récupérer informations du retrait
 					String rueRetrait=rs.getString("rue");
 					String codePostalRetrait=rs.getString("code_postal");
 					String villeRetrait=rs.getString("ville");
 					Article article;
 					
+					//Récuérer informations des enchères
+					int montantEnchere = rs.getInt("montant_enchere");
+					LocalDateTime dateEnchereRecupere = null;
+					//La colonne date_enchere peut etre vide
+					if(rs.getDate("date_enchere")!=null) {
+						LocalDateTime dateEnchere = LocalDateTime.of((rs.getDate("date_enchere").toLocalDate()), rs.getTime("date_enchere").toLocalTime());				
+						dateEnchereRecupere=dateEnchere;
+					}else {
+						LocalDateTime dateEnchere = null;
+						dateEnchereRecupere=dateEnchere;					
+					}
+									
 					//Création des objets métiers
-					Utilisateur seller=new Utilisateur(noUtilisateur, prenomVendeur,  nomVendeur, prenomVendeur,  email,  telephone, rue, codePostal, ville, motDePasse, credit,administrateur);
+					Utilisateur seller=new Utilisateur(noUtilisateurVendeur, pseudoVendeur,  nomVendeur, prenomVendeur,  emailVendeur,  telephoneVendeur, rueVendeur, codePostalVendeur, villeVendeur, motDePasseVendeur, creditVendeur,administrateurVendeur);
+					Utilisateur bidder=new Utilisateur(noUtilisateurBidder, pseudoBidder,  nomBidder, prenomBidder,  emailBidder,  telephoneBidder, rueBidder, codePostalBidder, villeBidder, motDePasseBidder, creditBidder,administrateurBidder);
 					Categorie cat = new Categorie(noCategorie,libelle);
 					Categorie categorieArticle=cat;
-					Utilisateur vendeur=seller;					
+					Utilisateur vendeur=seller;
+					Utilisateur encherisseur=bidder;
 					Article art = new Article(noArticle, nomArticle,  description,  dateDebutEncheres, dateFinEncheres,  miseAPrix,  prixVente,  etatVente,  categorieArticle, vendeur);
 					Retrait rt=new Retrait(rueRetrait, codePostalRetrait, villeRetrait, art);
+					//Sur le même article, il peut y avoir plusieurs enchères
+					Enchere enchere= new Enchere(dateEnchereRecupere, montantEnchere,encherisseur, art);
 					articleList.add(art);
+					System.out.println("Liste des encherisseurs");
+					System.out.println(encherisseur);
+					System.out.println("Liste des vendeurs");
+					System.out.println(vendeur);
 				}
 			
 		} catch (SQLException e) {
