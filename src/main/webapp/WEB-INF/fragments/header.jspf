@@ -14,10 +14,11 @@
 			<img id="imageTrocenchere" class="small-icon" src="${pageContext.request.contextPath}/img/trocenchere.jpg" alt="Accueil ENI-Encheres" height="50px" width="50"> 
 			<strong>ENI-Encheres</strong>
 		</a>
-		<a class="navbar-brand" href="${Url.HOME.getUrl()}" title="Gérer mon profil">
-			<img class="small-icon" src="images/user.svg" alt="icon_user">
-			<span class="align-middle text-muted">XXXXX  xxx, 0 crédit(s)</span>
-		</a>
+		<c:if test="${not empty utilisateurConnecte && utilisateurConnecte.credit != 0}">
+		<li class="navbar-brand" style="list-style-type: none;">
+			<strong>${utilisateurConnecte.credit}</strong> <small>credits</small>
+		</li>
+		</c:if>
 		<ul class="navbar-nav ml-auto">
 			<!-- Dropdown for small screen -->
 			<!-- TODO small screen -->
