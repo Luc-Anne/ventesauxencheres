@@ -3,30 +3,31 @@
 
   <display-name>ENI-VentesAuxEncheres</display-name>
   <description>Projet de groupe à l'ENI visant à développer un site de ventes aux enchères.</description>
-  
+
   <welcome-file-list>
     <welcome-file>home</welcome-file>
   </welcome-file-list>
 
   <error-page>
-  	<error-code>500</error-code>
-  	<location>/error/500.jsp</location>
+  	<error-code>403</error-code>
+  	<location>/error/403.jsp</location>
   </error-page>
   <error-page>
   	<error-code>404</error-code>
   	<location>/error/404.jsp</location>
+  </error-page>
+  <error-page>
+  	<error-code>500</error-code>
+  	<location>/error/500.jsp</location>
   </error-page>
 
   <context-param>
   	<param-name>debutTitre</param-name>
   	<param-value>Ventes aux Enchères -</param-value>
   </context-param>
-  
+
   <session-config>
   	<session-timeout>5</session-timeout>
   </session-config>
-  
-  
 
-  
 </web-app>

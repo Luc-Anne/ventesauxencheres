@@ -19,8 +19,8 @@ public enum Url {
 	// Administrateur
 	ADMIN_TABLEAUDEBORD("/admin"),
 	// Business
-	PROFIL_PUBLIC("/profil/");
-	
+	PROFIL_PUBLIC("/profil/"), //Ajouter un pseudo juste à la suite
+	DETAILS_ARTICLE("/encheres/article"); // le paramètre no_article est nécessaire pour la Servlet	
 	
 	private String url;
 	

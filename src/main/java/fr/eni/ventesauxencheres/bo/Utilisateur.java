@@ -56,7 +56,12 @@ public class Utilisateur {
 				+ codePostal + ", ville=" + ville + ", motDePasse=" + motDePasse + ", credit=" + credit
 				+ ", administrateur=" + administrateur + "]";
 	}
-
+	
+	public boolean equals(Utilisateur u1, Utilisateur u2) {
+		// TODO Vérifier que cela marche
+		return u1.getNoUtilisateur() == u2.getNoUtilisateur();
+	}
+	
 	public int getNoUtilisateur() {
 		return noUtilisateur;
 	}

@@ -1,11 +1,21 @@
 package fr.eni.ventesauxencheres.controllers.business;
 
 import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.eni.ventesauxencheres.bll.ArticleManager;
+import fr.eni.ventesauxencheres.bll.BLLException;
+import fr.eni.ventesauxencheres.bll.EnchereManager;
+import fr.eni.ventesauxencheres.bo.Article;
+import fr.eni.ventesauxencheres.bo.Enchere;
+import fr.eni.ventesauxencheres.bo.Utilisateur;
 
 /**
  * Servlet implementation class Template
@@ -15,19 +25,63 @@ public class detailsArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/* Afficher le détails de l'article dans un formulaire de modification */
+		// Récupération des paramètres
+		int no_article = 0;
+		try {
+			no_article = Integer.parseInt(request.getParameter("no_article"));
+		} catch (NullPointerException | NumberFormatException e) {
+			e.printStackTrace();
+			response.sendError(500);
+		}
+		
+		// Récupération et traitement des données
+		Article article = null;
+		try {
+			article = ArticleManager.getInstance().get(no_article);
+		} catch (BLLException e) {
+			e.printStackTrace();
+			response.sendError(404);
+		}
+		if (article.getEtatVente() == "CR") {
+			response.sendError(404);
+		} else {
+			List<Enchere> encheres = null;
+			Utilisateur acheteur = null;
+			try {
+				encheres = EnchereManager.getInstance().getByObject(article);
+				if (encheres != null) {
+					if (article.getEtatVente() == "VD" || article.getEtatVente() == "RT") {
+						acheteur = encheres.get(0).getEncherisseur();
+					}
+				}
+			} catch (BLLException e) {
+				e.printStackTrace();
+				response.sendError(404);
+			}
+			
+			if (article.getEtatVente() == "VD" || article.getEtatVente() == "RT") {
+				if(article.getVendeur() != (Utilisateur)request.getSession().getAttribute("UtilisateurConnecte")) {
+					// Fonction equals ?
+					response.sendError(403);
+				}
+				if (acheteur != null && acheteur != (Utilisateur)request.getSession().getAttribute("UtilisateurConnecte")) {
+					response.sendError(403);
+				}
+			}
+			
+			// Affichage de la vue
+			request.setAttribute("article", article);
+			request.setAttribute("encheres", encheres);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/business/detailsArticle.jsp");
+			if (rd != null) {
+				rd.forward(request, response);
+			}
+		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/* 1. Récupérer les paramètres
-		   2. Vérifier que les paramètres sont conformes au cas spécifiques de la Servlet (les cas généraux seront gérés grâce aux validation dans les BLL)
-		   3. Suivant les paramètres, les attributs disponibles dans les servlet et les données provenant d'appels à la BLL,
-		      Renvoyer une vue spécifique à l'utilisateur, ce que soit en passant par une autre servlet ou bien par un appel une jsp.
-		      Au cours de ce cheminement vers la vue, sauvegarder éventuellement des données dans des attributs ou bien grâve à des appels à la BLL
-		*/
-		
-		/* Suivant l'action demandée recueillir les informations nécessaires et traiter la demande */
-		/* Afficher soit /home si tout c'est bien passé, soit de nouveau le même formulaire avec les valeurs rentrées (qui seront indiqués comme erreur grâce à la gestion des erreurs) */
+		this.doGet(request, response);
 	}
 
 }

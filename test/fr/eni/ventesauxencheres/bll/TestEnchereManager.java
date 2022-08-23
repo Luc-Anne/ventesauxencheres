@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.ventesauxencheres.bo.Article;
+import fr.eni.ventesauxencheres.dal.DALException;
+import fr.eni.ventesauxencheres.dal.FactoryDAO;
+
 @WebServlet("/test/TestEnchereManager")
 public class TestEnchereManager extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -18,9 +22,18 @@ public class TestEnchereManager extends HttpServlet {
 		String message = "";
 		
 		// Test Method 1
-		pw.append("\nMethode \n");
+		pw.append("\nMethode selectByArticle \n");
 		// Test 1 ###################################################
 		pw.append("\nTest 1 : \n");
+		Article article;
+		try {
+			article = FactoryDAO.getArticleDAO().selectById(1);
+			FactoryDAO.getEnchereDAO().selectByArticle(article);
+			message += "OK";
+		} catch (DALException e) {
+			message += "ECHEC";
+			e.printStackTrace();
+		}
 		message = "";
 
 		pw.append(message);

@@ -1,6 +1,7 @@
 package fr.eni.ventesauxencheres.dal.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,6 +26,17 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "JOIN UTILISATEURS as seller on seller.no_utilisateur=a.no_utilisateur \r\n"
 			+ "JOIN CATEGORIES as c on c.no_categorie=a.no_categorie \r\n"
 			+ "LEFT JOIN RETRAITS as r  on r.no_article=a.no_article;";
+	private static final String BASE_JOIN = ""
+			+ "SELECT a.no_article, a.nom_article, a.description, a.date_debut_enchere, a.date_fin_enchere, a.prix_initial, a.prix_vente, a.etat_vente, "
+			+ "u.no_utilisateur, u.pseudo, u.nom, u.prenom, u.email, u.telephone, u.rue, u.code_postal, u.ville, u.mot_de_passe, u.credit, u.administrateur, "
+			+ "c.no_categorie, c.libelle, "
+			+ "r.rue AS Rrue, r.code_postal AS Rcode_postal, r.ville AS Rville "
+			+ "FROM ARTICLES_VENDUS a "
+			+ "LEFT JOIN UTILISATEURS u ON a.no_utilisateur = u.no_utilisateur "
+			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie "
+			+ "LEFT JOIN RETRAITS r ON a.no_article = r.no_article ";
+	private static final String SELECT_BY_ID = BASE_JOIN
+			+ "WHERE a.no_article = ? ";
 
 	@Override
 	public Article insert(Article u) throws DALException {
@@ -34,8 +46,20 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	@Override
 	public Article selectById(int id) throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
+			try (PreparedStatement statement = cnx.prepareStatement(SELECT_BY_ID)) {
+				statement.setInt(1, id);
+				ResultSet rs = statement.executeQuery();
+				while(rs.next()) {
+					return createArticleFromResultSet(rs);
+				}
+				return null;
+			} catch (SQLException e) {
+				throw new DALException("Erreur selectById(" + id + ")", e);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Erreur Connexion à la base de données", e);
+		}
 	}
 
 	@Override
@@ -110,4 +134,54 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		
 	}
 
+	private Article createArticleFromResultSet(ResultSet rs) throws SQLException {
+		Utilisateur vendeur = new Utilisateur (
+			rs.getInt("no_utilisateur"),
+			rs.getString("pseudo"),
+			rs.getString("nom"),
+			rs.getString("prenom"),
+			rs.getString("email"),
+			rs.getString("telephone"),
+			rs.getString("rue"),
+			rs.getString("code_postal"),
+			rs.getString("ville"),
+			rs.getString("mot_de_passe"),
+			rs.getInt("credit"),
+			rs.getBoolean("administrateur")
+		);
+		
+		Categorie categorie = new Categorie(
+			rs.getInt("no_categorie"),
+			rs.getString("libelle")
+		);
+		
+		Article article = new Article (
+			rs.getInt("no_article"),
+			rs.getString("nom_article"),
+			rs.getString("description"),
+			LocalDateTime.of((rs.getDate("date_debut_enchere").toLocalDate()), rs.getTime("date_debut_enchere").toLocalTime()),
+			LocalDateTime.of((rs.getDate("date_fin_enchere").toLocalDate()), rs.getTime("date_fin_enchere").toLocalTime()),
+			rs.getInt("prix_initial"),
+			rs.getInt("prix_vente"),
+			rs.getString("etat_vente"),
+			categorie,
+			vendeur
+			// null
+		);
+		
+		Retrait retrait = null;
+		if (rs.getString("rue") != null) {
+			retrait = new Retrait (
+				rs.getString("Rrue"),
+				rs.getString("Rcode_postal"),
+				rs.getString("Rville"),
+				article
+			);
+		}
+		
+		article.setRetrait(retrait);
+		
+		return article;
+	}
+	
 }
