@@ -19,9 +19,10 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	// TODO Enchere a un CRUD de base différent
 	private static final String SELECT_BY_OBJECT = ""
 			+ "SELECT * "
-			+ "FROM ENCHERES "
+			+ "FROM ENCHERES e "
+			+ "LEFT JOIN UTILISATEURS u ON e.no_utilisateur = u.no_utilisateur "
 			+ "WHERE no_article = ? "
-			+ "ORDER BY date_enchere DESC";
+			+ "ORDER BY date_enchere DESC ";
 
 	@Override
 	public Enchere insert(Enchere u) throws DALException {
@@ -47,8 +48,20 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				statement.setInt(1, article.getNoArticle());
 				ResultSet rs = statement.executeQuery();
 				while(rs.next()) {
-					// TODO mettre ça dans la requête
-					Utilisateur utilisateur = new UtilisateurDAOJdbcImpl().selectById(rs.getInt("no_utilisateur"));
+					Utilisateur utilisateur = new Utilisateur (
+						rs.getInt("no_utilisateur"),
+						rs.getString("pseudo"),
+						rs.getString("nom"),
+						rs.getString("prenom"),
+						rs.getString("email"),
+						rs.getString("telephone"),
+						rs.getString("rue"),
+						rs.getString("code_postal"),
+						rs.getString("ville"),
+						rs.getString("mot_de_passe"),
+						rs.getInt("credit"),
+						rs.getBoolean("administrateur")
+					);
 					listes.add(new Enchere(
 							LocalDateTime.of(rs.getDate("date_enchere").toLocalDate(), rs.getTime("date_enchere").toLocalTime()),
 							rs.getInt("montant_enchere"),
