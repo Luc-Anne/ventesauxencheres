@@ -8,12 +8,14 @@
 <html>
 <head>
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf"%>
-	<title>${initParam.debutTitre}Gestiond'un utilisateur</title>
+	<title>${initParam.debutTitre} Nouvelle vente</title>
 </head>
 <body>
 	<%@ include file="/WEB-INF/fragments/header.jspf"%>
-	<main>
-		<div class="container">
+	<main class="container">
+		<div class="mx-auto text-center">
+			<h1>Nouvelle vente</h1>
+		</div>
 			<%Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte"); %>
 				<form method="post" action="${Url.AJOUTER_ARTICLE.getUrl()}">
 					<!-- Article  -->
@@ -82,7 +84,6 @@
 						<span><button type="submit" class="btn btn-primary mt-4">ENREGISTRER</button> &nbsp;&nbsp; <button type="submit" class="btn btn-warning mt-4">Annuler</button> </span>
 						
 				</form>
-		</div>
 	</main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf"%>
 

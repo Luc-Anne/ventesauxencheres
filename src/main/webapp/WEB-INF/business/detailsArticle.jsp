@@ -17,15 +17,11 @@
 		<%
 		Article article = (Article)request.getAttribute("article");
 		%>
+		 <div class="mx-auto text-center">
+			<h1>${article.nomArticle}</h1>
+		</div>
 		<!-- Afficher les détails d'un article -->
-		<h3>${article.nomArticle}</h3>
 		<ul class="list-group">
-			<li class="list-group-item d-flex justify-content-between align-items-start">
-				<div class="ms-2 me-auto">
-					<div class="fw-bold">Article</div>
-					${article.nomArticle}
-				</div>
-			</li>
 			<li class="list-group-item d-flex justify-content-between align-items-start">
 				<div class="ms-2 me-auto">
 					<div class="fw-bold">Description</div>

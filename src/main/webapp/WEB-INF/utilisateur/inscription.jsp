@@ -12,6 +12,9 @@
 <body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 		<main class="container">
+		    <div class="mx-auto text-center">
+            	<h1>Inscription</h1>
+        	</div>
 			<div class="row g-8">
 				<div class="col-md-12 col-lg-12">
 					<h4 class="mb-3">Informations Générales à fournir</h4>

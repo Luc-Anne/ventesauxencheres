@@ -15,6 +15,9 @@
 	</c:if>
 	 -->
 	 <main class="container">
+	 	<div class="mx-auto text-center">
+			<h1>Se connecter</h1>
+		</div>
 		<div class="mt-5">
 			<form action="${Url.CONNEXION.getUrl()}" method="post">
 				<div class="mb-3">

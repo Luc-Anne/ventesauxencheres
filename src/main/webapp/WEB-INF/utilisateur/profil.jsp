@@ -5,13 +5,15 @@
 <html>
 <head>
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
-	<title>${initParam.debutTitre} Profil</title>
+	<title>${initParam.debutTitre} Mon Profil</title>
 </head>
 <body class="bg-light">
 <body>
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
-	<div class="container">
-		<main>
+		<main class="container">
+			<div class="mx-auto text-center">
+				<h1>Mon Profil</h1>
+			</div>
 			<div class="row g-8">
 				<div class="col-md-12 col-lg-12">
 					<h4 class="mb-3">Informations Générales à modifier</h4>
@@ -85,8 +87,6 @@
 			</form>
 
 		</main>
-
-	</div>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>
 </html>
