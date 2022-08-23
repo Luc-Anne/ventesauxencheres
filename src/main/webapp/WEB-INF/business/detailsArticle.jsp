@@ -26,9 +26,6 @@
 				<%
 				// Supprimer ces lignes
 				LocalDateTime dateDebutEncheres = article.getDateDebutEncheres();
-				%>
-					${dateDebutEncheres}
-				<%
 				Date dateDebutEncheresDate = java.sql.Timestamp.valueOf(dateDebutEncheres);
 				%>
 				<c:set var="dateFormate" value="<%=java.sql.Timestamp.valueOf(dateDebutEncheres)%>" />
