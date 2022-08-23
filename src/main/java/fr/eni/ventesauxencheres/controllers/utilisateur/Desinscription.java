@@ -35,7 +35,7 @@ public class Desinscription extends HttpServlet {
 			Utilisateur uc = (Utilisateur) session.getAttribute("utilisateurConnecte");
 			UtilisateurManager.getInstance().delete(uc.getNoUtilisateur());
 			session.removeAttribute("utilisateurConnecte");
-			request.getSession().setAttribute("messageGlobal", "Vous avez bien été désinscrit");
+			request.getSession().setAttribute("messageGlobal", "Votre compte a bien été supprimé");
 			response.sendRedirect(Url.HOME.getUrl());
 		} catch (BLLException e) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/moncompte/profil");
