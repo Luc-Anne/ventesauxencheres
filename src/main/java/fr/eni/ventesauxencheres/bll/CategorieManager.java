@@ -53,7 +53,7 @@ public class CategorieManager {
 		}
 	}
 	
-	public Categorie get(int id) throws BLLException {
+	public Categorie getById(int id) throws BLLException {
 		try {
 			return categorieDAO.selectById(id);
 		} catch (DALException e) {

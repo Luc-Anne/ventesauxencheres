@@ -2,6 +2,7 @@ package fr.eni.ventesauxencheres.bo;
 
 public class Retrait {
 
+	private int id;
 	private String rue;
 	private String codePostal;
 	private String ville;
@@ -10,6 +11,14 @@ public class Retrait {
 	
 	public Retrait() {}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public Retrait(String rue, String codePostal, String ville, Article article) {
 		super();
 		this.rue = rue;
@@ -17,6 +26,9 @@ public class Retrait {
 		this.ville = ville;
 		this.article = article;
 	}
+
+	
+
 
 	@Override
 	public String toString() {
@@ -46,5 +58,15 @@ public class Retrait {
 	public void setVille(String ville) {
 		this.ville = ville;
 	}
+
+	public Article getArticle() {
+		return article;
+	}
+
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+	
+	
 	
 }

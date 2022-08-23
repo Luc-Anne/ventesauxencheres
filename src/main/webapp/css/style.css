@@ -10,7 +10,6 @@
 }
 
 #profil-main {
-	color: black;
 	margin-left:500px;
 }
 
@@ -38,4 +37,19 @@ form .form-invalid-feedback {
    100%{
      opacity: 0;
    }
+}
+
+
+legend {
+    background-color: #000;
+    color: #fff;
+    padding: 3px 6px;
+}
+
+.output {
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input {
+    margin: .4rem;
 }

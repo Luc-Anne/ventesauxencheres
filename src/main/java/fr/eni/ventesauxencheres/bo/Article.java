@@ -1,6 +1,7 @@
 package fr.eni.ventesauxencheres.bo;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Article {
 
@@ -16,8 +17,36 @@ public class Article {
 	private Categorie categorieArticle; // Correspondance SQL
 	private Utilisateur vendeur; // Correspondance SQL
 	private Retrait retrait; // Utilité application
+	private Utilisateur encherisseur;
+	private Enchere enchere;
 	
+	private int no_utilisateur;
+	private int categorie;
+	
+	
+	
+	public int getNo_utilisateur() {
+		return no_utilisateur;
+	}
+
+	public void setNo_utilisateur(int no_utilisateur) {
+		this.no_utilisateur = no_utilisateur;
+	}
+
+	public int getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(int categorie) {
+		this.categorie = categorie;
+	}
+
+
 	public Article() {}
+
+
+
+
 
 	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle,
@@ -145,5 +174,22 @@ public class Article {
 	public void setRetrait(Retrait retrait) {
 		this.retrait = retrait;
 	}
+
+	public Enchere getEnchere() {
+		return enchere;
+	}
+
+	public void setEnchere(Enchere enchere) {
+		this.enchere = enchere;
+	}
+
+	public Utilisateur getEncherisseur() {
+		return encherisseur;
+	}
+
+	public void setEncherisseur(Utilisateur encherisseur) {
+		this.encherisseur = encherisseur;
+	}
+	
 	
 }
