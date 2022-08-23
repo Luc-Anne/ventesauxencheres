@@ -68,7 +68,7 @@ public class EnchereManager {
 		}
 	}
 	
-	public List<Enchere> getByObject(Article article) throws BLLException {
+	public Enchere getByArticle(Article article) throws BLLException {
 		try {
 			return enchereDAO.selectByArticle(article);
 		} catch (DALException e) {

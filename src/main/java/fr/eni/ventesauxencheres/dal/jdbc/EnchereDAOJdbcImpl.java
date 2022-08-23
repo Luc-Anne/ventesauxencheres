@@ -41,8 +41,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		return listes;
 	}
 	
-	public List<Enchere> selectByArticle(Article article) throws DALException {
-		List<Enchere> listes = new ArrayList<>();
+	public Enchere selectByArticle(Article article) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement statement = cnx.prepareStatement(SELECT_BY_OBJECT)) {
 				statement.setInt(1, article.getNoArticle());
@@ -62,12 +61,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 						rs.getInt("credit"),
 						rs.getBoolean("administrateur")
 					);
-					listes.add(new Enchere(
-							LocalDateTime.of(rs.getDate("date_enchere").toLocalDate(), rs.getTime("date_enchere").toLocalTime()),
-							rs.getInt("montant_enchere"),
-							utilisateur,
-							article
-						)
+					return new Enchere(
+						LocalDateTime.of(rs.getDate("date_enchere").toLocalDate(), rs.getTime("date_enchere").toLocalTime()),
+						rs.getInt("montant_enchere"),
+						utilisateur,
+						article
 					);
 				}
 				return null;
