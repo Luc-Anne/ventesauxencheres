@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="fr.eni.ventesauxencheres.bo.Article" %>
-<%@ page import="java.time.LocalDateTime" %>
-<%@ page import="java.util.Date" %>
+
 
 <%@ include file="/WEB-INF/fragments/taglib.jspf" %>
 
@@ -109,43 +107,8 @@
 
         <!--enchères-->
         <div class="row justify-content-center border-top card-deck">
-           <c:forEach items="${articleList}" var="itemArticle">
-             <div class="col-12 col-sm-6 p-2" >
-                 <div class="card">
-                     <div class="card-header text-center">
-                         <h4 class="my-0 font-weight-normal">${itemArticle.nomArticle}</h4>
-                     </div>
-                     <div class="d-flex">
-                         <div class="col-3 p-2">
-                             <img class="img-fluid img-thumbnail" src="images/photo.svg" alt="pas de photo" />
-                         </div>
-                         <ul class="col-9 list-unstyled p-2">                            
-                             <c:if test="${not empty prixVente}">
-                             	<!-- Non opérationnel -->
-							   <li>Meilleure enchère : ${itemArticle.prixVente} point(s)</li>      
-							</c:if>
-                             <c:if test="${empty prixVente}">
-							    <li>Prix de mise: ${itemArticle.miseAPrix} point(s)</li>   
-							</c:if>							                                                        
-                             <%
-                             Article art = (Article) pageContext.getAttribute("itemArticle");
-                             LocalDateTime dateLDT=art.getDateFinEncheres();
-                            // Date dateDate=Date.from(dateLDT.atZone(ZoneId.systemDefault()).toInstant());
-                            Date dateD = java.sql.Timestamp.valueOf(dateLDT);                                                                        
-                             %>                       
-                             <c:set var="dateFormate" value="<%=java.sql.Timestamp.valueOf(dateLDT)%>" />
-                             <li>Fin de l'enchère : <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateFormate}" /></li>
-							<li><a href="${Url.PROFIL_PUBLIC.getUrl()}${itemArticle.vendeur.pseudo}">Vendeur : ${itemArticle.vendeur.pseudo}</a></li>
-							<li>Montant enchère : ${itemArticle.enchere.montantEnchere} point(s)</li>
-							<li>Encherisseur : ${itemArticle.encherisseur.pseudo}</li>
-							<li>Prix de vente : ${itemArticle.prixVente} point(s)</li>
-						</ul>   
-                     </div>
-                     <a class="mt-3 btn btn-lg btn-block btn-primary" href="#" title="faire une enchère">
-                         <img class="small-icon" src="images/bid.svg">
-                     </a>
-                 </div>
-             </div>
+           <c:forEach items="${articlesList}" var="itemArticle">
+           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
             </c:forEach>
      </div>
     </main>

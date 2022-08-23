@@ -173,11 +173,14 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			rs.getBoolean("bidderAd")
 		);
 		
-		Enchere enchere = new Enchere(
-			LocalDateTime.of((rs.getDate("date_enchere").toLocalDate()), rs.getTime("date_enchere").toLocalTime()),
-			rs.getInt("montant_enchere"),
-			encherisseur
-		);
+		Enchere enchere = null;
+		if(rs.getDate("date_enchere")!=null) {
+			enchere = new Enchere(
+					LocalDateTime.of((rs.getDate("date_enchere").toLocalDate()), rs.getTime("date_enchere").toLocalTime()),
+					rs.getInt("montant_enchere"),
+					encherisseur
+				);			
+		}
 		
 		Article article = new Article (
 			rs.getInt("no_article"),

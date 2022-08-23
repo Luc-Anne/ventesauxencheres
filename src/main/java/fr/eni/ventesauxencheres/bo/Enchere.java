@@ -30,7 +30,7 @@ public class Enchere {
 	@Override
 	public String toString() {
 		return "Enchere [dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere + ", encherisseur="
-				+ encherisseur + ", article=" + article + "]";
+				+ encherisseur + "]";
 	}
 
 	public LocalDateTime getDateEnchere() {

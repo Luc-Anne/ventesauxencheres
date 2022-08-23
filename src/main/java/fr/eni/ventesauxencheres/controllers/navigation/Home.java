@@ -1,6 +1,7 @@
 package fr.eni.ventesauxencheres.controllers.navigation;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -22,13 +23,13 @@ public class Home extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Récupérer un attribut à travers un sendRedirect
 		request.setAttribute("messageGlobal", request.getSession().getAttribute("messageGlobal"));
-		request.getSession().removeAttribute("messageGlobal");
-		
-		List<Article> articleList;
+		request.getSession().removeAttribute("messageGlobal");		
+		List<Article> articlesList = new ArrayList<Article>();
 		try {
-			articleList = ArticleManager.getInstance().getAll();
+			articlesList = ArticleManager.getInstance().getAll();
 			//Mettre la liste d'article dans la requete car besoin uniquement dans la home
-			request.setAttribute("articleList",articleList);
+			request.setAttribute("articlesList",articlesList);
+
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
 			if (rd != null) {
 				rd.forward(request, response);

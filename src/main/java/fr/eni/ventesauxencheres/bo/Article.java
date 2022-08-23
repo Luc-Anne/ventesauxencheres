@@ -33,6 +33,7 @@ public class Article {
 		this.etatVente = etatVente;
 		this.categorieArticle = categorieArticle;
 		this.vendeur = vendeur;
+		this.enchere = enchere;
 	}
 
 	public Article(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres,
@@ -49,6 +50,7 @@ public class Article {
 		this.etatVente = etatVente;
 		this.categorieArticle = categorieArticle;
 		this.vendeur = vendeur;
+		this.enchere = enchere;
 	}
 
 	@Override
