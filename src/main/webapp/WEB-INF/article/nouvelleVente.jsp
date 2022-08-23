@@ -81,7 +81,9 @@
 							</div>
 						</fieldset>
 
-						<span><button type="submit" class="btn btn-primary mt-4">ENREGISTRER</button> &nbsp;&nbsp; <button type="submit" class="btn btn-warning mt-4">Annuler</button> </span>
+						<button type="submit" class="w-100 btn btn-primary btn-lg">Ajouter l'article</button>
+						<br><br>
+						<button class="w-100 btn btn-warning btn-lg" name="annuler" value="annuler">Annuler</button>
 						
 				</form>
 	</main>

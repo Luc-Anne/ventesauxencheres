@@ -35,7 +35,7 @@
 				<label class="form-check-label" for="exampleCheck1">Check me out</label>
 			</div>
 			-->
-				<button type="submit" class="btn btn-primary">Se connecter</button>
+				<button class="w-100 btn btn-primary btn-lg" type="submit">Se connecter</button>
 			</form>
 		</div>
 	</main>

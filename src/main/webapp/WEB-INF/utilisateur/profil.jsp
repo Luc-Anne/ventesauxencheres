@@ -81,7 +81,7 @@
 					</form>
 				</div>
 			</div>
-			<br><br>
+			<br>
 			<form action="${Url.DESINSCRIPTION.getUrl()}" method="post" style="text-align: center;">
 				<button class="w-100  btn btn-danger btn-lg" class="mb-3" style="text-align: center;">Supprimer son compte</button>
 			</form>
