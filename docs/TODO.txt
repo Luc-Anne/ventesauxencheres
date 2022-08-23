@@ -34,6 +34,7 @@ OK Déplacement du bouton suppression vers la modification du profil
 - Nom des fichiers différents des urls présentées : modifier les urls plutôt que les fichiers ?
 - Ajouter un second champs dans l'inscription pour confirmer le mot de passe
 - FAIRE LES FICHIERS DE TESTS ?
+- Renvoyer la page de nouvelle article vers la page home
 
 Demande clients secondaires :
 + Faire l'administration du site
@@ -47,6 +48,7 @@ OK Enum pour les adresse url du site
 
 Harmonisation du code :
 OK Modifier le nom inscription dans la dal utilisateur pour insert & modifier le type de retour de ce insert par un utilisateur
+- Ajouter le no_article avant de le renvoyer
 + Créer une interface pour les managers de la bll pour avoir les mêmes noms de méthodes, voire des méthodes par défauts
 + Factoriser la deconnexion (deconnexion et desincription) dans la BLL
 + Factoriser d'autres fonctionnalités

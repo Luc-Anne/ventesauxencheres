@@ -97,7 +97,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			throw new DALException("Erreur insertion ", e);
 		}
 
-		// TODO Ajouter le no_article avant de le renvoyer
 		return article;
 	}
 
