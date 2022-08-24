@@ -85,11 +85,16 @@ public class detailsArticle extends HttpServlet {
 		){
 			typeAffichage = "typeRetrait";
 		} else if (
+			(article.getEtatVente() == "VD" && utilisateurConnecte.equals(encherisseur))
+		){
+			typeAffichage = "typeGagne";
+		} else if (
 			(article.getEtatVente() == "EC" && utilisateurConnecte.equals(vendeur)) ||
-			(article.getEtatVente() == "VD" && utilisateurConnecte.equals(encherisseur)) ||
 			(article.getEtatVente() == "RT" && utilisateurConnecte.equals(vendeur)) ||
 			(article.getEtatVente() == "RT" && utilisateurConnecte.equals(encherisseur))
 		){
+			typeAffichage = "typeBack";
+		} else {
 			typeAffichage = "typeBack";
 		}
 
