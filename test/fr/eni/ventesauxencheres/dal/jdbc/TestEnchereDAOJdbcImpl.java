@@ -43,9 +43,21 @@ public class TestEnchereDAOJdbcImpl extends HttpServlet {
 
 		pw.append(message);
 		// Test 2 ###################################################
-		pw.append("\nTest 2 : \n");
+		pw.append("\nTest 2 : remplacerEnchere \n");
 		message = "";
-
+		/*
+		Enchere enchere;
+		try {
+			
+			enchere = FactoryDAO.getEnchereDAO().selectById(4);
+			FactoryDAO.getEnchereDAO().remplacerEnchere(enchere);
+			
+		} catch (DALException e) {
+			message += "ERREUR";
+			e.printStackTrace();
+		}
+		*/	
+		message = "Test incomplet";
 		pw.append(message);
 		// Test Method 2
 		pw.append("\nMethode \n");

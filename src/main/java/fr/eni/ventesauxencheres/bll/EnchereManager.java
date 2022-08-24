@@ -106,4 +106,16 @@ public class EnchereManager {
 		}
 		return encheres;
 	}
+	
+	public void remplacerEncherisseur(Enchere enchere) throws BLLException {
+		try {
+			if (this.isValide(enchere)) {
+				enchereDAO.remplacerEnchere(enchere);
+			} else {
+				throw new BLLException("enchere invalide");
+			}
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}
+	}
 }
