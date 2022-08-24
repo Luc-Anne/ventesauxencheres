@@ -44,9 +44,16 @@ public class Article {
 
 	public Article() {}
 
-
-
-
+	// Test
+	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, int miseAPrix) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+	}
 
 	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle,
@@ -61,6 +68,20 @@ public class Article {
 		this.etatVente = etatVente;
 		this.categorieArticle = categorieArticle;
 		this.vendeur = vendeur;
+	}
+	
+	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.etatVente = etatVente;
+		this.categorieArticle = categorieArticle;
+		
 	}
 
 	public Article(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres,
@@ -78,6 +99,7 @@ public class Article {
 		this.categorieArticle = categorieArticle;
 		this.vendeur = vendeur;
 	}
+
 
 	@Override
 	public String toString() {

@@ -4,14 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.ventesauxencheres.bo.Article;
-import fr.eni.ventesauxencheres.bo.Categorie;
-import fr.eni.ventesauxencheres.bo.Retrait;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
 import fr.eni.ventesauxencheres.dal.ConnectionProvider;
 import fr.eni.ventesauxencheres.dal.DALException;

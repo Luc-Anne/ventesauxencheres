@@ -1,3 +1,5 @@
+<%@page import="fr.eni.ventesauxencheres.bll.CategorieManager"%>
+<%@page import="fr.eni.ventesauxencheres.bo.Categorie"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="fr.eni.ventesauxencheres.bo.Article" %>
@@ -33,23 +35,22 @@
         </div>
         <!--filtre-->
         <c:if test="${not empty utilisateurConnecte}">
-        <form class="form-filter border mb-3" action="#" method="">
+        <form class="form-filter border mb-3" action="${pageContext.request.contextPath}/servletTestMotCle" method="post">
             <div class="row">
                 <!--Partie gauche-->
                 <div class="col-md-6 mb-3">
                     <div class="form-group">
                             <label for="filter-input">Filtre</label>
-                            <input type="text" class="form-control" id="filter-input" name="q" placeholder="articles contenant...">
+                            <input type="text" class="form-control" id="filter-input" name="q" placeholder="articles contenant..." name ="motCle">
                     </div>
                     <div class="form-group">
                         <label for="categories-select">Catégories</label>
-                        <select class="form-control" id="categories-select" name="categorie">
-                            <option selected>Toutes</option>
-                            <option name="categorie" value="">Informatique</option>
-                            <option name="categorie" value="">Ameublement</option>
-                            <option name="categorie" value="">Vêtement</option>
-                            <option name="categorie" value="">Sport & Loisirs</option>
-                        </select>
+                        <select class="form-select" id="floatingSelectGrid"	aria-label="Floating label select example" name="categorie">
+						 <option selected>Toutes</option>
+						 <%for (Categorie categorie : CategorieManager.getInstance().getAll()){ %>
+						 <option value="<%= categorie.getNoCategorie()%>"> <%=categorie.getLibelle() %></option>
+						<%} %> 
+					</select>
                     </div>
                 </div>
                 <!--Partie droite-->

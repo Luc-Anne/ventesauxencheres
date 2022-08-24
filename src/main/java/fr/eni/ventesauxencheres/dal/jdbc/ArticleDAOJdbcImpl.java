@@ -202,10 +202,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 					//Sur le même article, il peut y avoir plusieurs enchères
 					Enchere enchere= new Enchere(dateEnchereRecupere, montantEnchere,encherisseur, art);
 					articleList.add(art);
-					System.out.println("Liste des encherisseurs");
-					System.out.println(encherisseur);
-					System.out.println("Liste des vendeurs");
-					System.out.println(vendeur);
+
 				}
 			
 		} catch (SQLException e) {
@@ -215,6 +212,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		
 		return articleList;
 	}
+	
+
+	
+	
+	
 
 	@Override
 	public void update(Article userToUpdated) throws DALException {
@@ -277,5 +279,5 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		
 		return article;
 	}
-	
+
 }
