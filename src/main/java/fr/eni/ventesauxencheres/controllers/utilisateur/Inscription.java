@@ -39,10 +39,10 @@ public class Inscription extends HttpServlet {
 		String mot_de_passe = request.getParameter("password");
 		String mot_de_passeConfirmation = request.getParameter("passwordConfirmation");
 		Utilisateur utilisateur = new Utilisateur(
-			request.getParameter("pseudo"),
+			request.getParameter("pseudo").trim(),
 			request.getParameter("nom"),
 			request.getParameter("prenom"),
-			request.getParameter("email"),
+			request.getParameter("email").trim(),
 			request.getParameter("telephone"),
 			request.getParameter("rue"),
 			request.getParameter("code_postal"),
@@ -65,6 +65,20 @@ public class Inscription extends HttpServlet {
 			response.sendRedirect(Url.HOME.getUrl());
 			return;
 		} catch (BLLException e) {
+			erreurs.addAll(UtilisateurManager.getInstance().invalidCause(utilisateur));
+			CharSequence erreurAChercher = "utilisateurs_pseudo_uq";
+			if (e.getCause() != null && e.getCause().getCause() != null) {
+				if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {
+					erreurs.add("utilisateur.pseudo_deja_pris");
+				}
+			}
+			erreurAChercher = "utilisateurs_email_uq";
+			if (e.getCause() != null && e.getCause().getCause() != null) {
+				if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {
+					erreurs.add("utilisateur.email_deja_pris");
+				}
+			}
+			e.printStackTrace();
 			reafficherInscriptionQuandErreur(request, response, utilisateur, erreurs);
 			return;
 		}
