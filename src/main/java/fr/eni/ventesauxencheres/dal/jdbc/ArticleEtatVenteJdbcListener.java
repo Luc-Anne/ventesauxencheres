@@ -34,7 +34,6 @@ public class ArticleEtatVenteJdbcListener implements ServletContextListener {
 			private static final String updateArticle = "{ call updateArticle() }";
 			
 			private void executerProcedureStockee() {
-				System.out.println("La procédure stockée updateArticle est appelée");
 				try (Connection cnx = ConnectionProvider.getConnection_VAE()) {
 					try (CallableStatement statement = cnx.prepareCall(updateArticle)) {
 						statement.execute();
