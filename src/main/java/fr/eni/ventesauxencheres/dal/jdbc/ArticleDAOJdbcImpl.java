@@ -54,15 +54,15 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "WHERE a.no_article = ? ";
 	
 	private static final String SELECT_OPENED_BIDS = SELECT_ALL
-			+ "WHERE a.etat_vente!='VD' AND a.no_utilisateur!=3";
+			+ "WHERE a.etat_vente='EC' AND a.no_utilisateur!=3";
 	//à exclure no utilisateur = id profil connecte mode vendeur, profil tom vendeur
 		
 	private static final String SELECT_MY_BIDS = SELECT_ALL
-			+ "WHERE e.no_utilisateur=4";
+			+ "WHERE  a.etat_vente='EC' AND e.no_utilisateur=4";
 	//no utilisateur = id profil connecte. Temporairement restriction sur samuel, profil encherisseur connecte
 	
 	private static final String SELECT_MY_WON_BIDS = SELECT_ALL
-			+ "WHERE a.etat_vente='VD' AND e.no_utilisateur=4";
+			+ "WHERE (a.etat_vente='VD' OR a.etat_vente='RT') AND e.no_utilisateur=4";
 	//à exclure no utilisateur = id profil connecte	mode encherriseur.Temporairement restriction sur samuel, profil encherisseur connecte
 	
 	private static final String SELECT_MY_CURRENT_SALES = SELECT_ALL
@@ -73,7 +73,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "WHERE a.etat_vente='CR' AND a.no_utilisateur=3";
 	//à exclure no utilisateur = id profil connecte mode vendeur, profil tom vendeur	
 	private static final String SELECT_MY_CLOSED_SALES = SELECT_ALL
-			+ "WHERE a.etat_vente='VD' AND a.no_utilisateur=3";
+			+ "WHERE (a.etat_vente='VD' OR a.etat_vente='RT') AND a.no_utilisateur=3";
 	//à exclure no utilisateur = id profil connecte mode vendeur, profil tom vendeur	
 	@Override
 	public Article insert(Article article) throws DALException {
