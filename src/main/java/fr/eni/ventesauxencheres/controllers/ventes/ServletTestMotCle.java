@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.ventesauxencheres.bll.ArticleManager;
 import fr.eni.ventesauxencheres.bll.BLLException;
 import fr.eni.ventesauxencheres.bll.EnchereManager;
+import fr.eni.ventesauxencheres.bo.Article;
 import fr.eni.ventesauxencheres.bo.Enchere;
 
 
@@ -28,19 +30,7 @@ public class ServletTestMotCle extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String motCle = request.getParameter("motCle");
-		String libelle = request.getParameter("categorie");
 		
-		try {
-			List<Enchere> encheres = EnchereManager.getInstance().selectByMotCleAndByLibelle(motCle, libelle);
-			for (Enchere enchere : encheres) {
-				System.out.println(enchere.toString());
-			}
-			
-			request.setAttribute("encheres", encheres);
-		} catch (BLLException e) {
-			e.printStackTrace();
-		}
 		
 	
 	}

@@ -41,7 +41,7 @@
                 <div class="col-md-6 mb-3">
                     <div class="form-group">
                             <label for="filter-input">Filtre</label>
-                            <input type="text" class="form-control" id="filter-input" name="q" placeholder="articles contenant..." name ="motCle">
+                            <input type="text" class="form-control" id="filter-input" placeholder="articles contenant..." name ="motCle">
                     </div>
                     <div class="form-group">
                         <label for="categories-select">Catégories</label>
@@ -178,7 +178,18 @@
 			         </c:otherwise>
 				</c:choose>     		 
      		</c:if>      	
-     	</c:if>     		 
+     	</c:if>  
+     	
+       	<!-- Affichage searchbar  -->
+     	<c:if test="${not empty utilisateurConnecte}">
+     		<c:if test="${empty param.motCle}">
+     			<h3>motclé vide</h3>  
+     		</c:if>   
+      		<c:if test="${not empty param.motCle}">
+     			<h3>il faut la liste avec le motcle</h3>  
+     		</c:if>     		   	
+     	</c:if>     		  	
+     	   		 
     </main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>

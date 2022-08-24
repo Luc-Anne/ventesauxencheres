@@ -41,14 +41,42 @@ public class Home extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//récupérer la valeur du bouton radio coché et la renvoyer dans la requête
-		String typeEncheres = request.getParameter("type-encheres");
+		String typeEncheres = request.getParameter("typeEncheres");
 		request.setAttribute("typeEncheres", typeEncheres);		
 		//récupérer les paramètres des checkbox et les renvoyer
 		String encheresStatut = request.getParameter("encheres");
 		request.setAttribute("encheresStatut", encheresStatut);
 		String ventesStatut = request.getParameter("ventes");
 		request.setAttribute("ventesStatut", ventesStatut);
-		//Appeler la liste des achats avec encheres ouvertes
+		//Alimenter la variable typeQuery selon les filtres
+		String typeQuery=null;
+		if (typeEncheres.equals("achat")) {
+			switch ("encheres") {
+			case "ouvertes":
+				typeQuery="OpenedBids";
+				break;
+			case "encours":
+				typeQuery="MyBids";
+				break;
+			case "remportees":
+				typeQuery="MyWonBids";
+				break;
+			}
+		} else if (typeEncheres.equals("vente")) {
+			switch ("ventes") {
+			case "venteencours":
+				typeQuery="MyCurrentSales";
+				break;
+			case "nondebutees":
+				typeQuery="MyUnstartedSales";
+				break;
+			case "terminees":
+				typeQuery="MyClosedSales";
+				break;
+			}			
+
+		}
+
 		try {
 			//Appeler une session pour récupérer l'utilisateur connecté
 			HttpSession session = request.getSession();
@@ -56,22 +84,37 @@ public class Home extends HttpServlet {
 			Utilisateur utilisateurConnecte = (Utilisateur) session.getAttribute("utilisateurConnecte");
 			//Récupérer l'id de l'utilisateur connecté
 			int idUtilisateurConnecte = utilisateurConnecte.getNoUtilisateur();
-			
+			// Test factorisation
+			String motCle = request.getParameter("motCle");
+			String libelle = request.getParameter("categorie");
+			//List<Article> articlesListeGeneral=ArticleManager.getInstance().show("OpenedBids", idUtilisateurConnecte, motCle);
+			// Test ajout progressif
+			List<Article> enchereListeHome = ArticleManager.getInstance().showListeHome(typeQuery, idUtilisateurConnecte, motCle);
+			List<Article> encheresOuvertesListeMotCle=ArticleManager.getInstance().showOpenedBidsAndMotCle(idUtilisateurConnecte, motCle);
 			List<Article> encheresOuvertesListe=ArticleManager.getInstance().showOpenedBids(idUtilisateurConnecte);
-			List<Article> MesEncheresListe=ArticleManager.getInstance().showMyBids();
-			List<Article> MesEncheresGagneesListe=ArticleManager.getInstance().showMyWonBids();
-			List<Article> MesVentesEncoursListe=ArticleManager.getInstance().showMyCurrentSales();
-			List<Article> MesVentesNonDebuteesListe=ArticleManager.getInstance().showMyUnstartedSales();
-			List<Article> MesVentesTermineesListe=ArticleManager.getInstance().showMyClosedSales();
+			List<Article> MesEncheresListe=ArticleManager.getInstance().showMyBids(idUtilisateurConnecte);
+			List<Article> MesEncheresGagneesListe=ArticleManager.getInstance().showMyWonBids(idUtilisateurConnecte);
+			List<Article> MesVentesEncoursListe=ArticleManager.getInstance().showMyCurrentSales(idUtilisateurConnecte);
+			List<Article> MesVentesNonDebuteesListe=ArticleManager.getInstance().showMyUnstartedSales(idUtilisateurConnecte);
+			List<Article> MesVentesTermineesListe=ArticleManager.getInstance().showMyClosedSales(idUtilisateurConnecte);
 			//Envoyer la liste récupérée
 			request.setAttribute("encheresOuvertesListe", encheresOuvertesListe);
 			request.setAttribute("MesEncheresListe", MesEncheresListe);
 			request.setAttribute("MesEncheresGagneesListe", MesEncheresGagneesListe);
 			request.setAttribute("MesVentesEncoursListe", MesVentesEncoursListe);
 			request.setAttribute("MesVentesNonDebuteesListe", MesVentesNonDebuteesListe);
-			request.setAttribute("MesVentesTermineesListe", MesVentesTermineesListe);					
+			request.setAttribute("MesVentesTermineesListe", MesVentesTermineesListe);		
+			
+			try {
+				List<Article> articles = ArticleManager.getInstance().selectByMotCleAndByLibelle(motCle);
+				for (Article article : articles) {
+					System.out.println("On est dans la home servlet : "+article.toString());
+				}
+				request.setAttribute("motCle", motCle);
+			} catch (BLLException e) {
+				e.printStackTrace();
+			}
 		} catch (BLLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
