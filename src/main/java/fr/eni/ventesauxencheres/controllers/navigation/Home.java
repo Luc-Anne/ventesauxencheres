@@ -37,10 +37,6 @@ public class Home extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// On arrive ici par exemple depuis connexion pour afficher la page d'accueil
-		// Du coup, on doit seulement afficher la page dans ce cas de figure
-		// On ne peut donc faire aucun traitement ici autre que appeler le doGet
-		this.doGet(request, response);
 	}
 
 }
