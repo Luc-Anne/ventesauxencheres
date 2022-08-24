@@ -110,7 +110,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 	
 	// Methodes pour afficher les listes d'articles dans le home
-		public List<Article> selectOpenedBids() throws DALException{
+		public List<Article> selectOpenedBids(int idUtilisateurConnecte) throws DALException{
 			List<Article> articleList=new ArrayList<Article>();
 			try (Connection cnx = ConnectionProvider.getConnection_VAE();
 					Statement stmt = cnx.createStatement();

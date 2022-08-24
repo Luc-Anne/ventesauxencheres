@@ -87,9 +87,9 @@ public class ArticleManager {
 		}
 	}
 	
-	public List<Article> showOpenedBids ()throws BLLException {
+	public List<Article> showOpenedBids (int idUtilisateurConnecte)throws BLLException {
 		try {
-			return articleDAO.selectOpenedBids();
+			return articleDAO.selectOpenedBids(idUtilisateurConnecte);
 		} catch (DALException e) {
 			throw new BLLException("", e);
 		}		

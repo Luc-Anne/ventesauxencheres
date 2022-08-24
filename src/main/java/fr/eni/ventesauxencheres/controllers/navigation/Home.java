@@ -10,10 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.ventesauxencheres.bll.ArticleManager;
 import fr.eni.ventesauxencheres.bll.BLLException;
+import fr.eni.ventesauxencheres.bll.UtilisateurManager;
 import fr.eni.ventesauxencheres.bo.Article;
+import fr.eni.ventesauxencheres.bo.Utilisateur;
 
 
 @WebServlet("/home")
@@ -47,7 +50,14 @@ public class Home extends HttpServlet {
 		request.setAttribute("ventesStatut", ventesStatut);
 		//Appeler la liste des achats avec encheres ouvertes
 		try {
-			List<Article> encheresOuvertesListe=ArticleManager.getInstance().showOpenedBids();
+			//Appeler une session pour récupérer l'utilisateur connecté
+			HttpSession session = request.getSession();
+			//Créer une nouvelle instance utilisateur pour contenir l'utilisateur connecté en appelant l'attribut de la session
+			Utilisateur utilisateurConnecte = (Utilisateur) session.getAttribute("utilisateurConnecte");
+			//Récupérer l'id de l'utilisateur connecté
+			int idUtilisateurConnecte = utilisateurConnecte.getNoUtilisateur();
+			
+			List<Article> encheresOuvertesListe=ArticleManager.getInstance().showOpenedBids(idUtilisateurConnecte);
 			List<Article> MesEncheresListe=ArticleManager.getInstance().showMyBids();
 			List<Article> MesEncheresGagneesListe=ArticleManager.getInstance().showMyWonBids();
 			List<Article> MesVentesEncoursListe=ArticleManager.getInstance().showMyCurrentSales();
@@ -59,12 +69,11 @@ public class Home extends HttpServlet {
 			request.setAttribute("MesEncheresGagneesListe", MesEncheresGagneesListe);
 			request.setAttribute("MesVentesEncoursListe", MesVentesEncoursListe);
 			request.setAttribute("MesVentesNonDebuteesListe", MesVentesNonDebuteesListe);
-			request.setAttribute("MesVentesTermineesListe", MesVentesTermineesListe);
+			request.setAttribute("MesVentesTermineesListe", MesVentesTermineesListe);					
 		} catch (BLLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
