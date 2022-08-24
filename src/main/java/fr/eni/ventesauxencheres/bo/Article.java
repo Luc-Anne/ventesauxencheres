@@ -1,6 +1,7 @@
 package fr.eni.ventesauxencheres.bo;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Article {
 
@@ -17,9 +18,19 @@ public class Article {
 	private Utilisateur vendeur; // Correspondance SQL
 	private Retrait retrait; // Utilité application
 	private Enchere enchere; // Utilité application
+	public Article() {}
 
-	public Article() {};
-	
+	// Test
+	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, int miseAPrix) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+	}
+
 	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle,
 			Utilisateur vendeur, Enchere enchere) {
@@ -34,6 +45,20 @@ public class Article {
 		this.categorieArticle = categorieArticle;
 		this.vendeur = vendeur;
 		this.enchere = enchere;
+	}
+	
+	// Test
+	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.etatVente = etatVente;
+		this.categorieArticle = categorieArticle;
 	}
 
 	public Article(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres,
@@ -58,7 +83,7 @@ public class Article {
 		return "Article [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
 				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
 				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", categorieArticle="
-				+ categorieArticle + ", vendeur=" + vendeur + ", retrait=" + retrait + ", enchere=" + enchere + "]";
+				+ categorieArticle + ", vendeur=" + vendeur + "]";
 	}
 
 	public int getNoArticle() {

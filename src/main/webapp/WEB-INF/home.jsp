@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ page import="fr.eni.ventesauxencheres.bll.CategorieManager"%>
+<%@ page import="fr.eni.ventesauxencheres.bo.Categorie"%>
+<%@ page import="fr.eni.ventesauxencheres.bo.Article" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.util.Date" %>
 
 <%@ include file="/WEB-INF/fragments/taglib.jspf" %>
 
@@ -37,17 +41,16 @@
                 <div class="col-md-6 mb-3">
                     <div class="form-group">
                             <label for="filter-input">Filtre</label>
-                            <input type="text" class="form-control" id="filter-input" name="q" placeholder="articles contenant...">
+                            <input type="text" class="form-control" id="filter-input" name="q" placeholder="articles contenant..." name ="motCle">
                     </div>
                     <div class="form-group">
                         <label for="categories-select">Catégories</label>
-                        <select class="form-control" id="categories-select" name="categorie">
-                            <option selected>Toutes</option>
-                            <option name="categorie" value="">Informatique</option>
-                            <option name="categorie" value="">Ameublement</option>
-                            <option name="categorie" value="">Vêtement</option>
-                            <option name="categorie" value="">Sport & Loisirs</option>
-                        </select>
+                        <select class="form-select" id="floatingSelectGrid"	aria-label="Floating label select example" name="categorie">
+						 <option selected>Toutes</option>
+						 <%for (Categorie categorie : CategorieManager.getInstance().getAll()){ %>
+						 <option value="<%= categorie.getNoCategorie()%>"> <%=categorie.getLibelle() %></option>
+						<%} %> 
+					</select>
                     </div>
                 </div>
                 <!--Partie droite-->
@@ -56,9 +59,9 @@
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" checked name="typeEncheres" value="achats" id="achats">Achats
                         </label>
-                    </div>               
+                    </div>
                     <div class="form-group">
-                        <div class="form-check">                        	 
+                        <div class="form-check">
                             <label class="form-check-label">
                                 <input type="checkbox" class="form-check-input" checked name="encheres" value="ouvertes" id="ouvertes">Enchères ouvertes
                             </label>

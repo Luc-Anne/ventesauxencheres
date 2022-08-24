@@ -32,7 +32,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	public Enchere selectById(int id) throws DALException {
 		return null;
 	}
-	
+
 	@Override
 	public List<Enchere> selectAll() {
 		List<Enchere> listes = new ArrayList<>();
@@ -69,21 +69,59 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				}
 				return null;
 			} catch (SQLException e) {
-				throw new DALException("Erreur " + this.getClass().getSuperclass().getCanonicalName() + " - " + this.getClass().getCanonicalName(), e);
+				throw new DALException("Erreur " + this.getClass().getSuperclass().getCanonicalName() + " - "
+						+ this.getClass().getCanonicalName(), e);
 			}
 		} catch (SQLException e) {
 			throw new DALException("Erreur Connexion à la base de données", e);
 		}
 	}
 
+	private static final String FIND_BY_NOM_ARTICLE_AND_ALL_CATEGORIE = "SELECT * FROM dbo.ARTICLES_VENDUS A , dbo.CATEGORIES C, dbo.ENCHERES E, dbo.UTILISATEURS U WHERE A.no_categorie = C.no_categorie AND E.no_article = A.no_article and U.no_utilisateur = E.no_utilisateur AND A.nom_article like ?";
+
+	private static final String FIND_BY_NOM_ARTICLE_AND_LIBLLE_CATEGORIE = "SELECT * FROM dbo.ARTICLES_VENDUS A , dbo.CATEGORIES C, dbo.ENCHERES E, dbo.UTILISATEURS U WHERE A.no_categorie = C.no_categorie AND E.no_article = A.no_article and U.no_utilisateur = E.no_utilisateur	AND A.nom_article like ?  AND C.libelle like ?";
+
+	@Override
+	public List<Enchere> selectByMotCleAndByLibelle(String motCle, String libelleCategorie) throws DALException {
+		ResultSet rs = null;
+		List<Enchere> enchereListe = new ArrayList<>();
+		PreparedStatement stmt = null;
+		Enchere enchere = null;
+		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
+			libelleCategorie = "Toutes";
+			if (libelleCategorie.equalsIgnoreCase("Toutes")) {
+				stmt = cnx.prepareStatement(FIND_BY_NOM_ARTICLE_AND_ALL_CATEGORIE);
+				stmt.setString(1, "%" + motCle + "%");
+				rs = stmt.executeQuery();
+			} else {
+				stmt = cnx.prepareStatement(FIND_BY_NOM_ARTICLE_AND_LIBLLE_CATEGORIE);
+				rs = stmt.executeQuery();
+				stmt.setString(1, "%" + motCle + "%");
+				stmt.setString(2, "%" + libelleCategorie + "%");
+				rs = stmt.executeQuery();
+			}
+
+			while (rs.next()) {
+				
+
+			}
+			enchereListe.add(enchere);
+			System.out.println(enchereListe);
+		} catch (Exception e) {
+			throw new DALException("Erreur DAL selectByMotCleAndByLibelle", e);
+		}
+		return enchereListe;
+
+	}
+
 	@Override
 	public void update(Enchere userToUpdated) throws DALException {
-		
+
 	}
 
 	@Override
 	public void delete(int id) throws DALException {
-		
+
 	}
 
 }
