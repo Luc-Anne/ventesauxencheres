@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!-- Afficher le message en fonction de la connexion -->
 <header>
-<nav class="pr-5 navbar navbar-expand-sm bg-dark navbar-dark align-top justify-content-between"  >
+	<nav class="pr-5 navbar navbar-expand-sm bg-dark navbar-dark align-top justify-content-between">
 		<!-- Choix du typeDeMenuAAfficher -->
 		<c:set var="typeDeMenuAAfficher" value="TypeNonConnecte"></c:set>
 		<c:if test="${not empty sessionScope.utilisateurConnecte}">
@@ -14,10 +14,12 @@
 			<img id="imageTrocenchere" class="small-icon" src="${pageContext.request.contextPath}/img/trocenchere.jpg" alt="Accueil ENI-Encheres" height="50px" width="50"> 
 			<strong>ENI-Encheres</strong>
 		</a>
-		<a class="navbar-brand" href="${Url.HOME.getUrl()}" title="Gérer mon profil">
-			<img class="small-icon" src="images/user.svg" alt="icon_user">
-			<span class="align-middle text-muted">XXXXX  xxx, 0 crédit(s)</span>
-		</a>
+		<c:if test="${not empty utilisateurConnecte}">
+		<li class="navbar-brand" style="list-style-type: none;">
+			<strong>${utilisateurConnecte.credit}</strong>
+			<small>credit<c:if test="${utilisateurConnecte.credit != 0}">s</c:if></small>
+		</li>
+		</c:if>
 		<ul class="navbar-nav ml-auto">
 			<!-- Dropdown for small screen -->
 			<!-- TODO small screen -->
@@ -75,4 +77,9 @@
 			</c:if>
 		</ul>
 	</nav>
+	<c:if test="${not empty messageGlobal}">
+	<div id="messageGlobal">
+		<p>${messageGlobal}</p>
+	</div>
+	</c:if>
 </header>

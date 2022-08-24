@@ -20,10 +20,17 @@ public class Enchere {
 		this.article = article;
 	}
 
+	public Enchere(LocalDateTime dateEnchere, int montantEnchere, Utilisateur encherisseur) {
+		super();
+		this.dateEnchere = dateEnchere;
+		this.montantEnchere = montantEnchere;
+		this.encherisseur = encherisseur;
+	}
+
 	@Override
 	public String toString() {
 		return "Enchere [dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere + ", encherisseur="
-				+ encherisseur + ", article=" + article + "]";
+				+ encherisseur + "]";
 	}
 
 	public LocalDateTime getDateEnchere() {

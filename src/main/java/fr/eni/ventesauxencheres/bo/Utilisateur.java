@@ -1,6 +1,6 @@
 package fr.eni.ventesauxencheres.bo;
 
-public class Utilisateur {
+public class Utilisateur implements Comparable<Utilisateur> {
 	private int noUtilisateur;
 	private String pseudo;
 	private String nom;
@@ -57,9 +57,13 @@ public class Utilisateur {
 				+ ", administrateur=" + administrateur + "]";
 	}
 	
-	public boolean equals(Utilisateur u1, Utilisateur u2) {
-		// TODO Vérifier que cela marche
-		return u1.getNoUtilisateur() == u2.getNoUtilisateur();
+	@Override
+	public int compareTo(Utilisateur u) {
+		// TODO A TESTER
+		if (this.getNoUtilisateur() == u.getNoUtilisateur()) {
+			return 0;
+		};
+		return 1;
 	}
 	
 	public int getNoUtilisateur() {

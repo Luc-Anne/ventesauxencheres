@@ -22,17 +22,22 @@ public class Desinscription extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
+			// TODO Tester avant si on a le droit de le faire sinon remonter une exception
+			// Changer le false avec la raison choisie
+			if(false) {
+				request.setAttribute("messageGlobal", "Vous ne pouvez pas supprimer votre compte car ....");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/moncompte/profil");
+				if (rd != null) {
+					rd.forward(request, response);
+				}
+			}
 			HttpSession session = request.getSession();
 			Utilisateur uc = (Utilisateur) session.getAttribute("utilisateurConnecte");
 			UtilisateurManager.getInstance().delete(uc.getNoUtilisateur());
-			session.invalidate();
-			// TODO Prévoir un message qui s'affichera juste en dessous de la navbar pour confirmer la suppression du compte
-			// TODO Créer une div de communication globale pour ce genre de cas
-			request.setAttribute("sucessDelete", "Suppression de l'utilisateur réussie");
+			session.removeAttribute("utilisateurConnecte");
+			request.getSession().setAttribute("messageGlobal", "Votre compte a bien été supprimé");
 			response.sendRedirect(Url.HOME.getUrl());
 		} catch (BLLException e) {
-			// TODO Prévoir un message qui s'affichera juste en dessous de la navbar pour dire que ça n'a pas fonctionné
-			request.setAttribute("sucessDelete", "Suppression de l'utilisateur échoué");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/moncompte/profil");
 			if (rd != null) {
 				rd.forward(request, response);

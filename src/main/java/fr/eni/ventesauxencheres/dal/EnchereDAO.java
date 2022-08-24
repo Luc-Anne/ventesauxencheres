@@ -6,6 +6,6 @@ import fr.eni.ventesauxencheres.bo.Article;
 import fr.eni.ventesauxencheres.bo.Enchere;
 
 public interface EnchereDAO  extends DAO<Enchere> {
-	List<Enchere> selectByArticle(Article article) throws DALException;
+	Enchere selectByArticle(Article article) throws DALException;
 	public List<Enchere> selectByMotCleAndByLibelle(String motCle, String libelleCategorie) throws DALException;
 }

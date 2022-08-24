@@ -16,9 +16,9 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	
 	private static final String GET_CATEGORIE_BY_ID = "SELECT no_categorie, libelle FROM dbo.CATEGORIES WHERE no_categorie = ? ";
 	private static final String GET_ALL_CATEGORIE ="SELECT * FROM  dbo.CATEGORIES";
+	
 	@Override
 	public Categorie insert(Categorie u) throws DALException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -45,7 +45,6 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 
 	@Override
 	public List<Categorie> selectAll() throws DALException {
-
 		List<Categorie> categories = new ArrayList<>();
 		Categorie categorie = new Categorie();
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
@@ -66,14 +65,12 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 
 	@Override
 	public void update(Categorie userToUpdated) throws DALException {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete(int id) throws DALException {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

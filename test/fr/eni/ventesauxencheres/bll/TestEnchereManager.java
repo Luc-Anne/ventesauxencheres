@@ -22,18 +22,9 @@ public class TestEnchereManager extends HttpServlet {
 		String message = "";
 		
 		// Test Method 1
-		pw.append("\nMethode selectByArticle \n");
+		pw.append("\nMethode \n");
 		// Test 1 ###################################################
 		pw.append("\nTest 1 : \n");
-		Article article;
-		try {
-			article = FactoryDAO.getArticleDAO().selectById(1);
-			FactoryDAO.getEnchereDAO().selectByArticle(article);
-			message += "OK";
-		} catch (DALException e) {
-			message += "ECHEC";
-			e.printStackTrace();
-		}
 		message = "";
 
 		pw.append(message);

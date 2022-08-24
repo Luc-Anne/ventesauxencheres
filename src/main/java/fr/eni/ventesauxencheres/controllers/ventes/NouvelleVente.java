@@ -16,10 +16,8 @@ import javax.servlet.http.HttpSession;
 import fr.eni.ventesauxencheres.bll.ArticleManager;
 import fr.eni.ventesauxencheres.bll.BLLException;
 import fr.eni.ventesauxencheres.bll.CategorieManager;
-import fr.eni.ventesauxencheres.bll.RetraitManager;
 import fr.eni.ventesauxencheres.bo.Article;
 import fr.eni.ventesauxencheres.bo.Categorie;
-import fr.eni.ventesauxencheres.bo.Retrait;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
 
 
@@ -27,12 +25,10 @@ import fr.eni.ventesauxencheres.bo.Utilisateur;
 public class NouvelleVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/nouvelleVente.jsp");
 		if (rd != null) {rd.forward(request, response);
 		}
-			
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -107,7 +103,6 @@ public class NouvelleVente extends HttpServlet {
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 }

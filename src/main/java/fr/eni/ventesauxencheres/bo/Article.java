@@ -17,31 +17,7 @@ public class Article {
 	private Categorie categorieArticle; // Correspondance SQL
 	private Utilisateur vendeur; // Correspondance SQL
 	private Retrait retrait; // Utilité application
-	private Utilisateur encherisseur;
-	private Enchere enchere;
-	
-	private int no_utilisateur;
-	private int categorie;
-	
-	
-	
-	public int getNo_utilisateur() {
-		return no_utilisateur;
-	}
-
-	public void setNo_utilisateur(int no_utilisateur) {
-		this.no_utilisateur = no_utilisateur;
-	}
-
-	public int getCategorie() {
-		return categorie;
-	}
-
-	public void setCategorie(int categorie) {
-		this.categorie = categorie;
-	}
-
-
+	private Enchere enchere; // Utilité application
 	public Article() {}
 
 	// Test
@@ -57,7 +33,7 @@ public class Article {
 
 	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle,
-			Utilisateur vendeur) {
+			Utilisateur vendeur, Enchere enchere) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -68,8 +44,10 @@ public class Article {
 		this.etatVente = etatVente;
 		this.categorieArticle = categorieArticle;
 		this.vendeur = vendeur;
+		this.enchere = enchere;
 	}
 	
+	// Test
 	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle) {
 		super();
@@ -81,12 +59,11 @@ public class Article {
 		this.prixVente = prixVente;
 		this.etatVente = etatVente;
 		this.categorieArticle = categorieArticle;
-		
 	}
 
 	public Article(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle,
-			Utilisateur vendeur) {
+			Utilisateur vendeur, Enchere enchere) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -98,8 +75,8 @@ public class Article {
 		this.etatVente = etatVente;
 		this.categorieArticle = categorieArticle;
 		this.vendeur = vendeur;
+		this.enchere = enchere;
 	}
-
 
 	@Override
 	public String toString() {
@@ -204,14 +181,5 @@ public class Article {
 	public void setEnchere(Enchere enchere) {
 		this.enchere = enchere;
 	}
-
-	public Utilisateur getEncherisseur() {
-		return encherisseur;
-	}
-
-	public void setEncherisseur(Utilisateur encherisseur) {
-		this.encherisseur = encherisseur;
-	}
-	
 	
 }

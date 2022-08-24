@@ -1,6 +1,5 @@
 package fr.eni.ventesauxencheres.dal;
 
-import java.sql.SQLException;
 public class DALException extends Exception {
     private static final long serialVersionUID = -8053297193839148325L;
 

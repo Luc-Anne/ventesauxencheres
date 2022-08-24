@@ -1,7 +1,6 @@
 package fr.eni.ventesauxencheres.controllers.business;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,6 +24,13 @@ public class detailsArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Bloqué la page à un utilisateur non connecté
+		if (request.getSession().getAttribute("utilisateurConnecte") == null) {
+			response.sendError(403);
+			return;
+		}
+		Utilisateur utilisateurConnecte = (Utilisateur)request.getSession().getAttribute("utilisateurConnecte");
+		
 		// Récupération des paramètres
 		int no_article = 0;
 		try {
@@ -32,6 +38,7 @@ public class detailsArticle extends HttpServlet {
 		} catch (NullPointerException | NumberFormatException e) {
 			e.printStackTrace();
 			response.sendError(500);
+			return;
 		}
 		
 		// Récupération et traitement des données
@@ -41,41 +48,58 @@ public class detailsArticle extends HttpServlet {
 		} catch (BLLException e) {
 			e.printStackTrace();
 			response.sendError(404);
+			return;
 		}
-		if (article.getEtatVente() == "CR") {
+		
+		Enchere enchere = null;
+		Utilisateur encherisseur = null;
+		try {
+			enchere = EnchereManager.getInstance().getByArticle(article);
+			if (enchere != null) {
+				if (article.getEtatVente() == "VD" || article.getEtatVente() == "RT") {
+					encherisseur = enchere.getEncherisseur();
+				}
+			}
+		} catch (BLLException e) {
+			e.printStackTrace();
 			response.sendError(404);
-		} else {
-			List<Enchere> encheres = null;
-			Utilisateur acheteur = null;
-			try {
-				encheres = EnchereManager.getInstance().getByObject(article);
-				if (encheres != null) {
-					if (article.getEtatVente() == "VD" || article.getEtatVente() == "RT") {
-						acheteur = encheres.get(0).getEncherisseur();
-					}
-				}
-			} catch (BLLException e) {
-				e.printStackTrace();
-				response.sendError(404);
-			}
-			
-			if (article.getEtatVente() == "VD" || article.getEtatVente() == "RT") {
-				if(article.getVendeur() != (Utilisateur)request.getSession().getAttribute("UtilisateurConnecte")) {
-					// Fonction equals ?
-					response.sendError(403);
-				}
-				if (acheteur != null && acheteur != (Utilisateur)request.getSession().getAttribute("UtilisateurConnecte")) {
-					response.sendError(403);
-				}
-			}
-			
-			// Affichage de la vue
-			request.setAttribute("article", article);
-			request.setAttribute("encheres", encheres);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/business/detailsArticle.jsp");
-			if (rd != null) {
-				rd.forward(request, response);
-			}
+			return;
+		}
+		
+		// Bloqué l'accès à la page suivant l'état de la vente et la relation entre l'article et l'utilisateur connecté
+		String typeAffichage = "";
+		Utilisateur vendeur = article.getVendeur();
+		if (
+			article.getEtatVente() == "CR" ||
+			(article.getEtatVente() == "VD" && !utilisateurConnecte.equals(encherisseur)) ||
+			(article.getEtatVente() == "RT" && !utilisateurConnecte.equals(encherisseur))
+		) {
+			response.sendError(404);
+			return;
+		} else if (
+			(article.getEtatVente() == "EC" && !utilisateurConnecte.equals(vendeur))
+		){
+			typeAffichage = "typeEncherir";
+		} else if (
+			(article.getEtatVente() == "VD" && utilisateurConnecte.equals(vendeur))
+		){
+			typeAffichage = "typeRetrait";
+		} else if (
+			(article.getEtatVente() == "EC" && utilisateurConnecte.equals(vendeur)) ||
+			(article.getEtatVente() == "VD" && utilisateurConnecte.equals(encherisseur)) ||
+			(article.getEtatVente() == "RT" && utilisateurConnecte.equals(vendeur)) ||
+			(article.getEtatVente() == "RT" && utilisateurConnecte.equals(encherisseur))
+		){
+			typeAffichage = "typeBack";
+		}
+
+		// Affichage de la vue
+		request.setAttribute("article", article);
+		request.setAttribute("enchere", enchere);
+		request.setAttribute("typeAffichage", typeAffichage);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/business/detailsArticle.jsp");
+		if (rd != null) {
+			rd.forward(request, response);
 		}
 		
 	}

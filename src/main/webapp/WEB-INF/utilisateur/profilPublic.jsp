@@ -13,10 +13,12 @@
 <body class="bg-light">
 <body>
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
-	<main>
+	<main class="container">
+		<div class="mx-auto text-center">
+			<h1>Profil de ${utilisateur.pseudo}</h1>
+		</div>
 		<c:if test="${not empty utilisateur}">
 			<ul>
-				<li>${utilisateur.pseudo}</li>
 				<li>${utilisateur.nom}</li>
 				<li>${utilisateur.prenom}</li>
 				<li>${utilisateur.email}</li>

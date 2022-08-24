@@ -33,25 +33,21 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 
 	@Override
 	public Retrait selectById(int id) throws DALException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Retrait> selectAll() throws DALException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void update(Retrait userToUpdated) throws DALException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void delete(int id) throws DALException {
-		// TODO Auto-generated method stub
 		
 	}
 

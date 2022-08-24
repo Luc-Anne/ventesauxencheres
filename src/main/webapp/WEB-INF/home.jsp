@@ -1,7 +1,7 @@
-<%@page import="fr.eni.ventesauxencheres.bll.CategorieManager"%>
-<%@page import="fr.eni.ventesauxencheres.bo.Categorie"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="fr.eni.ventesauxencheres.bll.CategorieManager"%>
+<%@ page import="fr.eni.ventesauxencheres.bo.Categorie"%>
 <%@ page import="fr.eni.ventesauxencheres.bo.Article" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.util.Date" %>
@@ -14,7 +14,7 @@
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
 	<title>${initParam.debutTitre} Accueil</title>
 </head>
-<body>
+<body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	<!--main bloc-->
     <main>
@@ -35,7 +35,7 @@
         </div>
         <!--filtre-->
         <c:if test="${not empty utilisateurConnecte}">
-        <form class="form-filter border mb-3" action="${pageContext.request.contextPath}/servletTestMotCle" method="post">
+        <form class="form-filter border mb-3" action="${Url.ENCHERES.getUrl()}" method="post">
             <div class="row">
                 <!--Partie gauche-->
                 <div class="col-md-6 mb-3">
@@ -57,7 +57,7 @@
                 <div class="col-md-6 mb-3">  	
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" checked name="type-encheres" value="achats" id="achats">Achats
+                            <input type="radio" class="form-check-input" checked name="typeEncheres" value="achats" id="achats">Achats
                         </label>
                     </div>
                     <div class="form-group">
@@ -79,7 +79,7 @@
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="type-encheres" value="ventes" id="ventes">Ventes
+                            <input type="radio" class="form-check-input" name="typeEncheres" value="ventes" id="ventes">Ventes
                         </label>
                     </div>
                     <div class="form-group">
@@ -107,47 +107,78 @@
             </button>
         </form>
         </c:if>
-
+     
         <!--enchères-->
-        <div class="row justify-content-center border-top card-deck">
-           <c:forEach items="${articleList}" var="itemArticle">
-             <div class="col-12 col-sm-6 p-2" >
-                 <div class="card">
-                     <div class="card-header text-center">
-                         <h4 class="my-0 font-weight-normal">${itemArticle.nomArticle}</h4>
-                     </div>
-                     <div class="d-flex">
-                         <div class="col-3 p-2">
-                             <img class="img-fluid img-thumbnail" src="images/photo.svg" alt="pas de photo" />
-                         </div>
-                         <ul class="col-9 list-unstyled p-2">                            
-                             <c:if test="${not empty prixVente}">
-                             	<!-- Non opérationnel -->
-							   <li>Meilleure enchère : ${itemArticle.prixVente} point(s)</li>      
-							</c:if>
-                             <c:if test="${empty prixVente}">
-							    <li>Prix de mise: ${itemArticle.miseAPrix} point(s)</li>   
-							</c:if>							                                                        
-                             <%
-                             Article art = (Article) pageContext.getAttribute("itemArticle");
-                             LocalDateTime dateLDT=art.getDateFinEncheres();
-                            // Date dateDate=Date.from(dateLDT.atZone(ZoneId.systemDefault()).toInstant());
-                            Date dateD = java.sql.Timestamp.valueOf(dateLDT);                                                                        
-                             %>                       
-                             <c:set var="dateFormate" value="<%=java.sql.Timestamp.valueOf(dateLDT)%>" />
-                             <li>Fin de l'enchère : <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateFormate}" /></li>
-							<li><a href="${Url.PROFIL_PUBLIC.getUrl()}${itemArticle.vendeur.pseudo}">Vendeur : ${itemArticle.vendeur.pseudo}</a></li>
-							<li>Montant enchère : ${itemArticle.enchere.montantEnchere} point(s)</li>
-							<li>Encherisseur : ${itemArticle.encherisseur.pseudo}</li>
-							<li>Prix de vente : ${itemArticle.prixVente} point(s)</li>   
-                     </div>
-                     <a class="mt-3 btn btn-lg btn-block btn-primary" href="#" title="faire une enchère">
-                         <img class="small-icon" src="images/bid.svg">
-                     </a>
-                 </div>
-             </div>
-            </c:forEach>
-     </div>
+
+	        <!-- Liste des articles mode non connecté -->
+	        <div class="row justify-content-center border-top card-deck">
+	           <c:forEach items="${articlesList}" var="itemArticle">
+	           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+	            </c:forEach>
+	     	</div>
+    
+     	<!-- Affichage Achats  -->
+     	<c:if test="${not empty utilisateurConnecte}">
+     		<c:if test="${param.typeEncheres == 'achats'}">
+				<c:choose>         
+					<c:when test = "${param.encheres == 'ouvertes'}">
+			            <h3>Bouton radio ACHAT + Encheres OUVERTES </h3>
+				        <div class="row justify-content-center border-top card-deck">
+				           <c:forEach items="${encheresOuvertesListe}" var="itemArticle">
+				           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+				            </c:forEach>
+				     	</div>			            
+			         </c:when>			         
+			         <c:when test = "${param.encheres == 'encours'}">
+			            <h3>Bouton radio ACHAT + MES Encheres</h3>
+			            <div class="row justify-content-center border-top card-deck">
+				           <c:forEach items="${MesEncheresListe}" var="itemArticle">
+				           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+				            </c:forEach>
+				     	</div>				            
+			         </c:when>			         
+			         <c:otherwise>
+			            <h3>Bouton radio ACHAT + MES Encheres remportées</h3>
+			            <div class="row justify-content-center border-top card-deck">
+				           <c:forEach items="${MesEncheresGagneesListe}" var="itemArticle">
+				           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+				            </c:forEach>
+				     	</div>			            
+			         </c:otherwise>
+				</c:choose>     		 
+     		</c:if>      	
+     	</c:if> 
+      	<!-- Affichage Mes ventes  -->
+     	<c:if test="${not empty utilisateurConnecte}">
+     		<c:if test="${param.typeEncheres == 'ventes'}">
+				<c:choose>         
+					<c:when test = "${param.ventes == 'venteencours'}">
+			            <h3>Bouton radio VENTE + venteencours </h3> 
+			            <div class="row justify-content-center border-top card-deck">
+				           <c:forEach items="${MesVentesEncoursListe}" var="itemArticle">
+				           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+				            </c:forEach>
+				     	</div>			                    		            
+			         </c:when>			         
+			         <c:when test = "${param.ventes == 'nondebutees'}">
+			            <h3>Bouton radio VENTE + nondebutees</h3>
+			            <div class="row justify-content-center border-top card-deck">
+				           <c:forEach items="${MesVentesNonDebuteesListe}" var="itemArticle">
+				           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+				            </c:forEach>
+				     	</div>			            
+			         </c:when>			         
+			         <c:otherwise>
+			            <h3>Bouton radio VENTE + Terminées</h3>
+			            <div class="row justify-content-center border-top card-deck">
+				           <c:forEach items="${MesVentesTermineesListe}" var="itemArticle">
+				           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+				            </c:forEach>
+				     	</div>			            
+			         </c:otherwise>
+				</c:choose>     		 
+     		</c:if>      	
+     	</c:if>     		 
     </main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>

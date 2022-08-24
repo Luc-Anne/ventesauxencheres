@@ -16,19 +16,20 @@ import fr.eni.ventesauxencheres.dal.DALException;
 import fr.eni.ventesauxencheres.dal.EnchereDAO;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO {
-
-	private static final String SELECT_BY_OBJECT = "" + "SELECT * " + "FROM ENCHERES " + "WHERE no_article = ? "
-			+ "ORDER BY date_enchere DESC";
+	// TODO Enchere a un CRUD de base différent
+	private static final String SELECT_BY_OBJECT = ""
+			+ "SELECT * "
+			+ "FROM ENCHERES e "
+			+ "LEFT JOIN UTILISATEURS u ON e.no_utilisateur = u.no_utilisateur "
+			+ "WHERE no_article = ? ";
 
 	@Override
 	public Enchere insert(Enchere u) throws DALException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Enchere selectById(int id) throws DALException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -38,20 +39,33 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 		return listes;
 	}
-
-	public List<Enchere> selectByArticle(Article article) throws DALException {
-		List<Enchere> listes = new ArrayList<>();
+	
+	public Enchere selectByArticle(Article article) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement statement = cnx.prepareStatement(SELECT_BY_OBJECT)) {
 				statement.setInt(1, article.getNoArticle());
 				ResultSet rs = statement.executeQuery();
-				while (rs.next()) {
-					// TODO mettre ça dans la requête
-					Utilisateur utilisateur = new UtilisateurDAOJdbcImpl().selectById(rs.getInt("no_utilisateur"));
-					listes.add(new Enchere(
-							LocalDateTime.of(rs.getDate("date_enchere").toLocalDate(),
-									rs.getTime("date_enchere").toLocalTime()),
-							rs.getInt("montant_enchere"), utilisateur, article));
+				while(rs.next()) {
+					Utilisateur utilisateur = new Utilisateur (
+						rs.getInt("no_utilisateur"),
+						rs.getString("pseudo"),
+						rs.getString("nom"),
+						rs.getString("prenom"),
+						rs.getString("email"),
+						rs.getString("telephone"),
+						rs.getString("rue"),
+						rs.getString("code_postal"),
+						rs.getString("ville"),
+						rs.getString("mot_de_passe"),
+						rs.getInt("credit"),
+						rs.getBoolean("administrateur")
+					);
+					return new Enchere(
+						LocalDateTime.of(rs.getDate("date_enchere").toLocalDate(), rs.getTime("date_enchere").toLocalTime()),
+						rs.getInt("montant_enchere"),
+						utilisateur,
+						article
+					);
 				}
 				return null;
 			} catch (SQLException e) {
@@ -102,13 +116,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	@Override
 	public void update(Enchere userToUpdated) throws DALException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void delete(int id) throws DALException {
-		// TODO Auto-generated method stub
 
 	}
 
