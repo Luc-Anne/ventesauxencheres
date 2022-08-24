@@ -17,8 +17,19 @@
 		<%
 		Article article = (Article)request.getAttribute("article");
 		%>
-		 <div class="mx-auto text-center">
-			<h1>${article.nomArticle}</h1>
+		<!-- Titre -->
+		<div class="mx-auto text-center">
+			<h1>
+			<c:if test="${typeAffichage == 'typeEncherir' || typeAffichage == 'typeBack'}">
+				DétailsVente
+			</c:if>
+			<c:if test="${typeAffichage == 'typeRetrait'}">
+				${article.encherisseur.pseudo} a remporté la vente
+			</c:if>
+			<c:if test="${typeAffichage == 'typeGagne'}">
+				Bous avez remporté la vente
+			</c:if>
+			</h1>
 		</div>
 		<!-- Afficher les détails d'un article -->
 		<ul class="list-group">
@@ -62,7 +73,7 @@
 					${article.miseAPrix}
 				</div>
 			</li>
-			<c:if test="${typeAffichage != 'typeBack'}">
+			<c:if test="${typeAffichage == 'typeEncherir' || typeAffichage == 'typeRetrait'}">
 			<li class="list-group-item d-flex justify-content-between align-items-start">
 				<div class="ms-2 me-auto">
 					<div class="fw-bold">Fin des enchères</div>
@@ -75,12 +86,6 @@
 				</div>
 			</li>
 			</c:if>
-			<li class="list-group-item d-flex justify-content-between align-items-start">
-				<div class="ms-2 me-auto">
-					<div class="fw-bold">TODO</div>
-					
-				</div>
-			</li>
 			<li class="list-group-item d-flex justify-content-between align-items-start">
 				<div class="ms-2 me-auto">
 					<div class="fw-bold">Retrait</div>
@@ -96,14 +101,29 @@
 					</c:if>
 				</div>
 			</li>
+			<li class="list-group-item d-flex justify-content-between align-items-start">
+				<div class="ms-2 me-auto">
+					<div class="fw-bold">Vendeur</div>
+					${article.vendeur.pseudo}
+				</div>
+			</li>
+			<c:if test="${typeAffichage == 'typeGagne'}">
+			<li class="list-group-item d-flex justify-content-between align-items-start">
+				<div class="ms-2 me-auto">
+					<div class="fw-bold">Téléphone</div>
+					${article.vendeur.telephone}
+				</div>
+			</li>
+			</c:if>
 		</ul>
 		<c:if test="${typeAffichage == 'typeEncherir'}">
-			<button>Miser</button>
+			<input type="number" name="mise" value="${article.miseAPrix + 1}" min="${article.miseAPrix}">
+			<button type="submit">Miser</button>
 		</c:if>
 		<c:if test="${typeAffichage == 'typeRetrait'}">
 			<button>Confirmer le retrait</button>
 		</c:if>
-		<c:if test="${typeAffichage == 'typeBack'}">
+		<c:if test="${typeAffichage == 'typeBack' || typeAffichage == 'typeGagne'}">
 			<button>Back</button>
 		</c:if>
 	</main>
