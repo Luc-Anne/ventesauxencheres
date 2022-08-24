@@ -35,7 +35,7 @@
         </div>
         <!--filtre-->
         <c:if test="${not empty utilisateurConnecte}">
-        <form class="form-filter border mb-3" action="${Url.ENCHERES.getUrl()}" method="post">
+        <form class="form-filter border mb-3" action="${Url.HOME.getUrl()}" method="post">
             <div class="row">
                 <!--Partie gauche-->
                 <div class="col-md-6 mb-3">
