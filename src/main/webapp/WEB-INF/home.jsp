@@ -106,14 +106,14 @@
         </c:if>
      
         <!--enchères-->
-        <c:if test="${empty utilisateurConnecte}">
+
 	        <!-- Liste des articles mode non connecté -->
 	        <div class="row justify-content-center border-top card-deck">
 	           <c:forEach items="${articlesList}" var="itemArticle">
 	           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
 	            </c:forEach>
 	     	</div>
-     	</c:if>
+    
      	<!-- Affichage Achats  -->
      	<c:if test="${not empty utilisateurConnecte}">
      		<c:if test="${param.typeEncheres == 'achats'}">
