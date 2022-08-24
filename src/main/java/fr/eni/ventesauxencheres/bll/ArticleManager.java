@@ -87,4 +87,46 @@ public class ArticleManager {
 		}
 	}
 	
+	public List<Article> showOpenedBids ()throws BLLException {
+		try {
+			return articleDAO.selectOpenedBids();
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}		
+	}
+	public List<Article> showMyBids ()throws BLLException {
+		try {
+			return articleDAO.selectMyBids();
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}		
+	}	
+	public List<Article> showMyWonBids ()throws BLLException {
+		try {
+			return articleDAO.selectMyWonBids();
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}		
+	}	
+	public List<Article> showMyCurrentSales ()throws BLLException {
+		try {
+			return articleDAO.selectMyCurrentSales();
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}		
+	}
+	public List<Article> showMyUnstartedSales ()throws BLLException {
+		try {
+			return articleDAO.selectUnstartedSales();
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}		
+	}	
+	public List<Article> showMyClosedSales ()throws BLLException {
+		try {
+			return articleDAO.selectClosedSales();
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}		
+	}		
 }

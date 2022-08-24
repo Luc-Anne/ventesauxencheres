@@ -31,7 +31,7 @@
         </div>
         <!--filtre-->
         <c:if test="${not empty utilisateurConnecte}">
-        <form class="form-filter border mb-3" action="#" method="">
+        <form class="form-filter border mb-3" action="${Url.ENCHERES.getUrl()}" method="post">
             <div class="row">
                 <!--Partie gauche-->
                 <div class="col-md-6 mb-3">
@@ -54,11 +54,11 @@
                 <div class="col-md-6 mb-3">  	
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" checked name="type-encheres" value="achats" id="achats">Achats
+                            <input type="radio" class="form-check-input" checked name="typeEncheres" value="achats" id="achats">Achats
                         </label>
-                    </div>
+                    </div>               
                     <div class="form-group">
-                        <div class="form-check">
+                        <div class="form-check">                        	 
                             <label class="form-check-label">
                                 <input type="checkbox" class="form-check-input" checked name="encheres" value="ouvertes" id="ouvertes">Enchères ouvertes
                             </label>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="type-encheres" value="ventes" id="ventes">Ventes
+                            <input type="radio" class="form-check-input" name="typeEncheres" value="ventes" id="ventes">Ventes
                         </label>
                     </div>
                     <div class="form-group">
@@ -104,9 +104,7 @@
             </button>
         </form>
         </c:if>
-
- 
-  <span>-----------------------------------------------------------------------------</span>       
+     
         <!--enchères-->
         <c:if test="${empty utilisateurConnecte}">
 	        <!-- Liste des articles mode non connecté -->
@@ -116,15 +114,68 @@
 	            </c:forEach>
 	     	</div>
      	</c:if>
-     	<!-- Affichage Achats - Enchères ouvertes -->
+     	<!-- Affichage Achats  -->
      	<c:if test="${not empty utilisateurConnecte}">
-     		<c:if test="${achats.checked}">
-     		 <h3>Bouton radio achat checked !</h3>
+     		<c:if test="${param.typeEncheres == 'achats'}">
+				<c:choose>         
+					<c:when test = "${param.encheres == 'ouvertes'}">
+			            <h3>Bouton radio ACHAT + Encheres OUVERTES </h3>
+				        <div class="row justify-content-center border-top card-deck">
+				           <c:forEach items="${encheresOuvertesListe}" var="itemArticle">
+				           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+				            </c:forEach>
+				     	</div>			            
+			         </c:when>			         
+			         <c:when test = "${param.encheres == 'encours'}">
+			            <h3>Bouton radio ACHAT + MES Encheres</h3>
+			            <div class="row justify-content-center border-top card-deck">
+				           <c:forEach items="${MesEncheresListe}" var="itemArticle">
+				           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+				            </c:forEach>
+				     	</div>				            
+			         </c:when>			         
+			         <c:otherwise>
+			            <h3>Bouton radio ACHAT + MES Encheres remportées</h3>
+			            <div class="row justify-content-center border-top card-deck">
+				           <c:forEach items="${MesEncheresGagneesListe}" var="itemArticle">
+				           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+				            </c:forEach>
+				     	</div>			            
+			         </c:otherwise>
+				</c:choose>     		 
      		</c:if>      	
-     	</c:if>
-    	
-     	
-     	 
+     	</c:if> 
+      	<!-- Affichage Mes ventes  -->
+     	<c:if test="${not empty utilisateurConnecte}">
+     		<c:if test="${param.typeEncheres == 'ventes'}">
+				<c:choose>         
+					<c:when test = "${param.ventes == 'venteencours'}">
+			            <h3>Bouton radio VENTE + venteencours </h3> 
+			            <div class="row justify-content-center border-top card-deck">
+				           <c:forEach items="${MesVentesEncoursListe}" var="itemArticle">
+				           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+				            </c:forEach>
+				     	</div>			                    		            
+			         </c:when>			         
+			         <c:when test = "${param.ventes == 'nondebutees'}">
+			            <h3>Bouton radio VENTE + nondebutees</h3>
+			            <div class="row justify-content-center border-top card-deck">
+				           <c:forEach items="${MesVentesNonDebuteesListe}" var="itemArticle">
+				           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+				            </c:forEach>
+				     	</div>			            
+			         </c:when>			         
+			         <c:otherwise>
+			            <h3>Bouton radio VENTE + Terminées</h3>
+			            <div class="row justify-content-center border-top card-deck">
+				           <c:forEach items="${MesVentesTermineesListe}" var="itemArticle">
+				           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+				            </c:forEach>
+				     	</div>			            
+			         </c:otherwise>
+				</c:choose>     		 
+     		</c:if>      	
+     	</c:if>     		 
     </main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>
