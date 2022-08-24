@@ -74,7 +74,7 @@ public class detailsArticle extends HttpServlet {
 			(article.getEtatVente() == "VD" && !utilisateurConnecte.equals(encherisseur)) ||
 			(article.getEtatVente() == "RT" && !utilisateurConnecte.equals(encherisseur))
 		) {
-			response.sendError(404);
+			response.sendError(403);
 			return;
 		} else if (
 			(article.getEtatVente() == "EC" && !utilisateurConnecte.equals(vendeur))
