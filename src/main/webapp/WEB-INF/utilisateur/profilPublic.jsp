@@ -18,14 +18,49 @@
 			<h1>Profil de ${utilisateur.pseudo}</h1>
 		</div>
 		<c:if test="${not empty utilisateur}">
-			<ul>
-				<li>${utilisateur.nom}</li>
-				<li>${utilisateur.prenom}</li>
-				<li>${utilisateur.email}</li>
-				<li>${utilisateur.telephone}</li>
-				<li>${utilisateur.rue}</li>
-				<li>${utilisateur.codePostal}</li>
-				<li>${utilisateur.ville}</li>
+			<ul class="list-group">
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+						<div class="fw-bold">Nom</div>
+						${utilisateur.nom}
+					</div>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+						<div class="fw-bold">Prénom</div>
+						${utilisateur.prenom}
+					</div>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+						<div class="fw-bold">Email</div>
+						${utilisateur.email}
+					</div>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+						<div class="fw-bold">Téléphone</div>
+						${utilisateur.telephone}				
+					</div>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+						<div class="fw-bold">Rue</div>
+						${utilisateur.rue}				
+					</div>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+						<div class="fw-bold">Code Postal</div>
+						${utilisateur.codePostal}
+					</div>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+						<div class="fw-bold">Ville</div>
+						${utilisateur.ville}
+					</div>
+				</li>
 			</ul>
 		</c:if>
 	</main>
