@@ -96,40 +96,41 @@ public class ArticleManager {
 			throw new BLLException("", e);
 		}		
 	}
-	public List<Article> showMyBids ()throws BLLException {
+	public List<Article> showMyBids (int idUtilisateurConnecte)throws BLLException {
 		try {
-			return articleDAO.selectMyBids();
+			return articleDAO.selectMyBids(idUtilisateurConnecte);
 		} catch (DALException e) {
 			throw new BLLException("", e);
 		}		
 	}	
-	public List<Article> showMyWonBids ()throws BLLException {
+	public List<Article> showMyWonBids (int idUtilisateurConnecte)throws BLLException {
 		try {
-			return articleDAO.selectMyWonBids();
+			return articleDAO.selectMyWonBids(idUtilisateurConnecte);
 		} catch (DALException e) {
 			throw new BLLException("", e);
 		}		
 	}	
-	public List<Article> showMyCurrentSales ()throws BLLException {
+	public List<Article> showMyCurrentSales (int idUtilisateurConnecte)throws BLLException {
 		try {
-			return articleDAO.selectMyCurrentSales();
+			return articleDAO.selectMyCurrentSales(idUtilisateurConnecte);
 		} catch (DALException e) {
 			throw new BLLException("", e);
 		}		
 	}
-	public List<Article> showMyUnstartedSales ()throws BLLException {
+	public List<Article> showMyUnstartedSales (int idUtilisateurConnecte)throws BLLException {
 		try {
-			return articleDAO.selectUnstartedSales();
+			return articleDAO.selectUnstartedSales(idUtilisateurConnecte);
 		} catch (DALException e) {
 			throw new BLLException("", e);
 		}		
 	}	
-	public List<Article> showMyClosedSales ()throws BLLException {
+	public List<Article> showMyClosedSales (int idUtilisateurConnecte)throws BLLException {
 		try {
-			return articleDAO.selectClosedSales();
+			return articleDAO.selectClosedSales(idUtilisateurConnecte);
 		} catch (DALException e) {
 			throw new BLLException("", e);
 		}		
+
 	}
 	
 	public boolean canDisplayDetails(Article article, Utilisateur utilisateurConnecte) {
@@ -163,4 +164,42 @@ public class ArticleManager {
 		return false;
 	}
 
+	
+	public List<Article> selectByMotCleAndByLibelle(String motCle) throws BLLException {
+		List<Article> articles = null;
+		
+		try {
+			articles = articleDAO.selectByMotCleAndByLibelle(motCle);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return articles;
+	}
+	
+	//Test factorisation methode show general
+	public List<Article> show(String typeQuery, int idUtilisateurConnecte,String motCle)throws BLLException {
+		try {
+			return articleDAO.selectListHome(typeQuery, idUtilisateurConnecte, motCle);
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}		
+	}
+
+	public List<Article> showOpenedBidsAndMotCle(int idUtilisateurConnecte, String motCle) throws BLLException {
+		List<Article> articles = null;
+		articles = articleDAO.showOpenedBidsAndMotCle(idUtilisateurConnecte,motCle);
+		return articles;
+	}
+	
+	public List<Article> showListeHome(String typeQuery, int idUtilisateurConnecte, String motCle)
+			throws BLLException {
+		List<Article> articles = null;
+		try {
+			articles = articleDAO.selectListHome(typeQuery, idUtilisateurConnecte, motCle);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return articles;
+	}
+	
 }

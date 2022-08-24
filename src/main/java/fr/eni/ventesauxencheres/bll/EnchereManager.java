@@ -118,4 +118,5 @@ public class EnchereManager {
 			throw new BLLException("", e);
 		}
 	}
+	
 }

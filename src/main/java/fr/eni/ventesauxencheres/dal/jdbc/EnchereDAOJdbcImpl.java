@@ -137,42 +137,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		}
 	}
 
-	private static final String FIND_BY_NOM_ARTICLE_AND_ALL_CATEGORIE = "SELECT * FROM dbo.ARTICLES_VENDUS A , dbo.CATEGORIES C, dbo.ENCHERES E, dbo.UTILISATEURS U WHERE A.no_categorie = C.no_categorie AND E.no_article = A.no_article and U.no_utilisateur = E.no_utilisateur AND A.nom_article like ?";
-
-	private static final String FIND_BY_NOM_ARTICLE_AND_LIBLLE_CATEGORIE = "SELECT * FROM dbo.ARTICLES_VENDUS A , dbo.CATEGORIES C, dbo.ENCHERES E, dbo.UTILISATEURS U WHERE A.no_categorie = C.no_categorie AND E.no_article = A.no_article and U.no_utilisateur = E.no_utilisateur	AND A.nom_article like ?  AND C.libelle like ?";
-
-	@Override
-	public List<Enchere> selectByMotCleAndByLibelle(String motCle, String libelleCategorie) throws DALException {
-		ResultSet rs = null;
-		List<Enchere> enchereListe = new ArrayList<>();
-		PreparedStatement stmt = null;
-		Enchere enchere = null;
-		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
-			libelleCategorie = "Toutes";
-			if (libelleCategorie.equalsIgnoreCase("Toutes")) {
-				stmt = cnx.prepareStatement(FIND_BY_NOM_ARTICLE_AND_ALL_CATEGORIE);
-				stmt.setString(1, "%" + motCle + "%");
-				rs = stmt.executeQuery();
-			} else {
-				stmt = cnx.prepareStatement(FIND_BY_NOM_ARTICLE_AND_LIBLLE_CATEGORIE);
-				rs = stmt.executeQuery();
-				stmt.setString(1, "%" + motCle + "%");
-				stmt.setString(2, "%" + libelleCategorie + "%");
-				rs = stmt.executeQuery();
-			}
-
-			while (rs.next()) {
-				
-
-			}
-			enchereListe.add(enchere);
-			System.out.println(enchereListe);
-		} catch (Exception e) {
-			throw new DALException("Erreur DAL selectByMotCleAndByLibelle", e);
-		}
-		return enchereListe;
-
-	}
+	
 
 	@Override
 	public void update(Enchere enchere) throws DALException {
