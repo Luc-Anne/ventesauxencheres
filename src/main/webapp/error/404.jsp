@@ -7,7 +7,7 @@
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
 	<title>Erreur 404</title>
 </head>
-<body>
+<body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	<div id="messageGlobal">
 		<p>La page demandée n'existe pas</p>

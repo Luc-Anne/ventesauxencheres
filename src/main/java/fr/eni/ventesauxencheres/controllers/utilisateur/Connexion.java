@@ -39,12 +39,11 @@ public class Connexion extends HttpServlet {
 			if (utilisateur != null) {
 				HttpSession session = request.getSession();
 				session.setAttribute("utilisateurConnecte", utilisateur);
-				// TODO rediriger vers /admin quand la servlet sera créé
+				// Passer un attribut à travers un sendRedirect
+				session.setAttribute("messageGlobal", "Bonjour " + utilisateur.getPrenom() + " " + utilisateur.getNom());
 				if (utilisateur.isAdministrateur()) {
 					response.sendRedirect(Url.ADMIN_TABLEAUDEBORD.getUrl());
 				} else {
-					// Passer un attribut à travers un sendRedirect
-					session.setAttribute("messageGlobal", "Bonjour " + utilisateur.getPrenom() + " " + utilisateur.getNom());
 					response.sendRedirect(Url.HOME.getUrl());
 				}
 			} else {

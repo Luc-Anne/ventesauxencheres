@@ -36,32 +36,48 @@ public class Inscription extends HttpServlet {
 		Errors erreurs = new Errors();
 		request.setAttribute("erreurs", erreurs);
 
-		String pseudo = request.getParameter("pseudo");
-		String nom = request.getParameter("nom");
-		String prenom = request.getParameter("prenom");
-		String email = request.getParameter("email");
-		String telephone = request.getParameter("telephone");
-		String rue = request.getParameter("rue");
-		String code_postal = request.getParameter("code_postal");
-		String ville = request.getParameter("ville");
 		String mot_de_passe = request.getParameter("password");
-		int credit = UtilisateurManager.DEFAULT_CREDIT;
-		boolean administrateur = false;
+		String mot_de_passeConfirmation = request.getParameter("passwordConfirmation");
+		Utilisateur utilisateur = new Utilisateur(
+			request.getParameter("pseudo"),
+			request.getParameter("nom"),
+			request.getParameter("prenom"),
+			request.getParameter("email"),
+			request.getParameter("telephone"),
+			request.getParameter("rue"),
+			request.getParameter("code_postal"),
+			request.getParameter("ville"),
+			mot_de_passe,
+			UtilisateurManager.DEFAULT_CREDIT,
+			false
+		);
+		
+		if(!mot_de_passe.equals(mot_de_passeConfirmation)) {
+			request.getSession().setAttribute("messageGlobal", "Les deux mots de passe ne correspondent pas");
+			reafficherInscriptionQuandErreur(request, response, utilisateur, erreurs);
+			return;
+		}
 
-		Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur);
 		try {
 			utilisateur = UtilisateurManager.getInstance().save(utilisateur);
 			request.getSession().setAttribute("utilisateurConnecte", utilisateur);
 			request.getSession().setAttribute("messageGlobal", "Bienvenue sur le site !");
 			response.sendRedirect(Url.HOME.getUrl());
+			return;
 		} catch (BLLException e) {
-			erreurs.addAll(UtilisateurManager.getInstance().invalidCause(utilisateur));
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
-			if (rd != null) {
-				rd.forward(request, response);
-			}
+			reafficherInscriptionQuandErreur(request, response, utilisateur, erreurs);
+			return;
 		}
 		
+	}
+	
+	private void reafficherInscriptionQuandErreur(HttpServletRequest request, HttpServletResponse response, Utilisateur utilisateur, Errors erreurs)
+			throws ServletException, IOException {
+		erreurs.addAll(UtilisateurManager.getInstance().invalidCause(utilisateur));
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
+		if (rd != null) {
+			rd.forward(request, response);
+		}
 	}
 
 }

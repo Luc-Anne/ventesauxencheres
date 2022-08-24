@@ -7,7 +7,7 @@
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
 	<title>${initParam.debutTitre} Se connecter</title>
 </head>
-<body>
+<body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	<!-- 
 	<c:if test="${messageConnexion == 'Connexion réussie !'}">
@@ -15,6 +15,9 @@
 	</c:if>
 	 -->
 	 <main class="container">
+	 	<div class="mx-auto text-center">
+			<h1>Se connecter</h1>
+		</div>
 		<div class="mt-5">
 			<form action="${Url.CONNEXION.getUrl()}" method="post">
 				<div class="mb-3">
@@ -32,7 +35,7 @@
 				<label class="form-check-label" for="exampleCheck1">Check me out</label>
 			</div>
 			-->
-				<button type="submit" class="btn btn-primary">Se connecter</button>
+				<button class="w-100 btn btn-primary btn-lg" type="submit">Se connecter</button>
 			</form>
 		</div>
 	</main>
