@@ -33,11 +33,11 @@
 						<a class="nav-link" href="${Url.CONNEXION.getUrl()}">Me connecter</a>
 					</c:if>
 					<c:if test="${typeDeMenuAAfficher == 'TypeConnecte' && sessionScope.utilisateurConnecte.administrateur}">
-						<a class="nav-link" href="#">Administrer</a>
+						<a class="nav-link" href="${Url.ADMIN_TABLEAUDEBORD.getUrl()}">Administrer</a>
 						<hr class="dropdown-divider">
 					</c:if>
 					<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
-						<a class="nav-link" href="${pageContext.request.contextPath}/nouvelleVente/add" alt="Vendre un article">Vendre un article</a>
+						<a class="nav-link" href="${Url.AJOUTER_ARTICLE.getUrl()}" alt="Vendre un article">Vendre un article</a>
 						<hr class="dropdown-divider">
 						<a  class="nav-link" href="#">${sessionScope.utilisateurConnecte.prenom} ${sessionScope.utilisateurConnecte.nom}</a>
 						<a  class="nav-link" href="${Url.COMPTE_PROFIL.getUrl()}">Mon Profil</a>
@@ -57,12 +57,12 @@
 			</c:if>
 			<c:if test="${typeDeMenuAAfficher == 'TypeConnecte' && sessionScope.utilisateurConnecte.administrateur}">
 				<li class="nav-item d-none d-lg-block">
-					<a class="nav-link" href="#">Administrer</a>
+					<a class="nav-link" href="${Url.ADMIN_TABLEAUDEBORD.getUrl()}">Administrer</a>
 				</li>
 			</c:if>
 			<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
 				<li class="nav-item d-none d-lg-block">
-					<a class="nav-link" href="${pageContext.request.contextPath}/nouvelleVente/add" alt="Vendre un article">Vendre un article</a>
+					<a class="nav-link" href="${Url.AJOUTER_ARTICLE.getUrl()}" alt="Vendre un article">Vendre un article</a>
 				</li>
 				<li class="nav-item dropdown d-none d-lg-block ">
 					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">

@@ -43,22 +43,21 @@ public class GlobalFilter extends HttpFilter implements Filter {
 
 		// Dans le cas où ça n'a pas été accepté alors :
 		// cookieAccepte à null ou à false dans la session
-		if (session.getAttribute("cookieAccepte") == null) {
-			session.setAttribute("cookieAccepte", false);
-		} else {
-			if ((boolean)session.getAttribute("cookieAccepte") == false) {
-				String validationUtilisateur = request.getParameter("acceptationCookie");
-				if (validationUtilisateur != null) {
-					// Si l'utilisateur vient de valider l'acceptation
-					// Alors créer un cookie et enregistrer l'information dans la session
-					Cookie acceptationCookie = new Cookie("acceptationCookie", "true");
-					httpResponse.addCookie(acceptationCookie);
-					session.setAttribute("cookieAccepte", true);
-				} else {
-					// Aller chercher si l'information n'a pas déjà été enregistré dans un cookie
-					// S'il en trouve un, cela veut dire qu'il avait accepté précédemment
-					// S'il n'en trouve pas, cela veut dire qu'il n'avait pas accepté précédemment (false par défaut)
-					Cookie[] cookies = httpRequest.getCookies();
+		if ((session.getAttribute("cookieAccepte") == null) ||
+			(boolean)session.getAttribute("cookieAccepte") == false) {
+			String validationUtilisateur = request.getParameter("acceptationCookie");
+			if (validationUtilisateur != null) {
+				// Si l'utilisateur vient de valider l'acceptation
+				// Alors créer un cookie et enregistrer l'information dans la session
+				Cookie acceptationCookie = new Cookie("acceptationCookie", "true");
+				httpResponse.addCookie(acceptationCookie);
+				session.setAttribute("cookieAccepte", true);
+			} else {
+				// Aller chercher si l'information n'a pas déjà été enregistré dans un cookie
+				// S'il en trouve un, cela veut dire qu'il avait accepté précédemment
+				// S'il n'en trouve pas, cela veut dire qu'il n'avait pas accepté précédemment (false par défaut)
+				Cookie[] cookies = httpRequest.getCookies();
+				if (cookies != null) {
 					for (Cookie cookie : cookies) {
 						if (cookie.getName().equals("acceptationCookie")) {
 							if (cookie.getValue().equals("true")) {

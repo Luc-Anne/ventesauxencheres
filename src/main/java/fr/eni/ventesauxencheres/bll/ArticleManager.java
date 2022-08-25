@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.eni.ventesauxencheres.bo.Article;
 import fr.eni.ventesauxencheres.bo.Enchere;
+import fr.eni.ventesauxencheres.bo.Utilisateur;
 import fr.eni.ventesauxencheres.dal.ArticleDAO;
 import fr.eni.ventesauxencheres.dal.DALException;
 import fr.eni.ventesauxencheres.dal.FactoryDAO;
@@ -129,7 +130,40 @@ public class ArticleManager {
 		} catch (DALException e) {
 			throw new BLLException("", e);
 		}		
-	}	
+
+	}
+	
+	public boolean canDisplayDetails(Article article, Utilisateur utilisateurConnecte) {
+		if (utilisateurConnecte == null) {
+			// Bloqué les détails à un utilisateur non connecté
+			return false;
+		}
+		Enchere enchere = null;
+		Utilisateur encherisseur = null;
+		try {
+			enchere = EnchereManager.getInstance().getByArticle(article);
+			if (enchere != null) {
+				if (article.getEtatVente() == "VD" || article.getEtatVente() == "RT") {
+					encherisseur = enchere.getEncherisseur();
+					// Maintenant qu'on a toutes les données pour décider, on peut décider
+					if (
+						article.getEtatVente().equals("CR") ||
+						(article.getEtatVente().equals("VD") && !utilisateurConnecte.equals(encherisseur)) ||
+						(article.getEtatVente().equals("RT") && !utilisateurConnecte.equals(encherisseur))
+					) {
+						return false;
+					} else {
+						return true;
+					}
+				}
+			}
+		} catch (BLLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return false;
+	}
+
 	
 	public List<Article> selectByMotCleAndByLibelle(String motCle) throws BLLException {
 		List<Article> articles = null;

@@ -22,21 +22,21 @@ OK Faire les fichiers controllers et jsp pour les fonctionnalités principales
 	- Ventes en cours
 	- Mes ventes non débutées
 	- Mes ventes terminées
-Bediss Nouvelle Vente / Ajouter Article
-Luc Détails Article / Modifier étatVente et enchérissement
+OK Nouvelle Vente / Ajouter Article
+OK Détails Article / Modifier étatVente et enchérissement
 
 ################################################################################
 Demande clients principales :
 OK Supprimer de l'inscription la mention administrateur et fournir 100 crédits lors de l'inscription
 OK Déplacement du bouton suppression vers la modification du profil
-- Gérer l'unicité de l'e-mail et du pseudo lors de la modification du profil et de l'inscription
+OK Gérer l'unicité de l'e-mail et du pseudo lors de la modification du profil et de l'inscription
 OK Mettre en commentaire l'affichage de l'image d'un article car c'est une fonctionnalité secondaire
 - Nom des fichiers différents des urls présentées : modifier les urls plutôt que les fichiers ?
-- Ajouter un second champs dans l'inscription pour confirmer le mot de passe
+Ok Ajouter un second champs dans l'inscription pour confirmer le mot de passe
 - FAIRE LES FICHIERS DE TESTS ?
-- Renvoyer la page de nouvelle article vers la page home
+Ok Renvoyer la page de nouvelle article vers la page home
 - Gérer la désinscription d'une personne dans la cas où elle a des enchères en cours
-- Intégrer la procédure stockée et faire la classe évènement
+OK Intégrer la procédure stockée et faire la classe évènement
 
 Demande clients secondaires :
 + Faire l'administration du site
@@ -46,36 +46,50 @@ Organisation du code  :
 OK Revoir pour bien nettoyer la session de utilisateurConnecte lors de la deconnexion
 OK Enum pour les adresse url du site
 - Une fois que les vues des fonctionnalités sont implémentées, se demander comment l'intégré aux autres vues déjà présente. Ne pas hésitez à penser fragments, que ce soit lors de listes parcourues ou bien lors de factorisations sur plusieurs pages
-- Mettre les données sauvegardés dans le sql dans le context application ? afin de réduire au maximum les requêtes SQL ?
++ Mettre les données sauvegardés dans le sql dans le context application ? afin de réduire au maximum les requêtes SQL ?
 
 Harmonisation du code :
 OK Modifier le nom inscription dans la dal utilisateur pour insert & modifier le type de retour de ce insert par un utilisateur
-- Ajouter le no_article avant de le renvoyer
+- Ajouter le no_article dans l'article insérerer avant de le renvoyer de la DAL
 + Créer une interface pour les managers de la bll pour avoir les mêmes noms de méthodes, voire des méthodes par défauts
 + Factoriser la deconnexion (deconnexion et desincription) dans la BLL
 + Factoriser d'autres fonctionnalités
 
 QoL :
-- Mettre un bouton annuler dans la modification du profil pour revenir à l'accueil
-- Faire un div dans le header pour message de communication principal
-- (En cours dans inscription) Remonter les erreurs de saisie de formulaires avec la classe Errors
-- Lorsqu'une erreur est remontée, représenter de nouveau les saisies faites par l'utilisateur
-- Remonter les autres contraintes SQL existantes jusqu'à l'utilisateur si tel est le cas ou bien s'en prémunir dans la validation des manager de la BLL
++ Mettre un bouton annuler dans la modification du profil pour revenir à l'accueil
+OK Faire un div dans le header pour message de communication principal
++ (fait dans inscription) Remonter les erreurs de saisie de formulaires avec la classe Errors
++ (fait dans inscription) Lorsqu'une erreur est remontée, représenter de nouveau les saisies faites par l'utilisateur
++ (fait dans inscription) Remonter les autres contraintes SQL existantes jusqu'à l'utilisateur si tel est le cas ou bien s'en prémunir dans la validation des manager de la BLL
 OK Ajouter les deux methodes de validation dans chaque manager de la bbl
 
 Législation :
-- Demander l'autorisation d'utiliser les cookies (Strictement nécessaire pour la session). Faire un doFilter pour tout pattern d'url afin de vérifier si la demande à déjà été faite ou non. Ajouter dans le header deux boutons pour accepter ou non.
+OK Demander l'autorisation d'utiliser les cookies (Strictement nécessaire pour la session). Faire un doFilter pour tout pattern d'url afin de vérifier si la demande à déjà été faite ou non. Ajouter dans le header deux boutons pour accepter ou non.
 + Demander l'autorisation d'utiliser les cookies (Préférence pour la langue choisie)
 
 Sécurité :
 OK Faire un doFilter pour l'accès aux pages accessibles aux utilisateurs connectés (/moncompte/*) => modifier les urls correspondantes avec /moncompte/ au lieu de /utilisateur/
-- Ajouter des trim() lors de la récupération des saisies de formulaire (éviter les doublons "rr" et "rr " par exemple)
++ (fait dans inscription) Ajouter des trim() lors de la récupération des saisies de formulaire (éviter les doublons "rr" et "rr " par exemple)
+- Gérer les caractères spéciaux
 - Réserver l'url de nouvelleVente à un utilisateurConnecte : tant pour l'affichage de la page (doGet) que pour la gestion de cette page doPost) 
-+ Faire un doFilter pour l'accès à l'administration (/admin/*) et un autres pour l'accès aux tests (/test/*)
+OK Faire un doFilter pour l'accès à l'administration (/admin/*) et un autres pour l'accès aux tests (/test/*)
 + Voir comment externaliser les paramètres de la ressource de connexion jdbc dans un fichier externe.
 + Voir comment sortir le mot de passe de la bo
 + Crypter le mot de passe en changeant son type dans la base de données, intégrer le cryptage en java et modifier le jeu de données de la base de données.
 + Modifier le nom de la session JSESSION dans le cookie (<session-config><cookie-config><name>)
 
 Style :
-OK (fait pour le profil public) Utiliser getPathInfo() et getServletPath() pour retrouver un morceau de l'url pour s'en servir comme paramètre. Utiliser une variable pour créer une url dans une jsp. 
+OK (fait pour le profil public) Utiliser getPathInfo() et getServletPath() pour retrouver un morceau de l'url pour s'en servir comme paramètre. Utiliser une variable pour créer une url dans une jsp.
+
+
+/*
+<%@ page import="fr.eni.ventesauxencheres.bll.ArticleManager" %>
+<%@ page import="fr.eni.ventesauxencheres.bo.Utilisateur" %>
+<%
+boolean hasLink = ArticleManager.getInstance().canDisplayDetails((Article)pageContext.getAttribute("itemArticle"), (Utilisateur)session.getAttribute("utilisateurConnecte"));
+if (hasLink) {%>
+	<a href="${Url.DETAILS_ARTICLE.getUrl()}?no_article=${itemArticle.noArticle}">${itemArticle.nomArticle}</a>
+<%} else {%>
+	${itemArticle.nomArticle}
+<%}%>
+*/ 

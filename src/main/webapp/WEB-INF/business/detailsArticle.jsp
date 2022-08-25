@@ -26,6 +26,9 @@
 			<c:if test="${typeAffichage == 'typeRetrait'}">
 				${article.encherisseur.pseudo} a remporté la vente
 			</c:if>
+			<c:if test="${typeAffichage == 'typePerdu'}">
+				Personne n'a misé sur votre article
+			</c:if>
 			<c:if test="${typeAffichage == 'typeGagne'}">
 				Bous avez remporté la vente
 			</c:if>
@@ -116,16 +119,23 @@
 			</li>
 			</c:if>
 		</ul>
-		<c:if test="${typeAffichage == 'typeEncherir'}">
-			<input type="number" name="mise" value="${article.miseAPrix + 1}" min="${article.miseAPrix}">
-			<button type="submit">Miser</button>
-		</c:if>
-		<c:if test="${typeAffichage == 'typeRetrait'}">
-			<button>Confirmer le retrait</button>
-		</c:if>
-		<c:if test="${typeAffichage == 'typeBack' || typeAffichage == 'typeGagne'}">
-			<button>Back</button>
-		</c:if>
+		<form action="${Url.DETAILS_ARTICLE.getUrl()}?no_article=${article.noArticle}" method="post">
+			<c:if test="${typeAffichage == 'typeEncherir'}">
+				<label for="mise" class="form-label">Montant :</label>
+				<c:set var="montant_propose" value="${article.miseAPrix + 1}"></c:set>
+				<c:if test="${article.miseAPrix < enchere.montantEnchere}">
+					<c:set var="montant_propose" value="${enchere.montantEnchere + 1}"></c:set>
+				</c:if>
+				<input id="mise" class="form-control" type="number" name="mise" value="${montant_propose}" min="${montant_propose}">
+				<button type="submit" name="action" value="encherir">Faire une offre !</button>
+			</c:if>
+			<c:if test="${typeAffichage == 'typeRetrait'}">
+				<button name="action" value="retrait">Confirmer le retrait</button>
+			</c:if>
+			<c:if test="${typeAffichage == 'typeBack' || typeAffichage == 'typeGagne' || typeAffichage == 'typePerdu'}">
+				<button name="action" value="back">Back</button>
+			</c:if>
+		</form>
 	</main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>
