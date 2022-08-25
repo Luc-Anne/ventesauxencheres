@@ -19,6 +19,7 @@ import fr.eni.ventesauxencheres.bll.CategorieManager;
 import fr.eni.ventesauxencheres.bo.Article;
 import fr.eni.ventesauxencheres.bo.Categorie;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.controllers.Url;
 
 
 @WebServlet("/nouvelleVente/add")
@@ -42,14 +43,6 @@ public class NouvelleVente extends HttpServlet {
 		
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
 		
-		String rue = utilisateur.getRue();
-		String codePostale = utilisateur.getCodePostal();
-		String ville = utilisateur.getVille();
-		
-		utilisateur.setRue(rue);
-		utilisateur.setCodePostal(codePostale);
-		utilisateur.setVille(ville);
-		
 		int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
 		int categorieId =Integer.parseInt(request.getParameter("categorie"));
 		try {
@@ -61,12 +54,10 @@ public class NouvelleVente extends HttpServlet {
 		String dateDebut = request.getParameter("dateDebutEnchere");
 		String Debut[] = dateDebut.split("T");        
 	    LocalDateTime dateDebutEnchere = LocalDateTime.of(LocalDate.parse(Debut[0]), LocalTime.parse(Debut[1]));
-	    System.out.println("-----"+dateDebutEnchere);
 	    String dateFin = request.getParameter("dateFinEnchere");
 		String Fin[] = dateFin.split("T");
 	    LocalDateTime dateFintEnchere = LocalDateTime.of(LocalDate.parse(Fin[0]), LocalTime.parse(Fin[1]));
 	    
-	    System.out.println(dateDebutEnchere + "servlet");
 //	    
 //		dateDebutEnchere = LocalDateTime.parse(request.getParameter("dateDebutEnchere"));
 //		dateFintEnchere = LocalDateTime.parse(request.getParameter("dateFinEnchere"));
@@ -103,6 +94,9 @@ public class NouvelleVente extends HttpServlet {
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
+		
+		session.setAttribute("messageGlobal", "Votre article a bien été ajouté");
+		response.sendRedirect(Url.HOME.getUrl());
 	}
 
 }
