@@ -87,7 +87,7 @@
 						
 				</form>
 				<form action="${Url.HOME.getUrl()}" method="get" class="row col-md-12 col-lg-12">
-					<button class="w-50 col-4 btn btn-warning btn-lg" class="mb-3" name="action" value="annuler">Annuler</button>
+					<button class="w-100 col-4 btn btn-warning btn-lg" class="mb-3" name="action" value="annuler">Annuler</button>
 				</form>
 	</main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf"%>
