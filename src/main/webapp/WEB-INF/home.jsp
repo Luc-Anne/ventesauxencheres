@@ -17,21 +17,10 @@
 <body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	<!--main bloc-->
-    <main>
+    <main class="container">
         <!--title-->
         <div class="mx-auto text-center">
             <h1>Enchères</h1>
-        </div>
-        <!--erreur-->
-        <div class="d-flex alert-danger">
-            <div class="col-3 p-2">
-                <img class="small-icon" src="images/error.svg">
-            </div>
-        
-            <ul class="col-9 list-unstyled p-2">
-                <li>un message d'erreur éventuellement !</li>
-                <li>un autre message....</li>
-            </ul>
         </div>
         <!--filtre-->
         <c:if test="${not empty utilisateurConnecte}">
@@ -115,8 +104,8 @@
 
                 </div>
             </div>
-            <button class="btn btn-primary btn-lg btn-block" type="submit">
-            	<img class="small-icon" src="images/search.svg" alt="Eni Ecole">
+            <button class="btn btn-primary btn-lg btn-block col-12" type="submit">
+            	Rechercher
             </button>
         </form>
         </c:if>
