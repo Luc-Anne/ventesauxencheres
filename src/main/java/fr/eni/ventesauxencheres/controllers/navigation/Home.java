@@ -69,7 +69,7 @@ public class Home extends HttpServlet {
 		request.setAttribute("ventesStatut", ventesStatut);
 		//Alimenter la variable typeQuery selon les filtres
 		String typeQuery="";
-		if (typeEncheres.equals("achats")) {
+		if ("achats".equals(typeEncheres)) {
 			switch (encheresStatut) {
 			case "ouvertes":
 				typeQuery="OpenedBids";
@@ -81,7 +81,7 @@ public class Home extends HttpServlet {
 				typeQuery="MyWonBids";
 				break;
 			}
-		} else if (typeEncheres.equals("ventes")) {
+		} else if ("ventes".equals(typeEncheres)) {
 			switch (ventesStatut) {
 			case "venteencours":
 				typeQuery="MyCurrentSales";
