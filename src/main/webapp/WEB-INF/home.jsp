@@ -117,7 +117,29 @@
 	            </c:forEach>
 	     	</div>
     
-     	<!-- Affichage Achats  -->
+    
+   	        <!-- Liste des articles mode  connecté --> 
+ 		 <c:if test="${not empty utilisateurConnecte}">  
+  	        <div class="row justify-content-center border-top card-deck">
+	           <c:forEach items="${enchereListeHome}" var="itemArticle">
+	           	<%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+	            </c:forEach>
+	     	</div> 
+	     	</c:if> 
+
+    	<c:if test="${not empty utilisateurConnecte}">
+     		<c:if test="${empty param.motCle}">
+     			<h3>motclé vide</h3>  
+     		</c:if>   
+      		<c:if test="${not empty param.motCle}">
+     			<h3>il faut la liste avec le motcle</h3>  
+     		</c:if>
+     		${param.motCle} 		   	
+     	</c:if>   
+        
+    
+    <!--  Ancienne version : Déprécié A CONSERVER -->
+ <%--     	<!-- Affichage Achats  -->
      	<c:if test="${not empty utilisateurConnecte}">
      		<c:if test="${param.typeEncheres == 'achats'}">
 				<c:choose>         
@@ -188,7 +210,7 @@
       		<c:if test="${not empty param.motCle}">
      			<h3>il faut la liste avec le motcle</h3>  
      		</c:if>     		   	
-     	</c:if>     		  	
+     	</c:if>     		  	 --%>
      	   		 
     </main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>

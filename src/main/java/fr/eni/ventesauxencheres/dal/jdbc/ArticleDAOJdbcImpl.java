@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.ventesauxencheres.bll.UtilisateurManager;
 import fr.eni.ventesauxencheres.bo.Article;
 import fr.eni.ventesauxencheres.bo.Categorie;
 import fr.eni.ventesauxencheres.bo.Enchere;
@@ -342,42 +341,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		return article;
 	}
 	
-	
-
-//	@Override
-//	public List<Article> selectByMotCleAndByLille(String motCle, String libelleCategorie) throws DALException {
-//		ResultSet rs = null;
-//		List<Article> articleListe = new ArrayList<>();
-//		PreparedStatement stmt = null;
-//		Article article = null;
-//		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
-//			libelleCategorie = "Toutes";
-//			if (libelleCategorie.equalsIgnoreCase("Toutes")) {
-//				stmt = cnx.prepareStatement(FIND_BY_NOM_ARTICLE_AND_ALL_CATEGORIE);
-//				stmt.setString(1, "%" + motCle + "%");
-//				rs = stmt.executeQuery();
-//			} 
-//			else {
-//				stmt = cnx.prepareStatement(FIND_BY_NOM_ARTICLE_AND_LIBLLE_CATEGORIE);
-//				rs = stmt.executeQuery();
-//				stmt.setString(1, "%" + motCle + "%");
-//				stmt.setString(2, "%" + libelleCategorie + "%");
-//				rs = stmt.executeQuery();
-//			}
-//
-//			while (rs.next()) {
-//				stmt.setInt(1, rs.getInt(""));
-//
-//			}
-//			articleListe.add(article);
-//			System.out.println(articleListe);
-//		} catch (Exception e) {
-//			throw new DALException("Erreur DAL selectByMotCleAndByLibelle", e);
-//		}
-//		return articleListe;
-//
-//	}
-
 	public List<Article> selectByMotCleAndByLibelle(String motCle)throws DALException {
 		List<Article> articleList=new ArrayList<Article>();
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();){
@@ -401,72 +364,60 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	//Non fonctionelle en attente d'amélioration
 	@Override
-	public List<Article> selectListHome(String typeQuery, int idUtilisateurConnecte, String motCle)
-			throws DALException {
+	public List<Article> selectListHome(String typeQuery, int idUtilisateurConnecte, String motCle) throws DALException {
 		String query = "";
-		if (typeQuery.equals("OpenedBids")) {
+		if ("OpenedBids".equals(typeQuery)) {
 			query = SELECT_ALL
-					+ " WHERE"
-					+ "a.etat_vente='EC' AND a.no_utilisateur!=? " //String SELECT_OPENED_BIDS_STRING = "a.etat_vente='EC' AND a.no_utilisateur!=? "
-					+ "AND " + "A.nom_article like ? ";
-		} else if (typeQuery.equals("MyBids")) {
+					+ " WHERE "
+					+ " a.etat_vente='EC' AND a.no_utilisateur!=? " //String SELECT_OPENED_BIDS_STRING = "a.etat_vente='EC' AND a.no_utilisateur!=? "
+					+ " AND " + "a.nom_article like ? ";
+		} else if ("MyBids".equals(typeQuery)) {
 				query = SELECT_ALL
-						+ " WHERE"
-						+ "a.etat_vente='EC' AND e.no_utilisateur=?" //String  SELECT_MY_BIDS_STRING= "a.etat_vente='EC' AND e.no_utilisateur=?"
-						+ "AND " + "A.nom_article like ? "; 
-		}else if (typeQuery.equals("MyWonBids")) {
+						+ " WHERE "
+						+ " a.etat_vente='EC' AND e.no_utilisateur=? " //String  SELECT_MY_BIDS_STRING= "a.etat_vente='EC' AND e.no_utilisateur=?"
+						+ " AND " + "a.nom_article like ? "; 
+		}else if ("MyWonBids".equals(typeQuery)) {
 			query = SELECT_ALL
-					+ " WHERE"
-					+ "(a.etat_vente='VD' OR a.etat_vente='RT') AND e.no_utilisateur=?" //String SELECT_MY_WON_BIDS_STRING="(a.etat_vente='VD' OR a.etat_vente='RT') AND e.no_utilisateur=?"
-					+ "AND " + "A.nom_article like ? ";
-	}else if (typeQuery.equals("MyCurrentSales")) {
+					+ " WHERE "
+					+ " (a.etat_vente='VD' OR a.etat_vente='RT') AND e.no_utilisateur=? " //String SELECT_MY_WON_BIDS_STRING="(a.etat_vente='VD' OR a.etat_vente='RT') AND e.no_utilisateur=?"
+					+ " AND " + "a.nom_article like ? ";
+	}else if ("MyCurrentSales".equals(typeQuery)) {
 		query = SELECT_ALL
-				+ " WHERE"
-				+ "a.etat_vente='EC' AND a.no_utilisateur=?" // String SELECT_MY_CURRENT_SALES_STRING="a.etat_vente='EC' AND a.no_utilisateur=?"
-				+ "AND " + "A.nom_article like ? ";
-	}else if (typeQuery.equals("MyUnstartedSales")) {
+				+ " WHERE "
+				+ " a.etat_vente='EC' AND a.no_utilisateur=? " // String SELECT_MY_CURRENT_SALES_STRING="a.etat_vente='EC' AND a.no_utilisateur=?"
+				+ " AND " + "a.nom_article like ? ";
+	}else if ("MyUnstartedSales".equals(typeQuery)) {
 		query = SELECT_ALL
-				+ " WHERE"
-				+ "a.etat_vente='CR' AND a.no_utilisateur=?" //String SELECT_MY_UNSTARTED_SALES_STRING="a.etat_vente='CR' AND a.no_utilisateur=?"
-				+ "AND " + "A.nom_article like ? ";
-	}else if (typeQuery.equals("MyClosedSales")) {
+				+ " WHERE "
+				+ " a.etat_vente='CR' AND a.no_utilisateur=? " //String SELECT_MY_UNSTARTED_SALES_STRING="a.etat_vente='CR' AND a.no_utilisateur=?"
+				+ " AND " + "a.nom_article like ? ";
+	}else if ("MyClosedSales".equals(typeQuery)) {
 		query = SELECT_ALL
-				+ " WHERE"
-				+ "(a.etat_vente='VD' OR a.etat_vente='RT') AND a.no_utilisateur=?" //String SELECT_MY_CLOSED_SALES_STRING ="(a.etat_vente='VD' OR a.etat_vente='RT') AND a.no_utilisateur=?"
-				+ "AND " + "A.nom_article like ? ";
+				+ " WHERE "
+				+ " (a.etat_vente='VD' OR a.etat_vente='RT') AND a.no_utilisateur=? " //String SELECT_MY_CLOSED_SALES_STRING ="(a.etat_vente='VD' OR a.etat_vente='RT') AND a.no_utilisateur=?"
+				+ " AND " + "a.nom_article like ? ";
 	}
-		
 		List<Article> articleList=new ArrayList<Article>();
-		try (Connection cnx = ConnectionProvider.getConnection_VAE();){
-			
-			PreparedStatement stmt = cnx.prepareStatement(query);
-			stmt.setInt(1,idUtilisateurConnecte);
-			stmt.setString(2, "%" + motCle + "%");
-			
-			ResultSet rs=stmt.executeQuery();
+		try (Connection cnx = ConnectionProvider.getConnection_VAE();){			
+			ResultSet rs=null;
+			if (query.equals("")) {
+				query = SELECT_ALL;
+				PreparedStatement stmt = cnx.prepareStatement(query);
+				rs=stmt.executeQuery();
+			} else {
+				PreparedStatement stmt = cnx.prepareStatement(query);
+				stmt.setInt(1,idUtilisateurConnecte);
+				stmt.setString(2, "%" + motCle + "%");				
+				rs=stmt.executeQuery();
+			}
 				while(rs.next()) {
 					Article art = createInstanceArticleFromResultSet(rs);
 					articleList.add(art);
-					System.out.println("On est rentré dans le RS");				
 				}
-				System.out.println("Voici la liste des articles : "+articleList);
 				return articleList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("Probleme appel à la dal", e);
-		}
-		
-		
-	}
-
-	@Override
-	public List<Article> showOpenedBidsAndMotCle(int idUtilisateurConnecte, String motCle) {
-		try {
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-		return null;
+		}	
 	}
 }
