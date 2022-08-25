@@ -49,9 +49,9 @@ public class Home extends HttpServlet {
 		String ventesStatut = request.getParameter("ventes");
 		request.setAttribute("ventesStatut", ventesStatut);
 		//Alimenter la variable typeQuery selon les filtres
-		String typeQuery=null;
-		if (typeEncheres.equals("achat")) {
-			switch ("encheres") {
+		String typeQuery="";
+		if (typeEncheres.equals("achats")) {
+			switch (encheresStatut) {
 			case "ouvertes":
 				typeQuery="OpenedBids";
 				break;
@@ -62,8 +62,8 @@ public class Home extends HttpServlet {
 				typeQuery="MyWonBids";
 				break;
 			}
-		} else if (typeEncheres.equals("vente")) {
-			switch ("ventes") {
+		} else if (typeEncheres.equals("ventes")) {
+			switch (ventesStatut) {
 			case "venteencours":
 				typeQuery="MyCurrentSales";
 				break;
@@ -74,9 +74,7 @@ public class Home extends HttpServlet {
 				typeQuery="MyClosedSales";
 				break;
 			}			
-
 		}
-
 		try {
 			//Appeler une session pour récupérer l'utilisateur connecté
 			HttpSession session = request.getSession();
@@ -84,36 +82,47 @@ public class Home extends HttpServlet {
 			Utilisateur utilisateurConnecte = (Utilisateur) session.getAttribute("utilisateurConnecte");
 			//Récupérer l'id de l'utilisateur connecté
 			int idUtilisateurConnecte = utilisateurConnecte.getNoUtilisateur();
+			System.out.println("Home servlet : "+idUtilisateurConnecte);
 			// Test factorisation
 			String motCle = request.getParameter("motCle");
-			String libelle = request.getParameter("categorie");
-			//List<Article> articlesListeGeneral=ArticleManager.getInstance().show("OpenedBids", idUtilisateurConnecte, motCle);
+			//String libelle = request.getParameter("categorie");
+
 			// Test ajout progressif
 			List<Article> enchereListeHome = ArticleManager.getInstance().showListeHome(typeQuery, idUtilisateurConnecte, motCle);
-			List<Article> encheresOuvertesListeMotCle=ArticleManager.getInstance().showOpenedBidsAndMotCle(idUtilisateurConnecte, motCle);
-			List<Article> encheresOuvertesListe=ArticleManager.getInstance().showOpenedBids(idUtilisateurConnecte);
-			List<Article> MesEncheresListe=ArticleManager.getInstance().showMyBids(idUtilisateurConnecte);
-			List<Article> MesEncheresGagneesListe=ArticleManager.getInstance().showMyWonBids(idUtilisateurConnecte);
-			List<Article> MesVentesEncoursListe=ArticleManager.getInstance().showMyCurrentSales(idUtilisateurConnecte);
-			List<Article> MesVentesNonDebuteesListe=ArticleManager.getInstance().showMyUnstartedSales(idUtilisateurConnecte);
-			List<Article> MesVentesTermineesListe=ArticleManager.getInstance().showMyClosedSales(idUtilisateurConnecte);
-			//Envoyer la liste récupérée
-			request.setAttribute("encheresOuvertesListe", encheresOuvertesListe);
-			request.setAttribute("MesEncheresListe", MesEncheresListe);
-			request.setAttribute("MesEncheresGagneesListe", MesEncheresGagneesListe);
-			request.setAttribute("MesVentesEncoursListe", MesVentesEncoursListe);
-			request.setAttribute("MesVentesNonDebuteesListe", MesVentesNonDebuteesListe);
-			request.setAttribute("MesVentesTermineesListe", MesVentesTermineesListe);		
+			request.setAttribute("enchereListeHome", enchereListeHome);
+			System.out.println("enchereListeHome dans la servlet home " +enchereListeHome);
 			
-			try {
-				List<Article> articles = ArticleManager.getInstance().selectByMotCleAndByLibelle(motCle);
-				for (Article article : articles) {
-					System.out.println("On est dans la home servlet : "+article.toString());
-				}
-				request.setAttribute("motCle", motCle);
-			} catch (BLLException e) {
-				e.printStackTrace();
-			}
+			//Methodes à supprimer si factorisation opérationnelle
+			/*
+			 * List<Article>
+			 * encheresOuvertesListe=ArticleManager.getInstance().showOpenedBids(
+			 * idUtilisateurConnecte); List<Article>
+			 * MesEncheresListe=ArticleManager.getInstance().showMyBids(
+			 * idUtilisateurConnecte); List<Article>
+			 * MesEncheresGagneesListe=ArticleManager.getInstance().showMyWonBids(
+			 * idUtilisateurConnecte); List<Article>
+			 * MesVentesEncoursListe=ArticleManager.getInstance().showMyCurrentSales(
+			 * idUtilisateurConnecte); List<Article>
+			 * MesVentesNonDebuteesListe=ArticleManager.getInstance().showMyUnstartedSales(
+			 * idUtilisateurConnecte); List<Article>
+			 * MesVentesTermineesListe=ArticleManager.getInstance().showMyClosedSales(
+			 * idUtilisateurConnecte); //Envoyer la liste récupérée
+			 * request.setAttribute("encheresOuvertesListe", encheresOuvertesListe);
+			 * request.setAttribute("MesEncheresListe", MesEncheresListe);
+			 * request.setAttribute("MesEncheresGagneesListe", MesEncheresGagneesListe);
+			 * request.setAttribute("MesVentesEncoursListe", MesVentesEncoursListe);
+			 * request.setAttribute("MesVentesNonDebuteesListe", MesVentesNonDebuteesListe);
+			 * request.setAttribute("MesVentesTermineesListe", MesVentesTermineesListe);
+			 */	
+			
+			/*
+			 * try { List<Article> articles =
+			 * ArticleManager.getInstance().selectByMotCleAndByLibelle(motCle); for (Article
+			 * article : articles) {
+			 * System.out.println("On est dans la home servlet : "+article.toString()); }
+			 * request.setAttribute("motCle", motCle); } catch (BLLException e) {
+			 * e.printStackTrace(); }
+			 */
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
@@ -122,5 +131,4 @@ public class Home extends HttpServlet {
 			rd.forward(request, response);
 		}		
 	}
-
 }

@@ -27,7 +27,7 @@
                              %>                       
                              <c:set var="dateFormate" value="<%=java.sql.Timestamp.valueOf(dateLDT)%>" />
                              <li>Fin de l'enchère : <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${dateFormate}" /></li>
-							<li><a href="${Url.PROFIL_PUBLIC.getUrl()}${itemArticle.vendeur.pseudo}">Vendeur : ${itemArticle.vendeur.pseudo}</a></li>							
+							<li><a href="${Url.PROFIL_PUBLIC.getUrl()}${itemArticle.vendeur.pseudo}">Vendeur : ${itemArticle.vendeur.pseudo}</a></li>
 						</ul>   
                      </div>
                      <a class="mt-3 btn btn-lg btn-block btn-primary" href="#" title="faire une enchère">

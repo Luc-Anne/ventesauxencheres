@@ -142,30 +142,15 @@ public class ArticleManager {
 		return articles;
 	}
 	
-	//Test factorisation methode show general
-	public List<Article> show(String typeQuery, int idUtilisateurConnecte,String motCle)throws BLLException {
-		try {
-			return articleDAO.selectListHome(typeQuery, idUtilisateurConnecte, motCle);
-		} catch (DALException e) {
-			throw new BLLException("", e);
-		}		
-	}
-
-	public List<Article> showOpenedBidsAndMotCle(int idUtilisateurConnecte, String motCle) throws BLLException {
+	//Test factorisation methode show general	
+	public List<Article> showListeHome(String typeQuery, int idUtilisateurConnecte, String motCle) throws BLLException {
 		List<Article> articles = null;
-		articles = articleDAO.showOpenedBidsAndMotCle(idUtilisateurConnecte,motCle);
-		return articles;
-	}
-	
-	public List<Article> showListeHome(String typeQuery, int idUtilisateurConnecte, String motCle)
-			throws BLLException {
-		List<Article> articles = null;
+		System.out.println("BLL : "+idUtilisateurConnecte);
 		try {
 			articles = articleDAO.selectListHome(typeQuery, idUtilisateurConnecte, motCle);
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
 		return articles;
-	}
-	
+	}	
 }
