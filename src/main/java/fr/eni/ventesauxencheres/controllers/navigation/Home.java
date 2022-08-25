@@ -40,6 +40,25 @@ public class Home extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String motCle = request.getParameter("motCle");
+		String libelle = request.getParameter("categorie");	
+		switch (libelle) {
+		case "Toutes":
+			libelle ="";
+			break;
+		case "Informatique":
+			libelle ="Informatique";
+			break;
+		case "Ameublement":
+			libelle ="Ameublement";
+			break;
+		case "Vêtement":
+			libelle ="Vêtement";
+			break;	
+		case "Sport & Loisir":
+			libelle ="Sport & Loisir";
+			break;				
+		}
 		//récupérer la valeur du bouton radio coché et la renvoyer dans la requête
 		String typeEncheres = request.getParameter("typeEncheres");
 		request.setAttribute("typeEncheres", typeEncheres);		
@@ -82,15 +101,10 @@ public class Home extends HttpServlet {
 			Utilisateur utilisateurConnecte = (Utilisateur) session.getAttribute("utilisateurConnecte");
 			//Récupérer l'id de l'utilisateur connecté
 			int idUtilisateurConnecte = utilisateurConnecte.getNoUtilisateur();
-			System.out.println("Home servlet : "+idUtilisateurConnecte);
-			// Test factorisation
-			String motCle = request.getParameter("motCle");
-			//String libelle = request.getParameter("categorie");
 
 			// Test ajout progressif
-			List<Article> enchereListeHome = ArticleManager.getInstance().showListeHome(typeQuery, idUtilisateurConnecte, motCle);
+			List<Article> enchereListeHome = ArticleManager.getInstance().showListeHome(typeQuery, idUtilisateurConnecte, motCle,libelle);
 			request.setAttribute("enchereListeHome", enchereListeHome);
-			System.out.println("enchereListeHome dans la servlet home " +enchereListeHome);
 			
 			//Methodes à supprimer si factorisation opérationnelle
 			/*

@@ -96,16 +96,6 @@ public class EnchereManager {
 		}
 	}
 	
-	public List<Enchere> selectByMotCleAndByLibelle(String motCle, String libelleCategorie) throws BLLException {
-		List<Enchere> encheres = null;
-		
-		try {
-				encheres = enchereDAO.selectByMotCleAndByLibelle(motCle, libelleCategorie);
-		} catch (DALException e) {
-			e.printStackTrace();
-		}
-		return encheres;
-	}
 	
 	public void remplacerEncherisseur(Enchere enchere) throws BLLException {
 		try {

@@ -48,7 +48,7 @@
                         <select class="form-select" id="floatingSelectGrid"	aria-label="Floating label select example" name="categorie">
 						 <option selected>Toutes</option>
 						 <%for (Categorie categorie : CategorieManager.getInstance().getAll()){ %>
-						 <option value="<%= categorie.getNoCategorie()%>"> <%=categorie.getLibelle() %></option>
+						 <option value="<%= categorie.getLibelle()%>"> <%=categorie.getLibelle() %></option>
 						<%} %> 
 					</select>
                     </div>
@@ -126,7 +126,7 @@
 	            </c:forEach>
 	     	</div> 
 	     	</c:if> 
-
+<%-- 
     	<c:if test="${not empty utilisateurConnecte}">
      		<c:if test="${empty param.motCle}">
      			<h3>motclé vide</h3>  
@@ -135,7 +135,7 @@
      			<h3>il faut la liste avec le motcle</h3>  
      		</c:if>
      		${param.motCle} 		   	
-     	</c:if>   
+     	</c:if>    --%>
         
     
     <!--  Ancienne version : Déprécié A CONSERVER -->
