@@ -50,6 +50,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String SELECT_BY_ID = SELECT_ALL
 			+ "WHERE a.no_article = ? ";
 	
+	private static final String SELECT_BY_ID_UTILISATEUR = SELECT_ALL
+			+ "WHERE a.no_utilisateur = ? ";
+	
 	private static final String SELECT_OPENED_BIDS = SELECT_ALL
 			+ "WHERE a.etat_vente='EC' AND a.no_utilisateur!=?";
 	//à exclure no utilisateur = id profil connecte mode vendeur, profil tom vendeur
@@ -113,6 +116,25 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			}
 		} catch (SQLException e) {
 			throw new DALException("Erreur Connexion à la base de données", e);
+		}
+	}
+	
+	public List<Article> selectByIdUtilisateur(int idUtilisateur) throws DALException{
+		List<Article> articleList=new ArrayList<Article>();
+		try (Connection cnx = ConnectionProvider.getConnection_VAE();){
+			try (PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_ID_UTILISATEUR);) {
+				stmt.setInt(1, idUtilisateur);
+				ResultSet rs = stmt.executeQuery();
+				while(rs.next()) {
+					Article art = createInstanceArticleFromResultSet(rs);
+					articleList.add(art);
+				}
+				return articleList;
+			} catch (SQLException e) {
+				throw new DALException("Probleme appel à la dal", e);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Probleme appel à la dal", e);
 		}
 	}
 	

@@ -82,8 +82,12 @@
 				</div>
 			</div>
 			<br>
-			<form action="${Url.DESINSCRIPTION.getUrl()}" method="post" style="text-align: center;">
-				<button class="w-100  btn btn-danger btn-lg" class="mb-3" style="text-align: center;">Supprimer son compte</button>
+			<form action="${Url.DESINSCRIPTION.getUrl()}" method="post" class="row col-md-12 col-lg-12">
+				<button class="w-50 col-4 btn btn-danger btn-lg" class="mb-3">Supprimer son compte</button>
+				<div class="form-check w-50 col-4">
+					<label class="form-check-label" for="confirmationSuppression">Cocher pour confirmer si vous supprimer votre compte</label>
+					<input type="checkbox" class="form-check-input" checked name="confirmationSuppression" value="confirmationSuppression" id="confirmationSuppression">
+				</div>
 			</form>
 
 		</main>

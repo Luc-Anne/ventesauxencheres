@@ -89,6 +89,14 @@ public class ArticleManager {
 		}
 	}
 	
+	public boolean hasArticle(int id) throws BLLException {
+		try {
+			return articleDAO.selectByIdUtilisateur(id).size() != 0;
+		} catch (DALException e) {
+			throw new BLLException("ERREUR MANAGER", e);
+		}
+	}
+	
 	public List<Article> showOpenedBids (int idUtilisateurConnecte)throws BLLException {
 		try {
 			return articleDAO.selectOpenedBids(idUtilisateurConnecte);
