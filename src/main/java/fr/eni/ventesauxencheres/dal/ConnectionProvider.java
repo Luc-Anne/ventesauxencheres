@@ -16,7 +16,7 @@ public class ConnectionProvider {
 	static {
 		try {
 			Context context = new InitialContext();
-			bdd_VEA = (DataSource)context.lookup("java:comp/env/jdbc/pool_cnx/ventes_aux_encheres");
+			bdd_VEA = (DataSource)context.lookup("java:comp/env/jdbc/pool_cnx_bbl");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

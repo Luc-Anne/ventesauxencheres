@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
     <Resource
-        name="jdbc/pool_cnx/ventes_aux_encheres"
+        name="jdbc/pool_cnx_bbl"
         type="javax.sql.DataSource"
         driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
     
@@ -9,9 +9,9 @@
         username="ju_ENI-VentesAuxEncheres"
         password="Pa$$w0rd"
         
-        maxIdle="3"
-        maxTotal="10"
-        maxWaitMillis="15000"
+        maxIdle="30"
+        maxTotal="100"
+        maxWaitMillis="10000"
         
         removeAbandonedOnBorrow="true"
         removeAbandonedTimeout="10"
