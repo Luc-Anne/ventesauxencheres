@@ -47,7 +47,7 @@ public class Connexion extends HttpServlet {
 					response.sendRedirect(Url.HOME.getUrl());
 				}
 			} else {
-				request.setAttribute("messageGlobal", "Email ou mot de passe incorrect");
+				request.getSession().setAttribute("messageGlobal", "Email ou mot de passe incorrect");
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp");
 				if (rd != null) {
 					rd.forward(request, response);
