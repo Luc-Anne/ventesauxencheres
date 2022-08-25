@@ -83,8 +83,11 @@
 
 						<button type="submit" class="w-100 btn btn-primary btn-lg">Ajouter l'article</button>
 						<br><br>
-						<button class="w-100 btn btn-warning btn-lg" name="annuler" value="annuler">Annuler</button>
 						
+						
+				</form>
+				<form action="${Url.HOME.getUrl()}" method="get" class="row col-md-12 col-lg-12">
+					<button class="w-50 col-4 btn btn-warning btn-lg" class="mb-3" name="action" value="annuler">Annuler</button>
 				</form>
 	</main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf"%>
