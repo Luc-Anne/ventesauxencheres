@@ -53,20 +53,12 @@ public class detailsArticle extends HttpServlet {
 			response.sendError(404); return;
 		}
 		
-		Enchere enchere = null;
+		Enchere enchere = article.getEnchere();
 		Utilisateur encherisseur = null;
-		try {
-			enchere = EnchereManager.getInstance().getByArticle(article);
-			if (enchere != null) {
-				if (article.getEtatVente() == "VD" || article.getEtatVente() == "RT") {
-					encherisseur = enchere.getEncherisseur();
-				}
-			}
-		} catch (BLLException e) {
-			e.printStackTrace();
-			response.sendError(404); return;
+		if (enchere != null) {
+			encherisseur = enchere.getEncherisseur();
 		}
-		
+
 		Utilisateur vendeur = article.getVendeur();
 		
 		///////////////////////////////////////////////////////////////////////
@@ -145,18 +137,10 @@ public class detailsArticle extends HttpServlet {
 			response.sendError(404); return;
 		}
 
-		Enchere enchere = null;
+		Enchere enchere = article.getEnchere();
 		Utilisateur encherisseur = null;
-		try {
-			enchere = EnchereManager.getInstance().getByArticle(article);
-			if (enchere != null) {
-				if (article.getEtatVente() == "VD" || article.getEtatVente() == "RT") {
-					encherisseur = enchere.getEncherisseur();
-				}
-			}
-		} catch (BLLException e) {
-			e.printStackTrace();
-			response.sendError(404); return;
+		if (enchere != null) {
+			encherisseur = enchere.getEncherisseur();
 		}
 		
 		Utilisateur vendeur = article.getVendeur();

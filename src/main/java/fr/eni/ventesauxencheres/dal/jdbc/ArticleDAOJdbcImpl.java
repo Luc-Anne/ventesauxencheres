@@ -46,6 +46,17 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 						+ "no_categorie) "//7
 						+ " VALUES (?,?,?,?,?,?,?);";
 	
+	private static final String UPDATE = "UPDATE ARTICLES_VENDUS SET "
+						+ "nom_article = ?, "	//1
+						+ "description = ?, " //2
+						+ "date_debut_enchere = ?, " //3
+						+ "date_fin_enchere = ?, " //4
+						+ "prix_initial = ?, " //5
+						+ "no_utilisateur = ?, " //6
+						+ "no_categorie = ?, "//7
+						+ "etat_vente = ? "//8
+						+ "WHERE no_article = ? "; //9
+	
 	private static final String SELECT_BY_ID = SELECT_ALL
 			+ "WHERE a.no_article = ? ";
 	
@@ -259,8 +270,28 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 	
 	@Override
-	public void update(Article userToUpdated) throws DALException {
-	
+	public void update(Article article) throws DALException {
+		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
+			try (PreparedStatement stmt = cnx.prepareStatement(UPDATE);) {
+				cnx.setAutoCommit(false);
+				stmt.setString(1, article.getNomArticle());
+				stmt.setString(2, article.getDescription());
+				stmt.setTimestamp(3, Timestamp.valueOf(article.getDateDebutEncheres()));
+	            stmt.setTimestamp(4, Timestamp.valueOf(article.getDateFinEncheres()));
+				stmt.setInt(5, article.getMiseAPrix());
+				stmt.setInt(6, article.getVendeur().getNoUtilisateur());
+				stmt.setInt(7, article.getCategorieArticle().getNoCategorie());
+				stmt.setString(8, article.getEtatVente());
+				stmt.setInt(9, article.getNoArticle());
+				stmt.executeUpdate();
+				cnx.commit();
+			} catch (SQLException e) {
+				cnx.rollback();
+				throw new DALException("Probleme connexion", e);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Probleme connexion", e);
+		}
 	}
 
 	@Override

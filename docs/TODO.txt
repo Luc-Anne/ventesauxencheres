@@ -80,16 +80,3 @@ OK Faire un doFilter pour l'accès à l'administration (/admin/*) et un autres p
 
 Style :
 OK (fait pour le profil public) Utiliser getPathInfo() et getServletPath() pour retrouver un morceau de l'url pour s'en servir comme paramètre. Utiliser une variable pour créer une url dans une jsp.
-
-
-/*
-<%@ page import="fr.eni.ventesauxencheres.bll.ArticleManager" %>
-<%@ page import="fr.eni.ventesauxencheres.bo.Utilisateur" %>
-<%
-boolean hasLink = ArticleManager.getInstance().canDisplayDetails((Article)pageContext.getAttribute("itemArticle"), (Utilisateur)session.getAttribute("utilisateurConnecte"));
-if (hasLink) {%>
-	<a href="${Url.DETAILS_ARTICLE.getUrl()}?no_article=${itemArticle.noArticle}">${itemArticle.nomArticle}</a>
-<%} else {%>
-	${itemArticle.nomArticle}
-<%}%>
-*/ 

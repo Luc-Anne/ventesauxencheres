@@ -2,10 +2,20 @@
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.List" %>
+<%@ page import="fr.eni.ventesauxencheres.bll.ArticleManager" %>
+<%@ page import="fr.eni.ventesauxencheres.bo.Utilisateur" %>
              <div class="col-12 col-sm-6 p-2" >
                  <div class="card">
                      <div class="card-header text-center">
-                         <h4 class="my-0 font-weight-normal"><a href="${Url.DETAILS_ARTICLE.getUrl()}?no_article=${itemArticle.noArticle}"/>${itemArticle.nomArticle}</a></h4>
+                         <h4 class="my-0 font-weight-normal">
+						<%
+						boolean hasLink = ArticleManager.getInstance().canDisplayDetails((Article)pageContext.getAttribute("itemArticle"), (Utilisateur)session.getAttribute("utilisateurConnecte"));
+						if (hasLink) {%>
+							<a href="${Url.DETAILS_ARTICLE.getUrl()}?no_article=${itemArticle.noArticle}">${itemArticle.nomArticle}</a>
+						<%} else {%>
+							${itemArticle.nomArticle}
+						<%}%>
+                         </h4>
                      </div>
                      <div class="d-flex">
                          <div class="col-3 p-2">

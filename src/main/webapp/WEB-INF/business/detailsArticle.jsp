@@ -21,16 +21,16 @@
 		<div class="mx-auto text-center">
 			<h1>
 			<c:if test="${typeAffichage == 'typeEncherir' || typeAffichage == 'typeBack'}">
-				DétailsVente
+				Détails de l'article
 			</c:if>
 			<c:if test="${typeAffichage == 'typeRetrait'}">
-				${article.encherisseur.pseudo} a remporté la vente
+				${enchere.encherisseur.pseudo} a remporté la vente
 			</c:if>
 			<c:if test="${typeAffichage == 'typePerdu'}">
 				Personne n'a misé sur votre article
 			</c:if>
 			<c:if test="${typeAffichage == 'typeGagne'}">
-				Bous avez remporté la vente
+				Vous avez remporté la vente
 			</c:if>
 			</h1>
 		</div>

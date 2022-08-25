@@ -146,30 +146,50 @@ public class ArticleManager {
 			// Bloqué les détails à un utilisateur non connecté
 			return false;
 		}
-		Enchere enchere = null;
+		Utilisateur vendeur = article.getVendeur();
+		Enchere enchere = article.getEnchere();
+		//enchere = EnchereManager.getInstance().getByArticle(article);
 		Utilisateur encherisseur = null;
-		try {
-			enchere = EnchereManager.getInstance().getByArticle(article);
-			if (enchere != null) {
-				if (article.getEtatVente() == "VD" || article.getEtatVente() == "RT") {
-					encherisseur = enchere.getEncherisseur();
-					// Maintenant qu'on a toutes les données pour décider, on peut décider
-					if (
-						article.getEtatVente().equals("CR") ||
-						(article.getEtatVente().equals("VD") && !utilisateurConnecte.equals(encherisseur)) ||
-						(article.getEtatVente().equals("RT") && !utilisateurConnecte.equals(encherisseur))
-					) {
-						return false;
-					} else {
-						return true;
-					}
-				}
-			}
-		} catch (BLLException e) {
-			e.printStackTrace();
-			return false;
+		if (enchere != null) {
+			encherisseur = enchere.getEncherisseur();
 		}
-		return false;
+		
+//		System.out.println(article);
+//		System.out.println(enchere);
+//		System.out.println(utilisateurConnecte);
+//		System.out.println(encherisseur);
+//		System.out.println(vendeur);
+		if (
+			(article.getEtatVente().equals("VD") && utilisateurConnecte.equals(vendeur) && encherisseur == null)
+			){
+			return true;
+		} else if (
+			(article.getEtatVente().equals("VD") && utilisateurConnecte.equals(vendeur))
+		){
+			return true;
+		} else if (
+			(article.getEtatVente().equals("VD") && utilisateurConnecte.equals(encherisseur))
+		){
+			return true;
+		} else if (
+			(article.getEtatVente().equals("EC") && utilisateurConnecte.equals(vendeur)) ||
+			(article.getEtatVente().equals("RT") && utilisateurConnecte.equals(vendeur)) ||
+			(article.getEtatVente().equals("RT") && utilisateurConnecte.equals(encherisseur))
+		){
+			return true;
+		}else if (
+			article.getEtatVente().equals("CR") ||
+			(article.getEtatVente().equals("VD") && !utilisateurConnecte.equals(encherisseur)) ||
+			(article.getEtatVente().equals("RT") && !utilisateurConnecte.equals(encherisseur))
+		) {
+			return false;
+		} else if (
+			(article.getEtatVente().equals("EC") && !utilisateurConnecte.equals(vendeur))
+		){
+			return true;
+		}  else {
+			return true;
+		}
 	}
 
 	
