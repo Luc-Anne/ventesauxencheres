@@ -22,8 +22,8 @@ OK Faire les fichiers controllers et jsp pour les fonctionnalités principales
 	- Ventes en cours
 	- Mes ventes non débutées
 	- Mes ventes terminées
-Bediss Nouvelle Vente / Ajouter Article
-Luc Détails Article / Modifier étatVente et enchérissement
+OK Nouvelle Vente / Ajouter Article
+OK Détails Article / Modifier étatVente et enchérissement
 
 ################################################################################
 Demande clients principales :
@@ -34,7 +34,7 @@ OK Mettre en commentaire l'affichage de l'image d'un article car c'est une fonct
 - Nom des fichiers différents des urls présentées : modifier les urls plutôt que les fichiers ?
 Ok Ajouter un second champs dans l'inscription pour confirmer le mot de passe
 - FAIRE LES FICHIERS DE TESTS ?
-- Renvoyer la page de nouvelle article vers la page home
+Ok Renvoyer la page de nouvelle article vers la page home
 - Gérer la désinscription d'une personne dans la cas où elle a des enchères en cours
 OK Intégrer la procédure stockée et faire la classe évènement
 
@@ -50,7 +50,7 @@ OK Enum pour les adresse url du site
 
 Harmonisation du code :
 OK Modifier le nom inscription dans la dal utilisateur pour insert & modifier le type de retour de ce insert par un utilisateur
-- Ajouter le no_article avant de le renvoyer
+- Ajouter le no_article dans l'article insérerer avant de le renvoyer de la DAL
 + Créer une interface pour les managers de la bll pour avoir les mêmes noms de méthodes, voire des méthodes par défauts
 + Factoriser la deconnexion (deconnexion et desincription) dans la BLL
 + Factoriser d'autres fonctionnalités
