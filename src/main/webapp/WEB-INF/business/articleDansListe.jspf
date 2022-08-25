@@ -19,11 +19,11 @@
                      </div>
                      <div class="d-flex">
                          <ul class="col-9 list-unstyled p-2">                            
-                             <c:if test="${itemArticle.enchere.montantEnchere!=0}">
+                             <c:if test="${not empty itemArticle.enchere && itemArticle.enchere.montantEnchere!=0}">
                              	<!-- Non opérationnel -->
 							   <li>Meilleure enchère : ${itemArticle.enchere.montantEnchere} point(s)</li>      
 							</c:if>
-                             <c:if test="${itemArticle.enchere.montantEnchere==0 || empty itemArticle.enchere}">
+                             <c:if test="${!(not empty itemArticle.enchere && itemArticle.enchere.montantEnchere!=0)}">
 							    <li>Prix de mise: ${itemArticle.miseAPrix} point(s)</li>   
 							</c:if>							                                                        
                              <%                            

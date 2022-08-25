@@ -64,8 +64,14 @@ public class Home extends HttpServlet {
 		request.setAttribute("typeEncheres", typeEncheres);		
 		//récupérer les paramètres des checkbox et les renvoyer
 		String encheresStatut = request.getParameter("encheres");
+		if (encheresStatut == null) {
+			encheresStatut = "";
+		}
 		request.setAttribute("encheresStatut", encheresStatut);
 		String ventesStatut = request.getParameter("ventes");
+		if (ventesStatut == null) {
+			ventesStatut = "";
+		}
 		request.setAttribute("ventesStatut", ventesStatut);
 		//Alimenter la variable typeQuery selon les filtres
 		String typeQuery="";

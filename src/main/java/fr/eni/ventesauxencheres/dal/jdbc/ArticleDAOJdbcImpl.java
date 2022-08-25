@@ -438,8 +438,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();){			
 			ResultSet rs=null;
 			if (query.equals("")) {
-				query = SELECT_ALL;
+				query = SELECT_ALL + " WHERE " + "a.nom_article like ? " + " AND c.libelle like ? ";
 				PreparedStatement stmt = cnx.prepareStatement(query);
+				stmt.setString(1, "%" + motCle + "%");		
+				stmt.setString(2, "%" + libelle+ "%");
 				rs=stmt.executeQuery();
 			} else {
 				PreparedStatement stmt = cnx.prepareStatement(query);

@@ -66,7 +66,7 @@
 				</li>
 				<li class="nav-item dropdown d-none d-lg-block ">
 					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-						<img class="small-icon" src="images/menu.svg" alt="${sessionScope.utilisateurConnecte.prenom} ${sessionScope.utilisateurConnecte.nom}">
+						${sessionScope.utilisateurConnecte.prenom} ${sessionScope.utilisateurConnecte.nom}
 					</a>
 					<ul class="dropdown-menu dropdown-menu-end">
 						<li><a class="nav-link" href="${Url.COMPTE_PROFIL.getUrl()}">Mon Profil</a></li>
