@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!-- Afficher le message en fonction de la connexion -->
 <header>
-	<nav class="pr-5 navbar navbar-expand-sm bg-dark navbar-dark align-top justify-content-between">
+	<nav class="pr-5 navbar navbar-expand-sm bg-dark bg-dark-eni navbar-dark align-top justify-content-between">
 		<!-- Choix du typeDeMenuAAfficher -->
 		<c:set var="typeDeMenuAAfficher" value="TypeNonConnecte"></c:set>
 		<c:if test="${not empty sessionScope.utilisateurConnecte}">

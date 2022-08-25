@@ -6,7 +6,10 @@
 .navbar-nav .nav-link.active,
 .navbar-nav .show > .nav-link,
 .navbar-nav .show > li .nav-link {
-  color: black;
+  color:#30373F;
+}
+.bg-dark-eni {
+    background-color: #30373F !important;
 }
 
 #messageGlobal {
