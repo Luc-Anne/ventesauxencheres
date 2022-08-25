@@ -342,38 +342,44 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	//Non fonctionelle en attente d'amélioration
 	@Override
-	public List<Article> selectListHome(String typeQuery, int idUtilisateurConnecte, String motCle) throws DALException {
+	public List<Article> selectListHome(String typeQuery, int idUtilisateurConnecte, String motCle, String libelle) throws DALException {
 		String query = "";
 		if ("OpenedBids".equals(typeQuery)) {
 			query = SELECT_ALL
 					+ " WHERE "
 					+ " a.etat_vente='EC' AND a.no_utilisateur!=? " //String SELECT_OPENED_BIDS_STRING = "a.etat_vente='EC' AND a.no_utilisateur!=? "
-					+ " AND " + "a.nom_article like ? ";
+					+ " AND " + "a.nom_article like ? "
+					+ " AND c.libelle like ? ";
 		} else if ("MyBids".equals(typeQuery)) {
 				query = SELECT_ALL
 						+ " WHERE "
 						+ " a.etat_vente='EC' AND e.no_utilisateur=? " //String  SELECT_MY_BIDS_STRING= "a.etat_vente='EC' AND e.no_utilisateur=?"
-						+ " AND " + "a.nom_article like ? "; 
+						+ " AND " + "a.nom_article like ? "
+						+ " AND c.libelle like ? ";
 		}else if ("MyWonBids".equals(typeQuery)) {
 			query = SELECT_ALL
 					+ " WHERE "
 					+ " (a.etat_vente='VD' OR a.etat_vente='RT') AND e.no_utilisateur=? " //String SELECT_MY_WON_BIDS_STRING="(a.etat_vente='VD' OR a.etat_vente='RT') AND e.no_utilisateur=?"
-					+ " AND " + "a.nom_article like ? ";
+					+ " AND " + "a.nom_article like ? "
+					+ " AND c.libelle like ? ";
 	}else if ("MyCurrentSales".equals(typeQuery)) {
 		query = SELECT_ALL
 				+ " WHERE "
 				+ " a.etat_vente='EC' AND a.no_utilisateur=? " // String SELECT_MY_CURRENT_SALES_STRING="a.etat_vente='EC' AND a.no_utilisateur=?"
-				+ " AND " + "a.nom_article like ? ";
+				+ " AND " + "a.nom_article like ? "
+				+ " AND c.libelle like ? ";
 	}else if ("MyUnstartedSales".equals(typeQuery)) {
 		query = SELECT_ALL
 				+ " WHERE "
 				+ " a.etat_vente='CR' AND a.no_utilisateur=? " //String SELECT_MY_UNSTARTED_SALES_STRING="a.etat_vente='CR' AND a.no_utilisateur=?"
-				+ " AND " + "a.nom_article like ? ";
+				+ " AND " + "a.nom_article like ? "
+				+ " AND c.libelle like ? ";
 	}else if ("MyClosedSales".equals(typeQuery)) {
 		query = SELECT_ALL
 				+ " WHERE "
 				+ " (a.etat_vente='VD' OR a.etat_vente='RT') AND a.no_utilisateur=? " //String SELECT_MY_CLOSED_SALES_STRING ="(a.etat_vente='VD' OR a.etat_vente='RT') AND a.no_utilisateur=?"
-				+ " AND " + "a.nom_article like ? ";
+				+ " AND " + "a.nom_article like ? "
+				+ " AND c.libelle like ? ";
 	}
 		List<Article> articleList=new ArrayList<Article>();
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();){			
@@ -385,7 +391,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			} else {
 				PreparedStatement stmt = cnx.prepareStatement(query);
 				stmt.setInt(1,idUtilisateurConnecte);
-				stmt.setString(2, "%" + motCle + "%");				
+				stmt.setString(2, "%" + motCle + "%");		
+				stmt.setString(3, "%" + libelle+ "%");
 				rs=stmt.executeQuery();
 			}
 				while(rs.next()) {

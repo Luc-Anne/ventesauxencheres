@@ -14,6 +14,6 @@ public interface ArticleDAO extends DAO<Article> {
 	public List<Article> selectClosedSales(int idUtilisateurConnecte) throws DALException;	
 	public List<Article> selectByMotCleAndByLibelle(String motCle)throws DALException;
 	
-	public List<Article> selectListHome(String typeQuery, int idUtilisateurConnecte, String motCle)throws DALException;
+	public List<Article> selectListHome(String typeQuery, int idUtilisateurConnecte, String motCle, String libelle) throws DALException ;
 
 }

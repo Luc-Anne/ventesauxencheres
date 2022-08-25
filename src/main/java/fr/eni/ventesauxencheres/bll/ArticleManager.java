@@ -177,11 +177,10 @@ public class ArticleManager {
 	}
 	
 	//Test factorisation methode show general	
-	public List<Article> showListeHome(String typeQuery, int idUtilisateurConnecte, String motCle) throws BLLException {
+	public List<Article> showListeHome(String typeQuery, int idUtilisateurConnecte, String motCle, String libelle) throws BLLException {
 		List<Article> articles = null;
-		System.out.println("BLL : "+idUtilisateurConnecte);
 		try {
-			articles = articleDAO.selectListHome(typeQuery, idUtilisateurConnecte, motCle);
+			articles = articleDAO.selectListHome(typeQuery, idUtilisateurConnecte, motCle, libelle);
 		} catch (DALException e) {
 			e.printStackTrace();
 		}

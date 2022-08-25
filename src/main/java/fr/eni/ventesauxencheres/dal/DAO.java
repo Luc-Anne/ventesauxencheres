@@ -2,6 +2,8 @@ package fr.eni.ventesauxencheres.dal;
 
 import java.util.List;
 
+import fr.eni.ventesauxencheres.bo.Article;
+
 public interface DAO<T> {
 	// CRUD
 	T insert(T u) throws DALException ;
@@ -9,4 +11,5 @@ public interface DAO<T> {
 	List<T> selectAll() throws DALException ;
 	void update(T userToUpdated) throws DALException;
 	void delete(int id) throws DALException;
+
 }
