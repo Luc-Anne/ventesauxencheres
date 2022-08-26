@@ -49,6 +49,8 @@ public class GlobalFilter extends HttpFilter implements Filter {
 				// Si l'utilisateur vient de valider l'acceptation
 				// Alors créer un cookie et enregistrer l'information dans la session
 				Cookie acceptationCookie = new Cookie("acceptationCookie", "true");
+				acceptationCookie.setHttpOnly(true);
+				acceptationCookie.setMaxAge(100000);
 				httpResponse.addCookie(acceptationCookie);
 				session.setAttribute("cookieAccepte", true);
 			} else {
@@ -62,6 +64,8 @@ public class GlobalFilter extends HttpFilter implements Filter {
 							if (cookie.getValue().equals("true")) {
 								// Alors créer un cookie et enregistrer l'information dans la session
 								Cookie acceptationCookie = new Cookie("acceptationCookie", "true");
+								acceptationCookie.setHttpOnly(true);
+								acceptationCookie.setMaxAge(100000);
 								httpResponse.addCookie(acceptationCookie);
 								session.setAttribute("cookieAccepte", true);
 							}
