@@ -9,7 +9,7 @@
 		<li class="list-inline-item"><a href="#">Support</a></li>
 	</ul> -->
 </footer>
-<c:if test="${not cookieAccepte}">
+<c:if test="${empty cookieAccepte}">
 	<p class="fixed-bottom">Ce site nécessite l'utilisation de cookies pour fonctionner. En continuant la naviguation,
 	vous acceptez l'utilisation des cookies strictement nécessaires à l'utilisation de ce site.
 	<a href="?acceptationCookie=true">Accepter</a>
