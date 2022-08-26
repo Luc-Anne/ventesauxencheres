@@ -40,34 +40,23 @@ public class GlobalFilter extends HttpFilter implements Filter {
 		
 		// ### Gestion de l'information d'acceptation des cookies dans la session
 		// ### (et un cookie si la session est coupé, alias ne pas redemander toutes les 5 minutes)
+		
+		// Dans le cas où on a pas l'information dans la session alors cookieAccepte = null dans la session
+		// On doit donc aller chercher si l'information est disponible quelque part
 		System.out.println("Avant traitement Acceptation Cookie - " + session.getAttribute("cookieAccepte"));
-		// Dans le cas où on a pas l'information dans la session
-		// alors cookieAccepte = null dans la session
 		if ((session.getAttribute("cookieAccepte") == null)) {
-			String validationUtilisateur = request.getParameter("acceptationCookie");
-			if (validationUtilisateur != null) {
+			if (request.getParameter("acceptationCookie") != null) {
 				// Si l'utilisateur vient de valider l'acceptation
-				// Alors créer un cookie et enregistrer l'information dans la session
-				Cookie acceptationCookie = new Cookie("acceptationCookie", "true");
-				acceptationCookie.setHttpOnly(true);
-				acceptationCookie.setMaxAge(100000);
-				httpResponse.addCookie(acceptationCookie);
-				session.setAttribute("cookieAccepte", true);
+				cookieAccepted(httpResponse, session);
 			} else {
-				// Aller chercher si l'information n'a pas déjà été enregistré dans un cookie
-				// S'il en trouve un, cela veut dire qu'il avait accepté précédemment
-				// S'il n'en trouve pas, cela veut dire qu'il n'avait pas accepté précédemment (on laisse en l'état)
+				// Sinon aller chercher si l'information n'a pas déjà été enregistré dans un cookie
 				Cookie[] cookies = httpRequest.getCookies();
 				if (cookies != null) {
 					for (Cookie cookie : cookies) {
 						if (cookie.getName().equals("acceptationCookie")) {
 							if (cookie.getValue().equals("true")) {
-								// Alors créer un cookie et enregistrer l'information dans la session
-								Cookie acceptationCookie = new Cookie("acceptationCookie", "true");
-								acceptationCookie.setHttpOnly(true);
-								acceptationCookie.setMaxAge(100000);
-								httpResponse.addCookie(acceptationCookie);
-								session.setAttribute("cookieAccepte", true);
+								// Si on trouve le cookie ayant enregistré l'information d'acceptation
+								cookieAccepted(httpResponse, session);
 							}
 						}
 					}
@@ -75,8 +64,18 @@ public class GlobalFilter extends HttpFilter implements Filter {
 			}
 		}
 		System.out.println("Après traitement Acceptation Cookie - " + session.getAttribute("cookieAccepte") + "\n---");
+		
 		// Continuer vers la servlet appelée
 		chain.doFilter(request, response);
+	}
+	
+	private void cookieAccepted(HttpServletResponse httpResponse, HttpSession session) {
+		// Créer un cookie, l'envoyer dans la réponse et enregistrer l'information dans la session
+		Cookie acceptationCookie = new Cookie("acceptationCookie", "true");
+		acceptationCookie.setHttpOnly(true);
+		acceptationCookie.setMaxAge(100000);
+		httpResponse.addCookie(acceptationCookie);
+		session.setAttribute("cookieAccepte", true);
 	}
 	
 }
