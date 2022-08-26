@@ -3,11 +3,6 @@
 <footer class="my-5 pt-5 text-muted text-center text-small">
 	<p class="mb-1">&copy; Ventes Aux Enchères Promo 2022-2023 Bédiss
 		/ Luc / Bich</p>
-	<!-- <ul class="list-inline">
-		<li class="list-inline-item"><a href="#">Privacy</a></li>
-		<li class="list-inline-item"><a href="#">Terms</a></li>
-		<li class="list-inline-item"><a href="#">Support</a></li>
-	</ul> -->
 </footer>
 <c:if test="${empty cookieAccepte}">
 	<p class="fixed-bottom">Ce site nécessite l'utilisation de cookies pour fonctionner. En continuant la naviguation,
