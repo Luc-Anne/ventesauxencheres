@@ -22,6 +22,30 @@
         <div class="mx-auto text-center">
             <h1>Enchères</h1>
         </div>
+        <c:if test="${empty utilisateurConnecte}">      
+        	<form class="form-filter border mb-3" action="${Url.HOME.getUrl()}" method="post">
+	            <div class="row">
+	                <div class="col-md-6 mb-3">
+	                	<div class="form-group">
+	                            <label for="filter-input">Filtre</label>
+	                            <input type="text" class="form-control" id="filter-input" placeholder="articles contenant..." name ="motCle">
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="categories-select">Catégories</label>
+	                        <select class="form-select" id="floatingSelectGrid"	aria-label="Floating label select example" name="categorie">
+							 <option selected>Toutes</option>
+								 <%for (Categorie categorie : CategorieManager.getInstance().getAll()){ %>
+								 <option value="<%= categorie.getLibelle()%>"> <%=categorie.getLibelle() %></option>
+								<%} %> 
+							</select>
+	                    </div>
+	                </div>
+	            </div>
+	            <button class="btn btn-primary btn-lg btn-block col-12" type="submit">
+	            	Rechercher
+	            </button>
+        	</form>
+		 </c:if>        
         <!--filtre-->
         <c:if test="${not empty utilisateurConnecte}">
         <form class="form-filter border mb-3" action="${Url.HOME.getUrl()}" method="post">
