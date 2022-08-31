@@ -1,0 +1,77 @@
+.container {
+  max-width: 960px;
+}
+
+/* Bootstrap navbar */
+.navbar-nav .nav-link.active,
+.navbar-nav .show > .nav-link,
+.navbar-nav .show > li .nav-link {
+  color:#30373F;
+}
+.bg-dark-eni {
+    background-color: #30373F !important;
+}
+
+#messageGlobal {
+	text-align: center;
+	background-color: #ffc107;
+}
+
+#messageGlobal p {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-weight: bold;
+}
+
+.fixed-bottom {
+	background-color: #ffc107 !important;
+	margin-bottom: 0px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-align: center;
+}
+
+#profil-main {
+	margin-left:500px;
+}
+
+#imageTrocenchere{
+	height:50px;
+	width:50px;
+}
+
+form .form-invalid-feedback {
+	display: block;
+	width: 100%;
+	margin-top: .25rem;
+	font-size: .875em;
+	color: #dc3545;
+	animation: animate 1.5s linear infinite;
+ } 
+
+ @keyframes animate{
+   0%{
+     opacity: 0;
+   }
+   50%{
+     opacity: 0.7;
+   }
+   100%{
+     opacity: 0;
+   }
+}
+
+
+legend {
+    background-color: #000;
+    color: #fff;
+    padding: 3px 6px;
+}
+
+.output {
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input {
+    margin: .4rem;
+}
