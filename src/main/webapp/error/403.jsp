@@ -1,4 +1,4 @@
-<%@ page import="fr.eni.ventesauxencheres.controllers.Url" %>
+<%@ page import="fr.eni.ventesauxencheres.controllers.util.Url" %>
 <%@ include file="/WEB-INF/fragments/taglib.jspf" %>
 <!DOCTYPE html>
 <html>

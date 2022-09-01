@@ -89,12 +89,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	// récupérer un artciel via son nom 
 	private static final String FIND_BY_NOM_ARTICLE_AND_ALL_CATEGORIE = SELECT_ALL 
 			+"WHERE A.nom_article like ?";
-
-	private static final String FIND_BY_NOM_ARTICLE_AND_LIBLLE_CATEGORIE = SELECT_ALL
-			+" WHERE A.nom_article like ?  AND C.libelle like ?";
+	
 	@Override
 	public Article insert(Article article) throws DALException {
-		ResultSet rs= null;
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
 				PreparedStatement stmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);){
 			stmt.setString(1, article.getNomArticle());

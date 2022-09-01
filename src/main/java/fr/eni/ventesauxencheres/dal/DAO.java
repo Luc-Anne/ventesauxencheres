@@ -2,8 +2,6 @@ package fr.eni.ventesauxencheres.dal;
 
 import java.util.List;
 
-import fr.eni.ventesauxencheres.bo.Article;
-
 public interface DAO<T> {
 	// CRUD
 	T insert(T u) throws DALException ;

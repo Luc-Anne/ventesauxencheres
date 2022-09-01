@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
 import fr.eni.ventesauxencheres.dal.DALException;
 import fr.eni.ventesauxencheres.dal.FactoryDAO;
-import fr.eni.ventesauxencheres.dal.UtilisateurDAO;
 
 @WebServlet("/test/TestUtilisateurManager")
 public class TestUtilisateurManager extends HttpServlet {

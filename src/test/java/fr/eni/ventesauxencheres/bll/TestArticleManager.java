@@ -2,7 +2,6 @@ package fr.eni.ventesauxencheres.bll;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.ventesauxencheres.bo.Article;
-import fr.eni.ventesauxencheres.dal.DALException;
-
 @WebServlet("/test/TestArticleManager")
 public class TestArticleManager extends HttpServlet {
 	private static final long serialVersionUID = 1L;

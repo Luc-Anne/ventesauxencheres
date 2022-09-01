@@ -26,14 +26,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String AFFICHER_LIST_UTILISATEURS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit from UTILISATEURS";
 	private static final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
 
-	private static final String CHECK_UTILISATEUR = "";
-	private static final String SELECT_ALL_SELLER="SELECT u.no_utilisateur,u.pseudo,u.telephone,a.no_article,a.nom_article,a.description,\r\n"
-			+ "a.prix_initial,a.prix_vente,a.date_debut_enchere,a.date_fin_enchere ,a.no_categorie,a.etat_vente,\r\n"
-			+ "r.rue,r.code_postal,r.ville \r\n"
-			+ "FROM UTILISATEURS as u \r\n"
-			+ "JOIN ARTICLES_VENDUS as a on u.no_utilisateur=a.no_utilisateur \r\n"
-			+ "JOIN RETRAITS as r on a.no_article=r.no_article;";
-
 	// CRUD
 	public Utilisateur insert(Utilisateur u) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
@@ -69,7 +61,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	@Override
 	public Utilisateur selectById(int id) throws DALException {
 		Utilisateur utilisateur = null;
-		ResultSet rs = null;
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
 				PreparedStatement stmt = cnx.prepareStatement(GET_UTILISATEUR_BY_ID);){
 			

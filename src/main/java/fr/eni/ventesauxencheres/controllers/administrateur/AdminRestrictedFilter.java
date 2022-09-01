@@ -1,4 +1,4 @@
-package fr.eni.ventesauxencheres.controllers.utilisateur;
+package fr.eni.ventesauxencheres.controllers.administrateur;
 
 import java.io.IOException;
 import javax.servlet.DispatcherType;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.ventesauxencheres.bo.Utilisateur;
-import fr.eni.ventesauxencheres.controllers.Url;
+import fr.eni.ventesauxencheres.controllers.util.Url;
 
 /**
  * Servlet Filter implementation class AdministrateurFilter

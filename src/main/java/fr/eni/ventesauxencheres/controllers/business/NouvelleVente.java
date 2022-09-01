@@ -1,4 +1,4 @@
-package fr.eni.ventesauxencheres.controllers.ventes;
+package fr.eni.ventesauxencheres.controllers.business;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -19,10 +19,10 @@ import fr.eni.ventesauxencheres.bll.CategorieManager;
 import fr.eni.ventesauxencheres.bo.Article;
 import fr.eni.ventesauxencheres.bo.Categorie;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
-import fr.eni.ventesauxencheres.controllers.Url;
+import fr.eni.ventesauxencheres.controllers.util.Url;
 
 
-@WebServlet("/nouvelleVente/add")
+@WebServlet("/encheres/ajouter")
 public class NouvelleVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

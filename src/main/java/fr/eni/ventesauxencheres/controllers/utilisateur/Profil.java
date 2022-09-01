@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import fr.eni.ventesauxencheres.bll.BLLException;
 import fr.eni.ventesauxencheres.bll.UtilisateurManager;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
-import fr.eni.ventesauxencheres.controllers.Errors;
+import fr.eni.ventesauxencheres.controllers.util.Errors;
 
 /**
  * Servlet implementation class profil

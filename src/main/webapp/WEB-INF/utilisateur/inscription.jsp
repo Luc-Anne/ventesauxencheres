@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/fragments/taglib.jspf" %>
-<%@ page import="fr.eni.ventesauxencheres.controllers.Errors" %>
+<%@ page import="fr.eni.ventesauxencheres.controllers.util.Errors" %>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
 	<title>${initParam.debutTitre} Inscription</title>
-</style>
 </head>
 <body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>

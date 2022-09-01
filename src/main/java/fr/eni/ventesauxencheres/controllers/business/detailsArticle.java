@@ -16,19 +16,16 @@ import fr.eni.ventesauxencheres.bll.EnchereManager;
 import fr.eni.ventesauxencheres.bo.Article;
 import fr.eni.ventesauxencheres.bo.Enchere;
 import fr.eni.ventesauxencheres.bo.Utilisateur;
-import fr.eni.ventesauxencheres.controllers.Url;
+import fr.eni.ventesauxencheres.controllers.util.Url;
 
 /**
  * Servlet implementation class Template
  */
-@WebServlet("/encheres/article")
+@WebServlet("/encheres")
 public class detailsArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		///////////////////////////////////////////////////////////////////////
-		// IDEM                                                              //
-		///////////////////////////////////////////////////////////////////////
 		// Bloquer la page à un utilisateur non connecté
 		if (request.getSession().getAttribute("utilisateurConnecte") == null) {
 			response.sendError(403); return;
@@ -110,9 +107,6 @@ public class detailsArticle extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		///////////////////////////////////////////////////////////////////////
-		// IDEM                                                              //
-		///////////////////////////////////////////////////////////////////////
 		// Bloquer la page à un utilisateur non connecté
 		if (request.getSession().getAttribute("utilisateurConnecte") == null) {
 			response.sendError(403); return;
@@ -138,10 +132,6 @@ public class detailsArticle extends HttpServlet {
 		}
 
 		Enchere enchere = article.getEnchere();
-		Utilisateur encherisseur = null;
-		if (enchere != null) {
-			encherisseur = enchere.getEncherisseur();
-		}
 		
 		Utilisateur vendeur = article.getVendeur();
 

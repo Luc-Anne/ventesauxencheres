@@ -46,8 +46,8 @@ public class ArticleEtatVenteJdbcListener implements ServletContextListener {
 				}
 			}
         });
-        
-        taskEtatVenteJdbc.start();
+        // TODO Penser à relancer
+        //taskEtatVenteJdbc.start();
     }
 	
 	public void contextDestroyed(ServletContextEvent sce) { 

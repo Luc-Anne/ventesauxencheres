@@ -9,10 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.ventesauxencheres.bo.Article;
-import fr.eni.ventesauxencheres.dal.DALException;
-import fr.eni.ventesauxencheres.dal.FactoryDAO;
-
 @WebServlet("/test/TestEnchereManager")
 public class TestEnchereManager extends HttpServlet {
 	private static final long serialVersionUID = 1L;

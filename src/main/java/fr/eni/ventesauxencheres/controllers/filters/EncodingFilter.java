@@ -1,4 +1,4 @@
-package fr.eni.ventesauxencheres.controllers;
+package fr.eni.ventesauxencheres.controllers.filters;
 
 import java.io.IOException;
 import javax.servlet.Filter;

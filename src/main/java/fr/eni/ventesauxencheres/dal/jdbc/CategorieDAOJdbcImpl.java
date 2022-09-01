@@ -46,7 +46,6 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	@Override
 	public List<Categorie> selectAll() throws DALException {
 		List<Categorie> categories = new ArrayList<>();
-		Categorie categorie = new Categorie();
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
 				PreparedStatement stmt = cnx.prepareStatement(GET_ALL_CATEGORIE, PreparedStatement.RETURN_GENERATED_KEYS);){
 			

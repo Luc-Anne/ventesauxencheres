@@ -1,4 +1,4 @@
-package fr.eni.ventesauxencheres.controllers;
+package fr.eni.ventesauxencheres.controllers.util;
 
 import java.util.ArrayList;
 import java.util.List;

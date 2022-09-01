@@ -1,7 +1,6 @@
 package fr.eni.ventesauxencheres.bo;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class Article {
 

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.ventesauxencheres.controllers.Url;
+import fr.eni.ventesauxencheres.controllers.util.Url;
 
 
 @WebServlet("/moncompte/deconnexion")

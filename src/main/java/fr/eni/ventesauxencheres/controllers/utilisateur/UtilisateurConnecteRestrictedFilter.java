@@ -12,13 +12,15 @@ import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.ventesauxencheres.controllers.Url;
+import fr.eni.ventesauxencheres.controllers.util.Url;
 
 /**
  * Servlet Filter implementation class SecurityFilter
  */
-@WebFilter(dispatcherTypes = {DispatcherType.REQUEST }
-					, urlPatterns = { "/moncompte/*" })
+@WebFilter(
+		dispatcherTypes = {DispatcherType.REQUEST },
+		urlPatterns = {"/moncompte/*", "/encheres/article", "/nouvelleVente/add" }
+)
 public class UtilisateurConnecteRestrictedFilter extends HttpFilter implements Filter {
 	private static final long serialVersionUID = 5641058120626900022L;
 
@@ -31,11 +33,12 @@ public class UtilisateurConnecteRestrictedFilter extends HttpFilter implements F
 			// Ici vue redirigee vers la vue home, mais l'url avec profil est conservé
 			// httpRequest.getRequestDispatcher("/home").forward(httpRequest, response); 
 			// Privilegier une redirection vers la servlet home
+			httpRequest.getSession().setAttribute("messageGlobal", "Vous n'avez pas la permission d'accéder à cette page");
 			HttpServletResponse httpResponse=(HttpServletResponse) response;
 			httpResponse.sendRedirect(Url.HOME.getUrl());
 		}else {
 			chain.doFilter(request, response);
-		}			
+		}
 	}
 	
 }
