@@ -28,7 +28,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "r.rue AS Rrue, r.code_postal AS Rcode_postal, r.ville AS Rville, "
 			+ "e.date_enchere, e.montant_enchere, "
 			+ "bidder.no_utilisateur as bidderNo,bidder.pseudo as bidderPseudo,bidder.nom as bidderNom,bidder.prenom as bidderPrenom,bidder.email as bidderEmail,bidder.mot_de_passe as bidderMDP,bidder.telephone as bidderTel,bidder.rue as bidderRue,bidder.code_postal as bidderCP,bidder.ville as bidderVille,bidder.credit as bidderCredit,bidder.administrateur as bidderAd "
-			+ "FROM ARTICLES_VENDUS a "
+			+ "FROM ARTICLES a "
 			+ "LEFT JOIN UTILISATEURS u ON a.no_utilisateur = u.no_utilisateur "
 			+ "LEFT JOIN CATEGORIES c ON a.no_categorie = c.no_categorie "
 			+ "LEFT JOIN RETRAITS r ON a.no_article = r.no_article "
@@ -36,7 +36,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "LEFT JOIN UTILISATEURS as bidder on bidder.no_utilisateur = e.no_utilisateur ";
 
 	//INSERT INTO ARTICLES_VENDUS 
-	private static final String INSERT = "INSERT INTO ARTICLES_VENDUS "
+	private static final String INSERT = "INSERT INTO ARTICLES "
 						+ "(nom_article,"	//1
 						+ "description, " //2
 						+ "date_debut_enchere," //3
@@ -46,7 +46,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 						+ "no_categorie) "//7
 						+ " VALUES (?,?,?,?,?,?,?);";
 	
-	private static final String UPDATE = "UPDATE ARTICLES_VENDUS SET "
+	private static final String UPDATE = "UPDATE ARTICLES SET "
 						+ "nom_article = ?, "	//1
 						+ "description = ?, " //2
 						+ "date_debut_enchere = ?, " //3
