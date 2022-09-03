@@ -37,8 +37,9 @@ public class ArticleEtatVenteJdbcListener implements ServletContextListener {
 				try (Connection cnx = ConnectionProvider.getConnection_VAE()) {
 					try (CallableStatement statement = cnx.prepareCall(updateArticle)) {
 						statement.execute();
+						// System.out.println("Exécution de la prodécure stockée updateArticle");
 					} catch (SQLException e) {
-						//System.out.println("Erreur execution de la prodécure stockée updateArticle");
+						System.out.println("Erreur execution de la prodécure stockée updateArticle");
 						System.out.println(e.getMessage());
 					}
 				} catch (SQLException e) {
@@ -46,8 +47,8 @@ public class ArticleEtatVenteJdbcListener implements ServletContextListener {
 				}
 			}
         });
-        // TODO Penser à relancer
-        //taskEtatVenteJdbc.start();
+
+        taskEtatVenteJdbc.start();
     }
 	
 	public void contextDestroyed(ServletContextEvent sce) { 
