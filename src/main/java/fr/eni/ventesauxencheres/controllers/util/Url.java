@@ -1,8 +1,9 @@
 package fr.eni.ventesauxencheres.controllers.util;
 
 public enum Url {
-	// Use : Url.$$$.getUrl()
-	
+	// CONTEXT from UrlContextInitializer class
+	CONTEXT(""),
+
 	// Datas
 	CSS_STYLE("/css/style.css"),
 	CSS_BOOTSTRAP("/css/bootstrap.min.css"),
@@ -23,13 +24,17 @@ public enum Url {
 	DETAILS_ARTICLE("/encheres"); // le paramètre no_article est nécessaire pour la Servlet	
 
 	private String url;
-	
+
 	Url(String url) {
 		this.url = url; 
 	}
 
+	public static void setContext(String context) {
+		CONTEXT.url = context;
+	}
+
 	public String getUrl() {
-		return "/ventesauxencheres" + url;
+		return CONTEXT.url + url;
 	}
 
 }
