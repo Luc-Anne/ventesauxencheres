@@ -43,7 +43,7 @@ public class ArticleEtatVenteJdbcListener implements ServletContextListener {
 						System.out.println(e.getMessage());
 					}
 				} catch (SQLException e) {
-					System.out.println("Erreur de connexion");
+					System.out.println("Erreur de connexion à la base de données pour la procédure stockée updateArticle()");
 				}
 			}
         });

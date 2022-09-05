@@ -18,14 +18,14 @@ public class ConnectionProvider {
 		try {
 			Context context = new InitialContext();
 			bdd_SQLSERVER_ENIVEA = (DataSource)context.lookup("java:comp/env/jdbc/sqlServer/pool_cnx_ENIVAE");
-			System.out.println("Using bdd_SQLSERVER_ENIVEA");
+			System.out.println("Contexte de base de données : SQL SERVER");
 		} catch (NamingException e) {
 			//e.printStackTrace();
 		}
 		try {
 			Context context = new InitialContext();
 			bdd_MARIADB_ENIVEA = (DataSource)context.lookup("java:comp/env/jdbc/mariaDB/pool_cnx_ENIVAE");
-			System.out.println("Using bdd_MARIADB_ENIVEA");
+			System.out.println("Contexte de base de données : MARIADB");
 		} catch (NamingException e) {
 			//e.printStackTrace();
 		}
