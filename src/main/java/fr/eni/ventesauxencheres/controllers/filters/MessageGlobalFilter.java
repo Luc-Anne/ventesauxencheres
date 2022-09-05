@@ -37,6 +37,8 @@ public class MessageGlobalFilter extends HttpFilter implements Filter {
 		
 		request.setAttribute("messageGlobal", session.getAttribute("messageGlobal"));
 		session.removeAttribute("messageGlobal");
+
+		chain.doFilter(request, response);
 	}
 	
 }
