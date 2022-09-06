@@ -22,17 +22,16 @@ import fr.eni.ventesauxencheres.controllers.util.Url;
 public class Inscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
-
 		if (rd != null) {
 			rd.forward(request, response);
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Errors erreurs = new Errors();
 		request.setAttribute("erreurs", erreurs);
 
@@ -51,7 +50,7 @@ public class Inscription extends HttpServlet {
 			UtilisateurManager.DEFAULT_CREDIT,
 			false
 		);
-		
+
 		if(!mot_de_passe.equals(mot_de_passeConfirmation)) {
 			request.getSession().setAttribute("messageGlobal", "Les deux mots de passe ne correspondent pas");
 			reafficherInscriptionQuandErreur(request, response, utilisateur, erreurs);
@@ -82,11 +81,10 @@ public class Inscription extends HttpServlet {
 			reafficherInscriptionQuandErreur(request, response, utilisateur, erreurs);
 			return;
 		}
-		
+
 	}
-	
-	private void reafficherInscriptionQuandErreur(HttpServletRequest request, HttpServletResponse response, Utilisateur utilisateur, Errors erreurs)
-			throws ServletException, IOException {
+
+	private void reafficherInscriptionQuandErreur(HttpServletRequest request, HttpServletResponse response, Utilisateur utilisateur, Errors erreurs) throws ServletException, IOException {
 		erreurs.addAll(UtilisateurManager.getInstance().invalidCause(utilisateur));
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
 		if (rd != null) {

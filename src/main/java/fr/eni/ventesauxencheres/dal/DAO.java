@@ -9,5 +9,4 @@ public interface DAO<T> {
 	List<T> selectAll() throws DALException ;
 	void update(T userToUpdated) throws DALException;
 	void delete(int id) throws DALException;
-
 }

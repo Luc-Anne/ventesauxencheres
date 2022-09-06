@@ -48,7 +48,6 @@
 									placeholder="${sessionScope.utilisateurConnecte.email}" name="email" value="${sessionScope.utilisateurConnecte.email}">
 								<div class="invalid-feedback">Entrer un email Valid</div>
 							</div>
-
 							<div class="col-12">
 								<label for="numerotelephone" class="form-label">Numéro de Télephone</label> 
 								<input type="text" class="form-control"	id="numerotelephone" placeholder="${sessionScope.utilisateurConnecte.telephone}" required name="telephone" value="${sessionScope.utilisateurConnecte.telephone}">

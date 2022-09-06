@@ -49,7 +49,7 @@ form .form-invalid-feedback {
 	animation: animate 1.5s linear infinite;
  } 
 
- @keyframes animate{
+@keyframes animate{
    0%{
      opacity: 0;
    }
@@ -60,7 +60,6 @@ form .form-invalid-feedback {
      opacity: 0;
    }
 }
-
 
 legend {
     background-color: #000;

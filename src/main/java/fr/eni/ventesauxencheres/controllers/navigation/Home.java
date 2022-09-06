@@ -22,12 +22,13 @@ import fr.eni.ventesauxencheres.bo.Utilisateur;
 public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Article> articlesList = new ArrayList<Article>();
+		List<Article> articlesList = new ArrayList<>();
 		try {
 			articlesList = ArticleManager.getInstance().getAll();
 			//Mettre la liste d'article dans la requete car besoin uniquement dans la home
-			request.setAttribute("articlesList",articlesList);
+			request.setAttribute("articlesList", articlesList);
 
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
 			if (rd != null) {
@@ -39,9 +40,10 @@ public class Home extends HttpServlet {
 		}
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String motCle = request.getParameter("motCle");
-		String libelle = request.getParameter("categorie");	
+		String libelle = request.getParameter("categorie");
 		switch (libelle) {
 		case "Toutes":
 			libelle ="";
@@ -54,14 +56,14 @@ public class Home extends HttpServlet {
 			break;
 		case "Vêtement":
 			libelle ="Vêtement";
-			break;	
+			break;
 		case "Sport & Loisir":
 			libelle ="Sport & Loisir";
-			break;				
+			break;
 		}
 		//récupérer la valeur du bouton radio coché et la renvoyer dans la requête
 		String typeEncheres = request.getParameter("typeEncheres");
-		request.setAttribute("typeEncheres", typeEncheres);		
+		request.setAttribute("typeEncheres", typeEncheres);
 		//récupérer les paramètres des checkbox et les renvoyer
 		String encheresStatut = request.getParameter("encheres");
 		if (encheresStatut == null) {
@@ -98,7 +100,7 @@ public class Home extends HttpServlet {
 			case "terminees":
 				typeQuery="MyClosedSales";
 				break;
-			}			
+			}
 		}
 		try {
 			//Appeler une session pour récupérer l'utilisateur connecté
@@ -111,44 +113,14 @@ public class Home extends HttpServlet {
 			// Test ajout progressif
 			List<Article> enchereListeHome = ArticleManager.getInstance().showListeHome(typeQuery, idUtilisateurConnecte, motCle,libelle);
 			request.setAttribute("enchereListeHome", enchereListeHome);
-			
-			//Methodes à supprimer si factorisation opérationnelle
-			/*
-			 * List<Article>
-			 * encheresOuvertesListe=ArticleManager.getInstance().showOpenedBids(
-			 * idUtilisateurConnecte); List<Article>
-			 * MesEncheresListe=ArticleManager.getInstance().showMyBids(
-			 * idUtilisateurConnecte); List<Article>
-			 * MesEncheresGagneesListe=ArticleManager.getInstance().showMyWonBids(
-			 * idUtilisateurConnecte); List<Article>
-			 * MesVentesEncoursListe=ArticleManager.getInstance().showMyCurrentSales(
-			 * idUtilisateurConnecte); List<Article>
-			 * MesVentesNonDebuteesListe=ArticleManager.getInstance().showMyUnstartedSales(
-			 * idUtilisateurConnecte); List<Article>
-			 * MesVentesTermineesListe=ArticleManager.getInstance().showMyClosedSales(
-			 * idUtilisateurConnecte); //Envoyer la liste récupérée
-			 * request.setAttribute("encheresOuvertesListe", encheresOuvertesListe);
-			 * request.setAttribute("MesEncheresListe", MesEncheresListe);
-			 * request.setAttribute("MesEncheresGagneesListe", MesEncheresGagneesListe);
-			 * request.setAttribute("MesVentesEncoursListe", MesVentesEncoursListe);
-			 * request.setAttribute("MesVentesNonDebuteesListe", MesVentesNonDebuteesListe);
-			 * request.setAttribute("MesVentesTermineesListe", MesVentesTermineesListe);
-			 */	
-			
-			/*
-			 * try { List<Article> articles =
-			 * ArticleManager.getInstance().selectByMotCleAndByLibelle(motCle); for (Article
-			 * article : articles) {
-			 * System.out.println("On est dans la home servlet : "+article.toString()); }
-			 * request.setAttribute("motCle", motCle); } catch (BLLException e) {
-			 * e.printStackTrace(); }
-			 */
+
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
-		}		
+		}
 	}
+
 }

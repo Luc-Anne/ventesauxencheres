@@ -27,6 +27,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
 
 	// CRUD
+	@Override
 	public Utilisateur insert(Utilisateur u) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(INSCRIPTION, PreparedStatement.RETURN_GENERATED_KEYS);) {
@@ -57,35 +58,35 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw new DALException("Probleme insertion", e);
 		}
 	}
-	
+
 	@Override
 	public Utilisateur selectById(int id) throws DALException {
 		Utilisateur utilisateur = null;
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
 				PreparedStatement stmt = cnx.prepareStatement(GET_UTILISATEUR_BY_ID);){
-			
-			
+
+
 
 		} catch (SQLException e) {
 			throw new DALException("Probleme connexion", e);
-		} 
+		}
 		return utilisateur;
 	}
 
 	@Override
 	public List<Utilisateur> selectAll() throws DALException {
-		List<Utilisateur> listeUtilisateursExistants = new ArrayList<Utilisateur>();
+		List<Utilisateur> listeUtilisateursExistants = new ArrayList<>();
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
 				PreparedStatement stmt = cnx.prepareStatement(AFFICHER_LIST_UTILISATEURS);){
 
-			
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return listeUtilisateursExistants;
 	}
-	
+
 	@Override
 	public void update(Utilisateur userToUpdated) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
@@ -113,7 +114,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw new DALException("Probleme connexion", e);
 		}
 	}
-	
+
+	@Override
 	public void delete(int id) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(DELETE);) {
@@ -130,7 +132,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw new DALException("Probleme Suppresssion", e);
 		}
 	}
-	
+
 	// Accesseurs spécifiques
 	@Override
 	public Utilisateur selectUtilisateurConnecte(String email, String motDePasse) throws DALException {
@@ -161,6 +163,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		return null;
 	}
 
+	@Override
 	public Utilisateur selectByPseudo(String pseudo) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_PSEUDO);) {
@@ -183,7 +186,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw new DALException("Probleme insertion", e);
 		}
 	}
-	
+
 	@Override
 	public Utilisateur connexion(String email, String motDePasse) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {

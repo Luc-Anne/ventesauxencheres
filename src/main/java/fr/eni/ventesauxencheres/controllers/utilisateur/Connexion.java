@@ -22,18 +22,19 @@ import fr.eni.ventesauxencheres.controllers.util.Url;
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
 		}
 	}
-	
+
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		String email = request.getParameter("email");
 		String password = request.getParameter("motDePasse");
-		
+
 		try {
 			Utilisateur utilisateur = UtilisateurManager.getInstance().connexion(email, password);
 			if (utilisateur != null) {

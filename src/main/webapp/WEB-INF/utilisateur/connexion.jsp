@@ -9,13 +9,8 @@
 </head>
 <body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
-	<!-- 
-	<c:if test="${messageConnexion == 'Connexion réussie !'}">
-		<p class="fs-3 text-center text-success">${messageConnexion}</p>
-	</c:if>
-	 -->
-	 <main class="container">
-	 	<div class="mx-auto text-center">
+    <main class="container">
+	    <div class="mx-auto text-center">
 			<h1>Se connecter</h1>
 		</div>
 		<div class="mt-5">
@@ -29,12 +24,6 @@
 				<c:if test="${not empty echecConnexion}">
 					<div class="form-invalid-feedback">Email ou mot de passe incorrect.</div>
 				</c:if>
-				<!-- FONCTIONNALITE 1002 Se souvenir de moi 
-			<div class="mb-3 form-check">
-				<input type="checkbox" class="form-check-input" id="exampleCheck1">
-				<label class="form-check-label" for="exampleCheck1">Check me out</label>
-			</div>
-			-->
 				<button class="w-100 btn btn-primary btn-lg" type="submit">Se connecter</button>
 			</form>
 		</div>

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TableauDeBord extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/administrateur/tableaudebord.jsp");
 		if (rd != null) {
@@ -23,8 +24,9 @@ public class TableauDeBord extends HttpServlet {
 		}
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 	}
 
 }

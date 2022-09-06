@@ -9,35 +9,35 @@ import fr.eni.ventesauxencheres.dal.FactoryDAO;
 import fr.eni.ventesauxencheres.dal.RetraitDAO;
 
 public class RetraitManager {
-	
+
 	private static RetraitManager retraitManager;
 
 	private RetraitDAO retraitDAO;
-	
+
 	private RetraitManager() {
 		retraitDAO = FactoryDAO.getRetraitDAO();
 	}
-	
+
 	public static RetraitManager getInstance() {
 		if (retraitManager == null) {
 			retraitManager = new RetraitManager();
 		}
 		return retraitManager;
 	}
-	
+
 	// Règles métiers
-	
+
 	// Validation
 	public boolean isValide(Retrait retrait) {
 		return invalidCause(retrait).size() == 0 ? true : false;
 	}
-	
+
 	public List<String> invalidCause(Retrait retrait)  {
 		List<String> invalidCause = new ArrayList<>();
 		// TODO Remplir des critères de validation
 		return invalidCause;
 	}
-	
+
 	// Méthodes métier basiques
 	public Retrait save(Retrait retrait) throws BLLException {
 		try {
@@ -50,7 +50,7 @@ public class RetraitManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 	public Retrait get(int id) throws BLLException {
 		try {
 			return retraitDAO.selectById(id);
@@ -58,7 +58,7 @@ public class RetraitManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 	public List<Retrait> getAll() throws BLLException {
 		try {
 			return retraitDAO.selectAll();
@@ -66,7 +66,7 @@ public class RetraitManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 	public void modify(Retrait retrait)throws BLLException{
 		try {
 			if (this.isValide(retrait)) {
@@ -78,7 +78,7 @@ public class RetraitManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 	public void delete(int id) throws BLLException {
 		try {
 			retraitDAO.delete(id);
@@ -86,5 +86,5 @@ public class RetraitManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 }

@@ -1,85 +1,78 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!-- Afficher le message en fonction de la connexion -->
-<header>
-	<nav class="pr-5 navbar navbar-expand-sm bg-dark bg-dark-eni navbar-dark align-top justify-content-between">
-		<!-- Choix du typeDeMenuAAfficher -->
-		<c:set var="typeDeMenuAAfficher" value="TypeNonConnecte"></c:set>
-		<c:if test="${not empty sessionScope.utilisateurConnecte}">
-			<c:set var="typeDeMenuAAfficher" value="TypeConnecte"></c:set>
-		</c:if>
-		
-		<!-- Brand/logo -->
-		<a class="navbar-brand" href="${Url.HOME.getUrl()}"> 
-			<img id="imageTrocenchere" class="small-icon" src="${pageContext.request.contextPath}/img/trocenchere.jpg" alt="Accueil ENI-Encheres" height="50px" width="50"> 
-			<strong>ENI-Encheres</strong>
-		</a>
-		<c:if test="${not empty utilisateurConnecte}">
-		<li class="navbar-brand" style="list-style-type: none;">
-			<strong>${utilisateurConnecte.credit}</strong>
-			<small>credit<c:if test="${utilisateurConnecte.credit != 0}">s</c:if></small>
-		</li>
-		</c:if>
-		<ul class="navbar-nav ml-auto">
-			<!-- Dropdown for small screen -->
-			<!-- TODO small screen -->
-			<li class="nav-item dropdown d-lg-none">
-				<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false">
-					Menu
-				</a>
-				<div class="dropdown-menu dropdown-menu-end">
-					<c:if test="${typeDeMenuAAfficher != 'TypeConnecte'}">
-						<a class="nav-link" href="${Url.INSCRIPTION.getUrl()}">M'inscrire</a>
-						<a class="nav-link" href="${Url.CONNEXION.getUrl()}">Me connecter</a>
-					</c:if>
-					<c:if test="${typeDeMenuAAfficher == 'TypeConnecte' && sessionScope.utilisateurConnecte.administrateur}">
-						<a class="nav-link" href="${Url.ADMIN_TABLEAUDEBORD.getUrl()}">Administrer</a>
-						<hr class="dropdown-divider">
-					</c:if>
-					<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
-						<a class="nav-link" href="${Url.AJOUTER_ARTICLE.getUrl()}" alt="Vendre un article">Vendre un article</a>
-						<hr class="dropdown-divider">
-						<a  class="nav-link" href="#">${sessionScope.utilisateurConnecte.prenom} ${sessionScope.utilisateurConnecte.nom}</a>
-						<a  class="nav-link" href="${Url.COMPTE_PROFIL.getUrl()}">Mon Profil</a>
-						<hr class="dropdown-divider">
-						<a class="nav-link" href="${Url.DECONNEXION.getUrl()}">Me déconnecter</a>
-					</c:if>
-				</div>
+	<header>
+		<nav class="pr-5 navbar navbar-expand-sm bg-dark bg-dark-eni navbar-dark align-top justify-content-between">
+			<c:set var="typeDeMenuAAfficher" value="TypeNonConnecte"></c:set>
+			<c:if test="${not empty sessionScope.utilisateurConnecte}">
+				<c:set var="typeDeMenuAAfficher" value="TypeConnecte"></c:set>
+			</c:if>
+			<a class="navbar-brand" href="${Url.HOME.getUrl()}"> 
+				<img id="imageTrocenchere" class="small-icon" src="${pageContext.request.contextPath}/img/trocenchere.jpg" alt="Accueil ENI-Encheres" height="50px" width="50"> 
+				<strong>ENI-Encheres</strong>
+			</a>
+			<c:if test="${not empty utilisateurConnecte}">
+			<li class="navbar-brand" style="list-style-type: none;">
+				<strong>${utilisateurConnecte.credit}</strong>
+				<small>credit<c:if test="${utilisateurConnecte.credit != 0}">s</c:if></small>
 			</li>
-			<!-- Links for medium screen-->
-			<c:if test="${typeDeMenuAAfficher != 'TypeConnecte'}">
-				<li class="nav-item d-none d-lg-block">
-					<a class="nav-link" href="${Url.INSCRIPTION.getUrl()}">M'inscrire</a>
-				</li>
-				<li class="nav-item d-none d-lg-block">
-					<a class="nav-link" href="${Url.CONNEXION.getUrl()}">Me connecter</a>
-				</li>
 			</c:if>
-			<c:if test="${typeDeMenuAAfficher == 'TypeConnecte' && sessionScope.utilisateurConnecte.administrateur}">
-				<li class="nav-item d-none d-lg-block">
-					<a class="nav-link" href="${Url.ADMIN_TABLEAUDEBORD.getUrl()}">Administrer</a>
-				</li>
-			</c:if>
-			<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
-				<li class="nav-item d-none d-lg-block">
-					<a class="nav-link" href="${Url.AJOUTER_ARTICLE.getUrl()}" alt="Vendre un article">Vendre un article</a>
-				</li>
-				<li class="nav-item dropdown d-none d-lg-block ">
-					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-						${sessionScope.utilisateurConnecte.prenom} ${sessionScope.utilisateurConnecte.nom}
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item dropdown d-lg-none">
+					<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+						Menu
 					</a>
-					<ul class="dropdown-menu dropdown-menu-end">
-						<li><a class="nav-link" href="${Url.COMPTE_PROFIL.getUrl()}">Mon Profil</a></li>
-						<li><hr class="dropdown-divider"></li>
-						<li><a class="nav-link" href="${Url.DECONNEXION.getUrl()}">Me déconnecter</a></li>
-					</ul>
+					<div class="dropdown-menu dropdown-menu-end">
+						<c:if test="${typeDeMenuAAfficher != 'TypeConnecte'}">
+							<a class="nav-link" href="${Url.INSCRIPTION.getUrl()}">M'inscrire</a>
+							<a class="nav-link" href="${Url.CONNEXION.getUrl()}">Me connecter</a>
+						</c:if>
+						<c:if test="${typeDeMenuAAfficher == 'TypeConnecte' && sessionScope.utilisateurConnecte.administrateur}">
+							<a class="nav-link" href="${Url.ADMIN_TABLEAUDEBORD.getUrl()}">Administrer</a>
+							<hr class="dropdown-divider">
+						</c:if>
+						<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
+							<a class="nav-link" href="${Url.AJOUTER_ARTICLE.getUrl()}" alt="Vendre un article">Vendre un article</a>
+							<hr class="dropdown-divider">
+							<a  class="nav-link" href="#">${sessionScope.utilisateurConnecte.prenom} ${sessionScope.utilisateurConnecte.nom}</a>
+							<a  class="nav-link" href="${Url.COMPTE_PROFIL.getUrl()}">Mon Profil</a>
+							<hr class="dropdown-divider">
+							<a class="nav-link" href="${Url.DECONNEXION.getUrl()}">Me déconnecter</a>
+						</c:if>
+					</div>
 				</li>
-			</c:if>
-		</ul>
-	</nav>
-	<c:if test="${not empty messageGlobal}">
-	<div id="messageGlobal">
-		<p>${messageGlobal}</p>
-	</div>
-	</c:if>
-</header>
+				<c:if test="${typeDeMenuAAfficher != 'TypeConnecte'}">
+					<li class="nav-item d-none d-lg-block">
+						<a class="nav-link" href="${Url.INSCRIPTION.getUrl()}">M'inscrire</a>
+					</li>
+					<li class="nav-item d-none d-lg-block">
+						<a class="nav-link" href="${Url.CONNEXION.getUrl()}">Me connecter</a>
+					</li>
+				</c:if>
+				<c:if test="${typeDeMenuAAfficher == 'TypeConnecte' && sessionScope.utilisateurConnecte.administrateur}">
+					<li class="nav-item d-none d-lg-block">
+						<a class="nav-link" href="${Url.ADMIN_TABLEAUDEBORD.getUrl()}">Administrer</a>
+					</li>
+				</c:if>
+				<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
+					<li class="nav-item d-none d-lg-block">
+						<a class="nav-link" href="${Url.AJOUTER_ARTICLE.getUrl()}" alt="Vendre un article">Vendre un article</a>
+					</li>
+					<li class="nav-item dropdown d-none d-lg-block ">
+						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+							${sessionScope.utilisateurConnecte.prenom} ${sessionScope.utilisateurConnecte.nom}
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end">
+							<li><a class="nav-link" href="${Url.COMPTE_PROFIL.getUrl()}">Mon Profil</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><a class="nav-link" href="${Url.DECONNEXION.getUrl()}">Me déconnecter</a></li>
+						</ul>
+					</li>
+				</c:if>
+			</ul>
+		</nav>
+		<c:if test="${not empty messageGlobal}">
+		<div id="messageGlobal">
+			<p>${messageGlobal}</p>
+		</div>
+		</c:if>
+	</header>

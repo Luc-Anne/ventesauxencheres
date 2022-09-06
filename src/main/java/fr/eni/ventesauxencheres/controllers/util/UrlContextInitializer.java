@@ -7,10 +7,9 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class UrlContextInitializer implements ServletContextListener {
 
+	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		Url.setContext(sce.getServletContext().getContextPath());
 	}
 
-	public void contextDestroyed(ServletContextEvent sce) {}
-
-	}
+}

@@ -22,7 +22,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "FROM ENCHERES e "
 			+ "LEFT JOIN UTILISATEURS u ON e.no_utilisateur = u.no_utilisateur "
 			+ "WHERE no_article = ? ";
-	
+
 	private static final String INSERT = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?,?,?,?)";
 	private static final String UPDATE = "UPDATE ENCHERES SET date_enchere = ?, montant_enchere = ? WHERE no_utilisateur = ? AND no_article = ?";
 	private static final String UPDATE2 = "UPDATE ENCHERES SET date_enchere = ?, montant_enchere = ?, no_utilisateur = ? WHERE no_article = ?";
@@ -35,7 +35,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "LEFT JOIN ARTICLES_VENDUS a ON e.no_article = a.no_article ";
 	private static final String SELECT_BY_ID = SELECT_ALL
 			+ "WHERE e.no_article = ? ";
-	
+
 	@Override
 	public Enchere insert(Enchere enchere) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
@@ -78,11 +78,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 						rs.getInt("credit"),
 						rs.getBoolean("administrateur")
 					);
-					
+
 					return new Enchere(
 						LocalDateTime.of((rs.getDate("date_enchere").toLocalDate()), rs.getTime("date_enchere").toLocalTime()),
 						rs.getInt("montant_enchere"),
-						encherisseur				
+						encherisseur
 					);
 				}
 			} catch (SQLException e) {
@@ -100,7 +100,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 		return listes;
 	}
-	
+
+	@Override
 	public Enchere selectByArticle(Article article) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement statement = cnx.prepareStatement(SELECT_BY_OBJECT)) {
@@ -138,8 +139,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		}
 	}
 
-	
-
 	@Override
 	public void update(Enchere enchere) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
@@ -162,9 +161,10 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	@Override
 	public void delete(int id) throws DALException {
-		
+
 	}
-	
+
+	@Override
 	public void remplacerEnchere(Enchere enchere) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement statementSelectAncienEncherisseur = cnx.prepareStatement(SELECT_BY_ID);) {
@@ -235,7 +235,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 							statementUpdateNouvelEncherisseur.setBoolean(11, nouvelEncherisseur.isAdministrateur());
 							statementUpdateNouvelEncherisseur.setInt(12, nouvelEncherisseur.getNoUtilisateur());
 							statementUpdateNouvelEncherisseur.executeUpdate();
-							
+
 							// Update ENCHERE avec la nouvelle enchere
 							try (PreparedStatement statementUpdateEnchere = cnx.prepareStatement(UPDATE2);) {
 								statementUpdateEnchere.setTimestamp(1, Timestamp.valueOf(enchere.getDateEnchere()));

@@ -20,7 +20,8 @@ import fr.eni.ventesauxencheres.bo.Utilisateur;
 public class ProfilPublic extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pseudoProfilDemande = request.getPathInfo().substring(1);
 		Utilisateur utilisateur = null;

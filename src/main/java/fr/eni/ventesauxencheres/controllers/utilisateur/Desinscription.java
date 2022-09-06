@@ -19,34 +19,33 @@ import fr.eni.ventesauxencheres.controllers.util.Url;
 public class Desinscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
-			HttpSession session = request.getSession();
-			Utilisateur uc = (Utilisateur) session.getAttribute("utilisateurConnecte");
-			if (uc == null) {
-				response.sendError(403); return;
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		HttpSession session = request.getSession();
+		Utilisateur uc = (Utilisateur) session.getAttribute("utilisateurConnecte");
+		if (uc == null) {
+			response.sendError(403); return;
+		} else {
+			if (request.getParameter("confirmationSuppression") == null) {
+				session.setAttribute("messageGlobal", "Vous n'avez pas confirmé la suppresion de votre compte");
+				response.sendRedirect(Url.COMPTE_PROFIL.getUrl()); return;
 			} else {
-				if (request.getParameter("confirmationSuppression") == null) {
-					session.setAttribute("messageGlobal", "Vous n'avez pas confirmé la suppresion de votre compte");
-					response.sendRedirect(Url.COMPTE_PROFIL.getUrl()); return;
-				} else {
-					try {
-						if (ArticleManager.getInstance().hasArticle(uc.getNoUtilisateur())) {
-							session.setAttribute("messageGlobal", "Vous ne pouvez pas supprimer votre compte car vous avez des articles sur le site");
-							response.sendRedirect(Url.COMPTE_PROFIL.getUrl()); return;
-						} else {
-							UtilisateurManager.getInstance().delete(uc.getNoUtilisateur());
-							session.removeAttribute("utilisateurConnecte");
-							request.getSession().setAttribute("messageGlobal", "Votre compte a bien été supprimé");
-							response.sendRedirect(Url.HOME.getUrl());
-						}
-					} catch (BLLException e) {
-						response.sendError(500); return;
+				try {
+					if (ArticleManager.getInstance().hasArticle(uc.getNoUtilisateur())) {
+						session.setAttribute("messageGlobal", "Vous ne pouvez pas supprimer votre compte car vous avez des articles sur le site");
+						response.sendRedirect(Url.COMPTE_PROFIL.getUrl()); return;
+					} else {
+						UtilisateurManager.getInstance().delete(uc.getNoUtilisateur());
+						session.removeAttribute("utilisateurConnecte");
+						request.getSession().setAttribute("messageGlobal", "Votre compte a bien été supprimé");
+						response.sendRedirect(Url.HOME.getUrl());
 					}
+				} catch (BLLException e) {
+					response.sendError(500); return;
 				}
 			}
-
+		}
 	}
 
 }

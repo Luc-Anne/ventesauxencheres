@@ -35,7 +35,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "LEFT JOIN ENCHERES e ON a.no_article = e.no_article "
 			+ "LEFT JOIN UTILISATEURS as bidder on bidder.no_utilisateur = e.no_utilisateur ";
 
-	//INSERT INTO ARTICLES_VENDUS 
+	//INSERT INTO ARTICLES_VENDUS
 	private static final String INSERT = "INSERT INTO ARTICLES "
 						+ "(nom_article,"	//1
 						+ "description, " //2
@@ -45,7 +45,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 						+ "no_utilisateur, " //6
 						+ "no_categorie) "//7
 						+ " VALUES (?,?,?,?,?,?,?);";
-	
+
 	private static final String UPDATE = "UPDATE ARTICLES SET "
 						+ "nom_article = ?, "	//1
 						+ "description = ?, " //2
@@ -56,40 +56,13 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 						+ "no_categorie = ?, "//7
 						+ "etat_vente = ? "//8
 						+ "WHERE no_article = ? "; //9
-	
+
 	private static final String SELECT_BY_ID = SELECT_ALL
 			+ "WHERE a.no_article = ? ";
-	
+
 	private static final String SELECT_BY_ID_UTILISATEUR = SELECT_ALL
 			+ "WHERE a.no_utilisateur = ? ";
-	
-	private static final String SELECT_OPENED_BIDS = SELECT_ALL
-			+ "WHERE a.etat_vente='EC' AND a.no_utilisateur!=?";
-	//à exclure no utilisateur = id profil connecte mode vendeur, profil tom vendeur
-		
-	private static final String SELECT_MY_BIDS = SELECT_ALL
-			+ "WHERE  a.etat_vente='EC' AND e.no_utilisateur=?";
-	//no utilisateur = id profil connecte. Temporairement restriction sur samuel, profil encherisseur connecte
-	
-	private static final String SELECT_MY_WON_BIDS = SELECT_ALL
-			+ "WHERE (a.etat_vente='VD' OR a.etat_vente='RT') AND e.no_utilisateur=?";
-	//à exclure no utilisateur = id profil connecte	mode encherriseur.Temporairement restriction sur samuel, profil encherisseur connecte
-	
-	private static final String SELECT_MY_CURRENT_SALES = SELECT_ALL
-			+ "WHERE a.etat_vente='EC' AND a.no_utilisateur=?";
-	//à exclure no utilisateur = id profil connecte mode vendeur, profil tom vendeur
-	
-	private static final String SELECT_MY_UNSTARTED_SALES = SELECT_ALL
-			+ "WHERE a.etat_vente='CR' AND a.no_utilisateur=?";
-	//à exclure no utilisateur = id profil connecte mode vendeur, profil tom vendeur	
-	private static final String SELECT_MY_CLOSED_SALES = SELECT_ALL
-			+ "WHERE (a.etat_vente='VD' OR a.etat_vente='RT') AND a.no_utilisateur=?";
-	//à exclure no utilisateur = id profil connecte mode vendeur, profil tom vendeur	
-	
-	// récupérer un artciel via son nom 
-	private static final String FIND_BY_NOM_ARTICLE_AND_ALL_CATEGORIE = SELECT_ALL 
-			+"WHERE A.nom_article like ?";
-	
+
 	@Override
 	public Article insert(Article article) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
@@ -101,7 +74,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			stmt.setInt(5, article.getMiseAPrix());
 			stmt.setInt(6, article.getVendeur().getNoUtilisateur());
 			stmt.setInt(7, article.getCategorieArticle().getNoCategorie());
-			stmt.executeUpdate();					
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DALException("Erreur insertion ", e);
 		}
@@ -125,9 +98,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			throw new DALException("Erreur Connexion à la base de données", e);
 		}
 	}
-	
+
+	@Override
 	public List<Article> selectByIdUtilisateur(int idUtilisateur) throws DALException{
-		List<Article> articleList=new ArrayList<Article>();
+		List<Article> articleList=new ArrayList<>();
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();){
 			try (PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_ID_UTILISATEUR);) {
 				stmt.setInt(1, idUtilisateur);
@@ -144,113 +118,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			throw new DALException("Probleme appel à la dal", e);
 		}
 	}
-	
-	// Methodes pour afficher les listes d'articles dans le home
-		public List<Article> selectOpenedBids(int idUtilisateurConnecte) throws DALException{
-			List<Article> articleList=new ArrayList<Article>();
-			try (Connection cnx = ConnectionProvider.getConnection_VAE();){
-				PreparedStatement stmt = cnx.prepareStatement(SELECT_OPENED_BIDS);
-				stmt.setInt(1, idUtilisateurConnecte);
-				ResultSet rs=stmt.executeQuery();
-					while(rs.next()) {
-						Article art = createInstanceArticleFromResultSet(rs);
-						articleList.add(art);
-					}
-					return articleList;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DALException("Probleme appel à la dal", e);
-			}
-		}
-		
-		public List<Article> selectMyBids(int idUtilisateurConnecte) throws DALException{
-			List<Article> articleList=new ArrayList<Article>();
-			try (Connection cnx = ConnectionProvider.getConnection_VAE();){
-					PreparedStatement stmt = cnx.prepareStatement(SELECT_MY_BIDS);
-					stmt.setInt(1, idUtilisateurConnecte);
-					ResultSet rs=stmt.executeQuery();
-						while(rs.next()) {
-							Article art = createInstanceArticleFromResultSet(rs);
-							articleList.add(art);
-						}
-						return articleList;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DALException("Probleme appel à la dal", e);
-			}
-		}
-		
-		public List<Article> selectMyWonBids(int idUtilisateurConnecte) throws DALException{
-			List<Article> articleList=new ArrayList<Article>();
-			try (Connection cnx = ConnectionProvider.getConnection_VAE();){
-				PreparedStatement stmt = cnx.prepareStatement(SELECT_MY_WON_BIDS);
-				stmt.setInt(1, idUtilisateurConnecte);
-				ResultSet rs=stmt.executeQuery();
-					while(rs.next()) {
-						Article art = createInstanceArticleFromResultSet(rs);
-						articleList.add(art);
-					}
-					return articleList;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DALException("Probleme appel à la dal", e);
-			}
-		}
-		
-		public List<Article> selectMyCurrentSales(int idUtilisateurConnecte) throws DALException{
-			List<Article> articleList=new ArrayList<Article>();
-			try (Connection cnx = ConnectionProvider.getConnection_VAE();){
-					PreparedStatement stmt = cnx.prepareStatement(SELECT_MY_CURRENT_SALES);
-					stmt.setInt(1, idUtilisateurConnecte);
-					ResultSet rs=stmt.executeQuery();
-						while(rs.next()) {
-							Article art = createInstanceArticleFromResultSet(rs);
-							articleList.add(art);
-						}
-						return articleList;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DALException("Probleme appel à la dal", e);
-			}
-		}
-		
-		public List<Article> selectUnstartedSales(int idUtilisateurConnecte) throws DALException{
-			List<Article> articleList=new ArrayList<Article>();
-			try (Connection cnx = ConnectionProvider.getConnection_VAE();){
-				PreparedStatement stmt = cnx.prepareStatement(SELECT_MY_UNSTARTED_SALES);
-				stmt.setInt(1, idUtilisateurConnecte);
-				ResultSet rs=stmt.executeQuery();
-					while(rs.next()) {
-						Article art = createInstanceArticleFromResultSet(rs);
-						articleList.add(art);
-					}
-					return articleList;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DALException("Probleme appel à la dal", e);
-			}
-		}
-		
-		public List<Article> selectClosedSales(int idUtilisateurConnecte) throws DALException{
-			List<Article> articleList=new ArrayList<Article>();
-			try (Connection cnx = ConnectionProvider.getConnection_VAE();){
-				PreparedStatement stmt = cnx.prepareStatement(SELECT_MY_CLOSED_SALES);
-				stmt.setInt(1, idUtilisateurConnecte);
-				ResultSet rs=stmt.executeQuery();
-					while(rs.next()) {
-						Article art = createInstanceArticleFromResultSet(rs);
-						articleList.add(art);
-					}
-					return articleList;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DALException("Probleme appel à la dal", e);
-			}
-		}
-	
+
 	@Override
 	public List<Article> selectAll() throws DALException {
-		List<Article> articleList=new ArrayList<Article>();
+		List<Article> articleList=new ArrayList<>();
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
 				Statement stmt = cnx.createStatement();
 				ResultSet rs=stmt.executeQuery(SELECT_ALL);
@@ -265,7 +136,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		}
 		return articleList;
 	}
-	
+
 	@Override
 	public void update(Article article) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
@@ -292,7 +163,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	@Override
-	public void delete(int id) throws DALException {		
+	public void delete(int id) throws DALException {
 	}
 
 	private Article createInstanceArticleFromResultSet(ResultSet rs) throws SQLException {
@@ -310,12 +181,12 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			rs.getInt("credit"),
 			rs.getBoolean("administrateur")
 		);
-		
+
 		Categorie categorie = new Categorie(
 			rs.getInt("no_categorie"),
 			rs.getString("libelle")
 		);
-		
+
 		Utilisateur encherisseur = new Utilisateur (
 			rs.getInt("bidderNo"),
 			rs.getString("bidderPseudo"),
@@ -330,16 +201,16 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			rs.getInt("bidderCredit"),
 			rs.getBoolean("bidderAd")
 		);
-		
+
 		Enchere enchere = null;
 		if(rs.getDate("date_enchere")!=null) {
 			enchere = new Enchere(
 					LocalDateTime.of((rs.getDate("date_enchere").toLocalDate()), rs.getTime("date_enchere").toLocalTime()),
 					rs.getInt("montant_enchere"),
 					encherisseur
-				);			
+				);
 			}
-		
+
 		Article article = new Article (
 			rs.getInt("no_article"),
 			rs.getString("nom_article"),
@@ -353,7 +224,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			vendeur,
 			enchere
 		);
-		
+
 		Retrait retrait = null;
 		if (rs.getString("Rrue") != null) {
 			retrait = new Retrait (
@@ -363,34 +234,12 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				article
 			);
 		}
-		
+
 		article.setRetrait(retrait);
-		
+
 		return article;
 	}
-	
-	public List<Article> selectByMotCleAndByLibelle(String motCle)throws DALException {
-		List<Article> articleList=new ArrayList<Article>();
-		try (Connection cnx = ConnectionProvider.getConnection_VAE();){
-			
-			PreparedStatement stmt = cnx.prepareStatement(FIND_BY_NOM_ARTICLE_AND_ALL_CATEGORIE);
-			stmt.setString(1, "%" + motCle + "%");
-			
-			ResultSet rs=stmt.executeQuery();
-				while(rs.next()) {
-					Article art = createInstanceArticleFromResultSet(rs);
-					articleList.add(art);
-					System.out.println("On est rentré dans le RS");				
-				}
-				System.out.println("Voici la liste des articles : "+articleList);
-				return articleList;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DALException("Probleme appel à la dal", e);
-		}
-	}
 
-	//Non fonctionelle en attente d'amélioration
 	@Override
 	public List<Article> selectListHome(String typeQuery, int idUtilisateurConnecte, String motCle, String libelle) throws DALException {
 		String query = "";
@@ -401,60 +250,61 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 					+ " AND " + "a.nom_article like ? "
 					+ " AND c.libelle like ? ";
 		} else if ("MyBids".equals(typeQuery)) {
-				query = SELECT_ALL
-						+ " WHERE "
-						+ " a.etat_vente='EC' AND e.no_utilisateur=? " //String  SELECT_MY_BIDS_STRING= "a.etat_vente='EC' AND e.no_utilisateur=?"
-						+ " AND " + "a.nom_article like ? "
-						+ " AND c.libelle like ? ";
-		}else if ("MyWonBids".equals(typeQuery)) {
+			query = SELECT_ALL
+					+ " WHERE "
+					+ " a.etat_vente='EC' AND e.no_utilisateur=? " //String  SELECT_MY_BIDS_STRING= "a.etat_vente='EC' AND e.no_utilisateur=?"
+					+ " AND " + "a.nom_article like ? "
+					+ " AND c.libelle like ? ";
+		} else if ("MyWonBids".equals(typeQuery)) {
 			query = SELECT_ALL
 					+ " WHERE "
 					+ " (a.etat_vente='VD' OR a.etat_vente='RT') AND e.no_utilisateur=? " //String SELECT_MY_WON_BIDS_STRING="(a.etat_vente='VD' OR a.etat_vente='RT') AND e.no_utilisateur=?"
 					+ " AND " + "a.nom_article like ? "
 					+ " AND c.libelle like ? ";
-	}else if ("MyCurrentSales".equals(typeQuery)) {
-		query = SELECT_ALL
-				+ " WHERE "
-				+ " a.etat_vente='EC' AND a.no_utilisateur=? " // String SELECT_MY_CURRENT_SALES_STRING="a.etat_vente='EC' AND a.no_utilisateur=?"
-				+ " AND " + "a.nom_article like ? "
-				+ " AND c.libelle like ? ";
-	}else if ("MyUnstartedSales".equals(typeQuery)) {
-		query = SELECT_ALL
-				+ " WHERE "
-				+ " a.etat_vente='CR' AND a.no_utilisateur=? " //String SELECT_MY_UNSTARTED_SALES_STRING="a.etat_vente='CR' AND a.no_utilisateur=?"
-				+ " AND " + "a.nom_article like ? "
-				+ " AND c.libelle like ? ";
-	}else if ("MyClosedSales".equals(typeQuery)) {
-		query = SELECT_ALL
-				+ " WHERE "
-				+ " (a.etat_vente='VD' OR a.etat_vente='RT') AND a.no_utilisateur=? " //String SELECT_MY_CLOSED_SALES_STRING ="(a.etat_vente='VD' OR a.etat_vente='RT') AND a.no_utilisateur=?"
-				+ " AND " + "a.nom_article like ? "
-				+ " AND c.libelle like ? ";
-	}
-		List<Article> articleList=new ArrayList<Article>();
-		try (Connection cnx = ConnectionProvider.getConnection_VAE();){			
+		} else if ("MyCurrentSales".equals(typeQuery)) {
+			query = SELECT_ALL
+					+ " WHERE "
+					+ " a.etat_vente='EC' AND a.no_utilisateur=? " // String SELECT_MY_CURRENT_SALES_STRING="a.etat_vente='EC' AND a.no_utilisateur=?"
+					+ " AND " + "a.nom_article like ? "
+					+ " AND c.libelle like ? ";
+		} else if ("MyUnstartedSales".equals(typeQuery)) {
+			query = SELECT_ALL
+					+ " WHERE "
+					+ " a.etat_vente='CR' AND a.no_utilisateur=? " //String SELECT_MY_UNSTARTED_SALES_STRING="a.etat_vente='CR' AND a.no_utilisateur=?"
+					+ " AND " + "a.nom_article like ? "
+					+ " AND c.libelle like ? ";
+		} else if ("MyClosedSales".equals(typeQuery)) {
+			query = SELECT_ALL
+					+ " WHERE "
+					+ " (a.etat_vente='VD' OR a.etat_vente='RT') AND a.no_utilisateur=? " //String SELECT_MY_CLOSED_SALES_STRING ="(a.etat_vente='VD' OR a.etat_vente='RT') AND a.no_utilisateur=?"
+					+ " AND " + "a.nom_article like ? "
+					+ " AND c.libelle like ? ";
+		}
+		List<Article> articleList=new ArrayList<>();
+		try (Connection cnx = ConnectionProvider.getConnection_VAE();){
 			ResultSet rs=null;
 			if (query.equals("")) {
 				query = SELECT_ALL + " WHERE " + "a.nom_article like ? " + " AND c.libelle like ? ";
 				PreparedStatement stmt = cnx.prepareStatement(query);
-				stmt.setString(1, "%" + motCle + "%");		
+				stmt.setString(1, "%" + motCle + "%");
 				stmt.setString(2, "%" + libelle+ "%");
 				rs=stmt.executeQuery();
 			} else {
 				PreparedStatement stmt = cnx.prepareStatement(query);
 				stmt.setInt(1,idUtilisateurConnecte);
-				stmt.setString(2, "%" + motCle + "%");		
+				stmt.setString(2, "%" + motCle + "%");
 				stmt.setString(3, "%" + libelle+ "%");
 				rs=stmt.executeQuery();
 			}
-				while(rs.next()) {
-					Article art = createInstanceArticleFromResultSet(rs);
-					articleList.add(art);
-				}
-				return articleList;
+			while(rs.next()) {
+				Article art = createInstanceArticleFromResultSet(rs);
+				articleList.add(art);
+			}
+			return articleList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("Probleme appel à la dal", e);
-		}	
+		}
 	}
+
 }

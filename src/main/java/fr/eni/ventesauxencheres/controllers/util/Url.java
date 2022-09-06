@@ -21,12 +21,12 @@ public enum Url {
 	// Business
 	PROFIL_PUBLIC("/profil/"), //Ajouter un pseudo juste à la suite
 	AJOUTER_ARTICLE("/encheres/ajouter"),
-	DETAILS_ARTICLE("/encheres"); // le paramètre no_article est nécessaire pour la Servlet	
+	DETAILS_ARTICLE("/encheres"); // le paramètre no_article est nécessaire pour la Servlet
 
 	private String url;
 
 	Url(String url) {
-		this.url = url; 
+		this.url = url;
 	}
 
 	public static void setContext(String context) {

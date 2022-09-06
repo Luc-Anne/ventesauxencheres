@@ -11,19 +11,19 @@ public class FactoryDAO {
 	public static ArticleDAO getArticleDAO() {
 		return new ArticleDAOJdbcImpl();
 	}
-	
+
 	public static CategorieDAO getCategorieDAO() {
 		return new CategorieDAOJdbcImpl();
 	}
-	
+
 	public static EnchereDAO getEnchereDAO() {
 		return new EnchereDAOJdbcImpl();
 	}
-	
+
 	public static RetraitDAO getRetraitDAO() {
 		return new RetraitDAOJdbcImpl();
 	}
-	
+
 	public static UtilisateurDAO getUtilisateurDAO() {
 		return new UtilisateurDAOJdbcImpl();
 	}

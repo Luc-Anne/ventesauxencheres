@@ -1,6 +1,7 @@
 package fr.eni.ventesauxencheres.controllers.administrateur;
 
 import java.io.IOException;
+
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -20,7 +21,7 @@ import fr.eni.ventesauxencheres.controllers.util.Url;
  */
 @WebFilter(
 		dispatcherTypes = {
-			DispatcherType.REQUEST, 
+			DispatcherType.REQUEST,
 			DispatcherType.FORWARD
 		}
 		, urlPatterns = {
@@ -31,21 +32,22 @@ import fr.eni.ventesauxencheres.controllers.util.Url;
 public class AdminRestrictedFilter extends HttpFilter implements Filter {
 	private static final long serialVersionUID = -430253391637810057L;
 
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		//Faire appel à la méthode session de l'objet de type HttpServletRequest
 		//transformer l objet ServletRequest request en type HttpServletRequest
 		HttpServletRequest httpRequest=(HttpServletRequest) request;
 		Object utilisateur = httpRequest.getSession().getAttribute("utilisateurConnecte");
-		
+
 		if (utilisateur == null || !((Utilisateur)utilisateur).isAdministrateur()) {
 			// Ici vue redirigee vers la vue home, mais l'url avec profil est conservé
-			// httpRequest.getRequestDispatcher("/home").forward(httpRequest, response); 
+			// httpRequest.getRequestDispatcher("/home").forward(httpRequest, response);
 			// Privilegier une redirection vers la servlet home
 			HttpServletResponse httpResponse=(HttpServletResponse) response;
 			httpResponse.sendRedirect(Url.HOME.getUrl());
 		}else {
 			chain.doFilter(request, response);
-		}			
+		}
 	}
 
 }

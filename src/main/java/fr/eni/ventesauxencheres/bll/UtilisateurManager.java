@@ -9,33 +9,33 @@ import fr.eni.ventesauxencheres.dal.FactoryDAO;
 import fr.eni.ventesauxencheres.dal.UtilisateurDAO;
 
 public class UtilisateurManager {
-	
+
 	private static UtilisateurManager utilisateurManager;
 
 	private UtilisateurDAO utilisateurDAO;
-	
+
 	private UtilisateurManager() {
 		utilisateurDAO = FactoryDAO.getUtilisateurDAO();
 	}
-	
+
 	public static UtilisateurManager getInstance() {
 		if (utilisateurManager == null) {
 			utilisateurManager = new UtilisateurManager();
 		}
 		return utilisateurManager;
 	}
-	
+
 	// Règles métiers
 	public static final int DEFAULT_CREDIT = 100;
-	
+
 	// Validation
 	public boolean isValide(Utilisateur utilisateur) {
 		return invalidCause(utilisateur).size() == 0 ? true : false;
 	}
-	
+
 	public List<String> invalidCause(Utilisateur utilisateur)  {
 		List<String> invalidCause = new ArrayList<>();
-		
+
 		// pseudo
 		if (utilisateur.getPseudo() == null ||
 			utilisateur.getPseudo() == "") {
@@ -107,7 +107,7 @@ public class UtilisateurManager {
 		} else {
 			if (utilisateur.getVille().length() > 30) {
 				invalidCause.add("utilisateur.ville_tropLong");
-			}			
+			}
 		}
 		// motDePasse
 		if (utilisateur.getMotDePasse() == null ||
@@ -122,17 +122,17 @@ public class UtilisateurManager {
 				invalidCause.add("utilisateur.motDePasse_faible");
 			}
 		}
-		
+
 		// credit
 		if (utilisateur.getCredit() < 0) {
 			invalidCause.add("utilisateur.credit_negatif");
 		}
 		// administrateur
 		// Aucun test car boolean
-		
+
 		return invalidCause;
 	}
-	
+
 	// Méthodes métier basiques
 	public Utilisateur save(Utilisateur utilisateur) throws BLLException {
 		try {
@@ -145,7 +145,7 @@ public class UtilisateurManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 	public Utilisateur get(int id) throws BLLException {
 		try {
 			return utilisateurDAO.selectById(id);
@@ -153,7 +153,7 @@ public class UtilisateurManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 	public List<Utilisateur> getAll() throws BLLException {
 		try {
 			return utilisateurDAO.selectAll();
@@ -161,7 +161,7 @@ public class UtilisateurManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 	public void modify(Utilisateur utilisateur)throws BLLException{
 		try {
 			if (this.isValide(utilisateur)) {
@@ -173,7 +173,7 @@ public class UtilisateurManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 	public void delete(int id) throws BLLException {
 		try {
 			utilisateurDAO.delete(id);
@@ -198,7 +198,5 @@ public class UtilisateurManager {
 			throw new BLLException("ERREUR MANAGER", e);
 		}
 	}
-
-	
 
 }

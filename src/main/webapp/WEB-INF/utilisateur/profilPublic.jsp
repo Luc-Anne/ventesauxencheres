@@ -9,7 +9,6 @@
 		<title>${initParam.debutTitre} Profil de ${utilisateur.pseudo}</title>
 	</c:if>
 </head>
-
 <body class="bg-light">
 <body>
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>

@@ -6,19 +6,20 @@ public class BLLException extends Exception {
     public BLLException() {
         super();
     }
-    
+
     public BLLException(String message) {
         super(message);
     }
-    
+
     public BLLException(String message, Throwable exception) {
         super(message, exception);
     }
-    
+
     @Override
     public String getMessage() {
         StringBuilder message = new StringBuilder("Erreur Couche BLL - ");
         message.append(super.getMessage());
-        return message.toString();        
+        return message.toString();
     }
+
 }

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="fr.eni.ventesauxencheres.controllers.util.Url" %>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 	<link href="${Url.CSS_BOOTSTRAP.getUrl()}" rel="stylesheet">
 	<link href="${Url.CSS_STYLE.getUrl()}" type="text/css" rel="stylesheet">
 	<script src="${Url.CSS_BOOTSTRAP_BUNDLE.getUrl()}" type="text/javascript"></script>

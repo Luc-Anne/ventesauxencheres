@@ -13,13 +13,12 @@ import fr.eni.ventesauxencheres.dal.RetraitDAO;
 public class RetraitDAOJdbcImpl implements RetraitDAO {
 
 	private static final String  INSERT_LIEU ="INSERT INTO dbo.RETRAITS (no_article,rue, code_postal , ville) VALUES (?,?,?,?)";
-	
+
 	@Override
 	public Retrait insert(Retrait u) throws DALException {
 		Retrait lieuDeRetrait = new Retrait();
-		
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
-				PreparedStatement stmt = cnx.prepareStatement(INSERT_LIEU);){
+			PreparedStatement stmt = cnx.prepareStatement(INSERT_LIEU);){
 			stmt.setInt(1, lieuDeRetrait.getId());
 			stmt.setString(2, u.getRue());
 			stmt.setString(3, u.getCodePostal());
@@ -43,12 +42,12 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 
 	@Override
 	public void update(Retrait userToUpdated) throws DALException {
-		
+
 	}
 
 	@Override
 	public void delete(int id) throws DALException {
-		
+
 	}
 
 }

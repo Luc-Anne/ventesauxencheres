@@ -1,6 +1,7 @@
 package fr.eni.ventesauxencheres.controllers.filters;
 
 import java.io.IOException;
+
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -16,12 +17,8 @@ import javax.servlet.http.HttpSession;
  * Servlet Filter implementation class SecurityFilter
  */
 @WebFilter(
-	dispatcherTypes = {
-		DispatcherType.FORWARD
-	}
-	, urlPatterns = {
-		"/*"
-	}
+	dispatcherTypes = {DispatcherType.FORWARD},
+	urlPatterns = {"/*"}
 )
 /**
  *  Récupérer un attribut de communication globale si un message a été émis dans une servlet
@@ -31,14 +28,15 @@ import javax.servlet.http.HttpSession;
 public class MessageGlobalFilter extends HttpFilter implements Filter {
 	private static final long serialVersionUID = 5641058120626900022L;
 
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest)request;
 		HttpSession session = httpRequest.getSession();
-		
+
 		request.setAttribute("messageGlobal", session.getAttribute("messageGlobal"));
 		session.removeAttribute("messageGlobal");
 
 		chain.doFilter(request, response);
 	}
-	
+
 }

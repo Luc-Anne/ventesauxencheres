@@ -14,9 +14,10 @@ import fr.eni.ventesauxencheres.dal.ConnectionProvider;
 public class ArticleEtatVenteJdbcListener implements ServletContextListener {
 
 	Thread taskEtatVenteJdbc;
-	
+
+	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		
+
         taskEtatVenteJdbc = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -30,9 +31,9 @@ public class ArticleEtatVenteJdbcListener implements ServletContextListener {
 					System.out.println("Interruption de taskEtatVenteJdbc");
 				}
 			}
-			
+
 			private static final String updateArticle = "{ call updateArticle() }";
-			
+
 			private void executerProcedureStockee() {
 				try (Connection cnx = ConnectionProvider.getConnection_VAE()) {
 					try (CallableStatement statement = cnx.prepareCall(updateArticle)) {
@@ -50,8 +51,9 @@ public class ArticleEtatVenteJdbcListener implements ServletContextListener {
 
         taskEtatVenteJdbc.start();
     }
-	
-	public void contextDestroyed(ServletContextEvent sce) { 
+
+	@Override
+	public void contextDestroyed(ServletContextEvent sce) {
         if(taskEtatVenteJdbc != null && taskEtatVenteJdbc.isAlive()) {
         	taskEtatVenteJdbc.interrupt();
         }

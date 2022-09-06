@@ -21,18 +21,20 @@ import fr.eni.ventesauxencheres.controllers.util.Errors;
 @WebServlet("/moncompte/profil")
 public class Profil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp");
 		if (rd != null) {
 		rd.forward(request, response);
 		}
 	}
-	
+
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Errors erreurs = new Errors();
 		request.setAttribute("erreurs", erreurs);
-		
+
 		String pseudoAModifier = request.getParameter("pseudo");
 		String nomAModifier = request.getParameter("nom");
 		String prenomAModifier = request.getParameter("prenom");
@@ -42,11 +44,11 @@ public class Profil extends HttpServlet {
 		String CpAModifier = request.getParameter("code_postal");
 		String villeAModifier = request.getParameter("ville");
 		String mdpAModifier = request.getParameter("password");
-		//Récupérer les informations de la session
+		// Récupérer les informations de la session
 		HttpSession session = request.getSession();
-		//Creer un utilisateur avec les attributs de l'utilisateur connecté à la session à l'aide de l'objet utilisateurConnecte
+		// Créer un utilisateur avec les attributs de l'utilisateur connecté à la session à l'aide de l'objet utilisateurConnecte
 		Utilisateur userSession=(Utilisateur) session.getAttribute("utilisateurConnecte");
-		//Créer une nouvelle instance d'utilisateur, surlequel appliquer les modifications
+		// Créer une nouvelle instance d'utilisateur, sur lequel appliquer les modifications
 		Utilisateur user=new Utilisateur(
 				userSession.getNoUtilisateur(),
 				pseudoAModifier,nomAModifier,
@@ -60,6 +62,8 @@ public class Profil extends HttpServlet {
 				userSession.getCredit(),
 				userSession.isAdministrateur()
 		);
+
+		// Appliquer la modification est remonter les éventuelles erreurs SQL d'unicité
 		try {
 			UtilisateurManager.getInstance().modify(user);
 			session.setAttribute("utilisateurConnecte", user);
@@ -79,10 +83,11 @@ public class Profil extends HttpServlet {
 			}
 			e.printStackTrace();
 		}
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profil.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
 		}
 	}
-	
+
 }

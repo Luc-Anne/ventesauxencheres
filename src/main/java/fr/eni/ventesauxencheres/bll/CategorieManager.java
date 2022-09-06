@@ -9,35 +9,35 @@ import fr.eni.ventesauxencheres.dal.DALException;
 import fr.eni.ventesauxencheres.dal.FactoryDAO;
 
 public class CategorieManager {
-	
+
 	private static CategorieManager categorieManager;
 
 	private CategorieDAO categorieDAO;
-	
+
 	private CategorieManager() {
 		categorieDAO = FactoryDAO.getCategorieDAO();
 	}
-	
+
 	public static CategorieManager getInstance() {
 		if (categorieManager == null) {
 			categorieManager = new CategorieManager();
 		}
 		return categorieManager;
 	}
-	
+
 	// Règles métiers
-	
+
 	// Validation
 	public boolean isValide(Categorie categorie) {
 		return invalidCause(categorie).size() == 0 ? true : false;
 	}
-	
+
 	public List<String> invalidCause(Categorie categorie)  {
 		List<String> invalidCause = new ArrayList<>();
 		// TODO Remplir des critères de validation
 		return invalidCause;
 	}
-	
+
 	// Méthodes métier basiques
 	public Categorie save(Categorie u) throws BLLException {
 		try {
@@ -50,7 +50,7 @@ public class CategorieManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 	public Categorie getById(int id) throws BLLException {
 		try {
 			return categorieDAO.selectById(id);
@@ -58,7 +58,7 @@ public class CategorieManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 	public List<Categorie> getAll() throws BLLException {
 		try {
 			return categorieDAO.selectAll();
@@ -66,7 +66,7 @@ public class CategorieManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 	public void modify(Categorie categorie)throws BLLException{
 		try {
 			if (this.isValide(categorie)) {
@@ -78,7 +78,7 @@ public class CategorieManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 	public void delete(int id) throws BLLException {
 		try {
 			categorieDAO.delete(id);
@@ -86,5 +86,5 @@ public class CategorieManager {
 			throw new BLLException("", e);
 		}
 	}
-	
+
 }

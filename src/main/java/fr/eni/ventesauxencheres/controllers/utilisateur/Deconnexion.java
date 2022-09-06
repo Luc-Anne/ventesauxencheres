@@ -14,7 +14,8 @@ import fr.eni.ventesauxencheres.controllers.util.Url;
 @WebServlet("/moncompte/deconnexion")
 public class Deconnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().removeAttribute("utilisateurConnecte");
 		request.getSession().setAttribute("messageGlobal", "Vous avez été déconnecté");

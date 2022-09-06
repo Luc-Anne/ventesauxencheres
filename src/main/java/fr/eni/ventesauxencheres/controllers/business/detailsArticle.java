@@ -24,14 +24,15 @@ import fr.eni.ventesauxencheres.controllers.util.Url;
 @WebServlet("/encheres")
 public class detailsArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Bloquer la page à un utilisateur non connecté
 		if (request.getSession().getAttribute("utilisateurConnecte") == null) {
 			response.sendError(403); return;
 		}
 		Utilisateur utilisateurConnecte = (Utilisateur)request.getSession().getAttribute("utilisateurConnecte");
-		
+
 		// Récupération des paramètres
 		int no_article = 0;
 		try {
@@ -40,7 +41,7 @@ public class detailsArticle extends HttpServlet {
 			e.printStackTrace();
 			response.sendError(500); return;
 		}
-		
+
 		// Récupération et traitement des données
 		Article article = null;
 		try {
@@ -49,7 +50,7 @@ public class detailsArticle extends HttpServlet {
 			e.printStackTrace();
 			response.sendError(404); return;
 		}
-		
+
 		Enchere enchere = article.getEnchere();
 		Utilisateur encherisseur = null;
 		if (enchere != null) {
@@ -57,9 +58,7 @@ public class detailsArticle extends HttpServlet {
 		}
 
 		Utilisateur vendeur = article.getVendeur();
-		
-		///////////////////////////////////////////////////////////////////////
-		
+
 		// Bloqué l'accès à la page suivant l'état de la vente et la relation entre l'article et l'utilisateur connecté
 		String typeAffichage = "";
 		if (
@@ -103,16 +102,17 @@ public class detailsArticle extends HttpServlet {
 		if (rd != null) {
 			rd.forward(request, response);
 		}
-		
+
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Bloquer la page à un utilisateur non connecté
 		if (request.getSession().getAttribute("utilisateurConnecte") == null) {
 			response.sendError(403); return;
 		}
 		Utilisateur utilisateurConnecte = (Utilisateur)request.getSession().getAttribute("utilisateurConnecte");
-		
+
 		// Récupération des paramètres
 		int no_article = 0;
 		try {
@@ -132,10 +132,10 @@ public class detailsArticle extends HttpServlet {
 		}
 
 		Enchere enchere = article.getEnchere();
-		
+
 		Utilisateur vendeur = article.getVendeur();
 
-		///////////////////////////////////////////////////////////////////////
+		// Faire une action suivant l'état de la vente et la relation entre l'article et l'utilisateur connecté
 		if (request.getParameter("action") != null && "encherir".equals(request.getParameter("action")) &&
 			(article.getEtatVente().equals("EC") && !utilisateurConnecte.equals(vendeur))
 		){
@@ -146,12 +146,12 @@ public class detailsArticle extends HttpServlet {
 			} catch (NumberFormatException e) {
 				response.sendError(500); return;
 			}
-			
+
 			if (utilisateurConnecte.getCredit() < mise) {
 				request.getSession().setAttribute("messageGlobal", "Vous n'avez pas assez de crédit pour faire cette enchère");
 				this.doGet(request, response); return;
 			}
-			
+
 			try {
 				if(utilisateurConnecte.getCredit() < mise) {
 					request.getSession().setAttribute("messageGlobal", "Vous ne disposez pas des crédits suffisants pour enchérir de " + mise + " crédits");
@@ -182,7 +182,7 @@ public class detailsArticle extends HttpServlet {
 				e.printStackTrace();
 				response.sendError(500); return;
 			}
-			
+
 		} else if (request.getParameter("action") != null && "retrait".equals(request.getParameter("action")) &&
 			(article.getEtatVente().equals("VD") && utilisateurConnecte.equals(vendeur))
 		){

@@ -1,6 +1,7 @@
 package fr.eni.ventesauxencheres.controllers.filters;
 
 import java.io.IOException;
+
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -18,15 +19,11 @@ import javax.servlet.http.HttpSession;
  * Servlet Filter implementation class SecurityFilter
  */
 @WebFilter(
-	dispatcherTypes = {
-		DispatcherType.FORWARD
-	}
-	, urlPatterns = {
-		"/*"
-	}
+	dispatcherTypes = {DispatcherType.FORWARD},
+	urlPatterns = {"/*"}
 )
 /**
- * 
+ *
  * Gestion de l'acceptation des cookies par l'utilisateur par l'enregistrement de son choix
  * dans le contexte de session
  *
@@ -34,12 +31,13 @@ import javax.servlet.http.HttpSession;
 public class CookieAcceptationFilter extends HttpFilter implements Filter {
 	private static final long serialVersionUID = 5641058120626900022L;
 
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// Instanciation des interfaces pratiques
 		HttpServletRequest httpRequest = (HttpServletRequest)request;
 		HttpServletResponse httpResponse = (HttpServletResponse)response;
 		HttpSession session = httpRequest.getSession();
-		
+
 		// Si l'information manque dans la session
 		if ((session.getAttribute("cookieAccepte") == null)) {
 			if (request.getParameter("acceptationCookie") != null) {
@@ -63,7 +61,7 @@ public class CookieAcceptationFilter extends HttpFilter implements Filter {
 
 		chain.doFilter(request, response);
 	}
-	
+
 	private void cookieAccepted(HttpServletResponse httpResponse, HttpSession session) {
 		// Créer un cookie, l'envoyer dans la réponse et enregistrer l'information dans la session
 		Cookie acceptationCookie = new Cookie("acceptationCookie", "true");
@@ -72,5 +70,5 @@ public class CookieAcceptationFilter extends HttpFilter implements Filter {
 		httpResponse.addCookie(acceptationCookie);
 		session.setAttribute("cookieAccepte", true);
 	}
-	
+
 }

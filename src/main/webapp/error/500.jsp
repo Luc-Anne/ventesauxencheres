@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
-	<title>Erreur 404</title>
+	<title>Erreur 500</title>
 </head>
 <body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
