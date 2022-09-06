@@ -14,7 +14,7 @@ import fr.eni.ventesauxencheres.dal.UtilisateurDAO;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
-	private static final String CONNEXION = "SELECT * FROM dbo.UTILISATEURS WHERE email = ? AND mot_de_passe = ? ";
+	private static final String CONNEXION = "SELECT * FROM UTILISATEURS WHERE email = ? AND mot_de_passe = ? ";
 	private static final String INSCRIPTION = "INSERT INTO UTILISATEURS	(pseudo, nom,prenom, email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)"
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String DELETE = "delete from UTILISATEURS where no_utilisateur = ?";

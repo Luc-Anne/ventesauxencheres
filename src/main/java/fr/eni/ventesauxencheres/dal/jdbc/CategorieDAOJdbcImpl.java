@@ -14,8 +14,8 @@ import fr.eni.ventesauxencheres.dal.DALException;
 
 public class CategorieDAOJdbcImpl implements CategorieDAO {
 
-	private static final String GET_CATEGORIE_BY_ID = "SELECT no_categorie, libelle FROM dbo.CATEGORIES WHERE no_categorie = ? ";
-	private static final String GET_ALL_CATEGORIE ="SELECT * FROM  dbo.CATEGORIES";
+	private static final String GET_CATEGORIE_BY_ID = "SELECT no_categorie, libelle FROM CATEGORIES WHERE no_categorie = ? ";
+	private static final String GET_ALL_CATEGORIE ="SELECT * FROM  CATEGORIES";
 
 	@Override
 	public Categorie insert(Categorie u) throws DALException {

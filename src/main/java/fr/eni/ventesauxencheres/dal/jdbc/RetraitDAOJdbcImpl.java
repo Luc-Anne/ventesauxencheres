@@ -12,7 +12,7 @@ import fr.eni.ventesauxencheres.dal.RetraitDAO;
 
 public class RetraitDAOJdbcImpl implements RetraitDAO {
 
-	private static final String  INSERT_LIEU ="INSERT INTO dbo.RETRAITS (no_article,rue, code_postal , ville) VALUES (?,?,?,?)";
+	private static final String  INSERT_LIEU ="INSERT INTO RETRAITS (no_article,rue, code_postal , ville) VALUES (?,?,?,?)";
 
 	@Override
 	public Retrait insert(Retrait u) throws DALException {
