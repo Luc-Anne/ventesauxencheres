@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@page import="fr.eni.ventesauxencheres.bll.CategorieManager"%>
 <%@page import="fr.eni.ventesauxencheres.bo.Categorie"%>
 <%@page import="fr.eni.ventesauxencheres.bo.Utilisateur"%>

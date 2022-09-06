@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ include file="/WEB-INF/fragments/taglib.jspf" %>
 <%@ page import="fr.eni.ventesauxencheres.controllers.util.Errors" %>
 <!DOCTYPE html>
