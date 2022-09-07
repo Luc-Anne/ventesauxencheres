@@ -24,7 +24,6 @@ public abstract class Profil {
 	public Profil(String pseudo, String courriel) {
 		this.pseudo = pseudo;
 		this.courriel = courriel;
-		this.dateEnregistrement = LocalDateTime.now();
 	}
 
 	// Getters and Setters

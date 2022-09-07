@@ -39,7 +39,7 @@ CREATE TABLE PROFIL (
     pseudo VARCHAR(50) NOT NULL,
     courriel VARCHAR(50) NOT NULL,
     mot_de_passe CHAR(16) NOT NULL,
-    date_enregistrement DATETIME NOT NULL,
+    date_enregistrement DATETIME NOT NULL DEFAULT NOW(),
     no_client INT,
     no_administrateur INT,
     PRIMARY KEY (no_profil),
@@ -137,7 +137,7 @@ CREATE TABLE ARTICLE (
     description VARCHAR(256),
     imageFileName VARCHAR(50),
     etat_vente INT NOT NULL, -- 1: NEUF, 2: BON, 3: MOYEN, 4: MAUVAIS
-    date_enregistrement DATETIME NOT NULL,
+    date_enregistrement DATETIME NOT NULL DEFAULT NOW(),
     no_proprietaire INT,
     PRIMARY KEY (no_article)
 );

@@ -33,7 +33,6 @@ public class Article {
 		this.designation = designation;
 		this.description = description;
 		this.etat = etat;
-		this.dateEnregistrement = LocalDateTime.now();
 	}
 
 	// Getters and Setters
