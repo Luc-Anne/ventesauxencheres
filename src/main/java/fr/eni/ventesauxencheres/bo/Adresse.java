@@ -3,7 +3,7 @@ package fr.eni.ventesauxencheres.bo;
 public class Adresse {
 
 	// Attributes
-	private int no_adresse;
+	private int noAdresse;
 	private String rue;
 	private String codePostal;
 	private int ville;
@@ -13,8 +13,8 @@ public class Adresse {
 	// Constructors
 	public Adresse() {}
 
-	public Adresse(int no_adresse, String rue, String codePostal, int ville ,String pays) {
-		this.no_adresse = no_adresse;
+	public Adresse(int noAdresse, String rue, String codePostal, int ville ,String pays) {
+		this.noAdresse = noAdresse;
 		this.rue = rue;
 		this.codePostal = codePostal;
 		this.ville = ville;
@@ -29,12 +29,12 @@ public class Adresse {
 	}
 
 	// Getters and Setters
-	public int getNo_adresse() {
-		return no_adresse;
+	public int getNoAdresse() {
+		return noAdresse;
 	}
 
-	public void setNo_adresse(int no_adresse) {
-		this.no_adresse = no_adresse;
+	public void setNoAdresse(int noAdresse) {
+		this.noAdresse = noAdresse;
 	}
 
 	public String getRue() {

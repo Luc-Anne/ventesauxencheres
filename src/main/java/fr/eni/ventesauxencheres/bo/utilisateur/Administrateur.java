@@ -5,17 +5,17 @@ import java.util.List;
 
 public class Administrateur extends Profil {
 	// Attributes
-	private int no_administrateur;
+	private int noAdministrateur;
 	// Association attributes
 	private List<Droit> droits;
 
 	// Constructors
 	public Administrateur() {}
 
-	public Administrateur(int no_profil, String pseudo, String courriel, LocalDateTime dateEnregistrement,
-			int no_administrateur) {
-		super(no_profil, pseudo, courriel, dateEnregistrement);
-		this.no_administrateur = no_administrateur;
+	public Administrateur(int noProfil, String pseudo, String courriel, LocalDateTime dateEnregistrement,
+			int noAdministrateur) {
+		super(noProfil, pseudo, courriel, dateEnregistrement);
+		this.noAdministrateur = noAdministrateur;
 	}
 
 	public Administrateur(String pseudo, String courriel) {
@@ -23,12 +23,12 @@ public class Administrateur extends Profil {
 	}
 
 	// Getters and Setters
-	public int getNo_administrateur() {
-		return no_administrateur;
+	public int getNoAdministrateur() {
+		return noAdministrateur;
 	}
 
-	public void setNo_administrateur(int no_administrateur) {
-		this.no_administrateur = no_administrateur;
+	public void setNoAdministrateur(int noAdministrateur) {
+		this.noAdministrateur = noAdministrateur;
 	}
 
 	public List<Droit> getDroits() {

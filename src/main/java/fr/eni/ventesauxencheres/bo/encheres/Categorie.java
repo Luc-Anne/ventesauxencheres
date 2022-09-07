@@ -3,7 +3,7 @@ package fr.eni.ventesauxencheres.bo.encheres;
 public class Categorie {
 
 	// Attributes
-	private int no_categorie;
+	private int noCategorie;
 	private String designation;
 	// Association attributes
 	private Categorie parent;
@@ -11,8 +11,8 @@ public class Categorie {
 	// Constructors
 	public Categorie() {}
 
-	public Categorie(int no_categorie, String designation) {
-		this.no_categorie = no_categorie;
+	public Categorie(int noCategorie, String designation) {
+		this.noCategorie = noCategorie;
 		this.designation = designation;
 	}
 
@@ -21,12 +21,12 @@ public class Categorie {
 	}
 
 	// Getters and Setters
-	public int getNo_categorie() {
-		return no_categorie;
+	public int getNoCategorie() {
+		return noCategorie;
 	}
 
-	public void setNo_categorie(int no_categorie) {
-		this.no_categorie = no_categorie;
+	public void setNoCategorie(int noCategorie) {
+		this.noCategorie = noCategorie;
 	}
 
 	public String getDesignation() {

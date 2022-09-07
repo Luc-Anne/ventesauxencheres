@@ -7,7 +7,7 @@ import fr.eni.ventesauxencheres.bo.Adresse;
 public class Vente {
 
 	// Attributes
-	private int no_vente;
+	private int noVente;
 	private float montantDepart;
 	private LocalDateTime dateDebut;
 	private LocalDateTime dateFin;
@@ -20,9 +20,9 @@ public class Vente {
 	// Constructors
 	public Vente() {}
 
-	public Vente(int no_vente, float montantDepart, LocalDateTime dateDebutEnchere,
+	public Vente(int noVente, float montantDepart, LocalDateTime dateDebutEnchere,
 			LocalDateTime dateFinEnchere, int dateFinEnchereDeltaOrigine, LocalDateTime dateChangementProprietaire) {
-		this.no_vente = no_vente;
+		this.noVente = noVente;
 		this.montantDepart = montantDepart;
 		this.dateDebut = dateDebutEnchere;
 		this.dateFin = dateFinEnchere;
@@ -47,12 +47,12 @@ public class Vente {
 	}
 
 	// Getters and Setters
-	public int getNo_vente() {
-		return no_vente;
+	public int getNoVente() {
+		return noVente;
 	}
 
-	public void setNo_vente(int no_vente) {
-		this.no_vente = no_vente;
+	public void setNoVente(int noVente) {
+		this.noVente = noVente;
 	}
 
 	public float getMontantDepart() {

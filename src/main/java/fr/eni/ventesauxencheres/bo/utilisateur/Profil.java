@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public abstract class Profil {
 
 	// Attributes
-	private int no_profil;
+	private int noProfil;
 	private String pseudo;
 	private String courriel;
 	private LocalDateTime dateEnregistrement;
@@ -14,8 +14,8 @@ public abstract class Profil {
 	// Constructors
 	public Profil() {}
 
-	public Profil(int no_profil, String pseudo, String courriel, LocalDateTime dateEnregistrement) {
-		this.no_profil = no_profil;
+	public Profil(int noProfil, String pseudo, String courriel, LocalDateTime dateEnregistrement) {
+		this.noProfil = noProfil;
 		this.pseudo = pseudo;
 		this.courriel = courriel;
 		this.dateEnregistrement = dateEnregistrement;
@@ -28,12 +28,12 @@ public abstract class Profil {
 	}
 
 	// Getters and Setters
-	public int getNo_profil() {
-		return no_profil;
+	public int getNoProfil() {
+		return noProfil;
 	}
 
-	public void setNo_profil(int no_profil) {
-		this.no_profil = no_profil;
+	public void setNoProfil(int noProfil) {
+		this.noProfil = noProfil;
 	}
 
 	public String getPseudo() {

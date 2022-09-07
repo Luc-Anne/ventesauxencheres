@@ -7,7 +7,7 @@ import fr.eni.ventesauxencheres.bo.Adresse;
 public class Client extends Profil {
 
 	// Attributes
-	private int no_client;
+	private int noClient;
 	private String nom;
 	private String prenom;
 	private boolean actif;
@@ -19,10 +19,10 @@ public class Client extends Profil {
 	// Constructors
 	public Client() {}
 
-	public Client(int no_profil, String pseudo, String courriel, LocalDateTime dateEnregistrement,
-			int no_client, String nom, String prenom, boolean actif, float credit , String telephone) {
-		super(no_profil, pseudo, courriel, dateEnregistrement);
-		this.no_client = no_client;
+	public Client(int noProfil, String pseudo, String courriel, LocalDateTime dateEnregistrement,
+			int noClient, String nom, String prenom, boolean actif, float credit , String telephone) {
+		super(noProfil, pseudo, courriel, dateEnregistrement);
+		this.noClient = noClient;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.actif = actif;
@@ -40,12 +40,12 @@ public class Client extends Profil {
 	}
 
 	// Getters and Setters
-	public int getNo_client() {
-		return no_client;
+	public int getNoClient() {
+		return noClient;
 	}
 
-	public void setNo_client(int no_client) {
-		this.no_client = no_client;
+	public void setNoClient(int noClient) {
+		this.noClient = noClient;
 	}
 
 	public String getNom() {
@@ -98,7 +98,7 @@ public class Client extends Profil {
 
 	// Other methods
 	public boolean equals(Client client) {
-		return (client != null && this.getNo_client() == client.getNo_client());
+		return (client != null && this.getNoClient() == client.getNoClient());
 	}
 
 }

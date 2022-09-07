@@ -7,7 +7,7 @@ import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 public class Article {
 
 	// Attributes
-	private int no_article;
+	private int noArticle;
 	private String designation;
 	private String description;
 	private String imageFileName;
@@ -20,8 +20,8 @@ public class Article {
 	// Constructors
 	public Article() {}
 
-	public Article(int no_article, String designation, String description, String imageFileName, String etat, LocalDateTime dateEnregistrement) {
-		this.no_article =  no_article;
+	public Article(int noArticle, String designation, String description, String imageFileName, String etat, LocalDateTime dateEnregistrement) {
+		this.noArticle =  noArticle;
 		this.designation = designation;
 		this.description = description;
 		this.imageFileName = imageFileName;
@@ -37,12 +37,12 @@ public class Article {
 	}
 
 	// Getters and Setters
-	public int getNo_article() {
-		return no_article;
+	public int getNoArticle() {
+		return noArticle;
 	}
 
-	public void setNo_article(int no_article) {
-		this.no_article = no_article;
+	public void setNoArticle(int noArticle) {
+		this.noArticle = noArticle;
 	}
 
 	public String getDesignation() {
