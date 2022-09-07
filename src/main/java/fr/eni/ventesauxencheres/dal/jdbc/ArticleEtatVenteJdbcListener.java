@@ -48,8 +48,8 @@ public class ArticleEtatVenteJdbcListener implements ServletContextListener {
 				}
 			}
         });
-
-        taskEtatVenteJdbc.start();
+        // TODO Restart this ?
+        //taskEtatVenteJdbc.start();
     }
 
 	@Override
