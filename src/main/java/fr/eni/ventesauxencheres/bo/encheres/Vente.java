@@ -8,33 +8,42 @@ public class Vente {
 
 	// Attributes
 	private int no_vente;
-	private int montantDepart;
-	private LocalDateTime dateDebutEnchere;
-	private LocalDateTime dateFinEnchere;
-	private int dateFinEnchereDeltaOrigine;
+	private float montantDepart;
+	private LocalDateTime dateDebut;
+	private LocalDateTime dateFin;
+	private int dateFinDeltaOrigine;
 	private LocalDateTime dateChangementProprietaire;
 	// Association attributes
 	private Article article;
-	private Adresse adresseDeRetrait;
+	private Adresse adresseRetrait;
 
 	// Constructors
 	public Vente() {}
 
-	public Vente(int no_vente, int montantDepart, LocalDateTime dateDebutEnchere,
+	public Vente(int no_vente, float montantDepart, LocalDateTime dateDebutEnchere,
 			LocalDateTime dateFinEnchere, int dateFinEnchereDeltaOrigine, LocalDateTime dateChangementProprietaire) {
 		this.no_vente = no_vente;
 		this.montantDepart = montantDepart;
-		this.dateDebutEnchere = dateDebutEnchere;
-		this.dateFinEnchere = dateFinEnchere;
-		this.dateFinEnchereDeltaOrigine = dateFinEnchereDeltaOrigine;
+		this.dateDebut = dateDebutEnchere;
+		this.dateFin = dateFinEnchere;
+		this.dateFinDeltaOrigine = dateFinEnchereDeltaOrigine;
 		this.dateChangementProprietaire = dateChangementProprietaire;
 	}
 
-	public Vente(int montantDepart, LocalDateTime dateDebutEnchere,
+	public Vente(float montantDepart, LocalDateTime dateDebutEnchere,
+			LocalDateTime dateFinEnchere, int dateFinDeltaOrigine) {
+		this.montantDepart = montantDepart;
+		this.dateDebut = dateDebutEnchere;
+		this.dateFin = dateFinEnchere;
+		this.dateFinDeltaOrigine = dateFinDeltaOrigine;
+	}
+	
+	public Vente(float montantDepart, LocalDateTime dateDebutEnchere,
 			LocalDateTime dateFinEnchere) {
 		this.montantDepart = montantDepart;
-		this.dateDebutEnchere = dateDebutEnchere;
-		this.dateFinEnchere = dateFinEnchere;
+		this.dateDebut = dateDebutEnchere;
+		this.dateFin = dateFinEnchere;
+		this.dateFinDeltaOrigine = 0;
 	}
 
 	// Getters and Setters
@@ -46,36 +55,36 @@ public class Vente {
 		this.no_vente = no_vente;
 	}
 
-	public int getMontantDepart() {
+	public float getMontantDepart() {
 		return montantDepart;
 	}
 
-	public void setMontantDepart(int montantDepart) {
+	public void setMontantDepart(float montantDepart) {
 		this.montantDepart = montantDepart;
 	}
 
-	public LocalDateTime getDateDebutEnchere() {
-		return dateDebutEnchere;
+	public LocalDateTime getDateDebut() {
+		return dateDebut;
 	}
 
-	public void setDateDebutEnchere(LocalDateTime dateDebutEnchere) {
-		this.dateDebutEnchere = dateDebutEnchere;
+	public void setDateDebut(LocalDateTime dateDebutEnchere) {
+		this.dateDebut = dateDebutEnchere;
 	}
 
-	public LocalDateTime getDateFinEnchere() {
-		return dateFinEnchere;
+	public LocalDateTime getDateFin() {
+		return dateFin;
 	}
 
-	public void setDateFinEnchere(LocalDateTime dateFinEnchere) {
-		this.dateFinEnchere = dateFinEnchere;
+	public void setDateFin(LocalDateTime dateFinEnchere) {
+		this.dateFin = dateFinEnchere;
 	}
 
-	public int getDateFinEnchereDeltaOrigine() {
-		return dateFinEnchereDeltaOrigine;
+	public int getDateFinDeltaOrigine() {
+		return dateFinDeltaOrigine;
 	}
 
-	public void setDateFinEnchereDeltaOrigine(int dateFinEnchereDeltaOrigine) {
-		this.dateFinEnchereDeltaOrigine = dateFinEnchereDeltaOrigine;
+	public void setDateFinDeltaOrigine(int dateFinEnchereDeltaOrigine) {
+		this.dateFinDeltaOrigine = dateFinEnchereDeltaOrigine;
 	}
 
 	public LocalDateTime getDateChangementProprietaire() {
@@ -94,12 +103,12 @@ public class Vente {
 		this.article = article;
 	}
 
-	public Adresse getAdresseDeRetrait() {
-		return adresseDeRetrait;
+	public Adresse getAdresseRetrait() {
+		return adresseRetrait;
 	}
 
-	public void setAdresseDeRetrait(Adresse adresseDeRetrait) {
-		this.adresseDeRetrait = adresseDeRetrait;
+	public void setAdresseRetrait(Adresse adresseRetrait) {
+		this.adresseRetrait = adresseRetrait;
 	}
 
 	// Other methods

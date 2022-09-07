@@ -10,7 +10,8 @@ public class Client extends Profil {
 	private int no_client;
 	private String nom;
 	private String prenom;
-	private int credit;
+	private boolean actif;
+	private float credit;
 	private String telephone;
 	// Association attributes
 	private Adresse adresseDomicile;
@@ -18,18 +19,19 @@ public class Client extends Profil {
 	// Constructors
 	public Client() {}
 
-	public Client(int no_profil, String pseudo, String courriel, Boolean actif, LocalDateTime dateEnregistrement,
-			int no_client, String nom, String prenom, int credit , String telephone) {
-		super(no_profil, pseudo, courriel, actif, dateEnregistrement);
+	public Client(int no_profil, String pseudo, String courriel, LocalDateTime dateEnregistrement,
+			int no_client, String nom, String prenom, boolean actif, float credit , String telephone) {
+		super(no_profil, pseudo, courriel, dateEnregistrement);
 		this.no_client = no_client;
 		this.nom = nom;
 		this.prenom = prenom;
+		this.actif = actif;
 		this.credit = credit;
 		this.telephone = telephone;
 	}
 
 	public Client(String pseudo, String courriel,
-			String nom, String prenom, int credit , String telephone) {
+			String nom, String prenom, float credit , String telephone) {
 		super(pseudo, courriel);
 		this.nom = nom;
 		this.prenom = prenom;
@@ -62,11 +64,19 @@ public class Client extends Profil {
 		this.prenom = prenom;
 	}
 
-	public int getCredit() {
+	public boolean isActif() {
+		return actif;
+	}
+
+	public void setActif(boolean actif) {
+		this.actif = actif;
+	}
+
+	public float getCredit() {
 		return credit;
 	}
 
-	public void setCredit(int credit) {
+	public void setCredit(float credit) {
 		this.credit = credit;
 	}
 

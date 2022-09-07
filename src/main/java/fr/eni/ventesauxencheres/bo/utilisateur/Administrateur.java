@@ -12,9 +12,9 @@ public class Administrateur extends Profil {
 	// Constructors
 	public Administrateur() {}
 
-	public Administrateur(int no_profil, String pseudo, String courriel, Boolean actif, LocalDateTime dateEnregistrement,
+	public Administrateur(int no_profil, String pseudo, String courriel, LocalDateTime dateEnregistrement,
 			int no_administrateur) {
-		super(no_profil, pseudo, courriel, actif, dateEnregistrement);
+		super(no_profil, pseudo, courriel, dateEnregistrement);
 		this.no_administrateur = no_administrateur;
 	}
 

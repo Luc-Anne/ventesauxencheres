@@ -10,6 +10,7 @@ public class Article {
 	private int no_article;
 	private String designation;
 	private String description;
+	private String imageFileName;
 	private String etat;
 	private LocalDateTime dateEnregistrement;
 	// Association attributes
@@ -19,10 +20,11 @@ public class Article {
 	// Constructors
 	public Article() {}
 
-	public Article(int no_article, String designation, String description, String etat, LocalDateTime dateEnregistrement) {
+	public Article(int no_article, String designation, String description, String imageFileName, String etat, LocalDateTime dateEnregistrement) {
 		this.no_article =  no_article;
 		this.designation = designation;
 		this.description = description;
+		this.imageFileName = imageFileName;
 		this.etat = etat;
 		this.dateEnregistrement = dateEnregistrement;
 	}
@@ -57,6 +59,14 @@ public class Article {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 
 	public String getEtat() {

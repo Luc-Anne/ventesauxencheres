@@ -8,25 +8,22 @@ public abstract class Profil {
 	private int no_profil;
 	private String pseudo;
 	private String courriel;
-	private Boolean actif;
 	private LocalDateTime dateEnregistrement;
 	// Association attributes
 
 	// Constructors
 	public Profil() {}
 
-	public Profil(int no_profil, String pseudo, String courriel, Boolean actif, LocalDateTime dateEnregistrement) {
+	public Profil(int no_profil, String pseudo, String courriel, LocalDateTime dateEnregistrement) {
 		this.no_profil = no_profil;
 		this.pseudo = pseudo;
 		this.courriel = courriel;
-		this.actif = actif;
 		this.dateEnregistrement = dateEnregistrement;
 	}
 
 	public Profil(String pseudo, String courriel) {
 		this.pseudo = pseudo;
 		this.courriel = courriel;
-		this.actif = false;
 		this.dateEnregistrement = LocalDateTime.now();
 	}
 
@@ -53,14 +50,6 @@ public abstract class Profil {
 
 	public void setCourriel(String courriel) {
 		this.courriel = courriel;
-	}
-
-	public Boolean getActif() {
-		return actif;
-	}
-
-	public void setActif(Boolean actif) {
-		this.actif = actif;
 	}
 
 	public LocalDateTime getDateEnregistrement() {

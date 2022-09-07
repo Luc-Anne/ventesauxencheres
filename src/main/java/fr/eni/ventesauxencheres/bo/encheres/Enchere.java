@@ -8,7 +8,7 @@ public class Enchere {
 
 	// Attributes
 	private LocalDateTime date;
-	private int montant;
+	private float montant;
 	// Association attributes
 	private Client encherisseur;
 	private Vente vente;
@@ -16,7 +16,7 @@ public class Enchere {
 	// Constructors
 	public Enchere(){}
 
-	public Enchere(LocalDateTime date, int montant){
+	public Enchere(LocalDateTime date, float montant){
 		this.date = date;
 		this.montant = montant;
 	}
@@ -30,11 +30,11 @@ public class Enchere {
 		this.date = date;
 	}
 
-	public int getMontant() {
+	public float getMontant() {
 		return montant;
 	}
 
-	public void setMontant(int montant) {
+	public void setMontant(float montant) {
 		this.montant = montant;
 	}
 
