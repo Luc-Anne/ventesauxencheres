@@ -1,7 +1,5 @@
 package fr.eni.ventesauxencheres.bll;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +79,7 @@ public class ClientManager {
 	public Client save(Client client, String motDePasse) throws BLLException {
 		try {
 			if (this.isValide(client)) {
-				byte[] hashedMotDePasse = hashMotDePasse(motDePasse);
+				byte[] hashedMotDePasse = ProfilManager.getInstance().hashMotDePasse(motDePasse);
 				return clientDAO.insert(client, hashedMotDePasse);
 			} else {
 				throw new BLLException("client invalide");
@@ -106,7 +104,7 @@ public class ClientManager {
 			throw new BLLException("ERREUR MANAGER", e);
 		}
 	}
-	
+
 	public List<Client> getAll() throws BLLException {
 		try {
 			return clientDAO.selectAll();
@@ -137,24 +135,11 @@ public class ClientManager {
 
 	public Client connexion(String email, String motDePasse) throws BLLException {
 		try {
-			byte[] hashedMotDePasse = hashMotDePasse(motDePasse);
+			byte[] hashedMotDePasse = ProfilManager.getInstance().hashMotDePasse(motDePasse);
 			return clientDAO.connexion(email, hashedMotDePasse);
 		} catch (DALException e) {
 			throw new BLLException("ERREUR MANAGER", e);
 		}
-	}
-
-	public byte[] hashMotDePasse(String motDePasse) throws BLLException {
-		byte[] digest;
-		MessageDigest md;
-		try {
-			md = MessageDigest.getInstance("MD5");
-			md.update(motDePasse.getBytes());
-			digest = md.digest();
-		} catch (NoSuchAlgorithmException e) {
-			throw new BLLException("Problème lors du hashage du mot de passe.", e);
-		}
-		return digest;
 	}
 
 }

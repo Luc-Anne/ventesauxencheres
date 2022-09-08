@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
+import fr.eni.ventesauxencheres.dal.ClientDAO;
 import fr.eni.ventesauxencheres.dal.ConnectionProvider;
 import fr.eni.ventesauxencheres.dal.DALException;
-import fr.eni.ventesauxencheres.dal.ClientDAO;
 
 public class ClientDAOJdbcImpl implements ClientDAO {
 
@@ -19,6 +19,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	public Client insert(Client client, byte[] hashedMotDePasse) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			cnx.setAutoCommit(false);
+			int noProfil = -1;
 			// Add in ADRESSE
 			String query = "INSERT INTO ADRESSE (rue, code_postal, ville, pays)"
 						+ " VALUES (?, ?, ?, ?)";
@@ -60,36 +61,40 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 						st1.setInt(4, noClient);
 						st1.executeUpdate();
 						rs = st1.getGeneratedKeys();
-						int noProfil = -1;
+
 						if (rs.next()) {
 							noProfil = rs.getInt(1);
 						}
-						// Read dateEnregistrement
-						query = "SELECT dateEnregistrement FROM PROFIL WHERE no_profil = ?";
-						try (PreparedStatement st2 = cnx.prepareStatement(query);) {
-							st2.setInt(1, noProfil);
-							rs = st2.executeQuery();
-							LocalDateTime dateEnregistrement = null;
-							if (rs.next()) {
-								dateEnregistrement = LocalDateTime.of(rs.getDate("date_enregistement").toLocalDate(),
-																	  rs.getTime("date_enregistement").toLocalTime());
-							}
-							cnx.commit();
-							client.setNoClient(noClient);
-							client.setNoProfil(noProfil);
-							client.setDateEnregistrement(dateEnregistrement);
-							client.getAdresseDomicile().setNoAdresse(noAdresse);
-							return client;
-						}
+						cnx.commit();
+						client.setNoClient(noClient);
+						client.setNoProfil(noProfil);
+						client.getAdresseDomicile().setNoAdresse(noAdresse);
 					}
 				}
 			} catch (SQLException | NullPointerException e) {
 				cnx.rollback();
 				throw new DALException("Erreur insertion de client", e);
 			}
+			// Read dateEnregistrement
+			query = "SELECT date_enregistrement FROM PROFIL WHERE no_profil = ?";
+			try (PreparedStatement st2 = cnx.prepareStatement(query);) {
+				st2.setInt(1, noProfil);
+				ResultSet rs = st2.executeQuery();
+				LocalDateTime dateEnregistrement = null;
+				if (rs.next()) {
+					dateEnregistrement = LocalDateTime.of(rs.getDate("date_enregistrement").toLocalDate(),
+														  rs.getTime("date_enregistrement").toLocalTime());
+				}
+				client.setDateEnregistrement(dateEnregistrement);
+			} catch (SQLException e) {
+				throw new DALException("Erreur insertion de client", e);
+			}
 		} catch (SQLException e) {
 			throw new DALException("Connexion impossible", e);
 		}
+
+
+		return client;
 	}
 
 	@Override
@@ -114,7 +119,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 			throw new DALException("Connexion impossible", e);
 		}
 	}
-	
+
 	@Override
 	public Client selectByPseudo(String pseudo) throws DALException {
 		String query = "SELECT *"
@@ -146,7 +151,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement st = cnx.prepareStatement(query);){
 				ResultSet rs = st.executeQuery();
-				List<Client> clients = new ArrayList<>();;
+				List<Client> clients = new ArrayList<>();
 				while (rs.next()) {
 					clients.add(BoObjectFactory.getInstance().createClient(rs));
 				}
@@ -194,7 +199,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 			} catch (SQLException e) {
 				cnx.rollback();
 				throw new DALException("Erreur mise à jour de client", e);
-			}			
+			}
 		} catch (SQLException e) {
 			throw new DALException("Connexion impossible", e);
 		}
@@ -239,7 +244,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			String query = "SELECT *"
 						+ " FROM CLIENT c"
-						+ " LEFT JOIN PROFIL f ON c.no_profil = f.no_profil"
+						+ " LEFT JOIN PROFIL f ON c.no_client = f.no_client"
 						+ " WHERE courriel = ? AND mot_de_passe = ? AND no_profil IS NOT NULL";
 			try (PreparedStatement st = cnx.prepareStatement(query);) {
 				st.setString(1, email);

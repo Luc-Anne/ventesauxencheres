@@ -16,10 +16,10 @@
 		<div class="mt-5">
 			<form action="${Url.CONNEXION.getUrl()}" method="post">
 				<div class="mb-3">
-					<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" placeholder="Adresse mail">
+					<input type="email" class="form-control" aria-describedby="emailHelp" name="email" placeholder="Courriel">
 				</div>
 				<div class="mb-3">
-					<input type="password" class="form-control" id="exampleInputPassword1" name="motDePasse" placeholder="Mot de passe">
+					<input type="password" class="form-control" name="motDePasse" placeholder="Mot de passe">
 				</div>
 				<c:if test="${not empty echecConnexion}">
 					<div class="form-invalid-feedback">Email ou mot de passe incorrect.</div>

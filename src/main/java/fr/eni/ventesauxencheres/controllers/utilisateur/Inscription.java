@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.ventesauxencheres.bll.AdresseManager;
 import fr.eni.ventesauxencheres.bll.BLLException;
 import fr.eni.ventesauxencheres.bll.ClientManager;
+import fr.eni.ventesauxencheres.bll.ProfilManager;
+import fr.eni.ventesauxencheres.bo.Adresse;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Errors;
 import fr.eni.ventesauxencheres.controllers.util.Url;
@@ -35,57 +38,65 @@ public class Inscription extends HttpServlet {
 		Errors erreurs = new Errors();
 		request.setAttribute("erreurs", erreurs);
 
-		String mot_de_passe = request.getParameter("password");
-		String mot_de_passeConfirmation = request.getParameter("passwordConfirmation");
-		Client utilisateur = new Client(
-			request.getParameter("pseudo").trim(),
-			request.getParameter("nom"),
-			request.getParameter("prenom"),
-			request.getParameter("email").trim(),
-			request.getParameter("telephone"),
-			request.getParameter("rue"),
-			request.getParameter("code_postal"),
-			request.getParameter("ville"),
-			mot_de_passe,
-			ClientManager.DEFAULT_CREDIT,
-			false
-		);
+		Client client = new Client(
+				request.getParameter("pseudo").trim(),
+				request.getParameter("courriel").trim(),
+				request.getParameter("nom"),
+				request.getParameter("prenom"),
+				ClientManager.DEFAULT_CREDIT,
+				request.getParameter("telephone")
+				);
+		// AdresseDomicile
+		String pays = "".equals(request.getParameter("pays")) ? AdresseManager.DEFAULT_PAYS : request.getParameter("pays");
+		Adresse adresseDomicile = new Adresse(
+				request.getParameter("rue"),
+				request.getParameter("code_postal"),
+				request.getParameter("ville"),
+				pays
+				);
+		client.setAdresseDomicile(adresseDomicile);
 
-		if(!mot_de_passe.equals(mot_de_passeConfirmation)) {
+		// Vérifier que les deux mots de passe sont les mêmes
+		String motDePasse = request.getParameter("motDePasse");
+		String motDePasseConfirmation = request.getParameter("motDePasseConfirmation");
+		if(!motDePasse.equals(motDePasseConfirmation)) {
 			request.getSession().setAttribute("messageGlobal", "Les deux mots de passe ne correspondent pas");
-			reafficherInscriptionQuandErreur(request, response, utilisateur, erreurs);
+			reafficherInscriptionQuandErreur(request, response, client, erreurs);
 			return;
 		}
 
 		try {
-			utilisateur = ClientManager.getInstance().save(utilisateur);
-			request.getSession().setAttribute("utilisateurConnecte", utilisateur);
+			// Inscrire
+			client = ClientManager.getInstance().save(client, motDePasse);
+			// Connecte
+			request.getSession().setAttribute("clientConnecte", client);
 			request.getSession().setAttribute("messageGlobal", "Bienvenue sur le site !");
 			response.sendRedirect(Url.HOME.getUrl());
 			return;
 		} catch (BLLException e) {
-			erreurs.addAll(ClientManager.getInstance().invalidCause(utilisateur));
-			CharSequence erreurAChercher = "utilisateurs_pseudo_uq";
+			e.printStackTrace();
+			erreurs.addAll(ClientManager.getInstance().invalidCause(client));
+			erreurs.addAll(ProfilManager.getInstance().invalidCauseMotDePasse(motDePasse));
+			CharSequence erreurAChercher = "un_profil_pseudo";
 			if (e.getCause() != null && e.getCause().getCause() != null) {
 				if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {
 					erreurs.add("utilisateur.pseudo_deja_pris");
 				}
 			}
-			erreurAChercher = "utilisateurs_email_uq";
+			erreurAChercher = "un_profil_courriel";
 			if (e.getCause() != null && e.getCause().getCause() != null) {
 				if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {
-					erreurs.add("utilisateur.email_deja_pris");
+					erreurs.add("utilisateur.courriel_deja_pris");
 				}
 			}
-			e.printStackTrace();
-			reafficherInscriptionQuandErreur(request, response, utilisateur, erreurs);
+			reafficherInscriptionQuandErreur(request, response, client, erreurs);
 			return;
 		}
 
 	}
 
-	private void reafficherInscriptionQuandErreur(HttpServletRequest request, HttpServletResponse response, Client utilisateur, Errors erreurs) throws ServletException, IOException {
-		erreurs.addAll(ClientManager.getInstance().invalidCause(utilisateur));
+	private void reafficherInscriptionQuandErreur(HttpServletRequest request, HttpServletResponse response, Client client, Errors erreurs) throws ServletException, IOException {
+		erreurs.addAll(ClientManager.getInstance().invalidCause(client));
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
 		if (rd != null) {
 			rd.forward(request, response);

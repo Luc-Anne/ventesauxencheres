@@ -19,6 +19,7 @@ public class AdresseManager {
 	}
 
 	// Règles métiers
+	public static final String DEFAULT_PAYS = "FRANCE";
 
 	// Validation
 	public boolean isValide(Adresse adresse) {

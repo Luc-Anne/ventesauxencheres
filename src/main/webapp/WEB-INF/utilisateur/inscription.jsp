@@ -16,9 +16,9 @@
         </div>
 		<div class="row g-8">
 			<div class="col-md-12 col-lg-12">
-				<h4 class="mb-3">Informations Générales à fournir</h4>
 				<form class="needs-validation" novalidate  action="" method="post">
 					<div class="row g-3">
+                        <h4 class="mb-3">Informations de compte</h4>
 						<div class="col-12">
 							<c:set var="isInvalid" value=""></c:set>
 							<c:set var="IF" value=""></c:set>
@@ -38,10 +38,57 @@
 								<c:set var="isInvalid" value="is-invalid"></c:set>
 								<c:set var="IF" value="${IF} Ce pseudo est déjà utilisé par un membre."></c:set>
 							</c:if>
-							<label for="username" class="form-label">Pseudo</label>
-							<input type="text" class="form-control ${isInvalid}" id="username" required name="pseudo" value="${param.pseudo}">
+							<label for="pseudo" class="form-label">Pseudo</label>
+							<input type="text" class="form-control ${isInvalid}" id="pseudo" required name="pseudo" value="${param.pseudo}">
 							<div class="invalid-feedback">${IF}</div>
 						</div>
+						<div class="col-12">
+                            <c:set var="isInvalid" value=""></c:set>
+                            <c:set var="IF" value=""></c:set>
+                            <c:if test="${erreurs.contains('utilisateur.courriel_vide')}">
+                                <c:set var="isInvalid" value="is-invalid"></c:set>
+                                <c:set var="IF" value="${IF} Il faut nécessairement indiquer votre courriel."></c:set>
+                            </c:if>
+                            <c:if test="${erreurs.contains('utilisateur.courriel_tropLong')}">
+                                <c:set var="isInvalid" value="is-invalid"></c:set>
+                                <c:set var="IF" value="${IF} L'courriel est trop long."></c:set>
+                            </c:if>
+                            <c:if test="${erreurs.contains('utilisateur.courriel_manque@')}">
+                                <c:set var="isInvalid" value="is-invalid"></c:set>
+                                <c:set var="IF" value="${IF} Il n'y a pas de @ dans votre courriel."></c:set>
+                            </c:if>
+                            <c:if test="${erreurs.contains('utilisateur.courriel_deja_pris')}">
+                                <c:set var="isInvalid" value="is-invalid"></c:set>
+                                <c:set var="IF" value="${IF} Ce courriel est déjà utilisé par un membre."></c:set>
+                            </c:if>
+                            <label for="courriel" class="form-label">Courriel</label>
+                            <input type="email" class="form-control ${isInvalid}" id="courriel" placeholder="you@exemple.com" required name="courriel" value="${param.courriel}">
+                            <div class="invalid-feedback">${IF}</div>
+                        </div>
+                        <div class="col-6">
+                            <c:set var="isInvalid" value=""></c:set>
+                            <c:set var="IF" value=""></c:set>
+                            <c:if test="${erreurs.contains('utilisateur.motDePasse_vide')}">
+                                <c:set var="isInvalid" value="is-invalid"></c:set>
+                                <c:set var="IF" value="${IF} Il faut nécessairement indiquer un mot de passe valide (au moins 8 caractères)"></c:set>
+                            </c:if>
+                            <c:if test="${erreurs.contains('utilisateur.motDePasse_tropLong')}">
+                                <c:set var="isInvalid" value="is-invalid"></c:set>
+                                <c:set var="IF" value="${IF} Le mot de passe est trop long."></c:set>
+                            </c:if>
+                            <c:if test="${erreurs.contains('utilisateur.motDePasse_faible')}">
+                                <c:set var="isInvalid" value="is-invalid"></c:set>
+                                <c:set var="IF" value="${IF} "></c:set>
+                            </c:if>
+                            <label for="motDePasse" class="form-label">Mot de Passe</label>
+                            <input type="password" class="form-control ${isInvalid}" id="motDePasse" required name="motDePasse">
+                            <div class="invalid-feedback">${IF}</div>
+                        </div>
+                        <div class="col-6">
+                            <label for="motDePasseConfirmation" class="form-label">Confirmer le mot de Passe</label>
+                            <input type="password" class="form-control" id="motDePasseConfirmation" required name="motDePasseConfirmation">
+                        </div>
+                        <h4 class="mb-3">Informations personnelles</h4>
 						<div class="col-sm-6">
 							<c:set var="isInvalid" value=""></c:set>
 							<c:set var="IF" value=""></c:set>
@@ -53,8 +100,8 @@
 								<c:set var="isInvalid" value="is-invalid"></c:set>
 								<c:set var="IF" value="${IF} Le nom est trop long."></c:set>
 							</c:if>
-							<label for="lastName" class="form-label">Nom</label>
-							<input type="text" class="form-control ${isInvalid}" id="lastName" required name="nom" value="${param.nom}">
+							<label for="nom" class="form-label">Nom</label>
+							<input type="text" class="form-control ${isInvalid}" id="nom" required name="nom" value="${param.nom}">
 							<div class="invalid-feedback">${IF}</div>
 						</div>
 						<div class="col-sm-6">
@@ -68,31 +115,8 @@
 								<c:set var="isInvalid" value="is-invalid"></c:set>
 								<c:set var="IF" value="${IF} Le prénom est trop long."></c:set>
 							</c:if>
-							<label for="firstName" class="form-label">Prénom</label>
-							<input type="text" class="form-control ${isInvalid}" id="firstName" required name="prenom" value="${param.prenom}">
-							<div class="invalid-feedback">${IF}</div>
-						</div>
-						<div class="col-12">
-							<c:set var="isInvalid" value=""></c:set>
-							<c:set var="IF" value=""></c:set>
-							<c:if test="${erreurs.contains('utilisateur.email_vide')}">
-								<c:set var="isInvalid" value="is-invalid"></c:set>
-								<c:set var="IF" value="${IF} Il faut nécessairement indiquer votre mail."></c:set>
-							</c:if>
-							<c:if test="${erreurs.contains('utilisateur.email_tropLong')}">
-								<c:set var="isInvalid" value="is-invalid"></c:set>
-								<c:set var="IF" value="${IF} L'email est trop long."></c:set>
-							</c:if>
-							<c:if test="${erreurs.contains('utilisateur.email_manque@')}">
-								<c:set var="isInvalid" value="is-invalid"></c:set>
-								<c:set var="IF" value="${IF} Il n'y a pas de @ dans votre mail."></c:set>
-							</c:if>
-							<c:if test="${erreurs.contains('utilisateur.email_deja_pris')}">
-								<c:set var="isInvalid" value="is-invalid"></c:set>
-								<c:set var="IF" value="${IF} Cet email est déjà utilisé par un membre."></c:set>
-							</c:if>
-							<label for="email" class="form-label">Email</label>
-							<input type="email" class="form-control ${isInvalid}" id="email" placeholder="you@exemple.com" required name="email" value="${param.email}">
+							<label for="prenom" class="form-label">Prénom</label>
+							<input type="text" class="form-control ${isInvalid}" id="prenom" required name="prenom" value="${param.prenom}">
 							<div class="invalid-feedback">${IF}</div>
 						</div>
 						<div class="col-12">
@@ -102,11 +126,10 @@
 								<c:set var="isInvalid" value="is-invalid"></c:set>
 								<c:set var="IF" value="${IF} Le numéro de téléphone est trop long."></c:set>
 							</c:if>
-							<label for="numerotelephone" class="form-label">Numéro de Télephone</label>
-							<input type="text" class="form-control" id="numerotelephone" name="telephone" value="${param.telephone}">
+							<label for="telephone" class="form-label">Numéro de Télephone</label>
+							<input type="text" class="form-control" id="telephone" name="telephone" value="${param.telephone}">
 							<div class="invalid-feedback">${IF}</div>
 						</div>
-						<h4 class="mb-3">Adresse Complète</h4>
 						<div class="col-12">
 							<c:set var="isInvalid" value=""></c:set>
 							<c:set var="IF" value=""></c:set>
@@ -118,8 +141,8 @@
 								<c:set var="isInvalid" value="is-invalid"></c:set>
 								<c:set var="IF" value="${IF} Le numéro et le nom de la rue sont trop longs."></c:set>
 							</c:if>
-							<label for="address" class="form-label">Rue</label>
-							<input type="text" class="form-control ${isInvalid}" id="address" required name="rue" value="${param.rue}">
+							<label for="rue" class="form-label">Rue</label>
+							<input type="text" class="form-control ${isInvalid}" id="rue" required name="rue" value="${param.rue}">
 							<div class="invalid-feedback">${IF}</div>
 						</div>
 						<div class="col-3">
@@ -127,17 +150,17 @@
 							<c:set var="IF" value=""></c:set>
 							<c:if test="${erreurs.contains('utilisateur.codePostal_vide')}">
 								<c:set var="isInvalid" value="is-invalid"></c:set>
-								<c:set var="IF" value="${IF} Il faut nécessairement indiquer un code postale pour votre adresse."></c:set>
+								<c:set var="IF" value="${IF} Il faut nécessairement indiquer un code postal pour votre adresse."></c:set>
 							</c:if>
 							<c:if test="${erreurs.contains('utilisateur.codePostal_tropLong')}">
 								<c:set var="isInvalid" value="is-invalid"></c:set>
 								<c:set var="IF" value="${IF} Le code postal est trop long."></c:set>
 							</c:if>
-							<label for="address" class="form-label">Code Postale</label>
-							<input type="text" class="form-control ${isInvalid}" id="address" required name="code_postal" value="${param.code_postal}">
+							<label for="code_postal" class="form-label">Code Postal</label>
+							<input type="text" class="form-control ${isInvalid}" id="code_postal" required name="code_postal" value="${param.code_postal}">
 							<div class="invalid-feedback">${IF}</div>
 						</div>
-						<div class="col-9">
+						<div class="col-6">
 							<c:set var="isInvalid" value=""></c:set>
 							<c:set var="IF" value=""></c:set>
 							<c:if test="${erreurs.contains('utilisateur.ville_vide')}">
@@ -146,35 +169,23 @@
 							</c:if>
 							<c:if test="${erreurs.contains('utilisateur.ville_tropLong')}">
 								<c:set var="isInvalid" value="is-invalid"></c:set>
-								<c:set var="IF" value="${IF} Le nom de la bille est trop long."></c:set>
+								<c:set var="IF" value="${IF} Le nom de la ville est trop long."></c:set>
 							</c:if>
-							<label for="address" class="form-label">Ville</label>
-							<input type="text" class="form-control ${isInvalid}" id="address" required name="ville" value="${param.ville}">
+							<label for="ville" class="form-label">Ville</label>
+							<input type="text" class="form-control ${isInvalid}" id="ville" required name="ville" value="${param.ville}">
 							<div class="invalid-feedback">${IF}</div>
 						</div>
-						<div class="col-6">
-							<c:set var="isInvalid" value=""></c:set>
-							<c:set var="IF" value=""></c:set>
-							<c:if test="${erreurs.contains('utilisateur.motDePasse_vide')}">
-								<c:set var="isInvalid" value="is-invalid"></c:set>
-								<c:set var="IF" value="${IF} Il faut nécessairement indiquer un mot de passe valide (au moins 8 caractères)"></c:set>
-							</c:if>
-							<c:if test="${erreurs.contains('utilisateur.motDePasse_tropLong')}">
-								<c:set var="isInvalid" value="is-invalid"></c:set>
-								<c:set var="IF" value="${IF} Le mot de passe est trop long."></c:set>
-							</c:if>
-							<c:if test="${erreurs.contains('utilisateur.motDePasse_faible')}">
-								<c:set var="isInvalid" value="is-invalid"></c:set>
-								<c:set var="IF" value="${IF} "></c:set>
-							</c:if>
-							<label for="password" class="form-label">Mot de Passe</label>
-							<input type="password" class="form-control ${isInvalid}" id="password" required name="password">
-							<div class="invalid-feedback">${IF}</div>
-						</div>
-						<div class="col-6">
-							<label for="passwordConfirmation" class="form-label">Confirmer le mot de Passe</label>
-							<input type="password" class="form-control" id="passwordConfirmation" required name="passwordConfirmation">
-						</div>
+						<div class="col-3">
+                            <c:set var="isInvalid" value=""></c:set>
+                            <c:set var="IF" value=""></c:set>
+                            <c:if test="${erreurs.contains('utilisateur.pays_tropLong')}">
+                                <c:set var="isInvalid" value="is-invalid"></c:set>
+                                <c:set var="IF" value="${IF} Le nom du pays est trop long."></c:set>
+                            </c:if>
+                            <label for="address" class="form-label">Pays (FRANCE par défaut)</label>
+                            <input type="text" class="form-control ${isInvalid}" id="pays" required name="pays" value="${param.pays}" placeholder="FRANCE">
+                            <div class="invalid-feedback">${IF}</div>
+                        </div>
 					</div>
 					<hr class="my-4">
 					<button class="w-100 btn btn-primary btn-lg" type="submit">S'inscrire</button>

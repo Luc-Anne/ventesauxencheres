@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.ventesauxencheres.bll.BLLException;
 import fr.eni.ventesauxencheres.bll.ClientManager;
+import fr.eni.ventesauxencheres.bll.ProfilManager;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Url;
 
@@ -36,19 +37,19 @@ public class Connexion extends HttpServlet {
 		String password = request.getParameter("motDePasse");
 
 		try {
-			Client utilisateur = ClientManager.getInstance().connexion(email, password);
-			if (utilisateur != null) {
-				HttpSession session = request.getSession();
-				session.setAttribute("utilisateurConnecte", utilisateur);
+			String typeOfProfil = ProfilManager.getInstance().typeOfProfil(email, password);
+			HttpSession session = request.getSession();
+			if (typeOfProfil.equals("Client")) {
+				Client client = ClientManager.getInstance().connexion(email, password);
+				session.setAttribute("clientConnecte", client);
 				// Passer un attribut à travers un sendRedirect
-				session.setAttribute("messageGlobal", "Bonjour " + utilisateur.getPrenom() + " " + utilisateur.getNom());
-				if (utilisateur.isAdministrateur()) {
-					response.sendRedirect(Url.ADMIN_TABLEAUDEBORD.getUrl());
-				} else {
-					response.sendRedirect(Url.HOME.getUrl());
-				}
+				session.setAttribute("messageGlobal", "Bonjour " + client.getPrenom() + " " + client.getNom());
+				response.sendRedirect(Url.HOME.getUrl());
+			} else if (typeOfProfil.equals("Administrateur")) {
+				// TODO When Administrateur will be operational
+				response.sendRedirect(Url.ADMIN_TABLEAUDEBORD.getUrl());
 			} else {
-				request.getSession().setAttribute("messageGlobal", "Email ou mot de passe incorrect");
+				session.setAttribute("messageGlobal", "Email ou mot de passe incorrect");
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp");
 				if (rd != null) {
 					rd.forward(request, response);

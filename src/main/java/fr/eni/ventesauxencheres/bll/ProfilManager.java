@@ -1,15 +1,24 @@
 package fr.eni.ventesauxencheres.bll;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.ventesauxencheres.bo.utilisateur.Profil;
+import fr.eni.ventesauxencheres.dal.DALException;
+import fr.eni.ventesauxencheres.dal.FactoryDAO;
+import fr.eni.ventesauxencheres.dal.ProfilDAO;
 
 public class ProfilManager {
 
 	private static ProfilManager profilManager;
 
-	private ProfilManager() {}
+	private ProfilDAO profilDAO;
+
+	private ProfilManager() {
+		this.profilDAO = FactoryDAO.getProfilDAO();
+	}
 
 	public static ProfilManager getInstance() {
 		if (profilManager == null) {
@@ -40,26 +49,26 @@ public class ProfilManager {
 				invalidCause.add("profil.pseudo_avecEspace");
 			}
 		}
-		// email
+		// courriel
 		if (profil.getCourriel() == null ||
 			"".equals(profil.getCourriel())) {
-			invalidCause.add("profil.email_vide");
+			invalidCause.add("profil.courriel_vide");
 		} else {
 			if (profil.getCourriel().length() > 50) {
-				invalidCause.add("profil.email_tropLong");
+				invalidCause.add("profil.courriel_tropLong");
 			}
 			if (! profil.getCourriel().contains("@")) {
-				invalidCause.add("profil.email_manque@");
+				invalidCause.add("profil.courriel_manque@");
 			}
 		}
 
 		return invalidCause;
 	}
-	
+
 	public boolean isValideMotDePasse(String MotDePasse) {
 		return invalidCauseMotDePasse(MotDePasse).size() == 0 ? true : false;
 	}
-	
+
 	public List<String> invalidCauseMotDePasse(String motDePasse)  {
 		List<String> invalidCause = new ArrayList<>();
 
@@ -77,6 +86,28 @@ public class ProfilManager {
 		}
 
 		return invalidCause;
+	}
+
+	public String typeOfProfil(String email, String motDePasse) throws BLLException {
+		try {
+			byte[] hashedMotDePasse = hashMotDePasse(motDePasse);
+			return profilDAO.typeOfProfil(email, hashedMotDePasse);
+		} catch (DALException e) {
+			throw new BLLException("ERREUR MANAGER", e);
+		}
+	}
+
+	public byte[] hashMotDePasse(String motDePasse) throws BLLException {
+		byte[] digest;
+		MessageDigest md;
+		try {
+			md = MessageDigest.getInstance("MD5");
+			md.update(motDePasse.getBytes());
+			digest = md.digest();
+		} catch (NoSuchAlgorithmException e) {
+			throw new BLLException("Problème lors du hashage du mot de passe.", e);
+		}
+		return digest;
 	}
 
 }

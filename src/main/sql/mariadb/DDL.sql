@@ -27,7 +27,7 @@ CREATE TABLE ADRESSE (
     rue VARCHAR(100) NOT NULL,
     code_postal VARCHAR(15) NOT NULL,
     ville VARCHAR(50) NOT NULL,
-    pays VARCHAR(50) NOT NULL DEFAULT 'FRANCE',
+    pays VARCHAR(50) NOT NULL,
     PRIMARY KEY (no_adresse)
 );
 
@@ -35,7 +35,7 @@ CREATE TABLE ADRESSE (
 -- USERS
 --
 CREATE TABLE PROFIL (
-    no_profil INT NOT NULL,
+    no_profil INT NOT NULL AUTO_INCREMENT,
     pseudo VARCHAR(50) NOT NULL,
     courriel VARCHAR(50) NOT NULL,
     mot_de_passe CHAR(16) NOT NULL,
