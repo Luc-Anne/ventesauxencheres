@@ -6,14 +6,14 @@ public class Adresse {
 	private int noAdresse;
 	private String rue;
 	private String codePostal;
-	private int ville;
+	private String ville;
 	private String pays;
 	// Association attributes
 
 	// Constructors
 	public Adresse() {}
 
-	public Adresse(int noAdresse, String rue, String codePostal, int ville ,String pays) {
+	public Adresse(int noAdresse, String rue, String codePostal, String ville ,String pays) {
 		this.noAdresse = noAdresse;
 		this.rue = rue;
 		this.codePostal = codePostal;
@@ -21,7 +21,7 @@ public class Adresse {
 		this.pays = pays;
 	}
 
-	public Adresse(String rue, String codePostal, int ville ,String pays) {
+	public Adresse(String rue, String codePostal, String ville ,String pays) {
 		this.rue = rue;
 		this.codePostal = codePostal;
 		this.ville = ville;
@@ -53,11 +53,11 @@ public class Adresse {
 		this.codePostal = codePostal;
 	}
 
-	public int getVille() {
+	public String getVille() {
 		return ville;
 	}
 
-	public void setVille(int ville) {
+	public void setVille(String ville) {
 		this.ville = ville;
 	}
 
