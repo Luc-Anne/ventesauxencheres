@@ -4,7 +4,7 @@ import fr.eni.ventesauxencheres.dal.jdbc.ArticleDAOJdbcImpl;
 import fr.eni.ventesauxencheres.dal.jdbc.CategorieDAOJdbcImpl;
 import fr.eni.ventesauxencheres.dal.jdbc.EnchereDAOJdbcImpl;
 import fr.eni.ventesauxencheres.dal.jdbc.RetraitDAOJdbcImpl;
-import fr.eni.ventesauxencheres.dal.jdbc.UtilisateurDAOJdbcImpl;
+import fr.eni.ventesauxencheres.dal.jdbc.ClientDAOJdbcImpl;
 
 public class FactoryDAO {
 
@@ -24,8 +24,8 @@ public class FactoryDAO {
 		return new RetraitDAOJdbcImpl();
 	}
 
-	public static UtilisateurDAO getUtilisateurDAO() {
-		return new UtilisateurDAOJdbcImpl();
+	public static ClientDAO getClientDAO() {
+		return new ClientDAOJdbcImpl();
 	}
 
 }

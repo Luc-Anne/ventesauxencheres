@@ -4,64 +4,98 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.dal.ConnectionProvider;
 import fr.eni.ventesauxencheres.dal.DALException;
-import fr.eni.ventesauxencheres.dal.UtilisateurDAO;
+import fr.eni.ventesauxencheres.dal.ClientDAO;
 
-public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
+public class ClientDAOJdbcImpl implements ClientDAO {
 
 	private static final String CONNEXION = "SELECT * FROM UTILISATEURS WHERE email = ? AND mot_de_passe = ? ";
-	private static final String INSCRIPTION = "INSERT INTO UTILISATEURS	(pseudo, nom,prenom, email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)"
-			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-	private static final String DELETE = "delete from UTILISATEURS where no_utilisateur = ?";
+	private static final String DELETE = "delete from UTILISATEURS where no_client = ?";
 	private static final String UPDATE = "UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?,telephone=?, "
-			+ "rue=? ,code_postal=?,ville=? ,mot_de_passe=?,credit=? ,administrateur=? " + "WHERE no_utilisateur=?; ";
+			+ "rue=? ,code_postal=?,ville=? ,mot_de_passe=?,credit=? ,administrateur=? " + "WHERE no_client=?; ";
 
-	private static final String GET_UTILISATEUR_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit from UTILISATEURS where no_utilisateur = ?";
+	private static final String GET_UTILISATEUR_BY_ID = "SELECT no_client, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit from UTILISATEURS where no_client = ?";
 
-	private static final String AFFICHER_LIST_UTILISATEURS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit from UTILISATEURS";
+	private static final String AFFICHER_LIST_UTILISATEURS = "SELECT no_client, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit from UTILISATEURS";
 	private static final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
 
 	// CRUD
 	@Override
-	public Utilisateur insert(Utilisateur u) throws DALException {
+	public Client insert(Client client, byte[] hashedMotDePasse) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
-			try (PreparedStatement stmt = cnx.prepareStatement(INSCRIPTION, PreparedStatement.RETURN_GENERATED_KEYS);) {
-				cnx.setAutoCommit(false);
-				stmt.setString(1, u.getPseudo());
-				stmt.setString(2, u.getNom());
-				stmt.setString(3, u.getPrenom());
-				stmt.setString(4, u.getEmail());
-				stmt.setString(5, u.getTelephone());
-				stmt.setString(6, u.getRue());
-				stmt.setString(7, u.getCodePostal());
-				stmt.setString(8, u.getVille());
-				stmt.setString(9, u.getMotDePasse());
-				stmt.setInt(10, u.getCredit());
-				stmt.setBoolean(11, u.isAdministrateur());
+			cnx.setAutoCommit(false);
+			// Add in Client
+			String query = "INSERT INTO CLIENT (nom, prenom, actif, credit, no_adresse, telephone)"
+					+ " VALUES (?, ?, ?, ?, ?, ?)";
+			try (PreparedStatement stmt = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
+				stmt.setString(1, client.getNom());
+				stmt.setString(2, client.getPrenom());
+				stmt.setBoolean(3, client.isActif());
+				stmt.setFloat(4, client.getCredit());
+				stmt.setInt(5, client.getAdresseDomicile().getNoAdresse());
+				stmt.setString(6, client.getTelephone());
 				stmt.executeUpdate();
 				ResultSet rs = stmt.getGeneratedKeys();
+				int noClient = -1;
 				if (rs.next()) {
-					u.setNoUtilisateur(rs.getInt(1));
+					noClient = rs.getInt(1);
 				}
-				cnx.commit();
-				return u;
+				// Add in super
+				query = "INSERT INTO PROFIL (pseudo, courriel, mot_de_passe, no_client)"
+						+ " VALUES (?, ?, ?, ?)";
+				try (PreparedStatement stmt1 = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
+					cnx.setAutoCommit(false);
+					stmt1.setString(1, client.getPseudo());
+					stmt1.setString(2, client.getCourriel());
+					stmt1.setBytes(3, hashedMotDePasse);
+					stmt1.setInt(4, noClient);
+					stmt1.executeUpdate();
+					rs = stmt1.getGeneratedKeys();
+					int noProfil = -1;
+					if (rs.next()) {
+						noProfil = rs.getInt(1);
+					}
+					// Read dateEnregistrement
+					query = "SELECT dateEnregistrement FROM PROFIL WHERE no_profil = ?";
+					try (PreparedStatement stmt2 = cnx.prepareStatement(query);) {
+						stmt2.setInt(1, noProfil);
+						rs = stmt2.executeQuery();
+						LocalDateTime dateEnregistrement = null;
+						if (rs.next()) {
+							dateEnregistrement = LocalDateTime.of(rs.getDate("date_enregistement").toLocalDate(),
+																  rs.getTime("date_enregistement").toLocalTime());
+						}
+						cnx.commit();
+						client.setNoClient(noClient);
+						client.setNoProfil(noProfil);
+						client.setDateEnregistrement(dateEnregistrement);
+						return client;
+					} catch (SQLException e) {
+						cnx.rollback();
+						throw new DALException("Erreur insertion dans Profil", e);
+					}
+				} catch (SQLException e) {
+					cnx.rollback();
+					throw new DALException("Erreur insertion dans Profil", e);
+				}
 			} catch (SQLException e) {
 				cnx.rollback();
-				throw new DALException("Erreur insertion ", e);
+				throw new DALException("Erreur insertion dans Client", e);
 			}
 		} catch (SQLException e) {
-			throw new DALException("Probleme insertion", e);
+			throw new DALException("Connexion impossible", e);
 		}
 	}
 
 	@Override
-	public Utilisateur selectById(int id) throws DALException {
-		Utilisateur utilisateur = null;
+	public Client selectById(int id) throws DALException {
+		Client client = null;
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
 				PreparedStatement stmt = cnx.prepareStatement(GET_UTILISATEUR_BY_ID);){
 
@@ -70,12 +104,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (SQLException e) {
 			throw new DALException("Probleme connexion", e);
 		}
-		return utilisateur;
+		return client;
 	}
 
 	@Override
-	public List<Utilisateur> selectAll() throws DALException {
-		List<Utilisateur> listeUtilisateursExistants = new ArrayList<>();
+	public List<Client> selectAll() throws DALException {
+		List<Client> listeClientsExistants = new ArrayList<>();
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
 				PreparedStatement stmt = cnx.prepareStatement(AFFICHER_LIST_UTILISATEURS);){
 
@@ -84,11 +118,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return listeUtilisateursExistants;
+		return listeClientsExistants;
 	}
 
 	@Override
-	public void update(Utilisateur userToUpdated) throws DALException {
+	public void update(Client userToUpdated) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(UPDATE);) {
 				cnx.setAutoCommit(false);
@@ -103,7 +137,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				stmt.setString(9, userToUpdated.getMotDePasse());
 				stmt.setInt(10, userToUpdated.getCredit());
 				stmt.setBoolean(11, userToUpdated.isAdministrateur());
-				stmt.setInt(12, userToUpdated.getNoUtilisateur());
+				stmt.setInt(12, userToUpdated.getNoClient());
 				stmt.executeUpdate();
 				cnx.commit();
 			} catch (SQLException e) {
@@ -135,8 +169,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	// Accesseurs spécifiques
 	@Override
-	public Utilisateur selectUtilisateurConnecte(String email, String motDePasse) throws DALException {
-		Utilisateur u = null;
+	public Client selectClientConnecte(String email, String motDePasse) throws DALException {
+		Client u = null;
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(CONNEXION)) {
 				cnx.setAutoCommit(false);
@@ -144,7 +178,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				stmt.setString(2, motDePasse);
 				ResultSet resultSet = stmt.executeQuery();
 				if (resultSet.next()) {
-					u = new Utilisateur(resultSet.getInt("no_utilisateur"), resultSet.getString("pseudo"),
+					u = new Client(resultSet.getInt("no_client"), resultSet.getString("pseudo"),
 							resultSet.getString("nom"), resultSet.getString("prenom"), resultSet.getString("email"),
 							resultSet.getString("telephone"), resultSet.getString("rue"),
 							resultSet.getString("code_postal"), resultSet.getString("ville"),
@@ -164,14 +198,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public Utilisateur selectByPseudo(String pseudo) throws DALException {
+	public Client selectByPseudo(String pseudo) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_PSEUDO);) {
 				stmt.setString(1, pseudo);
 				ResultSet rs = stmt.executeQuery();
-				Utilisateur u = null;
+				Client u = null;
 				if (rs.next()) {
-					u = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"),
+					u = new Client(rs.getInt("no_client"), rs.getString("pseudo"),
 							rs.getString("nom"), rs.getString("prenom"), rs.getString("email"),
 							rs.getString("telephone"), rs.getString("rue"),
 							rs.getString("code_postal"), rs.getString("ville"),
@@ -188,22 +222,22 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public Utilisateur connexion(String email, String motDePasse) throws DALException {
+	public Client connexion(String email, String motDePasse) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(CONNEXION);) {
 				stmt.setString(1, email);
 				stmt.setString(2, motDePasse);
 				ResultSet rs = stmt.executeQuery();
-				Utilisateur u = null;
+				Client client = null;
 				if (rs.next()) {
-					u = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"),
+					client = new Client(rs.getInt("no_client"), rs.getString("pseudo"),
 							rs.getString("nom"), rs.getString("prenom"), rs.getString("email"),
 							rs.getString("telephone"), rs.getString("rue"),
 							rs.getString("code_postal"), rs.getString("ville"),
 							rs.getString("mot_de_passe"), rs.getInt("credit"),
 							rs.getBoolean("administrateur"));
 				}
-				return u;
+				return client;
 			} catch (SQLException e) {
 				throw new DALException("Erreur insertion ", e);
 			}
