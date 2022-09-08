@@ -16,6 +16,7 @@ public class ArticleEtatVenteJdbcListener implements ServletContextListener {
 	Thread taskEtatVenteJdbc;
 
 	@Override
+	@Deprecated
 	public void contextInitialized(ServletContextEvent sce) {
 
         taskEtatVenteJdbc = new Thread(new Runnable() {
@@ -53,6 +54,7 @@ public class ArticleEtatVenteJdbcListener implements ServletContextListener {
     }
 
 	@Override
+	@Deprecated
 	public void contextDestroyed(ServletContextEvent sce) {
         if(taskEtatVenteJdbc != null && taskEtatVenteJdbc.isAlive()) {
         	taskEtatVenteJdbc.interrupt();

@@ -114,6 +114,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	}
 
 	@Override
+	@Deprecated
 	public List<Client> selectAll() throws DALException {
 		List<Client> listeClientsExistants = new ArrayList<>();
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
@@ -128,6 +129,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	}
 
 	@Override
+	@Deprecated
 	public void update(Client userToUpdated) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(UPDATE);) {
@@ -156,6 +158,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	}
 
 	@Override
+	@Deprecated
 	public void delete(int id) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(DELETE);) {
@@ -175,6 +178,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 
 	// Accesseurs spécifiques
 	@Override
+	@Deprecated
 	public Client selectClientConnecte(String email, String motDePasse) throws DALException {
 		Client u = null;
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
@@ -204,6 +208,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	}
 
 	@Override
+	@Deprecated
 	public Client selectByPseudo(String pseudo) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_PSEUDO);) {
@@ -228,6 +233,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	}
 
 	@Override
+	@Deprecated
 	public Client connexion(String email, String motDePasse) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(CONNEXION);) {

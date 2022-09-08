@@ -18,11 +18,13 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	private static final String GET_ALL_CATEGORIE ="SELECT * FROM  CATEGORIES";
 
 	@Override
+	@Deprecated
 	public Categorie insert(Categorie u) throws DALException {
 		return null;
 	}
 
 	@Override
+	@Deprecated
 	public Categorie selectById(int id) throws DALException {
 		Categorie categorie = null;
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
@@ -41,6 +43,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	}
 
 	@Override
+	@Deprecated
 	public List<Categorie> selectAll() throws DALException {
 		List<Categorie> categories = new ArrayList<>();
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
@@ -60,11 +63,13 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	}
 
 	@Override
+	@Deprecated
 	public void update(Categorie userToUpdated) throws DALException {
 
 	}
 
 	@Override
+	@Deprecated
 	public void delete(int id) throws DALException {
 
 	}

@@ -63,6 +63,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "WHERE a.no_utilisateur = ? ";
 
 	@Override
+	@Deprecated
 	public Article insert(Article article) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
 				PreparedStatement stmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);){
@@ -81,6 +82,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	@Override
+	@Deprecated
 	public Article selectById(int id) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement statement = cnx.prepareStatement(SELECT_BY_ID)) {
@@ -99,6 +101,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	@Override
+	@Deprecated
 	public List<Article> selectByIdClient(int idClient) throws DALException{
 		List<Article> articleList=new ArrayList<>();
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();){
@@ -119,6 +122,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	@Override
+	@Deprecated
 	public List<Article> selectAll() throws DALException {
 		List<Article> articleList=new ArrayList<>();
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();
@@ -137,6 +141,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	@Override
+	@Deprecated
 	public void update(Article article) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(UPDATE);) {
@@ -162,9 +167,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	@Override
+	@Deprecated
 	public void delete(int id) throws DALException {
 	}
 
+	@Deprecated
 	private Article createInstanceArticleFromResultSet(ResultSet rs) throws SQLException {
 		Client vendeur = new Client (
 			rs.getInt("no_utilisateur"),
@@ -240,6 +247,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	@Override
+	@Deprecated
 	public List<Article> selectListHome(String typeQuery, int idClientConnecte, String motCle, String libelle) throws DALException {
 		String query = "";
 		if ("OpenedBids".equals(typeQuery)) {

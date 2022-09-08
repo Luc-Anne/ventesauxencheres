@@ -37,6 +37,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "WHERE e.no_article = ? ";
 
 	@Override
+	@Deprecated
 	public Enchere insert(Enchere enchere) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(INSERT);) {
@@ -58,6 +59,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	}
 
 	@Override
+	@Deprecated
 	public Enchere selectById(int no_article) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement statement = cnx.prepareStatement(SELECT_BY_ID)) {
@@ -95,6 +97,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	}
 
 	@Override
+	@Deprecated
 	public List<Enchere> selectAll() {
 		List<Enchere> listes = new ArrayList<>();
 
@@ -102,6 +105,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	}
 
 	@Override
+	@Deprecated
 	public Enchere selectByArticle(Article article) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement statement = cnx.prepareStatement(SELECT_BY_OBJECT)) {
@@ -140,6 +144,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	}
 
 	@Override
+	@Deprecated
 	public void update(Enchere enchere) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement stmt = cnx.prepareStatement(UPDATE);) {
@@ -160,11 +165,13 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	}
 
 	@Override
+	@Deprecated
 	public void delete(int id) throws DALException {
 
 	}
 
 	@Override
+	@Deprecated
 	public void remplacerEnchere(Enchere enchere) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement statementSelectAncienEncherisseur = cnx.prepareStatement(SELECT_BY_ID);) {
