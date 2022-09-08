@@ -15,13 +15,6 @@ import fr.eni.ventesauxencheres.dal.ClientDAO;
 
 public class ClientDAOJdbcImpl implements ClientDAO {
 
-	private static final String CONNEXION = "SELECT * FROM UTILISATEURS WHERE email = ? AND mot_de_passe = ? ";
-	private static final String DELETE = "delete from UTILISATEURS where no_client = ?"
-
-	private static final String AFFICHER_LIST_UTILISATEURS = "SELECT no_client, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit from UTILISATEURS";
-	private static final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
-
-	// CRUD
 	@Override
 	public Client insert(Client client, byte[] hashedMotDePasse) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
@@ -87,21 +80,12 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 							client.setDateEnregistrement(dateEnregistrement);
 							client.getAdresseDomicile().setNoAdresse(noAdresse);
 							return client;
-						} catch (SQLException e) {
-							cnx.rollback();
-							throw new DALException("Erreur insertion dans Profil", e);
 						}
-					} catch (SQLException e) {
-						cnx.rollback();
-						throw new DALException("Erreur insertion dans Profil", e);
 					}
-				} catch (SQLException e) {
-					cnx.rollback();
-					throw new DALException("Erreur insertion dans Profil", e);
 				}
-			} catch (SQLException e) {
+			} catch (SQLException | NullPointerException e) {
 				cnx.rollback();
-				throw new DALException("Erreur insertion dans Client", e);
+				throw new DALException("Erreur insertion de client", e);
 			}
 		} catch (SQLException e) {
 			throw new DALException("Connexion impossible", e);
@@ -163,7 +147,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 			try (PreparedStatement st = cnx.prepareStatement(query);){
 				ResultSet rs = st.executeQuery();
 				List<Client> clients = new ArrayList<>();;
-				if (rs.next()) {
+				while (rs.next()) {
 					clients.add(BoObjectFactory.getInstance().createClient(rs));
 				}
 				return clients;
@@ -179,6 +163,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	public void update(Client client) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			cnx.setAutoCommit(false);
+			// Update in CLIENT
 			String query = "UPDATE CLIENT SET"
 						+ " nom = ?,"
 						+ " prenom = ?,"
@@ -194,6 +179,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				st.setString(5, client.getTelephone());
 				st.setInt(6, client.getNoClient());
 				st.executeUpdate();
+				// Update in PROFIL
 				query = "UPDATE PROFIL SET"
 					 + " pseudo = ?,"
 				     + " courriel = ?"
@@ -204,9 +190,6 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 					st2.setInt(3, client.getNoProfil());
 					st2.executeUpdate();
 					cnx.commit();
-				} catch (SQLException e) {
-					cnx.rollback();
-					throw new DALException("Erreur mise à jour de profil", e);
 				}
 			} catch (SQLException e) {
 				cnx.rollback();
@@ -218,78 +201,61 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	}
 
 	@Override
-	@Deprecated
-	public void delete(int id) throws DALException {
+	public void delete(Client client) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
-			try (PreparedStatement stmt = cnx.prepareStatement(DELETE);) {
-				stmt.setInt(1, id);
-				stmt.executeUpdate();
-				int i = stmt.executeUpdate();
-				if (i == 1) {
-					System.out.println("Suppresssion réussie");
+			cnx.setAutoCommit(false);
+			// Delete in ADRESSE
+			String query = "DELETE FROM ADRESSE"
+						+ " WHERE no_adresse = ?";
+			try (PreparedStatement st = cnx.prepareStatement(query);) {
+				st.setInt(1, client.getAdresseDomicile().getNoAdresse());
+				st.executeUpdate();
+				// Delete in PROFIL
+				query = "DELETE FROM CLIENT"
+					 + " WHERE no_profil = ?";
+				try (PreparedStatement st2 = cnx.prepareStatement(query);) {
+					st2.setInt(1, client.getNoProfil());
+					st2.executeUpdate();
+					// Delete in CLIENT
+					query = "DELETE FROM CLIENT"
+						 + " WHERE no_client = ?";
+					try (PreparedStatement st1 = cnx.prepareStatement(query);) {
+						st1.setInt(1, client.getNoClient());
+						st1.executeUpdate();
+						cnx.commit();
+					}
 				}
-			} catch (SQLException e) {
-				throw new DALException("Erreur Suppresssion ", e);
-			}
-		} catch (SQLException e) {
-			throw new DALException("Probleme Suppresssion", e);
-		}
-	}
-
-	// Accesseurs spécifiques
-	@Override
-	@Deprecated
-	public Client selectClientConnecte(String email, String motDePasse) throws DALException {
-		Client u = null;
-		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
-			try (PreparedStatement stmt = cnx.prepareStatement(CONNEXION)) {
-				cnx.setAutoCommit(false);
-				stmt.setString(1, email);
-				stmt.setString(2, motDePasse);
-				ResultSet resultSet = stmt.executeQuery();
-				if (resultSet.next()) {
-					u = new Client(resultSet.getInt("no_client"), resultSet.getString("pseudo"),
-							resultSet.getString("nom"), resultSet.getString("prenom"), resultSet.getString("email"),
-							resultSet.getString("telephone"), resultSet.getString("rue"),
-							resultSet.getString("code_postal"), resultSet.getString("ville"),
-							resultSet.getString("mot_de_passe"), resultSet.getInt("credit"),
-							resultSet.getBoolean("administrateur"));
-					cnx.commit();
-					return u;
-				}
-			} catch (SQLException e) {
+			} catch (SQLException | NullPointerException e) {
 				cnx.rollback();
-				throw new DALException("Erreur Connexion", e);
+				throw new DALException("Erreur suppression de client", e);
 			}
 		} catch (SQLException e) {
-			throw new DALException("Probleme insertion", e);
+			throw new DALException("Connexion impossible", e);
 		}
-		return null;
 	}
 
 	@Override
-	@Deprecated
-	public Client connexion(String email, String motDePasse) throws DALException {
+	public Client connexion(String email, byte[] hashmotDePasse) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
-			try (PreparedStatement stmt = cnx.prepareStatement(CONNEXION);) {
-				stmt.setString(1, email);
-				stmt.setString(2, motDePasse);
-				ResultSet rs = stmt.executeQuery();
+			String query = "SELECT *"
+						+ " FROM CLIENT c"
+						+ " LEFT JOIN PROFIL f ON c.no_profil = f.no_profil"
+						+ " WHERE courriel = ? AND mot_de_passe = ? AND no_profil IS NOT NULL";
+			try (PreparedStatement st = cnx.prepareStatement(query);) {
+				st.setString(1, email);
+				st.setBytes(2, hashmotDePasse);
+				ResultSet rs = st.executeQuery();
 				Client client = null;
 				if (rs.next()) {
-					client = new Client(rs.getInt("no_client"), rs.getString("pseudo"),
-							rs.getString("nom"), rs.getString("prenom"), rs.getString("email"),
-							rs.getString("telephone"), rs.getString("rue"),
-							rs.getString("code_postal"), rs.getString("ville"),
-							rs.getString("mot_de_passe"), rs.getInt("credit"),
-							rs.getBoolean("administrateur"));
+					client = BoObjectFactory.getInstance().createClient(rs);
 				}
 				return client;
 			} catch (SQLException e) {
-				throw new DALException("Erreur insertion ", e);
+				cnx.rollback();
+				throw new DALException("Erreur selection client connecte", e);
 			}
 		} catch (SQLException e) {
-			throw new DALException("Probleme insertion", e);
+			throw new DALException("Connexion impossible", e);
 		}
 	}
 

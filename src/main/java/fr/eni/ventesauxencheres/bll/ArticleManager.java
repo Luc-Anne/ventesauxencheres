@@ -11,7 +11,7 @@ import fr.eni.ventesauxencheres.dal.DALException;
 import fr.eni.ventesauxencheres.dal.FactoryDAO;
 
 public class ArticleManager {
-
+	// TODO
 	private static ArticleManager articleManager;
 
 	private ArticleDAO articleDAO;

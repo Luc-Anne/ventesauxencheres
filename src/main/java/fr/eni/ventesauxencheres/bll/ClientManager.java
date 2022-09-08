@@ -2,9 +2,11 @@ package fr.eni.ventesauxencheres.bll;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
+import fr.eni.ventesauxencheres.bo.utilisateur.Profil;
 import fr.eni.ventesauxencheres.dal.ClientDAO;
 import fr.eni.ventesauxencheres.dal.DALException;
 import fr.eni.ventesauxencheres.dal.FactoryDAO;
@@ -34,110 +36,47 @@ public class ClientManager {
 		return invalidCause(client).size() == 0 ? true : false;
 	}
 
-	public List<String> invalidCause(Client client) {
-		return null;
-	}
-/*
 	public List<String> invalidCause(Client client)  {
 		List<String> invalidCause = new ArrayList<>();
 
-		// pseudo
-		if (client.getPseudo() == null ||
-			client.getPseudo() == "") {
-			invalidCause.add("client.pseudo_vide");
-		} else {
-			if (client.getPseudo().length() > 30) {
-				invalidCause.add("client.pseudo_tropLong");
-			}
-			if (client.getPseudo().contains(" ")) {
-				invalidCause.add("client.pseudo_avecEspace");
-			}
-		}
+		// profil (héritage)
+		invalidCause.addAll(ProfilManager.getInstance().invalidCause((Profil)client));
 		// nom
 		if (client.getNom() == null ||
-			client.getNom() == "") {
+			"".equals(client.getNom())) {
 			invalidCause.add("client.nom_vide");
 		} else {
-			if (client.getNom().length() > 30) {
+			if (client.getNom().length() > 50) {
 				invalidCause.add("client.nom_tropLong");
 			}
 		}
 		// prenom
 		if (client.getPrenom() == null ||
-			client.getPrenom() == "") {
+			"".equals(client.getPrenom())) {
 			invalidCause.add("client.prenom_vide");
 		} else {
-			if (client.getPrenom().length() > 30) {
+			if (client.getPrenom().length() > 50) {
 				invalidCause.add("client.prenom_tropLong");
 			}
 		}
-		// email
-		if (client.getEmail() == null ||
-			client.getEmail() == "") {
-			invalidCause.add("client.email_vide");
-		} else {
-			if (client.getEmail().length() > 20) {
-				invalidCause.add("client.email_tropLong");
-			}
-			if (! client.getEmail().contains("@")) {
-				invalidCause.add("client.email_manque@");
-			}
-		}
-		// telephone
-		if (client.getNom().length() > 15) {
-			invalidCause.add("client.telephone_tropLong");
-		}
-		// rue
-		if (client.getRue() == null ||
-			client.getRue() == "") {
-			invalidCause.add("client.rue_vide");
-		} else {
-			if (client.getRue().length() > 30) {
-				invalidCause.add("client.rue_tropLong");
-			}
-		}
-		// codePostal
-		if (client.getCodePostal() == null ||
-			client.getCodePostal() == "") {
-			invalidCause.add("client.codePostal_vide");
-		} else {
-			if (client.getCodePostal().length() > 10) {
-				invalidCause.add("client.codePostal_tropLong");
-			}
-		}
-		// ville
-		if (client.getVille() == null ||
-			client.getVille() == "") {
-			invalidCause.add("client.ville_vide");
-		} else {
-			if (client.getVille().length() > 30) {
-				invalidCause.add("client.ville_tropLong");
-			}
-		}
-		// motDePasse
-		if (client.getMotDePasse() == null ||
-			client.getMotDePasse() == "") {
-			invalidCause.add("client.motDePasse_vide");
-		} else {
-			if (client.getMotDePasse().length() > 30) {
-				invalidCause.add("client.motDePasse_tropLong");
-			}
-			if (client.getMotDePasse().length() < 8) {
-				// Un mot de passe est d'au moins 8 caractères
-				invalidCause.add("client.motDePasse_faible");
-			}
-		}
-
 		// credit
 		if (client.getCredit() < 0) {
 			invalidCause.add("client.credit_negatif");
 		}
-		// administrateur
-		// Aucun test car boolean
+		// telephone
+		if (client.getTelephone().length() > 20) {
+			invalidCause.add("client.telephone_tropLong");
+		}
+		// adresseDomicile
+		if (client.getAdresseDomicile() == null) {
+			invalidCause.add("client.adresse_vide");
+		} else {
+			invalidCause.addAll(AdresseManager.getInstance().invalidCause(client.getAdresseDomicile()));
+		}
 
 		return invalidCause;
 	}
-*/
+
 	// Méthodes métier basiques
 	public Client save(Client client, String motDePasse) throws BLLException {
 		try {
@@ -160,6 +99,14 @@ public class ClientManager {
 		}
 	}
 
+	public Client getByPseudo(String pseudo) throws BLLException {
+		try {
+			return clientDAO.selectByPseudo(pseudo);
+		} catch (DALException e) {
+			throw new BLLException("ERREUR MANAGER", e);
+		}
+	}
+	
 	public List<Client> getAll() throws BLLException {
 		try {
 			return clientDAO.selectAll();
@@ -180,26 +127,18 @@ public class ClientManager {
 		}
 	}
 
-	public void delete(int id) throws BLLException {
+	public void delete(Client client) throws BLLException {
 		try {
-			clientDAO.delete(id);
+			clientDAO.delete(client);
 		} catch (DALException e) {
 			throw new BLLException("", e);
 		}
 	}
 
-	// Spécifiques
-	public Client connexion(String email, String password) throws BLLException {
+	public Client connexion(String email, String motDePasse) throws BLLException {
 		try {
-			return clientDAO.connexion(email, password);
-		} catch (DALException e) {
-			throw new BLLException("ERREUR MANAGER", e);
-		}
-	}
-
-	public Client getByPseudo(String pseudo) throws BLLException {
-		try {
-			return clientDAO.selectByPseudo(pseudo);
+			byte[] hashedMotDePasse = hashMotDePasse(motDePasse);
+			return clientDAO.connexion(email, hashedMotDePasse);
 		} catch (DALException e) {
 			throw new BLLException("ERREUR MANAGER", e);
 		}

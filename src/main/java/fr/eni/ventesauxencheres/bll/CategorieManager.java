@@ -9,7 +9,7 @@ import fr.eni.ventesauxencheres.dal.DALException;
 import fr.eni.ventesauxencheres.dal.FactoryDAO;
 
 public class CategorieManager {
-
+	// TODO
 	private static CategorieManager categorieManager;
 
 	private CategorieDAO categorieDAO;

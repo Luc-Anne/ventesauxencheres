@@ -10,7 +10,7 @@ import fr.eni.ventesauxencheres.dal.EnchereDAO;
 import fr.eni.ventesauxencheres.dal.FactoryDAO;
 
 public class EnchereManager {
-
+	// TODO
 	private static EnchereManager enchereManager;
 
 	private EnchereDAO enchereDAO;
