@@ -3,8 +3,8 @@ package fr.eni.ventesauxencheres.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.ventesauxencheres.bo.Article;
-import fr.eni.ventesauxencheres.bo.Enchere;
+import fr.eni.ventesauxencheres.bo.encheres.Article;
+import fr.eni.ventesauxencheres.bo.encheres.Enchere;
 import fr.eni.ventesauxencheres.dal.DALException;
 import fr.eni.ventesauxencheres.dal.EnchereDAO;
 import fr.eni.ventesauxencheres.dal.FactoryDAO;

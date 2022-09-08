@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.ventesauxencheres.bll.BLLException;
-import fr.eni.ventesauxencheres.bll.UtilisateurManager;
-import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.bll.ClientManager;
+import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Errors;
 
 /**
@@ -47,10 +47,10 @@ public class Profil extends HttpServlet {
 		// Récupérer les informations de la session
 		HttpSession session = request.getSession();
 		// Créer un utilisateur avec les attributs de l'utilisateur connecté à la session à l'aide de l'objet utilisateurConnecte
-		Utilisateur userSession=(Utilisateur) session.getAttribute("utilisateurConnecte");
+		Client userSession=(Client) session.getAttribute("utilisateurConnecte");
 		// Créer une nouvelle instance d'utilisateur, sur lequel appliquer les modifications
-		Utilisateur user=new Utilisateur(
-				userSession.getNoUtilisateur(),
+		Client user=new Client(
+				userSession.getNoClient(),
 				pseudoAModifier,nomAModifier,
 				prenomAModifier,
 				emailAModifier,
@@ -65,10 +65,10 @@ public class Profil extends HttpServlet {
 
 		// Appliquer la modification est remonter les éventuelles erreurs SQL d'unicité
 		try {
-			UtilisateurManager.getInstance().modify(user);
+			ClientManager.getInstance().modify(user);
 			session.setAttribute("utilisateurConnecte", user);
 		} catch (BLLException e) {
-			erreurs.addAll(UtilisateurManager.getInstance().invalidCause(user));
+			erreurs.addAll(ClientManager.getInstance().invalidCause(user));
 			CharSequence erreurAChercher = "utilisateurs_pseudo_uq";
 			if (e.getCause() != null && e.getCause().getCause() != null) {
 				if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {

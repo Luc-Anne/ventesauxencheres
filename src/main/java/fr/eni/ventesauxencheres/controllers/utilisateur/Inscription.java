@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.ventesauxencheres.bll.BLLException;
-import fr.eni.ventesauxencheres.bll.UtilisateurManager;
-import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.bll.ClientManager;
+import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Errors;
 import fr.eni.ventesauxencheres.controllers.util.Url;
 
@@ -37,7 +37,7 @@ public class Inscription extends HttpServlet {
 
 		String mot_de_passe = request.getParameter("password");
 		String mot_de_passeConfirmation = request.getParameter("passwordConfirmation");
-		Utilisateur utilisateur = new Utilisateur(
+		Client utilisateur = new Client(
 			request.getParameter("pseudo").trim(),
 			request.getParameter("nom"),
 			request.getParameter("prenom"),
@@ -47,7 +47,7 @@ public class Inscription extends HttpServlet {
 			request.getParameter("code_postal"),
 			request.getParameter("ville"),
 			mot_de_passe,
-			UtilisateurManager.DEFAULT_CREDIT,
+			ClientManager.DEFAULT_CREDIT,
 			false
 		);
 
@@ -58,13 +58,13 @@ public class Inscription extends HttpServlet {
 		}
 
 		try {
-			utilisateur = UtilisateurManager.getInstance().save(utilisateur);
+			utilisateur = ClientManager.getInstance().save(utilisateur);
 			request.getSession().setAttribute("utilisateurConnecte", utilisateur);
 			request.getSession().setAttribute("messageGlobal", "Bienvenue sur le site !");
 			response.sendRedirect(Url.HOME.getUrl());
 			return;
 		} catch (BLLException e) {
-			erreurs.addAll(UtilisateurManager.getInstance().invalidCause(utilisateur));
+			erreurs.addAll(ClientManager.getInstance().invalidCause(utilisateur));
 			CharSequence erreurAChercher = "utilisateurs_pseudo_uq";
 			if (e.getCause() != null && e.getCause().getCause() != null) {
 				if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {
@@ -84,8 +84,8 @@ public class Inscription extends HttpServlet {
 
 	}
 
-	private void reafficherInscriptionQuandErreur(HttpServletRequest request, HttpServletResponse response, Utilisateur utilisateur, Errors erreurs) throws ServletException, IOException {
-		erreurs.addAll(UtilisateurManager.getInstance().invalidCause(utilisateur));
+	private void reafficherInscriptionQuandErreur(HttpServletRequest request, HttpServletResponse response, Client utilisateur, Errors erreurs) throws ServletException, IOException {
+		erreurs.addAll(ClientManager.getInstance().invalidCause(utilisateur));
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
 		if (rd != null) {
 			rd.forward(request, response);

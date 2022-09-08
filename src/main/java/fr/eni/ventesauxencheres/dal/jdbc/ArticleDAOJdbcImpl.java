@@ -10,11 +10,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.ventesauxencheres.bo.Article;
-import fr.eni.ventesauxencheres.bo.Categorie;
-import fr.eni.ventesauxencheres.bo.Enchere;
-import fr.eni.ventesauxencheres.bo.Retrait;
-import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.bo.encheres.Article;
+import fr.eni.ventesauxencheres.bo.encheres.Categorie;
+import fr.eni.ventesauxencheres.bo.encheres.Enchere;
+import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.dal.ArticleDAO;
 import fr.eni.ventesauxencheres.dal.ConnectionProvider;
 import fr.eni.ventesauxencheres.dal.DALException;
@@ -72,7 +71,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			stmt.setTimestamp(3, Timestamp.valueOf(article.getDateDebutEncheres()));
             stmt.setTimestamp(4, Timestamp.valueOf(article.getDateFinEncheres()));
 			stmt.setInt(5, article.getMiseAPrix());
-			stmt.setInt(6, article.getVendeur().getNoUtilisateur());
+			stmt.setInt(6, article.getVendeur().getNoClient());
 			stmt.setInt(7, article.getCategorieArticle().getNoCategorie());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -100,11 +99,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	@Override
-	public List<Article> selectByIdUtilisateur(int idUtilisateur) throws DALException{
+	public List<Article> selectByIdClient(int idClient) throws DALException{
 		List<Article> articleList=new ArrayList<>();
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();){
 			try (PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_ID_UTILISATEUR);) {
-				stmt.setInt(1, idUtilisateur);
+				stmt.setInt(1, idClient);
 				ResultSet rs = stmt.executeQuery();
 				while(rs.next()) {
 					Article art = createInstanceArticleFromResultSet(rs);
@@ -147,7 +146,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				stmt.setTimestamp(3, Timestamp.valueOf(article.getDateDebutEncheres()));
 	            stmt.setTimestamp(4, Timestamp.valueOf(article.getDateFinEncheres()));
 				stmt.setInt(5, article.getMiseAPrix());
-				stmt.setInt(6, article.getVendeur().getNoUtilisateur());
+				stmt.setInt(6, article.getVendeur().getNoClient());
 				stmt.setInt(7, article.getCategorieArticle().getNoCategorie());
 				stmt.setString(8, article.getEtatVente());
 				stmt.setInt(9, article.getNoArticle());
@@ -167,7 +166,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	private Article createInstanceArticleFromResultSet(ResultSet rs) throws SQLException {
-		Utilisateur vendeur = new Utilisateur (
+		Client vendeur = new Client (
 			rs.getInt("no_utilisateur"),
 			rs.getString("pseudo"),
 			rs.getString("nom"),
@@ -187,7 +186,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			rs.getString("libelle")
 		);
 
-		Utilisateur encherisseur = new Utilisateur (
+		Client encherisseur = new Client (
 			rs.getInt("bidderNo"),
 			rs.getString("bidderPseudo"),
 			rs.getString("bidderNom"),
@@ -241,7 +240,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	@Override
-	public List<Article> selectListHome(String typeQuery, int idUtilisateurConnecte, String motCle, String libelle) throws DALException {
+	public List<Article> selectListHome(String typeQuery, int idClientConnecte, String motCle, String libelle) throws DALException {
 		String query = "";
 		if ("OpenedBids".equals(typeQuery)) {
 			query = SELECT_ALL
@@ -291,7 +290,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				rs=stmt.executeQuery();
 			} else {
 				PreparedStatement stmt = cnx.prepareStatement(query);
-				stmt.setInt(1,idUtilisateurConnecte);
+				stmt.setInt(1,idClientConnecte);
 				stmt.setString(2, "%" + motCle + "%");
 				stmt.setString(3, "%" + libelle+ "%");
 				rs=stmt.executeQuery();

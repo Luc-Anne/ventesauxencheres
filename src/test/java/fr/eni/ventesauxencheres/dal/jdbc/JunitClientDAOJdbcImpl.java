@@ -14,15 +14,29 @@ class JunitClientDAOJdbcImpl {
 
 	@Test
 	void test_insert() {
-		Client client = new Client("pseudo", "pseudo@example.com", "Richard", "Gaston", 100 , "02065314");
-		System.out.println(client);
 		try {
+			// Enregistrer un client
+			Client client = new Client("pseudo", "pseudo@example.com", "Richard", "Gaston", 100 , "02065314");
 			byte[] motDePasse = ClientManager.getInstance().hashMotDePasse("test");
 			client = FactoryDAO.getClientDAO().insert(client, motDePasse);
+			// Récupérer un client
+			Client clientRecupere = FactoryDAO.getClientDAO().selectById(client.getNoClient());
+			// Comparer les deux
+			if (client.getPseudo().equals(clientRecupere.getPseudo()) &&
+				client.getCourriel().equals(clientRecupere.getCourriel()) &&
+				client.getNom().equals(clientRecupere.getNom()) &&
+				client.getPrenom().equals(clientRecupere.getPrenom()) &&
+				client.getCredit() == clientRecupere.getCredit() &&
+				client.getTelephone().equals(clientRecupere.getTelephone())
+				) {
+				assertTrue(true);
+			}
+			else {
+				assertTrue(false);
+			}
 		} catch (DALException | BLLException e) {
 			e.printStackTrace();
 		}
-		//System.out.println(client);
 	}
 
 }

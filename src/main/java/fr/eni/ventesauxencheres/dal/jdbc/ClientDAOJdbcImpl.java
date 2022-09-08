@@ -20,8 +20,6 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	private static final String UPDATE = "UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?,telephone=?, "
 			+ "rue=? ,code_postal=?,ville=? ,mot_de_passe=?,credit=? ,administrateur=? " + "WHERE no_client=?; ";
 
-	private static final String GET_UTILISATEUR_BY_ID = "SELECT no_client, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit from UTILISATEURS where no_client = ?";
-
 	private static final String AFFICHER_LIST_UTILISATEURS = "SELECT no_client, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit from UTILISATEURS";
 	private static final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
 
@@ -33,15 +31,15 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 			// Add in Client
 			String query = "INSERT INTO CLIENT (nom, prenom, actif, credit, no_adresse, telephone)"
 					+ " VALUES (?, ?, ?, ?, ?, ?)";
-			try (PreparedStatement stmt = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
-				stmt.setString(1, client.getNom());
-				stmt.setString(2, client.getPrenom());
-				stmt.setBoolean(3, client.isActif());
-				stmt.setFloat(4, client.getCredit());
-				stmt.setInt(5, client.getAdresseDomicile().getNoAdresse());
-				stmt.setString(6, client.getTelephone());
-				stmt.executeUpdate();
-				ResultSet rs = stmt.getGeneratedKeys();
+			try (PreparedStatement st = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
+				st.setString(1, client.getNom());
+				st.setString(2, client.getPrenom());
+				st.setBoolean(3, client.isActif());
+				st.setFloat(4, client.getCredit());
+				st.setInt(5, client.getAdresseDomicile().getNoAdresse());
+				st.setString(6, client.getTelephone());
+				st.executeUpdate();
+				ResultSet rs = st.getGeneratedKeys();
 				int noClient = -1;
 				if (rs.next()) {
 					noClient = rs.getInt(1);
@@ -49,14 +47,14 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				// Add in super
 				query = "INSERT INTO PROFIL (pseudo, courriel, mot_de_passe, no_client)"
 						+ " VALUES (?, ?, ?, ?)";
-				try (PreparedStatement stmt1 = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
+				try (PreparedStatement st1 = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
 					cnx.setAutoCommit(false);
-					stmt1.setString(1, client.getPseudo());
-					stmt1.setString(2, client.getCourriel());
-					stmt1.setBytes(3, hashedMotDePasse);
-					stmt1.setInt(4, noClient);
-					stmt1.executeUpdate();
-					rs = stmt1.getGeneratedKeys();
+					st1.setString(1, client.getPseudo());
+					st1.setString(2, client.getCourriel());
+					st1.setBytes(3, hashedMotDePasse);
+					st1.setInt(4, noClient);
+					st1.executeUpdate();
+					rs = st1.getGeneratedKeys();
 					int noProfil = -1;
 					if (rs.next()) {
 						noProfil = rs.getInt(1);
@@ -95,16 +93,24 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 
 	@Override
 	public Client selectById(int id) throws DALException {
-		Client client = null;
-		try (Connection cnx = ConnectionProvider.getConnection_VAE();
-				PreparedStatement stmt = cnx.prepareStatement(GET_UTILISATEUR_BY_ID);){
-
-
-
+		String query = "SELECT *"
+					+ " FROM CLIENT"
+					+ "	WHERE no_client = ?";
+		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
+			try (PreparedStatement st = cnx.prepareStatement(query);){
+				st.setInt(1, id);
+				ResultSet rs = st.executeQuery();
+				Client client = null;
+				if (rs.next()) {
+					client = BoObjectFactory.getInstance().createClient(rs);
+				}
+				return client;
+			} catch (SQLException e) {
+				throw new DALException("Erreur selection de client", e);
+			}
 		} catch (SQLException e) {
-			throw new DALException("Probleme connexion", e);
+			throw new DALException("Connexion impossible", e);
 		}
-		return client;
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package fr.eni.ventesauxencheres.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.ventesauxencheres.bo.Categorie;
+import fr.eni.ventesauxencheres.bo.encheres.Categorie;
 import fr.eni.ventesauxencheres.dal.CategorieDAO;
 import fr.eni.ventesauxencheres.dal.DALException;
 import fr.eni.ventesauxencheres.dal.FactoryDAO;

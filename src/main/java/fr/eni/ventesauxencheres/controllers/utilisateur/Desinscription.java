@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.ventesauxencheres.bll.ArticleManager;
 import fr.eni.ventesauxencheres.bll.BLLException;
-import fr.eni.ventesauxencheres.bll.UtilisateurManager;
-import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.bll.ClientManager;
+import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Url;
 
 @WebServlet("/moncompte/desinscription")
@@ -23,7 +23,7 @@ public class Desinscription extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		Utilisateur uc = (Utilisateur) session.getAttribute("utilisateurConnecte");
+		Client uc = (Client) session.getAttribute("utilisateurConnecte");
 		if (uc == null) {
 			response.sendError(403); return;
 		} else {
@@ -32,11 +32,11 @@ public class Desinscription extends HttpServlet {
 				response.sendRedirect(Url.COMPTE_PROFIL.getUrl()); return;
 			} else {
 				try {
-					if (ArticleManager.getInstance().hasArticle(uc.getNoUtilisateur())) {
+					if (ArticleManager.getInstance().hasArticle(uc.getNoClient())) {
 						session.setAttribute("messageGlobal", "Vous ne pouvez pas supprimer votre compte car vous avez des articles sur le site");
 						response.sendRedirect(Url.COMPTE_PROFIL.getUrl()); return;
 					} else {
-						UtilisateurManager.getInstance().delete(uc.getNoUtilisateur());
+						ClientManager.getInstance().delete(uc.getNoClient());
 						session.removeAttribute("utilisateurConnecte");
 						request.getSession().setAttribute("messageGlobal", "Votre compte a bien été supprimé");
 						response.sendRedirect(Url.HOME.getUrl());

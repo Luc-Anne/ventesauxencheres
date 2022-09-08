@@ -13,7 +13,7 @@ import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Url;
 
 /**
@@ -38,8 +38,8 @@ public class AdminRestrictedFilter extends HttpFilter implements Filter {
 		//transformer l objet ServletRequest request en type HttpServletRequest
 		HttpServletRequest httpRequest=(HttpServletRequest) request;
 		Object utilisateur = httpRequest.getSession().getAttribute("utilisateurConnecte");
-
-		if (utilisateur == null || !((Utilisateur)utilisateur).isAdministrateur()) {
+		// TODO Test if it's an administrateur
+		if (utilisateur == null) {
 			// Ici vue redirigee vers la vue home, mais l'url avec profil est conservé
 			// httpRequest.getRequestDispatcher("/home").forward(httpRequest, response);
 			// Privilegier une redirection vers la servlet home

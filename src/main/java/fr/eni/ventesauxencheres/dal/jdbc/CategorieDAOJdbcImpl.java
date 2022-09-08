@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.ventesauxencheres.bo.Categorie;
+import fr.eni.ventesauxencheres.bo.encheres.Categorie;
 import fr.eni.ventesauxencheres.dal.CategorieDAO;
 import fr.eni.ventesauxencheres.dal.ConnectionProvider;
 import fr.eni.ventesauxencheres.dal.DALException;

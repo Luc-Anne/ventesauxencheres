@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.ventesauxencheres.bll.BLLException;
-import fr.eni.ventesauxencheres.bll.UtilisateurManager;
-import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.bll.ClientManager;
+import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 
 /**
  * Servlet implementation class profil
@@ -24,9 +24,9 @@ public class ProfilPublic extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pseudoProfilDemande = request.getPathInfo().substring(1);
-		Utilisateur utilisateur = null;
+		Client utilisateur = null;
 		try {
-			utilisateur = UtilisateurManager.getInstance().getByPseudo(pseudoProfilDemande);
+			utilisateur = ClientManager.getInstance().getByPseudo(pseudoProfilDemande);
 			request.setAttribute("utilisateur", utilisateur);
 			if (utilisateur == null) {
 				response.sendError(404);

@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.ventesauxencheres.bll.BLLException;
-import fr.eni.ventesauxencheres.bll.UtilisateurManager;
-import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.bll.ClientManager;
+import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Url;
 
 /**
@@ -36,7 +36,7 @@ public class Connexion extends HttpServlet {
 		String password = request.getParameter("motDePasse");
 
 		try {
-			Utilisateur utilisateur = UtilisateurManager.getInstance().connexion(email, password);
+			Client utilisateur = ClientManager.getInstance().connexion(email, password);
 			if (utilisateur != null) {
 				HttpSession session = request.getSession();
 				session.setAttribute("utilisateurConnecte", utilisateur);

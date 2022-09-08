@@ -3,9 +3,9 @@ package fr.eni.ventesauxencheres.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.ventesauxencheres.bo.Article;
-import fr.eni.ventesauxencheres.bo.Enchere;
-import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.bo.encheres.Article;
+import fr.eni.ventesauxencheres.bo.encheres.Enchere;
+import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.dal.ArticleDAO;
 import fr.eni.ventesauxencheres.dal.DALException;
 import fr.eni.ventesauxencheres.dal.FactoryDAO;
@@ -91,21 +91,21 @@ public class ArticleManager {
 
 	public boolean hasArticle(int id) throws BLLException {
 		try {
-			return articleDAO.selectByIdUtilisateur(id).size() != 0;
+			return articleDAO.selectByIdClient(id).size() != 0;
 		} catch (DALException e) {
 			throw new BLLException("ERREUR MANAGER", e);
 		}
 	}
 
-	public boolean canDisplayDetails(Article article, Utilisateur utilisateurConnecte) {
+	public boolean canDisplayDetails(Article article, Client utilisateurConnecte) {
 		if (utilisateurConnecte == null) {
 			// Bloqué les détails à un utilisateur non connecté
 			return false;
 		}
-		Utilisateur vendeur = article.getVendeur();
+		Client vendeur = article.getVendeur();
 		Enchere enchere = article.getEnchere();
 		//enchere = EnchereManager.getInstance().getByArticle(article);
-		Utilisateur encherisseur = null;
+		Client encherisseur = null;
 		if (enchere != null) {
 			encherisseur = enchere.getEncherisseur();
 		}
@@ -143,10 +143,10 @@ public class ArticleManager {
 		}
 	}
 
-	public List<Article> showListeHome(String typeQuery, int idUtilisateurConnecte, String motCle, String libelle) throws BLLException {
+	public List<Article> showListeHome(String typeQuery, int idClientConnecte, String motCle, String libelle) throws BLLException {
 		List<Article> articles = null;
 		try {
-			articles = articleDAO.selectListHome(typeQuery, idUtilisateurConnecte, motCle, libelle);
+			articles = articleDAO.selectListHome(typeQuery, idClientConnecte, motCle, libelle);
 		} catch (DALException e) {
 			e.printStackTrace();
 		}

@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.ventesauxencheres.bll.ArticleManager;
 import fr.eni.ventesauxencheres.bll.BLLException;
 import fr.eni.ventesauxencheres.bll.EnchereManager;
-import fr.eni.ventesauxencheres.bo.Article;
-import fr.eni.ventesauxencheres.bo.Enchere;
-import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.bo.encheres.Article;
+import fr.eni.ventesauxencheres.bo.encheres.Enchere;
+import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Url;
 
 /**
@@ -31,7 +31,7 @@ public class detailsArticle extends HttpServlet {
 		if (request.getSession().getAttribute("utilisateurConnecte") == null) {
 			response.sendError(403); return;
 		}
-		Utilisateur utilisateurConnecte = (Utilisateur)request.getSession().getAttribute("utilisateurConnecte");
+		Client utilisateurConnecte = (Client)request.getSession().getAttribute("utilisateurConnecte");
 
 		// Récupération des paramètres
 		int no_article = 0;
@@ -52,12 +52,12 @@ public class detailsArticle extends HttpServlet {
 		}
 
 		Enchere enchere = article.getEnchere();
-		Utilisateur encherisseur = null;
+		Client encherisseur = null;
 		if (enchere != null) {
 			encherisseur = enchere.getEncherisseur();
 		}
 
-		Utilisateur vendeur = article.getVendeur();
+		Client vendeur = article.getVendeur();
 
 		// Bloqué l'accès à la page suivant l'état de la vente et la relation entre l'article et l'utilisateur connecté
 		String typeAffichage = "";
@@ -111,7 +111,7 @@ public class detailsArticle extends HttpServlet {
 		if (request.getSession().getAttribute("utilisateurConnecte") == null) {
 			response.sendError(403); return;
 		}
-		Utilisateur utilisateurConnecte = (Utilisateur)request.getSession().getAttribute("utilisateurConnecte");
+		Client utilisateurConnecte = (Client)request.getSession().getAttribute("utilisateurConnecte");
 
 		// Récupération des paramètres
 		int no_article = 0;
@@ -133,7 +133,7 @@ public class detailsArticle extends HttpServlet {
 
 		Enchere enchere = article.getEnchere();
 
-		Utilisateur vendeur = article.getVendeur();
+		Client vendeur = article.getVendeur();
 
 		// Faire une action suivant l'état de la vente et la relation entre l'article et l'utilisateur connecté
 		if (request.getParameter("action") != null && "encherir".equals(request.getParameter("action")) &&

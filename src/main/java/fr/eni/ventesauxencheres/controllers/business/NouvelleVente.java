@@ -16,9 +16,9 @@ import javax.servlet.http.HttpSession;
 import fr.eni.ventesauxencheres.bll.ArticleManager;
 import fr.eni.ventesauxencheres.bll.BLLException;
 import fr.eni.ventesauxencheres.bll.CategorieManager;
-import fr.eni.ventesauxencheres.bo.Article;
-import fr.eni.ventesauxencheres.bo.Categorie;
-import fr.eni.ventesauxencheres.bo.Utilisateur;
+import fr.eni.ventesauxencheres.bo.encheres.Article;
+import fr.eni.ventesauxencheres.bo.encheres.Categorie;
+import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Url;
 
 
@@ -44,7 +44,7 @@ public class NouvelleVente extends HttpServlet {
 		String nom = request.getParameter("article");
 		String description = request.getParameter("description");
 
-		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
+		Client utilisateur = (Client) session.getAttribute("utilisateurConnecte");
 
 		int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
 		int categorieId =Integer.parseInt(request.getParameter("categorie"));
