@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,14 +52,17 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 						noClient = rs.getInt(1);
 					}
 					// Add in PROFIL
-					query = "INSERT INTO PROFIL (pseudo, courriel, mot_de_passe, no_client)"
-							+ " VALUES (?, ?, ?, ?)";
+					LocalDateTime dateEnregistrement = LocalDateTime.now();
+					Timestamp date_enregistrement = Timestamp.valueOf(dateEnregistrement);
+					query = "INSERT INTO PROFIL (pseudo, courriel, mot_de_passe, date_enregistrement, no_client)"
+							+ " VALUES (?, ?, ?, ?, ?)";
 					try (PreparedStatement st1 = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
 						cnx.setAutoCommit(false);
 						st1.setString(1, client.getPseudo());
 						st1.setString(2, client.getCourriel());
 						st1.setBytes(3, hashedMotDePasse);
-						st1.setInt(4, noClient);
+						st1.setTimestamp(4, date_enregistrement);
+						st1.setInt(5, noClient);
 						st1.executeUpdate();
 						rs = st1.getGeneratedKeys();
 
@@ -68,25 +72,12 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 						cnx.commit();
 						client.setNoClient(noClient);
 						client.setNoProfil(noProfil);
+						client.setDateEnregistrement(dateEnregistrement);
 						client.getAdresseDomicile().setNoAdresse(noAdresse);
 					}
 				}
 			} catch (SQLException | NullPointerException e) {
 				cnx.rollback();
-				throw new DALException("Erreur insertion de client", e);
-			}
-			// Read dateEnregistrement
-			query = "SELECT date_enregistrement FROM PROFIL WHERE no_profil = ?";
-			try (PreparedStatement st2 = cnx.prepareStatement(query);) {
-				st2.setInt(1, noProfil);
-				ResultSet rs = st2.executeQuery();
-				LocalDateTime dateEnregistrement = null;
-				if (rs.next()) {
-					dateEnregistrement = LocalDateTime.of(rs.getDate("date_enregistrement").toLocalDate(),
-														  rs.getTime("date_enregistrement").toLocalTime());
-				}
-				client.setDateEnregistrement(dateEnregistrement);
-			} catch (SQLException e) {
 				throw new DALException("Erreur insertion de client", e);
 			}
 		} catch (SQLException e) {
