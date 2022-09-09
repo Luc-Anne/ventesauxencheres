@@ -48,7 +48,11 @@ CREATE TABLE PROFIL (
     CONSTRAINT ck_profil_courriel CHECK (courriel LIKE '%@%')
 );
 
--- TODO ADD TRIGGER TO HAVE ONLY ONE COLUM WITH DATA BETWEEN no_client AND no_administrateur
+ALTER TABLE PROFIL
+    ADD CONSTRAINT ck_profil_one_child CHECK (
+        (no_client IS NOT NULL AND no_administrateur IS NULL) OR
+        (no_client IS NULL AND no_administrateur IS NOT NULL)
+        );
 
 CREATE TABLE CLIENT (
     no_client INT NOT NULL AUTO_INCREMENT,
