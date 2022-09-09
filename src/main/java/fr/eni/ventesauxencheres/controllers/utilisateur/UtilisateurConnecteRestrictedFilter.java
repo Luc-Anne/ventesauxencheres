@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet Filter implementation class SecurityFilter
  */
 @WebFilter(
-	dispatcherTypes = {DispatcherType.REQUEST},
+	dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD},
 	urlPatterns = {"/moncompte/*", "/encheres/article", "/nouvelleVente/add"}
 )
 public class UtilisateurConnecteRestrictedFilter extends HttpFilter implements Filter {
