@@ -13,8 +13,6 @@ import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.ventesauxencheres.controllers.util.Url;
-
 /**
  * Servlet Filter implementation class SecurityFilter
  */
@@ -27,17 +25,11 @@ public class UtilisateurConnecteRestrictedFilter extends HttpFilter implements F
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		//Faire appel à la méthode session de l'objet de type HttpServletRequest
-		//transformer l objet ServletRequest request en type HttpServletRequest
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		Object connected = httpRequest.getSession().getAttribute("utilisateurConnecte");
-		if (connected == null) {
-			// Ici vue redirigee vers la vue home, mais l'url avec profil est conservé
-			// httpRequest.getRequestDispatcher("/home").forward(httpRequest, response);
-			// Privilegier une redirection vers la servlet home
-			httpRequest.getSession().setAttribute("messageGlobal", "Vous n'avez pas la permission d'accéder à cette page");
-			HttpServletResponse httpResponse=(HttpServletResponse) response;
-			httpResponse.sendRedirect(Url.HOME.getUrl());
+		// TODO DO the same for administrateur ?
+		Object client = httpRequest.getSession().getAttribute("clientConnecte");
+		if (client == null) {
+			((HttpServletResponse)response).sendError(403);
 		} else {
 			chain.doFilter(request, response);
 		}
