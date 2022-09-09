@@ -48,6 +48,8 @@ CREATE TABLE PROFIL (
     CONSTRAINT ck_profil_courriel CHECK (courriel LIKE '%@%')
 );
 
+-- TODO ADD TRIGGER TO HAVE ONLY ONE COLUM WITH DATA BETWEEN no_client AND no_administrateur
+
 CREATE TABLE CLIENT (
     no_client INT NOT NULL AUTO_INCREMENT,
     nom VARCHAR(50) NOT NULL,
@@ -138,11 +140,17 @@ CREATE TABLE ARTICLE (
     imageFileName VARCHAR(50),
     etat_vente INT NOT NULL, -- 1: NEUF, 2: BON, 3: MOYEN, 4: MAUVAIS
     date_enregistrement DATETIME NOT NULL DEFAULT NOW(),
+    no_categorie INT,
     no_proprietaire INT,
     PRIMARY KEY (no_article)
 );
 
 -- integrity constraints
+ALTER TABLE ARTICLE
+    ADD CONSTRAINT fk_article_no_categorie FOREIGN KEY (no_categorie) REFERENCES CATEGORIE(no_categorie)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
 ALTER TABLE ARTICLE
     ADD CONSTRAINT fk_article_no_proprietaire FOREIGN KEY (no_proprietaire) REFERENCES CLIENT(no_client)
     ON DELETE NO ACTION
