@@ -20,7 +20,7 @@ public class Client extends Profil {
 	public Client() {}
 
 	public Client(int noProfil, String pseudo, String courriel, LocalDateTime dateEnregistrement,
-			int noClient, String nom, String prenom, boolean actif, float credit , String telephone) {
+			int noClient, String nom, String prenom, boolean actif, float credit , String telephone, Adresse adresseDomicile) {
 		super(noProfil, pseudo, courriel, dateEnregistrement);
 		this.noClient = noClient;
 		this.nom = nom;
@@ -28,15 +28,17 @@ public class Client extends Profil {
 		this.actif = actif;
 		this.credit = credit;
 		this.telephone = telephone;
+		this.adresseDomicile = adresseDomicile;
 	}
 
 	public Client(String pseudo, String courriel,
-			String nom, String prenom, float credit , String telephone) {
+			String nom, String prenom, float credit, String telephone, Adresse adresseDomicile) {
 		super(pseudo, courriel);
 		this.nom = nom;
 		this.prenom = prenom;
 		this.credit = credit;
 		this.telephone = telephone;
+		this.adresseDomicile = adresseDomicile;
 	}
 
 	// Getters and Setters

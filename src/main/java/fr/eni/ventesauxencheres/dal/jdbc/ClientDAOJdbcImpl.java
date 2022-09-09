@@ -93,6 +93,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 		String query = "SELECT *"
 					+ " FROM CLIENT c"
 					+ " LEFT JOIN PROFIL f ON c.no_client = f.no_client"
+					+ " LEFT JOIN ADRESSE a ON c.no_adresse = a.no_adresse"
 					+ "	WHERE no_client = ?";
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement st = cnx.prepareStatement(query);){
@@ -116,6 +117,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 		String query = "SELECT *"
 					+ " FROM CLIENT c"
 					+ " LEFT JOIN PROFIL f ON c.no_client = f.no_client"
+					+ " LEFT JOIN ADRESSE a ON c.no_adresse = a.no_adresse"
 					+ "	WHERE pseudo = ?";
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement st = cnx.prepareStatement(query);){
@@ -138,7 +140,8 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	public List<Client> selectAll() throws DALException {
 		String query = "SELECT *"
 					+ " FROM CLIENT c"
-					+ " LEFT JOIN PROFIL f ON c.no_client = f.no_client";
+					+ " LEFT JOIN PROFIL f ON c.no_client = f.no_client"
+					+ " LEFT JOIN ADRESSE a ON c.no_adresse = a.no_adresse";
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			try (PreparedStatement st = cnx.prepareStatement(query);){
 				ResultSet rs = st.executeQuery();
@@ -185,7 +188,22 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 					st2.setString(2, client.getCourriel());
 					st2.setInt(3, client.getNoProfil());
 					st2.executeUpdate();
-					cnx.commit();
+					// Update in ADRESS
+					query = "UPDATE ADRESSE SET"
+						 + " rue = ?,"
+					     + " code_postal = ?,"
+					     + " ville = ?,"
+					     + " pays = ?"
+					     + " WHERE no_adresse = ?";
+					try (PreparedStatement st3 = cnx.prepareStatement(query);) {
+						st3.setString(1, client.getAdresseDomicile().getRue());
+						st3.setString(2, client.getAdresseDomicile().getCodePostal());
+						st3.setString(2, client.getAdresseDomicile().getVille());
+						st3.setString(2, client.getAdresseDomicile().getPays());
+						st3.setInt(3, client.getAdresseDomicile().getNoAdresse());
+						st3.executeUpdate();
+						cnx.commit();
+					}
 				}
 			} catch (SQLException e) {
 				cnx.rollback();
@@ -236,6 +254,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 			String query = "SELECT *"
 						+ " FROM CLIENT c"
 						+ " LEFT JOIN PROFIL f ON c.no_client = f.no_client"
+						+ " LEFT JOIN ADRESSE a ON c.no_adresse = a.no_adresse"
 						+ " WHERE courriel = ? AND mot_de_passe = ? AND no_profil IS NOT NULL";
 			try (PreparedStatement st = cnx.prepareStatement(query);) {
 				st.setString(1, email);

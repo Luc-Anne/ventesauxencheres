@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+import fr.eni.ventesauxencheres.bo.Adresse;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 
 public class BoObjectFactory {
@@ -28,7 +29,17 @@ public class BoObjectFactory {
 				rs.getString("prenom"),
 				rs.getBoolean("actif"),
 				rs.getInt("credit"),
-				rs.getString("telephone")
+				rs.getString("telephone"),
+				createAdresse(rs)
+				);
+	}
+	
+	public Adresse createAdresse(ResultSet rs) throws SQLException {
+		return new Adresse(
+				rs.getString("rue"),
+				rs.getString("code_postal"),
+				rs.getString("ville"),
+				rs.getString("pays")
 				);
 	}
 

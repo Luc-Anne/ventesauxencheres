@@ -38,14 +38,6 @@ public class Inscription extends HttpServlet {
 		Errors erreurs = new Errors();
 		request.setAttribute("erreurs", erreurs);
 
-		Client client = new Client(
-				request.getParameter("pseudo").trim(),
-				request.getParameter("courriel").trim(),
-				request.getParameter("nom"),
-				request.getParameter("prenom"),
-				ClientManager.DEFAULT_CREDIT,
-				request.getParameter("telephone")
-				);
 		// AdresseDomicile
 		String pays = "".equals(request.getParameter("pays")) ? AdresseManager.DEFAULT_PAYS : request.getParameter("pays");
 		Adresse adresseDomicile = new Adresse(
@@ -54,7 +46,15 @@ public class Inscription extends HttpServlet {
 				request.getParameter("ville"),
 				pays
 				);
-		client.setAdresseDomicile(adresseDomicile);
+		Client client = new Client(
+				request.getParameter("pseudo").trim(),
+				request.getParameter("courriel").trim(),
+				request.getParameter("nom"),
+				request.getParameter("prenom"),
+				ClientManager.DEFAULT_CREDIT,
+				request.getParameter("telephone"),
+				adresseDomicile
+				);
 
 		// Vérifier que les deux mots de passe sont les mêmes
 		String motDePasse = request.getParameter("motDePasse");
