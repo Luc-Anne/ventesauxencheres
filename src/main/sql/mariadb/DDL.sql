@@ -38,7 +38,7 @@ CREATE TABLE PROFIL (
     no_profil INT NOT NULL AUTO_INCREMENT,
     pseudo VARCHAR(50) NOT NULL,
     courriel VARCHAR(50) NOT NULL,
-    mot_de_passe CHAR(16) NOT NULL,
+    mot_de_passe BINARY(16) NOT NULL,
     date_enregistrement DATETIME NOT NULL DEFAULT NOW(),
     no_client INT,
     no_administrateur INT,
