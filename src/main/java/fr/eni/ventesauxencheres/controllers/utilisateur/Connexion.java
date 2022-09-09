@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import fr.eni.ventesauxencheres.bll.BLLException;
-import fr.eni.ventesauxencheres.bll.ClientManager;
-import fr.eni.ventesauxencheres.bll.ProfilManager;
+import fr.eni.ventesauxencheres.bll.utilisateur.ClientMgr;
+import fr.eni.ventesauxencheres.bll.utilisateur.ProfilMgr;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Url;
+import fr.eni.ventesauxencheres.exceptions.BLLException;
 
 /**
  * Servlet implementation class Connexion
@@ -37,10 +37,10 @@ public class Connexion extends HttpServlet {
 		String password = request.getParameter("motDePasse");
 
 		try {
-			String typeOfProfil = ProfilManager.getInstance().typeOfProfil(email, password);
+			String typeOfProfil = ProfilMgr.getInstance().typeOfProfil(email, password);
 			HttpSession session = request.getSession();
 			if (typeOfProfil.equals("Client")) {
-				Client client = ClientManager.getInstance().connexion(email, password);
+				Client client = ClientMgr.getInstance().connexion(email, password);
 				session.setAttribute("clientConnecte", client);
 				// Passer un attribut à travers un sendRedirect
 				session.setAttribute("messageGlobal", "Bonjour " + client.getPrenom() + " " + client.getNom());

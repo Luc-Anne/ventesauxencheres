@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-import fr.eni.ventesauxencheres.bo.Adresse;
+import fr.eni.ventesauxencheres.bo.dependencies.Adresse;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 
 public class BoObjectFactory {

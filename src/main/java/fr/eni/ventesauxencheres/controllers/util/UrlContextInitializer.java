@@ -10,6 +10,8 @@ public class UrlContextInitializer implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		Url.setContext(sce.getServletContext().getContextPath());
+		// Destroy is immediatly
+		this.contextDestroyed(sce);
 	}
 
 }

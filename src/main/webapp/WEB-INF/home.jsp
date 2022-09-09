@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ include file="/WEB-INF/fragments/taglib.jspf" %>
-<%@ page import="fr.eni.ventesauxencheres.bll.CategorieManager"%>
+<%@ page import="fr.eni.ventesauxencheres.bll.encheres.CategorieMgr"%>
 <%@ page import="fr.eni.ventesauxencheres.bo.Categorie"%>
 <%@ page import="fr.eni.ventesauxencheres.bo.Article" %>
 <%@ page import="java.time.LocalDateTime" %>
@@ -30,7 +30,9 @@
                         <label for="categories-select">Catégories</label>
                         <select class="form-select" id="floatingSelectGrid"	aria-label="Floating label select example" name="categorie">
 						 <option selected>Toutes</option>
-						 <%for (Categorie categorie : CategorieManager.getInstance().getAll()){ %>
+						 <%
+						 for (Categorie categorie : CategorieMgr.getInstance().getAll()){
+						 %>
 						 <option value="<%= categorie.getLibelle()%>"> <%=categorie.getLibelle() %></option>
 						<%} %> 
 					</select>

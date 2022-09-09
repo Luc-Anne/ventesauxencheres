@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
-<%@page import="fr.eni.ventesauxencheres.bll.CategorieManager"%>
+<%@page import="fr.eni.ventesauxencheres.bll.encheres.CategorieMgr"%>
 <%@page import="fr.eni.ventesauxencheres.bo.Categorie"%>
 <%@page import="fr.eni.ventesauxencheres.bo.Utilisateur"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -18,7 +18,9 @@
 		<div class="mx-auto text-center">
 			<h1>Nouvelle vente</h1>
 		</div>
-			<%Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte"); %>
+			<%
+			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
+			%>
 		<form method="post" action="${Url.AJOUTER_ARTICLE.getUrl()}">
 			<div class="mb-3 mt-4">
 				<label for="inputTextArticle" class="form-label">Article</label> 
@@ -32,7 +34,9 @@
 			<div class="mt-4">Catégorie</div>
 			<div>
 				<select class="form-select" id="floatingSelectGrid"	aria-label="Floating label select example" name="categorie">
-					 <%for (Categorie categorie : CategorieManager.getInstance().getAll()){ %>
+					 <%
+					 for (Categorie categorie : CategorieMgr.getInstance().getAll()){
+					 %>
 					<option value="<%= categorie.getNoCategorie()%>"> <%=categorie.getLibelle() %></option>
 					<%} %> 
 				</select>

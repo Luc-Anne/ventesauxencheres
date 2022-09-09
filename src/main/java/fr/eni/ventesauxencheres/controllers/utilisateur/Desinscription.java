@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import fr.eni.ventesauxencheres.bll.ArticleManager;
-import fr.eni.ventesauxencheres.bll.BLLException;
-import fr.eni.ventesauxencheres.bll.ClientManager;
+import fr.eni.ventesauxencheres.bll.encheres.ArticleMgr;
+import fr.eni.ventesauxencheres.bll.utilisateur.ClientMgr;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Url;
+import fr.eni.ventesauxencheres.exceptions.BLLException;
 
 @WebServlet("/moncompte/desinscription")
 public class Desinscription extends HttpServlet {
@@ -32,11 +32,11 @@ public class Desinscription extends HttpServlet {
 				response.sendRedirect(Url.COMPTE_PROFIL.getUrl()); return;
 			} else {
 				try {
-					if (ArticleManager.getInstance().hasArticle(uc.getNoClient())) {
+					if (ArticleMgr.getInstance().hasArticle(uc.getNoClient())) {
 						session.setAttribute("messageGlobal", "Vous ne pouvez pas supprimer votre compte car vous avez des articles sur le site");
 						response.sendRedirect(Url.COMPTE_PROFIL.getUrl()); return;
 					} else {
-						ClientManager.getInstance().delete(uc.getNoClient());
+						ClientMgr.getInstance().delete(uc.getNoClient());
 						session.removeAttribute("utilisateurConnecte");
 						request.getSession().setAttribute("messageGlobal", "Votre compte a bien été supprimé");
 						response.sendRedirect(Url.HOME.getUrl());

@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import fr.eni.ventesauxencheres.bll.ArticleManager;
-import fr.eni.ventesauxencheres.bll.BLLException;
+import fr.eni.ventesauxencheres.bll.encheres.ArticleMgr;
 import fr.eni.ventesauxencheres.bo.encheres.Article;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
+import fr.eni.ventesauxencheres.exceptions.BLLException;
 
 
 @WebServlet("/home")
@@ -26,7 +26,7 @@ public class Home extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Article> articlesList = new ArrayList<>();
 		try {
-			articlesList = ArticleManager.getInstance().getAll();
+			articlesList = ArticleMgr.getInstance().getAll();
 			//Mettre la liste d'article dans la requete car besoin uniquement dans la home
 			request.setAttribute("articlesList", articlesList);
 
@@ -111,7 +111,7 @@ public class Home extends HttpServlet {
 			int idUtilisateurConnecte = utilisateurConnecte.getNoUtilisateur();
 
 			// Test ajout progressif
-			List<Article> enchereListeHome = ArticleManager.getInstance().showListeHome(typeQuery, idUtilisateurConnecte, motCle,libelle);
+			List<Article> enchereListeHome = ArticleMgr.getInstance().showListeHome(typeQuery, idUtilisateurConnecte, motCle,libelle);
 			request.setAttribute("enchereListeHome", enchereListeHome);
 
 		} catch (BLLException e) {

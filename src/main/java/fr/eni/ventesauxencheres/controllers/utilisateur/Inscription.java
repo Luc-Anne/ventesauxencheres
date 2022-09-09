@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.ventesauxencheres.bll.AdresseManager;
-import fr.eni.ventesauxencheres.bll.BLLException;
-import fr.eni.ventesauxencheres.bll.ClientManager;
-import fr.eni.ventesauxencheres.bll.ProfilManager;
-import fr.eni.ventesauxencheres.bo.Adresse;
+import fr.eni.ventesauxencheres.bll.dependencies.AdresseMgr;
+import fr.eni.ventesauxencheres.bll.utilisateur.ClientMgr;
+import fr.eni.ventesauxencheres.bll.utilisateur.ProfilMgr;
+import fr.eni.ventesauxencheres.bo.dependencies.Adresse;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Errors;
 import fr.eni.ventesauxencheres.controllers.util.Url;
+import fr.eni.ventesauxencheres.exceptions.BLLException;
 
 /**
  * Servlet implementation class Inscription
@@ -39,7 +39,7 @@ public class Inscription extends HttpServlet {
 		request.setAttribute("erreurs", erreurs);
 
 		// AdresseDomicile
-		String pays = "".equals(request.getParameter("pays")) ? AdresseManager.DEFAULT_PAYS : request.getParameter("pays");
+		String pays = "".equals(request.getParameter("pays")) ? AdresseMgr.DEFAULT_PAYS : request.getParameter("pays");
 		Adresse adresseDomicile = new Adresse(
 				request.getParameter("rue"),
 				request.getParameter("code_postal"),
@@ -51,7 +51,7 @@ public class Inscription extends HttpServlet {
 				request.getParameter("courriel").trim(),
 				request.getParameter("nom"),
 				request.getParameter("prenom"),
-				ClientManager.DEFAULT_CREDIT,
+				ClientMgr.DEFAULT_CREDIT,
 				request.getParameter("telephone"),
 				adresseDomicile
 				);
@@ -67,7 +67,7 @@ public class Inscription extends HttpServlet {
 
 		try {
 			// Inscrire
-			client = ClientManager.getInstance().save(client, motDePasse);
+			client = ClientMgr.getInstance().save(client, motDePasse);
 			// Connecte
 			request.getSession().setAttribute("clientConnecte", client);
 			request.getSession().setAttribute("messageGlobal", "Bienvenue sur le site !");
@@ -75,8 +75,8 @@ public class Inscription extends HttpServlet {
 			return;
 		} catch (BLLException e) {
 			e.printStackTrace();
-			erreurs.addAll(ClientManager.getInstance().invalidCause(client));
-			erreurs.addAll(ProfilManager.getInstance().invalidCauseMotDePasse(motDePasse));
+			erreurs.addAll(ClientMgr.getInstance().invalidCause(client));
+			erreurs.addAll(ProfilMgr.getInstance().invalidCauseMotDePasse(motDePasse));
 			CharSequence erreurAChercher = "un_profil_pseudo";
 			if (e.getCause() != null && e.getCause().getCause() != null) {
 				if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {
@@ -96,7 +96,7 @@ public class Inscription extends HttpServlet {
 	}
 
 	private void reafficherInscriptionQuandErreur(HttpServletRequest request, HttpServletResponse response, Client client, Errors erreurs) throws ServletException, IOException {
-		erreurs.addAll(ClientManager.getInstance().invalidCause(client));
+		erreurs.addAll(ClientMgr.getInstance().invalidCause(client));
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
 		if (rd != null) {
 			rd.forward(request, response);

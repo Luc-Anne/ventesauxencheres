@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import fr.eni.ventesauxencheres.bll.ArticleManager;
-import fr.eni.ventesauxencheres.bll.BLLException;
-import fr.eni.ventesauxencheres.bll.CategorieManager;
+import fr.eni.ventesauxencheres.bll.encheres.ArticleMgr;
+import fr.eni.ventesauxencheres.bll.encheres.CategorieMgr;
 import fr.eni.ventesauxencheres.bo.encheres.Article;
 import fr.eni.ventesauxencheres.bo.encheres.Categorie;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Url;
+import fr.eni.ventesauxencheres.exceptions.BLLException;
 
 
 @WebServlet("/encheres/ajouter")
@@ -49,7 +49,7 @@ public class NouvelleVente extends HttpServlet {
 		int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
 		int categorieId =Integer.parseInt(request.getParameter("categorie"));
 		try {
-			categorie = CategorieManager.getInstance().getById(categorieId);
+			categorie = CategorieMgr.getInstance().getById(categorieId);
 		} catch (BLLException e2) {
 			e2.printStackTrace();
 		}
@@ -72,7 +72,7 @@ public class NouvelleVente extends HttpServlet {
 		article.setEtatVente("CR");
 
 		try {
-			ArticleManager.getInstance().save(article);
+			ArticleMgr.getInstance().save(article);
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}

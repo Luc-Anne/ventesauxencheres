@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.ventesauxencheres.bll.ArticleManager;
-import fr.eni.ventesauxencheres.bll.BLLException;
-import fr.eni.ventesauxencheres.bll.EnchereManager;
+import fr.eni.ventesauxencheres.bll.encheres.ArticleMgr;
+import fr.eni.ventesauxencheres.bll.encheres.EnchereMgr;
 import fr.eni.ventesauxencheres.bo.encheres.Article;
 import fr.eni.ventesauxencheres.bo.encheres.Enchere;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Url;
+import fr.eni.ventesauxencheres.exceptions.BLLException;
 
 /**
  * Servlet implementation class Template
@@ -45,7 +45,7 @@ public class detailsArticle extends HttpServlet {
 		// Récupération et traitement des données
 		Article article = null;
 		try {
-			article = ArticleManager.getInstance().get(no_article);
+			article = ArticleMgr.getInstance().get(no_article);
 		} catch (BLLException e) {
 			e.printStackTrace();
 			response.sendError(404); return;
@@ -125,7 +125,7 @@ public class detailsArticle extends HttpServlet {
 		// Récupération et traitement des données
 		Article article = null;
 		try {
-			article = ArticleManager.getInstance().get(no_article);
+			article = ArticleMgr.getInstance().get(no_article);
 		} catch (BLLException e) {
 			e.printStackTrace();
 			response.sendError(404); return;
@@ -159,7 +159,7 @@ public class detailsArticle extends HttpServlet {
 				}
 				if (enchere == null) {
 					// Ajouter l'enchère
-					EnchereManager.getInstance().save(new Enchere(
+					EnchereMgr.getInstance().save(new Enchere(
 							LocalDateTime.now(),
 							mise,
 							utilisateurConnecte,
@@ -168,7 +168,7 @@ public class detailsArticle extends HttpServlet {
 					);
 				} else {
 					// Remplacer l'enchère
-					EnchereManager.getInstance().remplacerEncherisseur(new Enchere(
+					EnchereMgr.getInstance().remplacerEncherisseur(new Enchere(
 							LocalDateTime.now(),
 							mise,
 							utilisateurConnecte,
@@ -189,7 +189,7 @@ public class detailsArticle extends HttpServlet {
 			// typeRetrait
 			try {
 				article.setEtatVente("RT");
-				ArticleManager.getInstance().modify(article);
+				ArticleMgr.getInstance().modify(article);
 				request.getSession().setAttribute("messageGlobal", "Votre déclaration de retrait de l'article " + article.getNomArticle() + " a bien été prise en compte");
 				this.doGet(request, response);
 			} catch (BLLException e) {

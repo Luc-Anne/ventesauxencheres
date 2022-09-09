@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import fr.eni.ventesauxencheres.bll.BLLException;
-import fr.eni.ventesauxencheres.bll.ClientManager;
+import fr.eni.ventesauxencheres.bll.utilisateur.ClientMgr;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.controllers.util.Errors;
+import fr.eni.ventesauxencheres.exceptions.BLLException;
 
 /**
  * Servlet implementation class profil
@@ -65,10 +65,10 @@ public class Profil extends HttpServlet {
 
 		// Appliquer la modification est remonter les éventuelles erreurs SQL d'unicité
 		try {
-			ClientManager.getInstance().modify(user);
+			ClientMgr.getInstance().modify(user);
 			session.setAttribute("utilisateurConnecte", user);
 		} catch (BLLException e) {
-			erreurs.addAll(ClientManager.getInstance().invalidCause(user));
+			erreurs.addAll(ClientMgr.getInstance().invalidCause(user));
 			CharSequence erreurAChercher = "utilisateurs_pseudo_uq";
 			if (e.getCause() != null && e.getCause().getCause() != null) {
 				if (e.getCause().getCause().getMessage().contains(erreurAChercher)) {

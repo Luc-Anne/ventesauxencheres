@@ -2,7 +2,7 @@ package fr.eni.ventesauxencheres.bo.encheres;
 
 import java.time.LocalDateTime;
 
-import fr.eni.ventesauxencheres.bo.Adresse;
+import fr.eni.ventesauxencheres.bo.dependencies.Adresse;
 
 public class Vente {
 
