@@ -54,6 +54,21 @@ ALTER TABLE PROFIL
         (no_client IS NULL AND no_administrateur IS NOT NULL)
         );
 
+DELIMITER //
+CREATE OR REPLACE TRIGGER tr_profil_one_child
+BEFORE UPDATE ON PROFIL FOR EACH ROW
+BEGIN
+	IF
+	    NEW.no_client <> OLD.no_client OR
+	    NEW.no_administrateur <> OLD.no_administrateur
+	    THEN
+	    SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 31001,
+	    MESSAGE_TEXT = 'Cant modify foreign key for children';
+	END IF;
+END
+//
+DELIMITER ;
+
 CREATE TABLE CLIENT (
     no_client INT NOT NULL AUTO_INCREMENT,
     nom VARCHAR(50) NOT NULL,
