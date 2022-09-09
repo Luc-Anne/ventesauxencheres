@@ -20,32 +20,20 @@ import fr.eni.ventesauxencheres.controllers.util.Url;
  * Servlet Filter implementation class AdministrateurFilter
  */
 @WebFilter(
-		dispatcherTypes = {
-			DispatcherType.REQUEST,
-			DispatcherType.FORWARD
-		}
-		, urlPatterns = {
-			"/admin/*",
-			"/test/*"
-		}
+	dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD},
+	urlPatterns = {"/admin/*", "/test/*"}
 )
 public class AdminRestrictedFilter extends HttpFilter implements Filter {
 	private static final long serialVersionUID = -430253391637810057L;
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		//Faire appel à la méthode session de l'objet de type HttpServletRequest
-		//transformer l objet ServletRequest request en type HttpServletRequest
-		HttpServletRequest httpRequest=(HttpServletRequest) request;
-		Object utilisateur = httpRequest.getSession().getAttribute("utilisateurConnecte");
-		// TODO Test if it's an administrateur
-		if (utilisateur == null) {
-			// Ici vue redirigee vers la vue home, mais l'url avec profil est conservé
-			// httpRequest.getRequestDispatcher("/home").forward(httpRequest, response);
-			// Privilegier une redirection vers la servlet home
-			HttpServletResponse httpResponse=(HttpServletResponse) response;
-			httpResponse.sendRedirect(Url.HOME.getUrl());
-		}else {
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		// TODO DO the same for administrateur ?
+		Object administrateur = httpRequest.getSession().getAttribute("administrateurConnecte");
+		if (administrateur == null) {
+			((HttpServletResponse)response).sendError(403);
+		} else {
 			chain.doFilter(request, response);
 		}
 	}
