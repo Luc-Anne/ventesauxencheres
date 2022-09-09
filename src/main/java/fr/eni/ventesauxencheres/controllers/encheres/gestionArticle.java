@@ -1,8 +1,7 @@
-package fr.eni.ventesauxencheres.controllers.administrateur;
+package fr.eni.ventesauxencheres.controllers.encheres;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,18 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TableauDeBord
+ * Servlet implementation class Template
  */
-@WebServlet("/admin")
-public class TableauDeBord extends HttpServlet {
+@WebServlet("/moncompte/article")
+public class gestionArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/administrateur/tableaudebord.jsp");
-		if (rd != null) {
-			rd.forward(request, response);
-		}
+
 	}
 
 	@Override

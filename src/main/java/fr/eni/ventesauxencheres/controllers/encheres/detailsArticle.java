@@ -1,4 +1,4 @@
-package fr.eni.ventesauxencheres.controllers.business;
+package fr.eni.ventesauxencheres.controllers.encheres;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

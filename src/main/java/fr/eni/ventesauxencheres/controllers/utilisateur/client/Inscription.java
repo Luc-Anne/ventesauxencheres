@@ -1,4 +1,4 @@
-package fr.eni.ventesauxencheres.controllers.utilisateur;
+package fr.eni.ventesauxencheres.controllers.utilisateur.client;
 
 import java.io.IOException;
 

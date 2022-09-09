@@ -1,4 +1,4 @@
-package fr.eni.ventesauxencheres.controllers.business;
+package fr.eni.ventesauxencheres.controllers.utilisateur.administrateur;
 
 import java.io.IOException;
 
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Template
  */
-@WebServlet("/moncompte/article")
-public class gestionArticle extends HttpServlet {
+@WebServlet("/admin/utilisateur")
+public class GestionUtilisateur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
