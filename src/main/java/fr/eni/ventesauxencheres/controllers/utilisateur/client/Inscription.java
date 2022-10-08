@@ -1,6 +1,7 @@
 package fr.eni.ventesauxencheres.controllers.utilisateur.client;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,7 +28,7 @@ public class Inscription extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher(Url.INSCRIPTION.getJsp());
 		if (rd != null) {
 			rd.forward(request, response);
 		}
@@ -49,8 +50,10 @@ public class Inscription extends HttpServlet {
 		Client client = new Client(
 				request.getParameter("pseudo").trim(),
 				request.getParameter("courriel").trim(),
+				LocalDateTime.now(),
 				request.getParameter("nom"),
 				request.getParameter("prenom"),
+				ClientMgr.DEFAULT_ACTIF,
 				ClientMgr.DEFAULT_CREDIT,
 				request.getParameter("telephone"),
 				adresseDomicile
@@ -68,14 +71,11 @@ public class Inscription extends HttpServlet {
 		try {
 			// Inscrire
 			client = ClientMgr.getInstance().save(client, motDePasse);
-			// Connecte
-			request.getSession().setAttribute("clientConnecte", client);
 			request.getSession().setAttribute("messageGlobal", "Bienvenue sur le site !");
-			response.sendRedirect(Url.HOME.getUrl());
+			response.sendRedirect(Url.CONNEXION.getUrl());
 			return;
 		} catch (BLLException e) {
 			e.printStackTrace();
-			erreurs.addAll(ClientMgr.getInstance().invalidCause(client));
 			erreurs.addAll(ProfilMgr.getInstance().invalidCauseMotDePasse(motDePasse));
 			CharSequence erreurAChercher = "un_profil_pseudo";
 			if (e.getCause() != null && e.getCause().getCause() != null) {
@@ -97,7 +97,7 @@ public class Inscription extends HttpServlet {
 
 	private void reafficherInscriptionQuandErreur(HttpServletRequest request, HttpServletResponse response, Client client, Errors erreurs) throws ServletException, IOException {
 		erreurs.addAll(ClientMgr.getInstance().invalidCause(client));
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/inscription.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher(Url.INSCRIPTION.getJsp());
 		if (rd != null) {
 			rd.forward(request, response);
 		}

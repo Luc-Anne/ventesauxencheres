@@ -23,7 +23,7 @@ public class Desinscription extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		Client uc = (Client) session.getAttribute("utilisateurConnecte");
+		Client uc = (Client) session.getAttribute("clientConnecte");
 		if (uc == null) {
 			response.sendError(403); return;
 		} else {
@@ -36,8 +36,9 @@ public class Desinscription extends HttpServlet {
 						session.setAttribute("messageGlobal", "Vous ne pouvez pas supprimer votre compte car vous avez des articles sur le site");
 						response.sendRedirect(Url.COMPTE_PROFIL.getUrl()); return;
 					} else {
-						ClientMgr.getInstance().delete(uc.getNoClient());
-						session.removeAttribute("utilisateurConnecte");
+						// TODO When Administrateur will be operational
+						ClientMgr.getInstance().delete(uc);
+						session.removeAttribute("clientConnecte");
 						request.getSession().setAttribute("messageGlobal", "Votre compte a bien été supprimé");
 						response.sendRedirect(Url.HOME.getUrl());
 					}

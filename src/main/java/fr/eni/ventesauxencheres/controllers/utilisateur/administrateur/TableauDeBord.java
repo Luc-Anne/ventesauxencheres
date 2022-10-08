@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.ventesauxencheres.controllers.util.Url;
+
 /**
  * Servlet implementation class TableauDeBord
  */
@@ -18,7 +20,7 @@ public class TableauDeBord extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/administrateur/tableaudebord.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher(Url.ADMIN_TABLEAUDEBORD.getJsp());
 		if (rd != null) {
 			rd.forward(request, response);
 		}

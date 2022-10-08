@@ -1,16 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ page import="fr.eni.ventesauxencheres.controllers.util.Url" %>
 <%@ include file="/WEB-INF/fragments/taglib.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
 	<title>Erreur 500</title>
 </head>
 <body class="bg-light">
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	<div id="messageGlobal">
-		<p>Le serveur a rencontré un problème</p>
+		<p>Le serveur a rencontrÃ© un problÃ¨me</p>
 	</div>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>

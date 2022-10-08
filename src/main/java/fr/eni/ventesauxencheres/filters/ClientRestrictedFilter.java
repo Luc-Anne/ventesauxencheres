@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebFilter(
 	dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD},
-	urlPatterns = {"/moncompte/*", "/encheres/article", "/nouvelleVente/add"}
+	urlPatterns = {"/moncompte/*", "/encheres/article", "/nouvelleVente/add", "/profil/"}
 )
 public class ClientRestrictedFilter extends HttpFilter implements Filter {
 	private static final long serialVersionUID = 5641058120626900022L;

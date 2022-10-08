@@ -1,0 +1,227 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/fragments/taglib.jspf" %>
+<div class="row g-8">
+    <div class="col-md-12 col-lg-12">
+        <form class="needs-validation" novalidate  action="" method="post">
+            <div class="row g-3">
+                <h4 class="mb-3">Informations de compte</h4>
+                <div class="col-12">
+                    <c:set var="isInvalid" value=""></c:set>
+                    <c:set var="IF" value=""></c:set>
+                    <c:if test="${erreurs.contains('profil.pseudo_vide')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Le pseudo doit être renseigné."></c:set>
+                    </c:if>
+                    <c:if test="${erreurs.contains('profil.pseudo_tropLong')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Le pseudo est trop long."></c:set>
+                    </c:if>
+                    <c:if test="${erreurs.contains('profil.pseudo_avecEspace')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Le pseudo ne doit pas avoir d'espace."></c:set>
+                    </c:if>
+                    <c:if test="${erreurs.contains('profil.pseudo_deja_pris')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Ce pseudo est déjà utilisé par un membre."></c:set>
+                    </c:if>
+                    <c:set var="valueInput" value="${param.pseudo}"></c:set>
+                    <c:if test="${ typeForm == 'modification' }">
+                        <c:set var="valueInput" value="${sessionScope.clientConnecte.pseudo}"></c:set>
+                    </c:if>
+                    <label for="pseudo" class="form-label">Pseudo</label>
+                    <input type="text" class="form-control ${isInvalid}" id="pseudo" required name="pseudo" value="${valueInput}">
+                    <div class="invalid-feedback">${IF}</div>
+                </div>
+                <div class="col-12">
+                    <c:set var="isInvalid" value=""></c:set>
+                    <c:set var="IF" value=""></c:set>
+                    <c:if test="${erreurs.contains('profil.courriel_vide')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Il faut nécessairement indiquer votre courriel."></c:set>
+                    </c:if>
+                    <c:if test="${erreurs.contains('profil.courriel_tropLong')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} L'courriel est trop long."></c:set>
+                    </c:if>
+                    <c:if test="${erreurs.contains('profil.courriel_manque@')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Il n'y a pas de @ dans votre courriel."></c:set>
+                    </c:if>
+                    <c:if test="${erreurs.contains('profil.courriel_deja_pris')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Ce courriel est déjà utilisé par un membre."></c:set>
+                    </c:if>
+                    <c:set var="valueInput" value="${param.courriel}"></c:set>
+                    <c:if test="${ typeForm == 'modification' }">
+                        <c:set var="valueInput" value="${sessionScope.clientConnecte.courriel}"></c:set>
+                    </c:if>
+                    <label for="courriel" class="form-label">Courriel</label>
+                    <input type="email" class="form-control ${isInvalid}" id="courriel" required name="courriel" value="${valueInput}">
+                    <div class="invalid-feedback">${IF}</div>
+                </div>
+                <div class="col-6">
+                    <c:set var="isInvalid" value=""></c:set>
+                    <c:set var="IF" value=""></c:set>
+                    <c:if test="${erreurs.contains('client.motDePasse_vide')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Il faut nécessairement indiquer un mot de passe valide (au moins 8 caractères)"></c:set>
+                    </c:if>
+                    <c:if test="${erreurs.contains('client.motDePasse_tropLong')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Le mot de passe est trop long."></c:set>
+                    </c:if>
+                    <c:if test="${erreurs.contains('client.motDePasse_faible')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} "></c:set>
+                    </c:if>
+                    <c:set var="placeholder" value=""></c:set>
+                    <c:if test="${ typeForm == 'modification' }">
+                        <c:set var="placeholder" value="Laisser vide pour ne pas modifier"></c:set>
+                    </c:if>
+                    <label for="motDePasse" class="form-label">Mot de Passe</label>
+                    <input type="password" class="form-control ${isInvalid}" placeholder="${placeholder}" id="motDePasse" required name="motDePasse">
+                    <div class="invalid-feedback">${IF}</div>
+                </div>
+                <div class="col-6">
+                    <label for="motDePasseConfirmation" class="form-label">Confirmer le mot de Passe</label>
+                    <input type="password" class="form-control" id="motDePasseConfirmation" required name="motDePasseConfirmation">
+                </div>
+                <h4 class="mb-3">Informations personnelles</h4>
+                <div class="col-sm-6">
+                    <c:set var="isInvalid" value=""></c:set>
+                    <c:set var="IF" value=""></c:set>
+                    <c:if test="${erreurs.contains('client.nom_vide')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Il faut nécessairement indiquer votre nom."></c:set>
+                    </c:if>
+                    <c:if test="${erreurs.contains('client.nom_tropLong')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Le nom est trop long."></c:set>
+                    </c:if>
+                    <c:set var="valueInput" value="${param.nom}"></c:set>
+                    <c:if test="${ typeForm == 'modification' }">
+                        <c:set var="valueInput" value="${sessionScope.clientConnecte.nom}"></c:set>
+                    </c:if>
+                    <label for="nom" class="form-label">Nom</label>
+                    <input type="text" class="form-control ${isInvalid}" id="nom" required name="nom" value="${valueInput}">
+                    <div class="invalid-feedback">${IF}</div>
+                </div>
+                <div class="col-sm-6">
+                    <c:set var="isInvalid" value=""></c:set>
+                    <c:set var="IF" value=""></c:set>
+                    <c:if test="${erreurs.contains('client.prenom_vide')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Il faut nécessairement indiquer votre prénom."></c:set>
+                    </c:if>
+                    <c:if test="${erreurs.contains('client.prenom_tropLong')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Le prénom est trop long."></c:set>
+                    </c:if>
+                    <c:set var="valueInput" value="${param.prenom}"></c:set>
+                    <c:if test="${ typeForm == 'modification' }">
+                        <c:set var="valueInput" value="${sessionScope.clientConnecte.prenom}"></c:set>
+                    </c:if>
+                    <label for="prenom" class="form-label">Prénom</label>
+                    <input type="text" class="form-control ${isInvalid}" id="prenom" required name="prenom" value="${valueInput}">
+                    <div class="invalid-feedback">${IF}</div>
+                </div>
+                <div class="col-12">
+                    <c:set var="isInvalid" value=""></c:set>
+                    <c:set var="IF" value=""></c:set>
+                    <c:if test="${erreurs.contains('client.telephone_tropLong')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Le numéro de téléphone est trop long."></c:set>
+                    </c:if>
+                    <c:set var="valueInput" value="${param.telephone}"></c:set>
+                    <c:if test="${ typeForm == 'modification' }">
+                        <c:set var="valueInput" value="${sessionScope.clientConnecte.telephone}"></c:set>
+                    </c:if>
+                    <label for="telephone" class="form-label">Numéro de Télephone</label>
+                    <input type="text" class="form-control" id="telephone" name="telephone" value="${valueInput}">
+                    <div class="invalid-feedback">${IF}</div>
+                </div>
+                <div class="col-12">
+                    <c:set var="isInvalid" value=""></c:set>
+                    <c:set var="IF" value=""></c:set>
+                    <c:if test="${erreurs.contains('adresse.rue_vide')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Il faut nécessairement indiquer le numéro et nom de la rue votre adresse."></c:set>
+                    </c:if>
+                    <c:if test="${erreurs.contains('adresse.rue_tropLong')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Le numéro et le nom de la rue sont trop longs."></c:set>
+                    </c:if>
+                    <c:set var="valueInput" value="${param.rue}"></c:set>
+                    <c:if test="${ typeForm == 'modification' }">
+                        <c:set var="valueInput" value="${sessionScope.clientConnecte.adresseDomicile.rue}"></c:set>
+                    </c:if>
+                    <label for="rue" class="form-label">Rue</label>
+                    <input type="text" class="form-control ${isInvalid}" id="rue" required name="rue" value="${valueInput}">
+                    <div class="invalid-feedback">${IF}</div>
+                </div>
+                <div class="col-3">
+                    <c:set var="isInvalid" value=""></c:set>
+                    <c:set var="IF" value=""></c:set>
+                    <c:if test="${erreurs.contains('adresse.codePostal_vide')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Il faut nécessairement indiquer un code postal pour votre adresse."></c:set>
+                    </c:if>
+                    <c:if test="${erreurs.contains('adresse.codePostal_tropLong')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Le code postal est trop long."></c:set>
+                    </c:if>
+                    <c:set var="valueInput" value="${param.code_postal}"></c:set>
+                    <c:if test="${ typeForm == 'modification' }">
+                        <c:set var="valueInput" value="${sessionScope.clientConnecte.adresseDomicile.codePostal}"></c:set>
+                    </c:if>
+                    <label for="code_postal" class="form-label">Code Postal</label>
+                    <input type="text" class="form-control ${isInvalid}" id="code_postal" required name="code_postal" value="${valueInput}">
+                    <div class="invalid-feedback">${IF}</div>
+                </div>
+                <div class="col-6">
+                    <c:set var="isInvalid" value=""></c:set>
+                    <c:set var="IF" value=""></c:set>
+                    <c:if test="${erreurs.contains('adresse.ville_vide')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Il faut nécessairement indiquer une ville pour votre adresse."></c:set>
+                    </c:if>
+                    <c:if test="${erreurs.contains('adresse.ville_tropLong')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Le nom de la ville est trop long."></c:set>
+                    </c:if>
+                    <c:set var="valueInput" value="${param.ville}"></c:set>
+                    <c:if test="${ typeForm == 'modification' }">
+                        <c:set var="valueInput" value="${sessionScope.clientConnecte.adresseDomicile.ville}"></c:set>
+                    </c:if>
+                    <label for="ville" class="form-label">Ville</label>
+                    <input type="text" class="form-control ${isInvalid}" id="ville" required name="ville" value="${valueInput}">
+                    <div class="invalid-feedback">${IF}</div>
+                </div>
+                <div class="col-3">
+                    <c:set var="isInvalid" value=""></c:set>
+                    <c:set var="IF" value=""></c:set>
+                    <c:if test="${erreurs.contains('adresse.pays_tropLong')}">
+                        <c:set var="isInvalid" value="is-invalid"></c:set>
+                        <c:set var="IF" value="${IF} Le nom du pays est trop long."></c:set>
+                    </c:if>
+                    <c:set var="valueInput" value="${param.pays}"></c:set>
+                    <c:if test="${ typeForm == 'modification' }">
+                        <c:set var="valueInput" value="${sessionScope.clientConnecte.adresseDomicile.pays}"></c:set>
+                    </c:if>
+                    <label for="address" class="form-label">Pays (FRANCE par défaut)</label>
+                    <input type="text" class="form-control ${isInvalid}" id="pays" required name="pays" value="${valueInput}" placeholder="FRANCE">
+                    <div class="invalid-feedback">${IF}</div>
+                </div>
+            </div>
+            <hr class="my-4">
+             <c:if test="${ typeForm == 'inscription' }">
+                 <c:set var="textButton" value="S'inscrire"></c:set>
+             </c:if>
+             <c:if test="${ typeForm == 'modification' }">
+                 <c:set var="textButton" value="Modifier son profil"></c:set>
+             </c:if>
+            <button class="w-100 btn btn-primary btn-lg" type="submit">${textButton}</button>
+        </form>
+    </div>
+</div>

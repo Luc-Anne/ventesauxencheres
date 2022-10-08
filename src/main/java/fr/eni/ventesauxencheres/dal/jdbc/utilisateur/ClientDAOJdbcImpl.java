@@ -103,6 +103,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				Client client = null;
 				if (rs.next()) {
 					client = BoObjectFactory.getInstance().createClient(rs);
+					client.setAdresseDomicile(BoObjectFactory.getInstance().createAdresse(rs));
 				}
 				return client;
 			} catch (SQLException e) {
@@ -127,6 +128,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				Client client = null;
 				if (rs.next()) {
 					client = BoObjectFactory.getInstance().createClient(rs);
+					client.setAdresseDomicile(BoObjectFactory.getInstance().createAdresse(rs));
 				}
 				return client;
 			} catch (SQLException e) {
@@ -148,7 +150,9 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				ResultSet rs = st.executeQuery();
 				List<Client> clients = new ArrayList<>();
 				while (rs.next()) {
-					clients.add(BoObjectFactory.getInstance().createClient(rs));
+					Client client = BoObjectFactory.getInstance().createClient(rs);
+					client.setAdresseDomicile(BoObjectFactory.getInstance().createAdresse(rs));
+					clients.add(client);
 				}
 				return clients;
 			} catch (SQLException e) {
@@ -189,7 +193,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 					st2.setString(2, client.getCourriel());
 					st2.setInt(3, client.getNoProfil());
 					st2.executeUpdate();
-					// Update in ADRESS
+					// Update in ADRESSE
 					query = "UPDATE ADRESSE SET"
 						 + " rue = ?,"
 					     + " code_postal = ?,"
@@ -199,9 +203,9 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 					try (PreparedStatement st3 = cnx.prepareStatement(query);) {
 						st3.setString(1, client.getAdresseDomicile().getRue());
 						st3.setString(2, client.getAdresseDomicile().getCodePostal());
-						st3.setString(2, client.getAdresseDomicile().getVille());
-						st3.setString(2, client.getAdresseDomicile().getPays());
-						st3.setInt(3, client.getAdresseDomicile().getNoAdresse());
+						st3.setString(3, client.getAdresseDomicile().getVille());
+						st3.setString(4, client.getAdresseDomicile().getPays());
+						st3.setInt(5, client.getAdresseDomicile().getNoAdresse());
 						st3.executeUpdate();
 						cnx.commit();
 					}
@@ -226,7 +230,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				st.setInt(1, client.getAdresseDomicile().getNoAdresse());
 				st.executeUpdate();
 				// Delete in PROFIL
-				query = "DELETE FROM CLIENT"
+				query = "DELETE FROM PROFIL"
 					 + " WHERE no_profil = ?";
 				try (PreparedStatement st2 = cnx.prepareStatement(query);) {
 					st2.setInt(1, client.getNoProfil());
@@ -264,6 +268,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				Client client = null;
 				if (rs.next()) {
 					client = BoObjectFactory.getInstance().createClient(rs);
+					client.setAdresseDomicile(BoObjectFactory.getInstance().createAdresse(rs));
 				}
 				return client;
 			} catch (SQLException e) {

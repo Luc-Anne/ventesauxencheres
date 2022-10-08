@@ -1,15 +1,15 @@
-<%@ page import="fr.eni.ventesauxencheres.bo.Article" %>
+<%@ page import="fr.eni.ventesauxencheres.bo.encheres.Article" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.List" %>
-<%@ page import="fr.eni.ventesauxencheres.bll.ArticleManager" %>
-<%@ page import="fr.eni.ventesauxencheres.bo.Utilisateur" %>
+<%@ page import="fr.eni.ventesauxencheres.bll.encheres.ArticleMgr" %>
+<%@ page import="fr.eni.ventesauxencheres.bo.utilisateur.Client" %>
 			<div class="col-12 col-sm-6 p-2" >
 				<div class="card">
 					<div class="card-header text-center">
 						<h4 class="my-0 font-weight-normal">
 							<%
-							boolean hasLink = ArticleManager.getInstance().canDisplayDetails((Article)pageContext.getAttribute("itemArticle"), (Utilisateur)session.getAttribute("utilisateurConnecte"));
+							boolean hasLink = ArticleMgr.getInstance().canDisplayDetails((Article)pageContext.getAttribute("itemArticle"), (Client)session.getAttribute("utilisateurConnecte"));
 							if (hasLink) {%>
 							<a href="${Url.DETAILS_ARTICLE.getUrl()}?no_article=${itemArticle.noArticle}">${itemArticle.nomArticle}</a>
 							<%} else {%>

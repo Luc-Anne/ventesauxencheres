@@ -28,14 +28,13 @@ public class NouvelleVente extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/article/nouvelleVente.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher(Url.AJOUTER_ARTICLE.getJsp());
 		if (rd != null) {rd.forward(request, response);
 		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO
 		HttpSession session = request.getSession();
 		Article article = new Article();
 		Categorie categorie = new Categorie();
@@ -61,7 +60,6 @@ public class NouvelleVente extends HttpServlet {
 		String Fin[] = dateFin.split("T");
 	    LocalDateTime dateFintEnchere = LocalDateTime.of(LocalDate.parse(Fin[0]), LocalTime.parse(Fin[1]));
 
-	    // TODO Use constructor
 		article.setNomArticle(nom);
 		article.setDescription(description);
 		article.setDateDebutEncheres(dateDebutEnchere);

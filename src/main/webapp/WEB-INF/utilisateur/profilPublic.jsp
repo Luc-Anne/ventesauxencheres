@@ -5,7 +5,7 @@
 <html>
 <head>
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
-	<c:if test="${not empty utilisateur}">
+	<c:if test="${not empty client}">
 		<title>${initParam.debutTitre} Profil de ${utilisateur.pseudo}</title>
 	</c:if>
 </head>
@@ -14,54 +14,47 @@
 	<%@ include file="/WEB-INF/fragments/header.jspf" %>
 	<main class="container">
 		<div class="mx-auto text-center">
-			<h1>Profil de ${utilisateur.pseudo}</h1>
+			<h1>Profil de ${client.pseudo}</h1>
 		</div>
-		<c:if test="${not empty utilisateur}">
+		<c:if test="${not empty client}">
+			<h4>Identité</h4>
 			<ul class="list-group">
-				<li class="list-group-item d-flex justify-content-between align-items-start">
-					<div class="ms-2 me-auto">
-						<div class="fw-bold">Nom</div>
-						${utilisateur.nom}
-					</div>
-				</li>
-				<li class="list-group-item d-flex justify-content-between align-items-start">
-					<div class="ms-2 me-auto">
-						<div class="fw-bold">Prénom</div>
-						${utilisateur.prenom}
-					</div>
-				</li>
-				<li class="list-group-item d-flex justify-content-between align-items-start">
-					<div class="ms-2 me-auto">
-						<div class="fw-bold">Email</div>
-						${utilisateur.email}
-					</div>
-				</li>
-				<li class="list-group-item d-flex justify-content-between align-items-start">
-					<div class="ms-2 me-auto">
-						<div class="fw-bold">Téléphone</div>
-						${utilisateur.telephone}				
-					</div>
-				</li>
-				<li class="list-group-item d-flex justify-content-between align-items-start">
-					<div class="ms-2 me-auto">
-						<div class="fw-bold">Rue</div>
-						${utilisateur.rue}				
-					</div>
-				</li>
-				<li class="list-group-item d-flex justify-content-between align-items-start">
-					<div class="ms-2 me-auto">
-						<div class="fw-bold">Code Postal</div>
-						${utilisateur.codePostal}
-					</div>
-				</li>
-				<li class="list-group-item d-flex justify-content-between align-items-start">
-					<div class="ms-2 me-auto">
-						<div class="fw-bold">Ville</div>
-						${utilisateur.ville}
-					</div>
-				</li>
-			</ul>
-		</c:if>
+			  <li class="list-group-item d-flex justify-content-between align-items-start">
+	                <div class="ms-2 me-auto">
+	                    <div class="fw-bold">Pseudo</div>
+	                    ${client.pseudo}
+	                </div>
+	            </li>
+	            <li class="list-group-item d-flex justify-content-between align-items-start">
+	                <div class="ms-2 me-auto">
+	                    <div class="fw-bold">Nom Prénom</div>
+	                    ${client.nom}&nbsp;${client.prenom}
+	                </div>
+	            </li>
+	        </ul>
+	        <h4>Coordonnées</h4>
+	        <ul class="list-group">
+	            <li class="list-group-item d-flex justify-content-between align-items-start">
+	                <div class="ms-2 me-auto">
+	                    <div class="fw-bold">Courriel</div>
+	                    ${client.courriel}
+	                </div>
+	            </li>
+	            <li class="list-group-item d-flex justify-content-between align-items-start">
+	                <div class="ms-2 me-auto">
+	                    <div class="fw-bold">Téléphone</div>
+	                    ${client.telephone}
+	                </div>
+	            </li>
+	            <li class="list-group-item d-flex justify-content-between align-items-start">
+	                <div class="ms-2 me-auto">
+	                    <div class="fw-bold">Adresse</div>
+	                    <div>${client.adresseDomicile.rue}</div>
+	                    <div>${client.adresseDomicile.codePostal}&nbsp;${client.adresseDomicile.ville}&nbsp;${client.adresseDomicile.pays}</div>
+	                </div>
+	            </li>
+	        </ul>
+        </c:if>
 	</main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>

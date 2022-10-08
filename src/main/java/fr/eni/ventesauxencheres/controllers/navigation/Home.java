@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import fr.eni.ventesauxencheres.bll.encheres.ArticleMgr;
 import fr.eni.ventesauxencheres.bo.encheres.Article;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
+import fr.eni.ventesauxencheres.controllers.util.Url;
 import fr.eni.ventesauxencheres.exceptions.BLLException;
 
 
@@ -30,7 +31,7 @@ public class Home extends HttpServlet {
 			//Mettre la liste d'article dans la requete car besoin uniquement dans la home
 			request.setAttribute("articlesList", articlesList);
 
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher(Url.HOME.getJsp());
 			if (rd != null) {
 				rd.forward(request, response);
 			}
@@ -106,7 +107,7 @@ public class Home extends HttpServlet {
 			//Appeler une session pour récupérer l'utilisateur connecté
 			HttpSession session = request.getSession();
 			//Créer une nouvelle instance utilisateur pour contenir l'utilisateur connecté en appelant l'attribut de la session
-			Utilisateur utilisateurConnecte = (Utilisateur) session.getAttribute("utilisateurConnecte");
+			Client utilisateurConnecte = (Client) session.getAttribute("clientConnecte");
 			//Récupérer l'id de l'utilisateur connecté
 			int idUtilisateurConnecte = utilisateurConnecte.getNoUtilisateur();
 
@@ -117,7 +118,7 @@ public class Home extends HttpServlet {
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher(Url.HOME.getJsp());
 		if (rd != null) {
 			rd.forward(request, response);
 		}

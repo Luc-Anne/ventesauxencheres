@@ -18,8 +18,8 @@ public class Administrateur extends Profil {
 		this.noAdministrateur = noAdministrateur;
 	}
 
-	public Administrateur(String pseudo, String courriel) {
-		super(pseudo, courriel);
+	public Administrateur(String pseudo, String courriel, LocalDateTime dateEnregistrement) {
+		super(pseudo, courriel, dateEnregistrement);
 	}
 
 	// Getters and Setters

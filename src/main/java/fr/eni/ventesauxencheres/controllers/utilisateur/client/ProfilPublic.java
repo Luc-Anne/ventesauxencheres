@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.ventesauxencheres.bll.utilisateur.ClientMgr;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
+import fr.eni.ventesauxencheres.controllers.util.Url;
 import fr.eni.ventesauxencheres.exceptions.BLLException;
 
 /**
@@ -24,14 +25,14 @@ public class ProfilPublic extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pseudoProfilDemande = request.getPathInfo().substring(1);
-		Client utilisateur = null;
+		Client client = null;
 		try {
-			utilisateur = ClientMgr.getInstance().getByPseudo(pseudoProfilDemande);
-			request.setAttribute("utilisateur", utilisateur);
-			if (utilisateur == null) {
+			client = ClientMgr.getInstance().getByPseudo(pseudoProfilDemande);
+			if (client == null) {
 				response.sendError(404);
 			} else {
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/profilPublic.jsp");
+				request.setAttribute("client", client);
+				RequestDispatcher rd = request.getRequestDispatcher(Url.PROFIL_PUBLIC.getJsp());
 				if (rd != null) {
 					rd.forward(request, response);
 				}

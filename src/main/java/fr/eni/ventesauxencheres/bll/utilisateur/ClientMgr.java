@@ -30,6 +30,7 @@ public class ClientMgr {
 
 	// Règles métiers
 	public static final int DEFAULT_CREDIT = 100;
+	public static final boolean DEFAULT_ACTIF = false;
 
 	// Validation
 	public boolean isValide(Client client) {
@@ -115,7 +116,7 @@ public class ClientMgr {
 		}
 	}
 
-	public void modify(Client client)throws BLLException{
+	public void modify(Client client) throws BLLException{
 		try {
 			if (this.isValide(client)) {
 				clientDAO.update(client);

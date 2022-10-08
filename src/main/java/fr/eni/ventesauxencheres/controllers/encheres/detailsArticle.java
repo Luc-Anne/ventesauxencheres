@@ -28,10 +28,10 @@ public class detailsArticle extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Bloquer la page à un utilisateur non connecté
-		if (request.getSession().getAttribute("utilisateurConnecte") == null) {
+		if (request.getSession().getAttribute("clientConnecte") == null) {
 			response.sendError(403); return;
 		}
-		Client utilisateurConnecte = (Client)request.getSession().getAttribute("utilisateurConnecte");
+		Client utilisateurConnecte = (Client)request.getSession().getAttribute("clientConnecte");
 
 		// Récupération des paramètres
 		int no_article = 0;
@@ -98,7 +98,7 @@ public class detailsArticle extends HttpServlet {
 		request.setAttribute("article", article);
 		request.setAttribute("enchere", enchere);
 		request.setAttribute("typeAffichage", typeAffichage);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/business/detailsArticle.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher(Url.DETAILS_ARTICLE.getJsp());
 		if (rd != null) {
 			rd.forward(request, response);
 		}
@@ -108,10 +108,10 @@ public class detailsArticle extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Bloquer la page à un utilisateur non connecté
-		if (request.getSession().getAttribute("utilisateurConnecte") == null) {
+		if (request.getSession().getAttribute("clientConnecte") == null) {
 			response.sendError(403); return;
 		}
-		Client utilisateurConnecte = (Client)request.getSession().getAttribute("utilisateurConnecte");
+		Client utilisateurConnecte = (Client)request.getSession().getAttribute("clientConnecte");
 
 		// Récupération des paramètres
 		int no_article = 0;

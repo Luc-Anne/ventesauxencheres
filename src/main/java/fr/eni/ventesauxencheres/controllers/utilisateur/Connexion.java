@@ -25,7 +25,7 @@ public class Connexion extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher(Url.CONNEXION.getJsp());
 		if (rd != null) {
 			rd.forward(request, response);
 		}
@@ -50,7 +50,7 @@ public class Connexion extends HttpServlet {
 				response.sendRedirect(Url.ADMIN_TABLEAUDEBORD.getUrl());
 			} else {
 				session.setAttribute("messageGlobal", "Email ou mot de passe incorrect");
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/utilisateur/connexion.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher(Url.CONNEXION.getJsp());
 				if (rd != null) {
 					rd.forward(request, response);
 				}

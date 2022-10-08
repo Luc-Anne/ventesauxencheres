@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@page import="fr.eni.ventesauxencheres.bll.encheres.CategorieMgr"%>
-<%@page import="fr.eni.ventesauxencheres.bo.Categorie"%>
-<%@page import="fr.eni.ventesauxencheres.bo.Utilisateur"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@page import="fr.eni.ventesauxencheres.bo.encheres.Categorie"%>
+<%@page import="fr.eni.ventesauxencheres.bo.utilisateur.Client"%>
 <%@ include file="/WEB-INF/fragments/taglib.jspf"%>
 <!DOCTYPE html>
 <html>
@@ -18,9 +16,7 @@
 		<div class="mx-auto text-center">
 			<h1>Nouvelle vente</h1>
 		</div>
-			<%
-			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
-			%>
+	    <%Client utilisateur = (Client) session.getAttribute("clientConnecte"); %>
 		<form method="post" action="${Url.AJOUTER_ARTICLE.getUrl()}">
 			<div class="mb-3 mt-4">
 				<label for="inputTextArticle" class="form-label">Article</label> 
@@ -57,7 +53,7 @@
 				<legend >Retrait</legend>
 				<div class="mb-3">
 					<label for="exampleInputText" class="form-label">Rue</label> 
-					<input type="text" class="form-control" id="exampleInputText" name="rue" value="<%=utilisateur.getRue() %>">
+					<input type="text" class="form-control" id="exampleInputText" name="rue" value="${sessionScope.clientConnecte.adresse.rue}">
 				</div>
 				<div class="mb-3">
 					<label for="exampleInputText" class="form-label">Code Postale</label>

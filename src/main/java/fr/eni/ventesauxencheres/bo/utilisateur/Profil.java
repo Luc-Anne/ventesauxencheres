@@ -21,9 +21,10 @@ public abstract class Profil {
 		this.dateEnregistrement = dateEnregistrement;
 	}
 
-	public Profil(String pseudo, String courriel) {
+	public Profil(String pseudo, String courriel, LocalDateTime dateEnregistrement) {
 		this.pseudo = pseudo;
 		this.courriel = courriel;
+		this.dateEnregistrement = dateEnregistrement;
 	}
 
 	// Getters and Setters

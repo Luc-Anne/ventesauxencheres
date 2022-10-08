@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import fr.eni.ventesauxencheres.bo.dependencies.Adresse;
 
+
 public class Client extends Profil {
 
 	// Attributes
@@ -31,15 +32,17 @@ public class Client extends Profil {
 		this.adresseDomicile = adresseDomicile;
 	}
 
-	public Client(String pseudo, String courriel,
-			String nom, String prenom, float credit, String telephone, Adresse adresseDomicile) {
-		super(pseudo, courriel);
+	public Client(String pseudo, String courriel, LocalDateTime dateEnregistrement,
+			String nom, String prenom, boolean actif, float credit , String telephone, Adresse adresseDomicile) {
+		super(pseudo, courriel, dateEnregistrement);
 		this.nom = nom;
 		this.prenom = prenom;
+		this.actif = actif;
 		this.credit = credit;
 		this.telephone = telephone;
 		this.adresseDomicile = adresseDomicile;
 	}
+
 
 	// Getters and Setters
 	public int getNoClient() {

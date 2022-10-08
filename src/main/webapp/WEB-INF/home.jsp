@@ -2,8 +2,8 @@
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ include file="/WEB-INF/fragments/taglib.jspf" %>
 <%@ page import="fr.eni.ventesauxencheres.bll.encheres.CategorieMgr"%>
-<%@ page import="fr.eni.ventesauxencheres.bo.Categorie"%>
-<%@ page import="fr.eni.ventesauxencheres.bo.Article" %>
+<%@ page import="fr.eni.ventesauxencheres.bo.encheres.Categorie"%>
+<%@ page import="fr.eni.ventesauxencheres.bo.encheres.Article" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.util.Date" %>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@
         <div class="mx-auto text-center">
             <h1>Enchères</h1>
         </div>
-        <c:if test="${not empty utilisateurConnecte}">
+        <c:if test="${not empty sessionScope.clientConnecte}">
         <form class="form-filter border mb-3" action="${Url.HOME.getUrl()}" method="post">
             <div class="row">
                 <div class="col-md-6 mb-3">
@@ -106,7 +106,7 @@
 		    <%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
 		</c:forEach>
 		</div>
-		<c:if test="${not empty utilisateurConnecte}">
+		<c:if test="${not empty sessionScope.clientConnecte}">
 		<div class="row justify-content-center border-top card-deck">
 		<c:forEach items="${enchereListeHome}" var="itemArticle">
 		    <%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
@@ -114,7 +114,7 @@
 		</div>
 		</c:if>
     <%/*
-    	<c:if test="${not empty utilisateurConnecte}">
+    	<c:if test="${not empty sessionScope.clientConnecte}">
      		<c:if test="${empty param.motCle}">
      			<h3>motclé vide</h3>  
      		</c:if>   

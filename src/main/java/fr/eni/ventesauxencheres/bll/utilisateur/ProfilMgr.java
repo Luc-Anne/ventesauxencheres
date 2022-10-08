@@ -89,6 +89,19 @@ public class ProfilMgr {
 		return invalidCause;
 	}
 
+	public void modifyMotDePasse(Profil profil, String motDePasse)throws BLLException{
+		try {
+			if (this.isValideMotDePasse(motDePasse)) {
+				byte[] hashedMotDePasse = ProfilMgr.getInstance().hashMotDePasse(motDePasse);
+				profilDAO.updateMotDePasse(profil, hashedMotDePasse);
+			} else {
+				throw new BLLException("mot de passe invalide");
+			}
+		} catch (DALException e) {
+			throw new BLLException("", e);
+		}
+	}
+
 	public String typeOfProfil(String email, String motDePasse) throws BLLException {
 		try {
 			byte[] hashedMotDePasse = hashMotDePasse(motDePasse);

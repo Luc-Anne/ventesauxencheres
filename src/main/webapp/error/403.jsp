@@ -1,9 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ page import="fr.eni.ventesauxencheres.controllers.util.Url" %>
 <%@ include file="/WEB-INF/fragments/taglib.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
 	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
 	<title>Erreur 403</title>
 </head>
