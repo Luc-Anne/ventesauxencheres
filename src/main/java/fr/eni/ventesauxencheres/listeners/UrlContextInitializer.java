@@ -1,8 +1,10 @@
-package fr.eni.ventesauxencheres.controllers.util;
+package fr.eni.ventesauxencheres.listeners;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+
+import fr.eni.ventesauxencheres.controllers.util.Url;
 
 @WebListener
 public class UrlContextInitializer implements ServletContextListener {
