@@ -1,4 +1,4 @@
-package fr.eni.ventesauxencheres.dal.jdbc.utilisateur;
+package fr.eni.ventesauxencheres.dal.bo.utilisateur;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,8 +11,9 @@ import java.util.List;
 
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.dal.ConnectionProvider;
+import fr.eni.ventesauxencheres.dal.bo.BoObjectFactory;
 import fr.eni.ventesauxencheres.dal.dao.utilisateur.ClientDAO;
-import fr.eni.ventesauxencheres.dal.jdbc.BoObjectFactory;
+import fr.eni.ventesauxencheres.dal.jdbcMariaDB.tables.ClientJdbcMariaDB;
 import fr.eni.ventesauxencheres.exceptions.DALException;
 
 public class ClientDAOJdbcImpl implements ClientDAO {
@@ -21,6 +22,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	public Client insert(Client client, byte[] hashedMotDePasse) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			cnx.setAutoCommit(false);
+			Client newClient = client;
 			int noProfil = -1;
 			// Add in ADRESSE
 			String query = "INSERT INTO ADRESSE (rue, code_postal, ville, pays)"
@@ -36,25 +38,9 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				if (rs.next()) {
 					noAdresse = rs.getInt(1);
 				}
-				// Add in CLIENT
-				query = "INSERT INTO CLIENT (nom, prenom, actif, credit, no_adresse, telephone)"
-						+ " VALUES (?, ?, ?, ?, ?, ?)";
-				try (PreparedStatement st = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
-					st.setString(1, client.getNom());
-					st.setString(2, client.getPrenom());
-					st.setBoolean(3, client.isActif());
-					st.setFloat(4, client.getCredit());
-					st.setInt(5, noAdresse);
-					st.setString(6, client.getTelephone());
-					st.executeUpdate();
-					rs = st.getGeneratedKeys();
-					int noClient = -1;
-					if (rs.next()) {
-						noClient = rs.getInt(1);
-					}
+				newClient.getAdresseDomicile().setNoAdresse(noAdresse);
+				newClient = ClientJdbcMariaDB.insert(cnx, client);
 					// Add in PROFIL
-					LocalDateTime dateEnregistrement = LocalDateTime.now();
-					Timestamp date_enregistrement = Timestamp.valueOf(dateEnregistrement);
 					query = "INSERT INTO PROFIL (pseudo, courriel, mot_de_passe, date_enregistrement, no_client)"
 							+ " VALUES (?, ?, ?, ?, ?)";
 					try (PreparedStatement st1 = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
@@ -62,31 +48,24 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 						st1.setString(1, client.getPseudo());
 						st1.setString(2, client.getCourriel());
 						st1.setBytes(3, hashedMotDePasse);
-						st1.setTimestamp(4, date_enregistrement);
-						st1.setInt(5, noClient);
+						st1.setTimestamp(4, Timestamp.valueOf(client.getDateEnregistrement()));
+						st1.setInt(5, newClient.getNoClient());
 						st1.executeUpdate();
 						rs = st1.getGeneratedKeys();
-
 						if (rs.next()) {
 							noProfil = rs.getInt(1);
 						}
 						cnx.commit();
-						client.setNoClient(noClient);
-						client.setNoProfil(noProfil);
-						client.setDateEnregistrement(dateEnregistrement);
-						client.getAdresseDomicile().setNoAdresse(noAdresse);
+						newClient.setNoProfil(noProfil);
+						return newClient;
 					}
-				}
-			} catch (SQLException | NullPointerException e) {
+			} catch (SQLException e) {
 				cnx.rollback();
-				throw new DALException("Erreur insertion de client", e);
+				throw new DALException("insertion de client", e);
 			}
 		} catch (SQLException e) {
 			throw new DALException("Connexion impossible", e);
 		}
-
-
-		return client;
 	}
 
 	@Override
@@ -107,7 +86,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				}
 				return client;
 			} catch (SQLException e) {
-				throw new DALException("Erreur selection de client", e);
+				throw new DALException("selection de client", e);
 			}
 		} catch (SQLException e) {
 			throw new DALException("Connexion impossible", e);
@@ -132,7 +111,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				}
 				return client;
 			} catch (SQLException e) {
-				throw new DALException("Erreur selection de client", e);
+				throw new DALException("selection de client", e);
 			}
 		} catch (SQLException e) {
 			throw new DALException("Connexion impossible", e);
@@ -156,7 +135,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				}
 				return clients;
 			} catch (SQLException e) {
-				throw new DALException("Erreur selection de clients", e);
+				throw new DALException("selection de clients", e);
 			}
 		} catch (SQLException e) {
 			throw new DALException("Connexion impossible", e);
@@ -212,7 +191,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				}
 			} catch (SQLException e) {
 				cnx.rollback();
-				throw new DALException("Erreur mise à jour de client", e);
+				throw new DALException("mise à jour de client", e);
 			}
 		} catch (SQLException e) {
 			throw new DALException("Connexion impossible", e);
@@ -246,7 +225,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				}
 			} catch (SQLException | NullPointerException e) {
 				cnx.rollback();
-				throw new DALException("Erreur suppression de client", e);
+				throw new DALException("suppression de client", e);
 			}
 		} catch (SQLException e) {
 			throw new DALException("Connexion impossible", e);
@@ -273,7 +252,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				return client;
 			} catch (SQLException e) {
 				cnx.rollback();
-				throw new DALException("Erreur selection client connecte", e);
+				throw new DALException("selection client connecte", e);
 			}
 		} catch (SQLException e) {
 			throw new DALException("Connexion impossible", e);

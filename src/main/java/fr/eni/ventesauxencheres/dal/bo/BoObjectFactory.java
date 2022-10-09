@@ -1,4 +1,4 @@
-package fr.eni.ventesauxencheres.dal.jdbc;
+package fr.eni.ventesauxencheres.dal.bo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

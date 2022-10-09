@@ -1,4 +1,4 @@
-package fr.eni.ventesauxencheres.dal.jdbc.encheres;
+package fr.eni.ventesauxencheres.dal.bo.encheres;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
