@@ -24,15 +24,13 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			cnx.setAutoCommit(false);
 			try {
-			Client newClient = client;
-			// Add in ADRESSE
-				Adresse adresse = AdresseJdbcMariaDB.insert(cnx, client.getAdresseDomicile());
+				Client newClient = client;
+				Adresse adresse = AdresseJdbcMariaDB.insert(cnx, newClient.getAdresseDomicile());
 				newClient.setAdresseDomicile(adresse);
 				newClient = ClientJdbcMariaDB.insert(cnx, newClient);
-					// Add in PROFIL
-					ProfilJdbcMariaDB.insertClient(cnx, newClient, hashedMotDePasse);
-						cnx.commit();
-						return newClient;
+				ProfilJdbcMariaDB.insertClient(cnx, newClient, hashedMotDePasse);
+				cnx.commit();
+				return newClient;
 			} catch (SQLException e) {
 				cnx.rollback();
 				throw new DALException("insertion de client", e);
@@ -121,12 +119,10 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			cnx.setAutoCommit(false);
 			try {
-			ClientJdbcMariaDB.update(cnx, client);
-				// Update in PROFIL
+				ClientJdbcMariaDB.update(cnx, client);
 				ProfilJdbcMariaDB.update(cnx, client);
-					// Update in ADRESSE
-					AdresseJdbcMariaDB.update(cnx, client.getAdresseDomicile());
-						cnx.commit();
+				AdresseJdbcMariaDB.update(cnx, client.getAdresseDomicile());
+				cnx.commit();
 			} catch (SQLException e) {
 				cnx.rollback();
 				throw new DALException("mise à jour de client", e);
@@ -141,12 +137,10 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			cnx.setAutoCommit(false);
 			try {
-			// Delete in ADRESSE
-			AdresseJdbcMariaDB.delete(cnx, client.getAdresseDomicile());
-				// Delete in PROFIL
-					ProfilJdbcMariaDB.delete(cnx, client);
-					ClientJdbcMariaDB.delete(cnx, client);
-					cnx.commit();
+				AdresseJdbcMariaDB.delete(cnx, client.getAdresseDomicile());
+				ProfilJdbcMariaDB.delete(cnx, client);
+				ClientJdbcMariaDB.delete(cnx, client);
+				cnx.commit();
 			} catch (SQLException | NullPointerException e) {
 				cnx.rollback();
 				throw new DALException("suppression de client", e);

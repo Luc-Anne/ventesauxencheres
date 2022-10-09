@@ -36,7 +36,7 @@ public class ProfilDAOJdbcImpl implements ProfilDAO {
 				return typeOfProfil;
 			} catch (SQLException e) {
 				cnx.rollback();
-				throw new DALException("Erreur select type de profil", e);
+				throw new DALException("select type de profil", e);
 			}
 		} catch (SQLException e) {
 			throw new DALException("Connexion impossible", e);
@@ -55,7 +55,7 @@ public class ProfilDAOJdbcImpl implements ProfilDAO {
 				st.executeUpdate();
 			} catch (SQLException e) {
 				cnx.rollback();
-				throw new DALException("Erreur de modification de mot de passe", e);
+				throw new DALException("modification de mot de passe", e);
 			}
 		} catch (SQLException e) {
 			throw new DALException("Connexion impossible", e);
