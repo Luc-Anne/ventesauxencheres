@@ -8,11 +8,10 @@ import java.sql.Timestamp;
 
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.bo.utilisateur.Profil;
-import fr.eni.ventesauxencheres.exceptions.DALException;
 
 public class ProfilJdbcMariaDB {
 
-	public static Client insertClient(Connection cnx, Client client, byte[] hashedMotDePasse) throws DALException {
+	public static Client insertClient(Connection cnx, Client client, byte[] hashedMotDePasse) throws SQLException {
 		String query = "INSERT INTO PROFIL (pseudo, courriel, mot_de_passe, date_enregistrement, no_client)"
 				+ " VALUES (?, ?, ?, ?, ?)";
 		try (PreparedStatement st = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
@@ -29,11 +28,11 @@ public class ProfilJdbcMariaDB {
 			}
 			return client;
 		} catch (SQLException e) {
-			throw new DALException("Insert Client PROFIL Table");
+			throw e;
 		}
 	}
 
-	public static void update(Connection cnx, Profil profil) throws DALException {
+	public static void update(Connection cnx, Profil profil) throws SQLException {
 		String query = "UPDATE PROFIL SET"
 					 + " pseudo = ?,"
 				     + " courriel = ?"
@@ -44,18 +43,18 @@ public class ProfilJdbcMariaDB {
 			st.setInt(3, profil.getNoProfil());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DALException("Update PROFIL Table");
+			throw e;
 		}
 	}
 
-	public static void delete(Connection cnx, Profil profil) throws DALException {
+	public static void delete(Connection cnx, Profil profil) throws SQLException {
 		String query = "DELETE FROM PROFIL"
 					+ " WHERE no_profil = ?";
 			try (PreparedStatement st2 = cnx.prepareStatement(query);) {
 				st2.setInt(1, profil.getNoProfil());
 				st2.executeUpdate();
 		} catch (SQLException e) {
-			throw new DALException("Delete PROFIL Table");
+			throw e;
 		}
 	}
 

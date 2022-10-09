@@ -6,11 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
-import fr.eni.ventesauxencheres.exceptions.DALException;
 
 public class ClientJdbcMariaDB {
 
-	public static Client insert(Connection cnx, Client client) throws DALException {
+	public static Client insert(Connection cnx, Client client) throws SQLException {
 		String query = "INSERT INTO CLIENT (nom, prenom, actif, credit, no_adresse, telephone)"
 				     + " VALUES (?, ?, ?, ?, ?, ?)";
 		try (PreparedStatement st = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
@@ -27,11 +26,11 @@ public class ClientJdbcMariaDB {
 			}
 			return client;
 		} catch (SQLException e) {
-			throw new DALException("Insert CLIENT Table");
+			throw e;
 		}
 	}
 
-	public static void update(Connection cnx, Client client) throws DALException {
+	public static void update(Connection cnx, Client client) throws SQLException {
 		String query = "UPDATE CLIENT SET"
 					+ " nom = ?,"
 					+ " prenom = ?,"
@@ -48,18 +47,18 @@ public class ClientJdbcMariaDB {
 			st.setInt(6, client.getNoClient());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DALException("Update CLIENT Table");
+			throw e;
 		}
 	}
 
-	public static void delete(Connection cnx, Client client) throws DALException {
+	public static void delete(Connection cnx, Client client) throws SQLException {
 		String query = "DELETE FROM CLIENT"
 					+ " WHERE no_client = ?";
 		try (PreparedStatement st = cnx.prepareStatement(query);) {
 			st.setInt(1, client.getNoClient());
 			st.executeUpdate();
 		} catch (SQLException e) {
-			throw new DALException("Delete CLIENT Table");
+			throw e;
 		}
 	}
 
