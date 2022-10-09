@@ -1,4 +1,4 @@
-package fr.eni.ventesauxencheres.dal.bo.utilisateur;
+package fr.eni.ventesauxencheres.dal.jdbc.bo.utilisateur;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,11 +10,12 @@ import java.util.List;
 import fr.eni.ventesauxencheres.bo.dependencies.Adresse;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.dal.ConnectionProvider;
-import fr.eni.ventesauxencheres.dal.bo.BoObjectFactory;
 import fr.eni.ventesauxencheres.dal.dao.utilisateur.ClientDAO;
-import fr.eni.ventesauxencheres.dal.jdbcMariaDB.tables.AdresseJdbcMariaDB;
-import fr.eni.ventesauxencheres.dal.jdbcMariaDB.tables.ClientJdbcMariaDB;
-import fr.eni.ventesauxencheres.dal.jdbcMariaDB.tables.ProfilJdbcMariaDB;
+import fr.eni.ventesauxencheres.dal.jdbc.bo.BoObjectFactory;
+import fr.eni.ventesauxencheres.dal.jdbc.tables.AdresseJdbcMariaDB;
+import fr.eni.ventesauxencheres.dal.jdbc.tables.ClientJdbcMariaDB;
+import fr.eni.ventesauxencheres.dal.jdbc.tables.GenericsJdbcMariaDB;
+import fr.eni.ventesauxencheres.dal.jdbc.tables.ProfilJdbcMariaDB;
 import fr.eni.ventesauxencheres.exceptions.DALException;
 
 public class ClientDAOJdbcImpl implements ClientDAO {

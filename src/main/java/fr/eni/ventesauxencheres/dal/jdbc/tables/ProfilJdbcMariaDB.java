@@ -1,4 +1,4 @@
-package fr.eni.ventesauxencheres.dal.jdbcMariaDB.tables;
+package fr.eni.ventesauxencheres.dal.jdbc.tables;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
