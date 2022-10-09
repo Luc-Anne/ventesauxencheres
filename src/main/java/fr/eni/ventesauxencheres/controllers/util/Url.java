@@ -9,19 +9,20 @@ public enum Url {
 	CSS_BOOTSTRAP("/css/bootstrap.min.css",""),
 	CSS_BOOTSTRAP_BUNDLE("/css/bootstrap.bundle.min.js",""),
 	// Navigation
-	HOME("/home","home.jsp"),
+	HOME("/home","main/home.jsp"),
 	// Utilisateur
-	INSCRIPTION("/inscription","utilisateur/inscription.jsp"),
-	DESINSCRIPTION("/moncompte/desinscription",""),
 	CONNEXION("/connexion","utilisateur/connexion.jsp"),
 	DECONNEXION("/moncompte/deconnexion",""),
-	COMPTE_PROFIL("/moncompte/profil","utilisateur/profil.jsp"),
-	// Administrateur
-	ADMIN_TABLEAUDEBORD("/admin","administrateur/tableaudebord.jsp"),
-	// Business
-	PROFIL_PUBLIC("/profil/","utilisateur/profilPublic.jsp"), //Ajouter un pseudo juste à la suite
-	AJOUTER_ARTICLE("/encheres/ajouter","article/nouvelleVente.jsp"),
-	DETAILS_ARTICLE("/encheres","business/detailsArticle.jsp"); // le paramètre no_article est nécessaire pour la Servlet
+		// Client
+		INSCRIPTION("/inscription","utilisateur/client/inscription.jsp"),
+		DESINSCRIPTION("/moncompte/desinscription",""),
+		COMPTE_PROFIL("/moncompte/profil","utilisateur/client/profil.jsp"),
+		PROFIL_PUBLIC("/profil/","utilisateur/client/profilPublic.jsp"), //Ajouter un pseudo juste à la suite
+		// Administrateur
+		ADMIN_TABLEAUDEBORD("/admin","administrateur/tableaudebord.jsp"),
+	// Enchères
+	AJOUTER_ARTICLE("/encheres/ajouter","encheres/nouvelleVente.jsp"),
+	DETAILS_ARTICLE("/encheres","encheres/detailsArticle.jsp"); // le paramètre no_article est nécessaire pour la Servlet
 
 	private String url;
 	private String jsp;

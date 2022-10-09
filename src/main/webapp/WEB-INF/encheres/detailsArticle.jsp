@@ -4,15 +4,15 @@
 <%@ page import="fr.eni.ventesauxencheres.bo.encheres.Enchere" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.util.Date" %>
-<%@ include file="/WEB-INF/fragments/taglib.jspf" %>
+<%@ include file="/WEB-INF/main/taglib.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
-	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
+	<%@ include file="/WEB-INF/main/commonHead.jspf" %>
 	<title>${initParam.debutTitre} Article {article.nomArticle}</title>
 </head>
 <body class="bg-light">
-	<%@ include file="/WEB-INF/fragments/header.jspf" %>
+	<%@ include file="/WEB-INF/main/header.jspf" %>
 	<main class="container">
 		<%
 		Article article = (Article)request.getAttribute("article");
@@ -137,6 +137,6 @@
 			</c:if>
 		</form>
 	</main>
-	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
+	<%@ include file="/WEB-INF/main/footer.jspf" %>
 </body>
 </html>

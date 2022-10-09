@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
-<%@ include file="/WEB-INF/fragments/taglib.jspf" %>
+<%@ include file="/WEB-INF/main/taglib.jspf" %>
 <%@ page import="fr.eni.ventesauxencheres.bll.encheres.CategorieMgr"%>
 <%@ page import="fr.eni.ventesauxencheres.bo.encheres.Categorie"%>
 <%@ page import="fr.eni.ventesauxencheres.bo.encheres.Article" %>
@@ -9,11 +9,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<%@ include file="/WEB-INF/fragments/commonHead.jspf" %>
+	<%@ include file="/WEB-INF/main/commonHead.jspf" %>
 	<title>${initParam.debutTitre} Accueil</title>
 </head>
 <body class="bg-light">
-	<%@ include file="/WEB-INF/fragments/header.jspf" %>
+	<%@ include file="/WEB-INF/main/header.jspf" %>
     <main class="container">
         <div class="mx-auto text-center">
             <h1>Enchères</h1>
@@ -103,13 +103,13 @@
 		</c:if>
 		<div class="row justify-content-center border-top card-deck">
 		<c:forEach items="${articlesList}" var="itemArticle">
-		    <%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+		    <%@ include file="/WEB-INF/encheres/articleDansListe.jspf" %>
 		</c:forEach>
 		</div>
 		<c:if test="${not empty sessionScope.clientConnecte}">
 		<div class="row justify-content-center border-top card-deck">
 		<c:forEach items="${enchereListeHome}" var="itemArticle">
-		    <%@ include file="/WEB-INF/business/articleDansListe.jspf" %>
+		    <%@ include file="/WEB-INF/encheres/articleDansListe.jspf" %>
 		</c:forEach>
 		</div>
 		</c:if>
@@ -182,6 +182,6 @@
 		})();
 	</script>  	   		 
     </main>
-	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
+	<%@ include file="/WEB-INF/main/footer.jspf" %>
 </body>
 </html>

@@ -3,15 +3,15 @@
 <%@page import="fr.eni.ventesauxencheres.bll.encheres.CategorieMgr"%>
 <%@page import="fr.eni.ventesauxencheres.bo.encheres.Categorie"%>
 <%@page import="fr.eni.ventesauxencheres.bo.utilisateur.Client"%>
-<%@ include file="/WEB-INF/fragments/taglib.jspf"%>
+<%@ include file="/WEB-INF/main/taglib.jspf"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<%@ include file="/WEB-INF/fragments/commonHead.jspf"%>
+	<%@ include file="/WEB-INF/main/commonHead.jspf"%>
 	<title>${initParam.debutTitre} Nouvelle vente</title>
 </head>
 <body class="bg-light">
-	<%@ include file="/WEB-INF/fragments/header.jspf"%>
+	<%@ include file="/WEB-INF/main/header.jspf"%>
 	<main class="container">
 		<div class="mx-auto text-center">
 			<h1>Nouvelle vente</h1>
@@ -71,6 +71,6 @@
 			<button class="w-100 col-4 btn btn-warning btn-lg" class="mb-3" name="action" value="annuler">Annuler</button>
 		</form>
 	</main>
-	<%@ include file="/WEB-INF/fragments/footer.jspf"%>
+	<%@ include file="/WEB-INF/main/footer.jspf"%>
 </body>
 </html>

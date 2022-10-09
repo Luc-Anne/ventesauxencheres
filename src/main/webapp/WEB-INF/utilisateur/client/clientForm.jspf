@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/fragments/taglib.jspf" %>
+<%@ include file="/WEB-INF/main/taglib.jspf" %>
 <div class="row g-8">
     <div class="col-md-12 col-lg-12">
         <form class="needs-validation" novalidate  action="" method="post">
