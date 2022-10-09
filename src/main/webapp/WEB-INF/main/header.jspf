@@ -29,7 +29,7 @@
 						<c:if test="${typeDeMenuAAfficher == 'TypeConnecte'}">
 							<a class="nav-link" href="${Url.AJOUTER_ARTICLE.getUrl()}" alt="Vendre un article">Vendre un article</a>
 							<hr class="dropdown-divider">
-							<a  class="nav-link" href="#">${sessionScope.clientConnecte.prenom} ${sessionScope.clientConnecte.nom}</a>
+							<a  class="nav-link" href="#">${sessionScope.clientConnecte.pseudo}</a>
 							<a  class="nav-link" href="${Url.COMPTE_PROFIL.getUrl()}">Mon Profil</a>
 							<hr class="dropdown-divider">
 							<a class="nav-link" href="${Url.DECONNEXION.getUrl()}">Me déconnecter</a>
@@ -50,7 +50,7 @@
 					</li>
 					<li class="nav-item dropdown d-none d-lg-block ">
 						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-							${sessionScope.clientConnecte.prenom} ${sessionScope.clientConnecte.nom}
+							${sessionScope.clientConnecte.pseudo}
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li><a class="nav-link" href="${Url.COMPTE_PROFIL.getUrl()}">Mon Profil</a></li>
