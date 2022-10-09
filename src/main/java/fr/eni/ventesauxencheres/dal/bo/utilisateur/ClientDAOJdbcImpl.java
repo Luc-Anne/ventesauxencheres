@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +12,7 @@ import fr.eni.ventesauxencheres.dal.ConnectionProvider;
 import fr.eni.ventesauxencheres.dal.bo.BoObjectFactory;
 import fr.eni.ventesauxencheres.dal.dao.utilisateur.ClientDAO;
 import fr.eni.ventesauxencheres.dal.jdbcMariaDB.tables.ClientJdbcMariaDB;
+import fr.eni.ventesauxencheres.dal.jdbcMariaDB.tables.ProfilJdbcMariaDB;
 import fr.eni.ventesauxencheres.exceptions.DALException;
 
 public class ClientDAOJdbcImpl implements ClientDAO {
@@ -23,7 +22,6 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			cnx.setAutoCommit(false);
 			Client newClient = client;
-			int noProfil = -1;
 			// Add in ADRESSE
 			String query = "INSERT INTO ADRESSE (rue, code_postal, ville, pays)"
 						+ " VALUES (?, ?, ?, ?)";
@@ -39,26 +37,11 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 					noAdresse = rs.getInt(1);
 				}
 				newClient.getAdresseDomicile().setNoAdresse(noAdresse);
-				newClient = ClientJdbcMariaDB.insert(cnx, client);
+				newClient = ClientJdbcMariaDB.insert(cnx, newClient);
 					// Add in PROFIL
-					query = "INSERT INTO PROFIL (pseudo, courriel, mot_de_passe, date_enregistrement, no_client)"
-							+ " VALUES (?, ?, ?, ?, ?)";
-					try (PreparedStatement st1 = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
-						cnx.setAutoCommit(false);
-						st1.setString(1, client.getPseudo());
-						st1.setString(2, client.getCourriel());
-						st1.setBytes(3, hashedMotDePasse);
-						st1.setTimestamp(4, Timestamp.valueOf(client.getDateEnregistrement()));
-						st1.setInt(5, newClient.getNoClient());
-						st1.executeUpdate();
-						rs = st1.getGeneratedKeys();
-						if (rs.next()) {
-							noProfil = rs.getInt(1);
-						}
+					ProfilJdbcMariaDB.insertClient(cnx, newClient, hashedMotDePasse);
 						cnx.commit();
-						newClient.setNoProfil(noProfil);
 						return newClient;
-					}
 			} catch (SQLException e) {
 				cnx.rollback();
 				throw new DALException("insertion de client", e);
@@ -148,17 +131,9 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 			cnx.setAutoCommit(false);
 			ClientJdbcMariaDB.update(cnx, client);
 				// Update in PROFIL
-				String query = "UPDATE PROFIL SET"
-					 + " pseudo = ?,"
-				     + " courriel = ?"
-				     + " WHERE no_profil = ?";
-				try (PreparedStatement st2 = cnx.prepareStatement(query);) {
-					st2.setString(1, client.getPseudo());
-					st2.setString(2, client.getCourriel());
-					st2.setInt(3, client.getNoProfil());
-					st2.executeUpdate();
+				ProfilJdbcMariaDB.update(cnx, client);
 					// Update in ADRESSE
-					query = "UPDATE ADRESSE SET"
+					String query = "UPDATE ADRESSE SET"
 						 + " rue = ?,"
 					     + " code_postal = ?,"
 					     + " ville = ?,"
@@ -172,7 +147,6 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 						st3.setInt(5, client.getAdresseDomicile().getNoAdresse());
 						st3.executeUpdate();
 						cnx.commit();
-					}
 			} catch (SQLException e) {
 				cnx.rollback();
 				throw new DALException("mise à jour de client", e);
@@ -193,14 +167,9 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				st.setInt(1, client.getAdresseDomicile().getNoAdresse());
 				st.executeUpdate();
 				// Delete in PROFIL
-				query = "DELETE FROM PROFIL"
-					 + " WHERE no_profil = ?";
-				try (PreparedStatement st2 = cnx.prepareStatement(query);) {
-					st2.setInt(1, client.getNoProfil());
-					st2.executeUpdate();
+					ProfilJdbcMariaDB.delete(cnx, client);
 					ClientJdbcMariaDB.delete(cnx, client);
 					cnx.commit();
-				}
 			} catch (SQLException | NullPointerException e) {
 				cnx.rollback();
 				throw new DALException("suppression de client", e);

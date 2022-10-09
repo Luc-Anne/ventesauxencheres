@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.exceptions.DALException;
@@ -63,6 +62,5 @@ public class ClientJdbcMariaDB {
 			throw new DALException("Delete CLIENT Table");
 		}
 	}
-
 
 }
