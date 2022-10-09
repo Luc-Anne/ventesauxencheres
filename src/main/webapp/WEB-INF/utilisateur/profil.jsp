@@ -18,6 +18,7 @@
 			<c:set var="typeForm" value="modification"></c:set>
             <%@ include file="/WEB-INF/utilisateur/clientForm.jspf" %>
 			<br>
+			<!--
 			<form action="${Url.DESINSCRIPTION.getUrl()}" method="post" class="row col-md-12 col-lg-12">
 				<button class="w-50 col-4 btn btn-danger btn-lg" class="mb-3">Supprimer son compte</button>
 				<div class="form-check w-50 col-4">
@@ -25,7 +26,7 @@
 					<input type="checkbox" class="form-check-input" checked name="confirmationSuppression" value="confirmationSuppression" id="confirmationSuppression">
 				</div>
 			</form>
-
+            -->
 		</main>
 	<%@ include file="/WEB-INF/fragments/footer.jspf" %>
 </body>

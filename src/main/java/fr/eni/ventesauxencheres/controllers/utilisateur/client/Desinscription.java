@@ -21,7 +21,7 @@ public class Desinscription extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		// TODO When Article will be operational
 		HttpSession session = request.getSession();
 		Client uc = (Client) session.getAttribute("clientConnecte");
 		if (uc == null) {
