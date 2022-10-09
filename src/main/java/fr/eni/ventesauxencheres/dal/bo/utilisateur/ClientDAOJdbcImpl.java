@@ -146,24 +146,9 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	public void update(Client client) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			cnx.setAutoCommit(false);
-			// Update in CLIENT
-			String query = "UPDATE CLIENT SET"
-						+ " nom = ?,"
-						+ " prenom = ?,"
-						+ " actif = ?,"
-						+ " credit = ?,"
-						+ " telephone = ?"
-						+ " WHERE no_client = ?";
-			try (PreparedStatement st = cnx.prepareStatement(query);) {
-				st.setString(1, client.getNom());
-				st.setString(2, client.getPrenom());
-				st.setBoolean(3, client.isActif());
-				st.setFloat(4, client.getCredit());
-				st.setString(5, client.getTelephone());
-				st.setInt(6, client.getNoClient());
-				st.executeUpdate();
+			ClientJdbcMariaDB.update(cnx, client);
 				// Update in PROFIL
-				query = "UPDATE PROFIL SET"
+				String query = "UPDATE PROFIL SET"
 					 + " pseudo = ?,"
 				     + " courriel = ?"
 				     + " WHERE no_profil = ?";
@@ -188,7 +173,6 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 						st3.executeUpdate();
 						cnx.commit();
 					}
-				}
 			} catch (SQLException e) {
 				cnx.rollback();
 				throw new DALException("mise à jour de client", e);
@@ -214,14 +198,8 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				try (PreparedStatement st2 = cnx.prepareStatement(query);) {
 					st2.setInt(1, client.getNoProfil());
 					st2.executeUpdate();
-					// Delete in CLIENT
-					query = "DELETE FROM CLIENT"
-						 + " WHERE no_client = ?";
-					try (PreparedStatement st1 = cnx.prepareStatement(query);) {
-						st1.setInt(1, client.getNoClient());
-						st1.executeUpdate();
-						cnx.commit();
-					}
+					ClientJdbcMariaDB.delete(cnx, client);
+					cnx.commit();
 				}
 			} catch (SQLException | NullPointerException e) {
 				cnx.rollback();
