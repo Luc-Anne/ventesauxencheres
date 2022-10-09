@@ -13,7 +13,7 @@ public class ProfilJdbcMariaDB {
 
 	public static Client insertClient(Connection cnx, Client client, byte[] hashedMotDePasse) throws SQLException {
 		String query = "INSERT INTO PROFIL (pseudo, courriel, mot_de_passe, date_enregistrement, no_client)"
-				+ " VALUES (?, ?, ?, ?, ?)";
+				    + " VALUES (?, ?, ?, ?, ?)";
 		try (PreparedStatement st = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
 			cnx.setAutoCommit(false);
 			st.setString(1, client.getPseudo());
@@ -27,8 +27,6 @@ public class ProfilJdbcMariaDB {
 				client.setNoProfil(rs.getInt(1));
 			}
 			return client;
-		} catch (SQLException e) {
-			throw e;
 		}
 	}
 
@@ -42,19 +40,15 @@ public class ProfilJdbcMariaDB {
 			st.setString(2, profil.getCourriel());
 			st.setInt(3, profil.getNoProfil());
 			st.executeUpdate();
-		} catch (SQLException e) {
-			throw e;
 		}
 	}
 
 	public static void delete(Connection cnx, Profil profil) throws SQLException {
 		String query = "DELETE FROM PROFIL"
 					+ " WHERE no_profil = ?";
-			try (PreparedStatement st2 = cnx.prepareStatement(query);) {
-				st2.setInt(1, profil.getNoProfil());
-				st2.executeUpdate();
-		} catch (SQLException e) {
-			throw e;
+		try (PreparedStatement st2 = cnx.prepareStatement(query);) {
+			st2.setInt(1, profil.getNoProfil());
+			st2.executeUpdate();
 		}
 	}
 

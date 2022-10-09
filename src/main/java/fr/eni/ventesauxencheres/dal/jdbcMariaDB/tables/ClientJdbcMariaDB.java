@@ -25,8 +25,6 @@ public class ClientJdbcMariaDB {
 				client.setNoClient(rs.getInt(1));
 			}
 			return client;
-		} catch (SQLException e) {
-			throw e;
 		}
 	}
 
@@ -46,8 +44,6 @@ public class ClientJdbcMariaDB {
 			st.setString(5, client.getTelephone());
 			st.setInt(6, client.getNoClient());
 			st.executeUpdate();
-		} catch (SQLException e) {
-			throw e;
 		}
 	}
 
@@ -57,8 +53,6 @@ public class ClientJdbcMariaDB {
 		try (PreparedStatement st = cnx.prepareStatement(query);) {
 			st.setInt(1, client.getNoClient());
 			st.executeUpdate();
-		} catch (SQLException e) {
-			throw e;
 		}
 	}
 
