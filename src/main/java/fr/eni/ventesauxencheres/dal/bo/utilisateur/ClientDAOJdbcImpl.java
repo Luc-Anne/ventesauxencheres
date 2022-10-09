@@ -7,10 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.ventesauxencheres.bo.dependencies.Adresse;
 import fr.eni.ventesauxencheres.bo.utilisateur.Client;
 import fr.eni.ventesauxencheres.dal.ConnectionProvider;
 import fr.eni.ventesauxencheres.dal.bo.BoObjectFactory;
 import fr.eni.ventesauxencheres.dal.dao.utilisateur.ClientDAO;
+import fr.eni.ventesauxencheres.dal.jdbcMariaDB.tables.AdresseJdbcMariaDB;
 import fr.eni.ventesauxencheres.dal.jdbcMariaDB.tables.ClientJdbcMariaDB;
 import fr.eni.ventesauxencheres.dal.jdbcMariaDB.tables.ProfilJdbcMariaDB;
 import fr.eni.ventesauxencheres.exceptions.DALException;
@@ -21,22 +23,11 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	public Client insert(Client client, byte[] hashedMotDePasse) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			cnx.setAutoCommit(false);
+			try {
 			Client newClient = client;
 			// Add in ADRESSE
-			String query = "INSERT INTO ADRESSE (rue, code_postal, ville, pays)"
-						+ " VALUES (?, ?, ?, ?)";
-			try (PreparedStatement st3 = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);) {
-				st3.setString(1, client.getAdresseDomicile().getRue());
-				st3.setString(2, client.getAdresseDomicile().getCodePostal());
-				st3.setString(3, client.getAdresseDomicile().getVille());
-				st3.setString(4, client.getAdresseDomicile().getPays());
-				st3.executeUpdate();
-				ResultSet rs = st3.getGeneratedKeys();
-				int noAdresse = -1;
-				if (rs.next()) {
-					noAdresse = rs.getInt(1);
-				}
-				newClient.getAdresseDomicile().setNoAdresse(noAdresse);
+				Adresse adresse = AdresseJdbcMariaDB.insert(cnx, client.getAdresseDomicile());
+				newClient.setAdresseDomicile(adresse);
 				newClient = ClientJdbcMariaDB.insert(cnx, newClient);
 					// Add in PROFIL
 					ProfilJdbcMariaDB.insertClient(cnx, newClient, hashedMotDePasse);
@@ -129,23 +120,12 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	public void update(Client client) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			cnx.setAutoCommit(false);
+			try {
 			ClientJdbcMariaDB.update(cnx, client);
 				// Update in PROFIL
 				ProfilJdbcMariaDB.update(cnx, client);
 					// Update in ADRESSE
-					String query = "UPDATE ADRESSE SET"
-						 + " rue = ?,"
-					     + " code_postal = ?,"
-					     + " ville = ?,"
-					     + " pays = ?"
-					     + " WHERE no_adresse = ?";
-					try (PreparedStatement st3 = cnx.prepareStatement(query);) {
-						st3.setString(1, client.getAdresseDomicile().getRue());
-						st3.setString(2, client.getAdresseDomicile().getCodePostal());
-						st3.setString(3, client.getAdresseDomicile().getVille());
-						st3.setString(4, client.getAdresseDomicile().getPays());
-						st3.setInt(5, client.getAdresseDomicile().getNoAdresse());
-						st3.executeUpdate();
+					AdresseJdbcMariaDB.update(cnx, client.getAdresseDomicile());
 						cnx.commit();
 			} catch (SQLException e) {
 				cnx.rollback();
@@ -160,12 +140,9 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 	public void delete(Client client) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection_VAE();) {
 			cnx.setAutoCommit(false);
+			try {
 			// Delete in ADRESSE
-			String query = "DELETE FROM ADRESSE"
-						+ " WHERE no_adresse = ?";
-			try (PreparedStatement st = cnx.prepareStatement(query);) {
-				st.setInt(1, client.getAdresseDomicile().getNoAdresse());
-				st.executeUpdate();
+			AdresseJdbcMariaDB.delete(cnx, client.getAdresseDomicile());
 				// Delete in PROFIL
 					ProfilJdbcMariaDB.delete(cnx, client);
 					ClientJdbcMariaDB.delete(cnx, client);
